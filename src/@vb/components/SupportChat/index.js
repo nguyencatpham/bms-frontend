@@ -27,7 +27,7 @@ const SupportChat = ({ settings: { isSupportChatOpen }, dispatch }) => {
         className="vb__utils__sidebar__button vb__utils__sidebar__button__long"
       >
         <i className="fe fe-message-square mr-md-2" />
-        <span className="d-none d-md-inline">Support Chat</span>
+        <span className="d-none d-md-inline">Hỗ trợ</span>
       </a>
       <div
         className={classNames(style.container, {
@@ -35,7 +35,7 @@ const SupportChat = ({ settings: { isSupportChatOpen }, dispatch }) => {
         })}
       >
         <div className="d-flex flex-wrap mb-2">
-          <div className="text-dark font-size-18 font-weight-bold mr-auto">Support Chat</div>
+          <div className="text-dark font-size-18 font-weight-bold mr-auto">Hỗ trợ</div>
           <button onClick={toggleSupportChat} type="button" className="btn btn-link p-0 border-0">
             <i className="fe fe-x-square font-size-21 align-middle text-gray-6" />
           </button>

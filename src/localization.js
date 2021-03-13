@@ -7,12 +7,14 @@ import english from './locales/en-US'
 import french from './locales/fr-FR'
 import russian from './locales/ru-RU'
 import chinese from './locales/zh-CN'
+import vietnamese from './locales/vi-VN'
 
 const locales = {
   'en-US': english,
   'fr-FR': french,
   'ru-RU': russian,
   'zh-CN': chinese,
+  'vi-VN': vietnamese,
 }
 
 const mapStateToProps = ({ settings }) => ({ settings })

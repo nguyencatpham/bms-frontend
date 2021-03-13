@@ -7,6 +7,7 @@ import FlagEn from './flags/en.svg'
 import FlagRu from './flags/ru.svg'
 import FlagFr from './flags/fr.svg'
 import FlagZh from './flags/zh.svg'
+import FlagVi from './flags/vi.svg'
 
 const mapStateToProps = ({ settings }) => ({
   locale: settings.locale,
@@ -18,6 +19,7 @@ const LanguageSwitcher = ({ dispatch, locale }) => {
     ru: FlagRu,
     fr: FlagFr,
     zh: FlagZh,
+    vi: FlagVi,
   }
 
   const changeLanguage = ({ key }) => {
@@ -34,6 +36,12 @@ const LanguageSwitcher = ({ dispatch, locale }) => {
 
   const menu = (
     <Menu selectedKeys={[locale]} onClick={changeLanguage}>
+      <Menu.Item key="vi-VN">
+        <span className={styles.menuIcon}>
+          <img src={mapFlags.vi} alt="Việt Nam" />
+        </span>
+        Việt Nam
+      </Menu.Item>
       <Menu.Item key="en-US">
         <span className={styles.menuIcon}>
           <img src={mapFlags.en} alt="English" />
@@ -51,12 +59,6 @@ const LanguageSwitcher = ({ dispatch, locale }) => {
           <img src={mapFlags.ru} alt="Русский" />
         </span>
         Русский
-      </Menu.Item>
-      <Menu.Item key="zh-CN">
-        <span className={styles.menuIcon}>
-          <img src={mapFlags.zh} alt="简体中文" />
-        </span>
-        简体中文
       </Menu.Item>
     </Menu>
   )

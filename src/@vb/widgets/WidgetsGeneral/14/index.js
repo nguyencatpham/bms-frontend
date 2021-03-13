@@ -8,19 +8,10 @@ const General14 = () => {
       <div className="height-300 d-flex flex-column justify-content-end">
         <PerfectScrollbar>
           <div className={style.contentWrapper}>
-            <div className={style.message}>
-              <div className={style.messageContent}>
-                <div className="text-gray-4 font-size-12 text-uppercase">You, 5 min ago</div>
-                <div>Hi! Anyone here? I want to know how I can buy Clean UI KIT Pro?</div>
-              </div>
-              <div className={`${style.messageAvatar} vb__utils__avatar`}>
-                <img src="resources/images/avatars/avatar-2.png" alt="You" />
-              </div>
-            </div>
             <div className={`${style.message} ${style.answer}`}>
               <div className={style.messageContent}>
-                <div className="text-gray-4 font-size-12 text-uppercase">Mary, 14 sec ago</div>
-                <div>Please call us + 100 295 000</div>
+                <div className="text-gray-4 font-size-12 text-uppercase">Quỳnh, 14 giây trước</div>
+                <div>Bạn đang gặp sự cố? </div>
               </div>
               <div className={`${style.messageAvatar} vb__utils__avatar`}>
                 <img src="resources/images/avatars/2.jpg" alt="Mary Stanform" />
@@ -29,13 +20,13 @@ const General14 = () => {
           </div>
         </PerfectScrollbar>
       </div>
-      <div className="pt-2 pb-2">Mary is typing...</div>
+      <div className="pt-2 pb-2">Quỳnh đang nhắn...</div>
       <form>
         <div className="input-group mb-3">
           <input
             type="text"
             className="form-control"
-            placeholder="Send message..."
+            placeholder="Gửi tin nhắn..."
             aria-label="Recipient's username"
             aria-describedby="button-addon2"
           />
