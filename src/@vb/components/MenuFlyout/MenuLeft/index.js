@@ -18,7 +18,7 @@ const mapStateToProps = ({ menu, settings, user }) => ({
       settings.flyoutMenuType === 'compact' ||
       settings.isMenuCollapsed) &&
     !settings.isMobileView,
-  role: user.role,
+  role: user.role
 })
 
 const flyoutTimers = {}
@@ -30,7 +30,7 @@ const MenuLeft = ({
   location: { pathname },
   settings,
   flyoutActive,
-  role,
+  role
 }) => {
   const [activeSubmenu, setActiveSubmenu] = useState('')
   const [activeItem, setActiveItem] = useState('')
@@ -48,8 +48,8 @@ const MenuLeft = ({
       type: 'settings/CHANGE_SETTING',
       payload: {
         setting: 'isMenuCollapsed',
-        value: !isMenuCollapsed,
-      },
+        value: !isMenuCollapsed
+      }
     })
   }
 
@@ -60,8 +60,8 @@ const MenuLeft = ({
       type: 'settings/CHANGE_SETTING',
       payload: {
         setting: 'isMobileMenuOpen',
-        value: !isMobileMenuOpen,
-      },
+        value: !isMobileMenuOpen
+      }
     })
   }
 
@@ -81,11 +81,11 @@ const MenuLeft = ({
       const element = renderFlyoutMenu(items, key, itemDimensions)
       setRenderedFlyoutItems({
         ...renderedFlyoutItems,
-        [key]: element,
+        [key]: element
       })
       flyoutItems = {
         ...renderedFlyoutItems,
-        [key]: element,
+        [key]: element
       }
     }
   }
@@ -95,7 +95,7 @@ const MenuLeft = ({
       flyoutTimers[key] = setTimeout(() => {
         delete flyoutItems[key]
         setRenderedFlyoutItems({
-          ...flyoutItems,
+          ...flyoutItems
         })
       }, 100)
     }
@@ -116,7 +116,7 @@ const MenuLeft = ({
           [style.air__menuFlyoutLeft]: settings.menuLayoutType === 'left',
           [style.air__menuFlyout__black]: settings.flyoutMenuColor === 'dark',
           [style.air__menuFlyout__white]: settings.flyoutMenuColor === 'white',
-          [style.air__menuFlyout__gray]: settings.flyoutMenuColor === 'gray',
+          [style.air__menuFlyout__gray]: settings.flyoutMenuColor === 'gray'
         })}
         key={key}
       >
@@ -132,7 +132,7 @@ const MenuLeft = ({
             return (
               <li
                 className={classNames(style.air__menuLeft__item, {
-                  [style.air__menuLeft__item__active]: activeItem === item.key,
+                  [style.air__menuLeft__item__active]: activeItem === item.key
                 })}
                 key={item.key}
               >
@@ -189,7 +189,7 @@ const MenuLeft = ({
       return (
         <li
           className={classNames(style.air__menuLeft__item, {
-            [style.air__menuLeft__item__active]: activeItem === key,
+            [style.air__menuLeft__item__active]: activeItem === key
           })}
           key={key}
         >
@@ -200,7 +200,7 @@ const MenuLeft = ({
             </Link>
           )}
           {!item.url && (
-            <a href="#" onClick={(e) => e.preventDefault()} className={style.air__menuLeft__link}>
+            <a href='#' onClick={(e) => e.preventDefault()} className={style.air__menuLeft__link}>
               {icon && <i className={`${icon} ${style.air__menuLeft__icon}`} />}
               <span>{title}</span>
             </a>
@@ -213,12 +213,12 @@ const MenuLeft = ({
       return (
         <li
           className={classNames(style.air__menuLeft__item, style.air__menuLeft__submenu, {
-            [style.air__menuLeft__submenu__active]: activeSubmenu === item.key,
+            [style.air__menuLeft__submenu__active]: activeSubmenu === item.key
           })}
           key={item.key}
         >
           <a
-            href="#"
+            href='#'
             className={style.air__menuLeft__link}
             onClick={(e) => handleSubmenuClick(e, item.key)}
             onMouseEnter={(event) => handleFlyoutOver(event, item.key, item.children)}
@@ -229,7 +229,7 @@ const MenuLeft = ({
             <i className={`${item.icon} ${style.air__menuLeft__icon}`} />
             <span>{item.title}</span>
             {item.count && (
-              <span className="badge text-white bg-blue-light float-right mt-1 px-2">
+              <span className='badge text-white bg-blue-light float-right mt-1 px-2'>
                 {item.count}
               </span>
             )}
@@ -266,15 +266,15 @@ const MenuLeft = ({
     flex: `0 0 ${settings.leftMenuWidth}px`,
     maxWidth: `${settings.leftMenuWidth}px`,
     minWidth: `${settings.leftMenuWidth}px`,
-    width: `${settings.leftMenuWidth}px`,
+    width: `${settings.leftMenuWidth}px`
   }
 
   return (
-    <Sider width="auto">
+    <Sider width='auto'>
       <TransitionGroup>
         {Object.keys(renderedFlyoutItems).map((item) => {
           return (
-            <CSSTransition key={item} timeout={0} classNames="air__menuFlyout__animation">
+            <CSSTransition key={item} timeout={0} classNames='air__menuFlyout__animation'>
               {renderedFlyoutItems[item]}
             </CSSTransition>
           )
@@ -295,49 +295,49 @@ const MenuLeft = ({
           [style.air__menuFlyout__white]:
             settings.flyoutMenuColor === 'white' && settings.flyoutMenuType !== 'default',
           [style.air__menuFlyout__gray]:
-            settings.flyoutMenuColor === 'gray' && settings.flyoutMenuType !== 'default',
+            settings.flyoutMenuColor === 'gray' && settings.flyoutMenuType !== 'default'
         })}
         style={menuWidthStyle}
       >
         <div className={style.air__menuLeft__outer} style={menuWidthStyle}>
           <a
-            href="#"
+            href='#'
             className={style.air__menuLeft__mobileToggleButton}
             onClick={toggleMobileMenu}
           >
             <span />
           </a>
-          <a href="#" className={style.air__menuLeft__toggleButton} onClick={toggleMenu}>
+          <a href='#' className={style.air__menuLeft__toggleButton} onClick={toggleMenu}>
             <span />
             <span />
           </a>
           <div className={style.air__menuLeft__logo}>
             <div className={style.air__menuLeft__logo__letter}>
               <svg
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 24 24"
-                version="1.1"
-                height="24px"
-                width="24px"
+                xmlns='http://www.w3.org/2000/svg'
+                viewBox='0 0 24 24'
+                version='1.1'
+                height='24px'
+                width='24px'
               >
                 <g>
                   <path
-                    fill="#4b7cf3"
-                    strokeWidth="1"
-                    stroke="#4b7cf3"
-                    d="M12,10.9c-0.1,0-0.2,0-0.2-0.1L3.5,6.1C3.4,6,3.3,5.8,3.3,5.6c0-0.2,0.1-0.3,0.2-0.4l8.2-4.7c0.2-0.1,0.3-0.1,0.5,0      l8.2,4.7c0.2,0.1,0.2,0.3,0.2,0.4S20.6,6,20.5,6.1l-8.2,4.7C12.2,10.8,12.1,10.9,12,10.9z M4.8,5.6L12,9.8l7.2-4.2L12,1.5      L4.8,5.6z"
+                    fill='#4b7cf3'
+                    strokeWidth='1'
+                    stroke='#4b7cf3'
+                    d='M12,10.9c-0.1,0-0.2,0-0.2-0.1L3.5,6.1C3.4,6,3.3,5.8,3.3,5.6c0-0.2,0.1-0.3,0.2-0.4l8.2-4.7c0.2-0.1,0.3-0.1,0.5,0      l8.2,4.7c0.2,0.1,0.2,0.3,0.2,0.4S20.6,6,20.5,6.1l-8.2,4.7C12.2,10.8,12.1,10.9,12,10.9z M4.8,5.6L12,9.8l7.2-4.2L12,1.5      L4.8,5.6z'
                   />
                   <path
-                    fill="#4b7cf3"
-                    strokeWidth="1"
-                    stroke="#4b7cf3"
-                    d="M13.6,23.6c-0.1,0-0.2,0-0.2-0.1c-0.2-0.1-0.2-0.3-0.2-0.4v-9.5c0-0.2,0.1-0.3,0.2-0.4l8.2-4.7c0.2-0.1,0.3-0.1,0.5,0      c0.2,0.1,0.2,0.3,0.2,0.4v9.5c0,0.2-0.1,0.3-0.3,0.4l-8.2,4.7C13.8,23.6,13.7,23.6,13.6,23.6z M14.1,13.9v8.3l7.2-4.2V9.8      L14.1,13.9z"
+                    fill='#4b7cf3'
+                    strokeWidth='1'
+                    stroke='#4b7cf3'
+                    d='M13.6,23.6c-0.1,0-0.2,0-0.2-0.1c-0.2-0.1-0.2-0.3-0.2-0.4v-9.5c0-0.2,0.1-0.3,0.2-0.4l8.2-4.7c0.2-0.1,0.3-0.1,0.5,0      c0.2,0.1,0.2,0.3,0.2,0.4v9.5c0,0.2-0.1,0.3-0.3,0.4l-8.2,4.7C13.8,23.6,13.7,23.6,13.6,23.6z M14.1,13.9v8.3l7.2-4.2V9.8      L14.1,13.9z'
                   />
                   <path
-                    fill="#4b7cf3"
-                    strokeWidth="1"
-                    stroke="#4b7cf3"
-                    d="M10.4,23.6c-0.1,0-0.2,0-0.2-0.1l-8.2-4.7c-0.2-0.1-0.3-0.3-0.3-0.4V8.9c0-0.2,0.1-0.3,0.2-0.4c0.2-0.1,0.3-0.1,0.5,0      l8.2,4.7c0.2,0.1,0.2,0.3,0.2,0.4v9.5c0,0.2-0.1,0.3-0.2,0.4C10.5,23.6,10.5,23.6,10.4,23.6z M2.7,18.1l7.2,4.2v-8.3L2.7,9.8      V18.1z"
+                    fill='#4b7cf3'
+                    strokeWidth='1'
+                    stroke='#4b7cf3'
+                    d='M10.4,23.6c-0.1,0-0.2,0-0.2-0.1l-8.2-4.7c-0.2-0.1-0.3-0.3-0.3-0.4V8.9c0-0.2,0.1-0.3,0.2-0.4c0.2-0.1,0.3-0.1,0.5,0      l8.2,4.7c0.2,0.1,0.2,0.3,0.2,0.4v9.5c0,0.2-0.1,0.3-0.2,0.4C10.5,23.6,10.5,23.6,10.4,23.6z M2.7,18.1l7.2,4.2v-8.3L2.7,9.8      V18.1z'
                   />
                 </g>
               </svg>
@@ -345,35 +345,35 @@ const MenuLeft = ({
             <div className={style.air__menuLeft__logo__name}>{settings.logo}</div>
             <div className={style.air__menuLeft__logo__descr}>{settings.version}</div>
           </div>
-          <a href="#" onClick={(e) => e.preventDefault()} className={style.air__menuLeft__user}>
+          <a href='#' onClick={(e) => e.preventDefault()} className={style.air__menuLeft__user}>
             <Avatar
               className={style.air__menuLeft__user__avatar}
-              shape="square"
-              size="large"
+              shape='square'
+              size='large'
               icon={<UserOutlined />}
             />
             <div className={style.air__menuLeft__user__name}>David Beckham</div>
             <div className={style.air__menuLeft__user__role}>Administrator</div>
           </a>
           <PerfectScrollbar>
-            <div id="menu-left-container" className={style.air__menuLeft__container}>
+            <div id='menu-left-container' className={style.air__menuLeft__container}>
               <ul className={style.air__menuLeft__list}>{items}</ul>
-              <div className={style.air__menuLeft__banner}>
-                <p>Full access, lifetime updates, github issues, and extended licenses!</p>
-                <a
-                  href="https://themeforest.net/item/air-ui-multi-concept-admin-template/24434456"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="btn btn-white text-center d-block"
+              {/* <div className={style.air__menuLeft__banner}> */}
+              {/* <p>Full access, lifetime updates, github issues, and extended licenses!</p> */}
+              {/* <a
+                  href='https://themeforest.net/item/air-ui-multi-concept-admin-template/24434456'
+                  target='_blank'
+                  rel='noopener noreferrer'
+                  className='btn btn-white text-center d-block'
                 >
                   Get a license
-                </a>
-              </div>
+                </a> */}
+              {/* </div> */}
             </div>
           </PerfectScrollbar>
         </div>
       </div>
-      <a href="#" className={style.air__menuLeft__backdrop} onClick={toggleMobileMenu} />
+      <a href='#' className={style.air__menuLeft__backdrop} onClick={toggleMobileMenu} />
     </Sider>
   )
 }

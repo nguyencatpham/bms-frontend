@@ -1,33 +1,54 @@
 import apiClient from 'services/axios'
 import store from 'store'
 
-export async function login(email, password) {
+export async function login (email, password) {
   return apiClient
-    .post('/auth/login', {
+    .post('/api/users/login', {
       email,
-      password,
+      password
     })
-    .then((response) => {
+    .then(response => {
       if (response) {
-        const { accessToken } = response.data
-        if (accessToken) {
-          store.set('accessToken', accessToken)
+        const { userId, id } = response.data
+        if (id) {
+          store.set('accessToken', id)
+          store.set('user.email', email)
+          store.set('user.id', userId)
         }
         return response.data
       }
       return false
     })
-    .catch((err) => console.log(err))
+    .catch(err => console.log(err))
+}
+export async function preConfirm (password) {
+  const id = store.get('user.id')
+  return apiClient
+    .post(`/api/users/${id}/check-password`, {
+      id,
+      password
+    })
+    .then(response => {
+      if (response) {
+        const { valid } = response.data
+        if (valid) {
+          return true
+        }
+      }
+      return false
+    })
+    .catch(err => console.log(err))
 }
 
-export async function register(email, password, name) {
+export async function register ({ username, email, password, name }) {
   return apiClient
     .post('/auth/register', {
+      username,
       email,
       password,
-      name,
+      name
     })
-    .then((response) => {
+    .then(response => {
       if (response) {
         const { accessToken } = response.data
         if (accessToken) {
@@ -37,31 +58,32 @@ export async function register(email, password, name) {
       }
       return false
     })
-    .catch((err) => console.log(err))
+    .catch(err => console.log(err))
 }
 
-export async function currentAccount() {
+export async function currentAccount (id) {
+  const filter = JSON.stringify({ include: [] })
+
   return apiClient
-    .get('/auth/account')
-    .then((response) => {
+    .get(`/api/users/${id}?filter=${filter}`)
+    .then(response => {
       if (response) {
-        const { accessToken } = response.data
-        if (accessToken) {
-          store.set('accessToken', accessToken)
-        }
+        store.set('user.state', JSON.stringify(response.data))
         return response.data
       }
       return false
     })
-    .catch((err) => console.log(err))
+    .catch(err => {
+      console.log(err)
+      return false
+    })
 }
 
-export async function logout() {
+export async function logout () {
   return apiClient
-    .get('/auth/logout')
+    .post('/api/users/logout')
     .then(() => {
-      store.remove('accessToken')
       return true
     })
-    .catch((err) => console.log(err))
+    .catch(err => console.log(err))
 }

@@ -11,7 +11,7 @@ const ProfileMenu = ({ dispatch, user }) => {
   const logout = (e) => {
     e.preventDefault()
     dispatch({
-      type: 'user/LOGOUT',
+      type: 'user/LOGOUT'
     })
   }
 
@@ -19,17 +19,11 @@ const ProfileMenu = ({ dispatch, user }) => {
     <Menu selectable={false}>
       <Menu.Item>
         <strong>
-          <FormattedMessage id="topBar.profileMenu.hello" />, {user.name || 'Anonymous'}
+          <FormattedMessage id='topBar.profileMenu.hello' />, {user.name || user.username || user.email}
         </strong>
         <div>
-          <strong className="mr-1">
-            <FormattedMessage id="topBar.profileMenu.billingPlan" />:{' '}
-          </strong>
-          Professional
-        </div>
-        <div>
           <strong>
-            <FormattedMessage id="topBar.profileMenu.role" />:{' '}
+            <FormattedMessage id='topBar.profileMenu.role' />:{' '}
           </strong>
           {user.role || '—'}
         </div>
@@ -38,28 +32,28 @@ const ProfileMenu = ({ dispatch, user }) => {
       <Menu.Item>
         <div>
           <strong>
-            <FormattedMessage id="topBar.profileMenu.email" />:{' '}
+            <FormattedMessage id='topBar.profileMenu.email' />:{' '}
           </strong>
           {user.email || '—'}
           <br />
           <strong>
-            <FormattedMessage id="topBar.profileMenu.phone" />:{' '}
+            <FormattedMessage id='topBar.profileMenu.phone' />:{' '}
           </strong>
           {user.phone || '—'}
         </div>
       </Menu.Item>
       <Menu.Divider />
       <Menu.Item>
-        <a href="#" onClick={(e) => e.preventDefault()}>
-          <i className="fe fe-user mr-2" />
-          <FormattedMessage id="topBar.profileMenu.editProfile" />
+        <a href='/profile' onClick={(e) => e.preventDefault()}>
+          <i className='fe fe-user mr-2' />
+          <FormattedMessage id='topBar.profileMenu.editProfile' />
         </a>
       </Menu.Item>
       <Menu.Divider />
       <Menu.Item>
-        <a href="#" onClick={logout}>
-          <i className="fe fe-log-out mr-2" />
-          <FormattedMessage id="topBar.profileMenu.logout" />
+        <a href='#' onClick={logout}>
+          <i className='fe fe-log-out mr-2' />
+          <FormattedMessage id='topBar.profileMenu.logout' />
         </a>
       </Menu.Item>
     </Menu>
@@ -67,7 +61,7 @@ const ProfileMenu = ({ dispatch, user }) => {
   return (
     <Dropdown overlay={menu} trigger={['click']}>
       <div className={styles.dropdown}>
-        <Avatar className={styles.avatar} shape="square" size="large" icon={<UserOutlined />} />
+        <Avatar className={styles.avatar} shape='square' size='large' icon={<UserOutlined />} />
       </div>
     </Dropdown>
   )

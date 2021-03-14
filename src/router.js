@@ -11,44 +11,70 @@ const routes = [
   {
     path: '/dashboard',
     Component: lazy(() => import('pages/dashboard')),
-    exact: true,
+    exact: true
   },
 
   // VB:REPLACE-END:ROUTER-CONFIG
   {
     path: '/auth/login',
     Component: lazy(() => import('pages/auth/login')),
-    exact: true,
+    exact: true
   },
   {
     path: '/auth/forgot-password',
     Component: lazy(() => import('pages/auth/forgot-password')),
-    exact: true,
+    exact: true
   },
   {
     path: '/auth/register',
     Component: lazy(() => import('pages/auth/register')),
-    exact: true,
+    exact: true
   },
   {
     path: '/auth/lockscreen',
     Component: lazy(() => import('pages/auth/lockscreen')),
-    exact: true,
+    exact: true
   },
   {
     path: '/auth/404',
     Component: lazy(() => import('pages/auth/404')),
-    exact: true,
+    exact: true
   },
   {
     path: '/auth/500',
     Component: lazy(() => import('pages/auth/500')),
-    exact: true,
+    exact: true
   },
+
+  {
+    path: '/accounts',
+    Component: lazy(() => import('pages/account')),
+    exact: true
+  },
+  {
+    path: '/accounts/create',
+    Component: lazy(() => import('pages/account/create')),
+    exact: true
+  },
+  {
+    path: '/accounts/profile',
+    Component: lazy(() => import('pages/account/profile')),
+    exact: true
+  },
+  {
+    path: '/accounts/:id',
+    Component: lazy(() => import('pages/account/detail')),
+    exact: true
+  },
+  {
+    path: '/accounts/:id/update',
+    Component: lazy(() => import('pages/account/update')),
+    exact: true
+  }
 ]
 
 const mapStateToProps = ({ settings }) => ({
-  routerAnimation: settings.routerAnimation,
+  routerAnimation: settings.routerAnimation
 })
 
 const Router = ({ history, routerAnimation }) => {
@@ -68,7 +94,7 @@ const Router = ({ history, routerAnimation }) => {
                 >
                   <Switch location={location}>
                     {/* VB:REPLACE-NEXT-LINE:ROUTER-REDIRECT */}
-                    <Route exact path="/" render={() => <Redirect to="/dashboard" />} />
+                    <Route exact path='/' render={() => <Redirect to='/dashboard' />} />
                     {routes.map(({ path, Component, exact }) => (
                       <Route
                         path={path}
@@ -85,7 +111,7 @@ const Router = ({ history, routerAnimation }) => {
                         }}
                       />
                     ))}
-                    <Redirect to="/auth/404" />
+                    <Redirect to='/auth/404' />
                   </Switch>
                 </CSSTransition>
               </SwitchTransition>

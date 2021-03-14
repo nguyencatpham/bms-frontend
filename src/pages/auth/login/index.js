@@ -5,7 +5,7 @@ import Login from '@vb/components/Auth/Login'
 const SystemLogin = () => {
   return (
     <div>
-      <Helmet title="Login" />
+      <Helmet title='Login' />
       <Login />
     </div>
   )

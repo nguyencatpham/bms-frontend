@@ -2,23 +2,22 @@ import React, { useState, useEffect } from 'react'
 import { withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { reduce } from 'lodash'
+import { history } from 'index'
 import styles from './style.module.scss'
 
 const mapStateToProps = ({ menu }) => ({
-  menuData: menu.menuData,
+  menuData: menu.menuData
 })
 
 const Breadcrumbs2 = (props) => {
   const [breadcrumbs, setBreadcrumbs] = useState([])
   const {
     location: { pathname },
-    menuData = [],
+    menuData = []
   } = props
   useEffect(() => {
     setBreadcrumbs(() => getBreadcrumbs())
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pathname, menuData])
-
   const getPath = (data, url, parents = []) => {
     const items = reduce(
       data,
@@ -35,12 +34,12 @@ const Breadcrumbs2 = (props) => {
         }
         return result
       },
-      [],
+      []
     )
     return items.length > 0 ? items : [false]
   }
 
-  const toUpper = (str) => str.replace(/\b\w/g, (l) => l.toUpperCase())
+  // const toUpper = (str) => str.replace(/\b\w/g, (l) => l.toUpperCase())
 
   const getBreadcrumbs = () => {
     const [activeMenuItem] = getPath(menuData, pathname)
@@ -56,32 +55,45 @@ const Breadcrumbs2 = (props) => {
           return (
             <li className={styles.breadcrumb} key={item}>
               <strong className={`${styles.breadcrumbLink} ${styles.breadcrumbLink__current}`}>
-                {toUpper(activeMenuItem.title)}
+                {(activeMenuItem.title || '').toUpperCase()}
               </strong>
             </li>
           )
         }
         return (
           <li className={styles.breadcrumb} key={item}>
-            <span>{toUpper(item)}</span>
+            {(item || '').toUpperCase()}
           </li>
         )
       })
     }
-
     return (
       <li className={styles.breadcrumb}>
         <strong className={styles.current}>{activeMenuItem.title}</strong>
       </li>
     )
   }
-
+  const addNew = () => {
+    history.push(`${window.location.pathname}/create`)
+  }
+  const isCreatable = () => {
+    const current = window.location.pathname
+    if (current === '/' ||
+      current === '/dashboard' ||
+      current.includes('create') ||
+      current.includes('update') ||
+      current.includes('detail')
+    ) {
+      return false
+    }
+    return true
+  }
   return (
     <div className={styles.subbar}>
       <ul className={`${styles.breadcrumbs} mr-4`}>
         <li className={styles.breadcrumb}>
-          <a href="#" className={styles.breadcrumbLink}>
-            Main
+          <a href='#' className={styles.breadcrumbLink}>
+            Trang chủ
           </a>
         </li>
         {breadcrumbs}
@@ -92,21 +104,23 @@ const Breadcrumbs2 = (props) => {
         </li> */}
       </ul>
       <div className={`${styles.divider} mr-4 d-none d-xl-block`} />
-      <p className="color-gray-4 text-uppercase font-size-16 mb-0 mr-4 d-none d-xl-block">
+      {/* <p className='color-gray-4 text-uppercase font-size-16 mb-0 mr-4 d-none d-xl-block'>
         INV-00125
-      </p>
-      <button
-        type="button"
-        className="btn btn-primary btn-with-addon mr-auto text-nowrap d-none d-md-block"
-      >
-        <span className="btn-addon">
-          <i className="btn-addon-icon fe fe-plus-circle" />
-        </span>
-        New Request
-      </button>
+      </p> */}
+      {isCreatable() &&
+        <button
+          onClick={() => { addNew() }}
+          type='button'
+          className='btn btn-primary btn-with-addon mr-auto text-nowrap d-none d-md-block'
+        >
+          <span className='btn-addon'>
+            <i className='btn-addon-icon fe fe-plus-circle' />
+          </span>
+        Thêm mới
+        </button>}
       <div className={`${styles.amount} mr-3 ml-auto d-none d-sm-flex`}>
         <p className={styles.amountText}>
-          This month
+          Tháng này
           <span className={styles.amountValue}>$251.12</span>
         </p>
         <div className={styles.amountGraph}>
@@ -120,7 +134,7 @@ const Breadcrumbs2 = (props) => {
       </div>
       <div className={`${styles.amount} d-none d-sm-flex`}>
         <p className={styles.amountText}>
-          Last month
+          Tháng trước
           <span className={styles.amountValue}>$12,256.12</span>
         </p>
         <div className={styles.amountGraph}>

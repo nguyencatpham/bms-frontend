@@ -1,28 +1,17 @@
 import actions from './actions'
 
-const DEV = process.env.REACT_APP_AUTHENTICATED
-  ? {
-      id: '1',
-      name: 'Tom Jones',
-      role: 'admin',
-      email: 'demo@sellpixels.com',
-      avatar: '',
-      authorized: true,
-    }
-  : {}
-
 const initialState = {
   id: '',
   name: '',
   role: '',
   email: '',
   avatar: '',
-  authorized: false,
+  authorized: process.env.REACT_APP_AUTHENTICATED || false, // false is default value
   loading: false,
-  ...DEV, // remove it, used for demo build
+  list: []
 }
 
-export default function userReducer(state = initialState, action) {
+export default function userReducer (state = initialState, action) {
   switch (action.type) {
     case actions.SET_STATE:
       return { ...state, ...action.payload }

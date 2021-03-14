@@ -1,0 +1,2341 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "version": "0.1.0",
+    "title": "bms-backend",
+    "description": "bms Backend API"
+  },
+  "basePath": "/api",
+  "paths": {
+    "/users/{id}/devices/{fk}": {
+      "get": {
+        "tags": [
+          "User"
+        ],
+        "summary": "Find a related item by id for devices.",
+        "operationId": "User.prototype.__findById__devices",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "User id",
+            "required": true,
+            "type": "string",
+            "format": "JSON"
+          },
+          {
+            "name": "fk",
+            "in": "path",
+            "description": "Foreign key for devices",
+            "required": true,
+            "type": "string",
+            "format": "JSON"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Request was successful",
+            "schema": {
+              "$ref": "#/definitions/Device"
+            }
+          }
+        },
+        "deprecated": false
+      },
+      "delete": {
+        "tags": [
+          "User"
+        ],
+        "summary": "Delete a related item by id for devices.",
+        "operationId": "User.prototype.__destroyById__devices",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "User id",
+            "required": true,
+            "type": "string",
+            "format": "JSON"
+          },
+          {
+            "name": "fk",
+            "in": "path",
+            "description": "Foreign key for devices",
+            "required": true,
+            "type": "string",
+            "format": "JSON"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Request was successful"
+          }
+        },
+        "deprecated": false
+      },
+      "put": {
+        "tags": [
+          "User"
+        ],
+        "summary": "Update a related item by id for devices.",
+        "operationId": "User.prototype.__updateById__devices",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "User id",
+            "required": true,
+            "type": "string",
+            "format": "JSON"
+          },
+          {
+            "name": "fk",
+            "in": "path",
+            "description": "Foreign key for devices",
+            "required": true,
+            "type": "string",
+            "format": "JSON"
+          },
+          {
+            "name": "data",
+            "in": "body",
+            "required": false,
+            "schema": {
+              "$ref": "#/definitions/Device"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Request was successful",
+            "schema": {
+              "$ref": "#/definitions/Device"
+            }
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/users/{id}/devices": {
+      "get": {
+        "tags": [
+          "User"
+        ],
+        "summary": "Queries devices of User.",
+        "operationId": "User.prototype.__get__devices",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "User id",
+            "required": true,
+            "type": "string",
+            "format": "JSON"
+          },
+          {
+            "name": "filter",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "JSON"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Request was successful",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Device"
+              }
+            }
+          }
+        },
+        "deprecated": false
+      },
+      "post": {
+        "tags": [
+          "User"
+        ],
+        "summary": "Creates a new instance in devices of this model.",
+        "operationId": "User.prototype.__create__devices",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "User id",
+            "required": true,
+            "type": "string",
+            "format": "JSON"
+          },
+          {
+            "name": "data",
+            "in": "body",
+            "required": false,
+            "schema": {
+              "$ref": "#/definitions/Device"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Request was successful",
+            "schema": {
+              "$ref": "#/definitions/Device"
+            }
+          }
+        },
+        "deprecated": false
+      },
+      "delete": {
+        "tags": [
+          "User"
+        ],
+        "summary": "Deletes all devices of this model.",
+        "operationId": "User.prototype.__delete__devices",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "User id",
+            "required": true,
+            "type": "string",
+            "format": "JSON"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Request was successful"
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/users/{id}/devices/count": {
+      "get": {
+        "tags": [
+          "User"
+        ],
+        "summary": "Counts devices of User.",
+        "operationId": "User.prototype.__count__devices",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "User id",
+            "required": true,
+            "type": "string",
+            "format": "JSON"
+          },
+          {
+            "name": "where",
+            "in": "query",
+            "description": "Criteria to match model instances",
+            "required": false,
+            "type": "string",
+            "format": "JSON"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Request was successful",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "count": {
+                  "type": "number",
+                  "format": "double"
+                }
+              }
+            }
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/users/{id}": {
+      "get": {
+        "tags": [
+          "User"
+        ],
+        "summary": "Find a model instance by {{id}} from the data source.",
+        "operationId": "User.findById",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Model id",
+            "required": true,
+            "type": "string",
+            "format": "JSON"
+          },
+          {
+            "name": "filter",
+            "in": "query",
+            "description": "Filter defining fields and include - must be a JSON-encoded string ({\"something\":\"value\"})",
+            "required": false,
+            "type": "string",
+            "format": "JSON"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Request was successful",
+            "schema": {
+              "$ref": "#/definitions/User"
+            }
+          }
+        },
+        "deprecated": false
+      },
+      "delete": {
+        "tags": [
+          "User"
+        ],
+        "summary": "Delete a model instance by {{id}} from the data source.",
+        "operationId": "User.deleteById",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Model id",
+            "required": true,
+            "type": "string",
+            "format": "JSON"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Request was successful",
+            "schema": {
+              "type": "object"
+            }
+          }
+        },
+        "deprecated": false
+      },
+      "patch": {
+        "tags": [
+          "User"
+        ],
+        "summary": "Update user information",
+        "operationId": "User.prototype.updateProperties",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "User id",
+            "required": true,
+            "type": "string",
+            "format": "JSON"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": false,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string"
+                },
+                "description": {
+                  "type": "string"
+                },
+                "username": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Request was successful",
+            "schema": {
+              "$ref": "#/definitions/User"
+            }
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/users": {
+      "get": {
+        "tags": [
+          "User"
+        ],
+        "summary": "Find all instances of the model matched by filter from the data source.",
+        "operationId": "User.find",
+        "parameters": [
+          {
+            "name": "filter",
+            "in": "query",
+            "description": "Filter defining fields, where, include, order, offset, and limit - must be a JSON-encoded string (`{\"where\":{\"something\":\"value\"}}`).  See https://loopback.io/doc/en/lb3/Querying-data.html#using-stringified-json-in-rest-queries for more details.",
+            "required": false,
+            "type": "string",
+            "format": "JSON"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Request was successful",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/User"
+              }
+            }
+          }
+        },
+        "deprecated": false
+      },
+      "post": {
+        "tags": [
+          "User"
+        ],
+        "summary": "Register a user account with email and password.",
+        "operationId": "User.registerAccount",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": false,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "username": {
+                  "type": "string"
+                },
+                "password": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Request was successful",
+            "schema": {
+              "$ref": "#/definitions/User"
+            }
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/users/count": {
+      "get": {
+        "tags": [
+          "User"
+        ],
+        "summary": "Count instances of the model matched by where from the data source.",
+        "operationId": "User.count",
+        "parameters": [
+          {
+            "name": "where",
+            "in": "query",
+            "description": "Criteria to match model instances",
+            "required": false,
+            "type": "string",
+            "format": "JSON"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Request was successful",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "count": {
+                  "type": "number",
+                  "format": "double"
+                }
+              }
+            }
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/users/{id}/fcms": {
+      "post": {
+        "tags": [
+          "User"
+        ],
+        "summary": "create FCM notification",
+        "operationId": "User.prototype.createFcm",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "User id",
+            "required": true,
+            "type": "string",
+            "format": "JSON"
+          },
+          {
+            "name": "token",
+            "in": "formData",
+            "description": "FCM notification token",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "appId",
+            "in": "formData",
+            "description": "appId is one of: android, ios, web, other",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Request was successful",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "auth": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/users/reset": {
+      "post": {
+        "tags": [
+          "User"
+        ],
+        "summary": "Reset password for a user with email.",
+        "operationId": "User.resetPasswordWithEmail",
+        "parameters": [
+          {
+            "name": "email",
+            "in": "formData",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Request was successful"
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/users/login": {
+      "post": {
+        "tags": [
+          "User"
+        ],
+        "summary": "Login a user with email and password.",
+        "operationId": "User.login",
+        "parameters": [
+          {
+            "name": "email",
+            "in": "formData",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "password",
+            "in": "formData",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "username",
+            "in": "formData",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Request was successful",
+            "schema": {
+              "$ref": "#/definitions/AccessToken"
+            }
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/users/logout": {
+      "post": {
+        "tags": [
+          "User"
+        ],
+        "summary": "Logout a user with access token.",
+        "operationId": "User.logout",
+        "parameters": [],
+        "responses": {
+          "204": {
+            "description": "Request was successful"
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/users/confirm": {
+      "get": {
+        "tags": [
+          "User"
+        ],
+        "summary": "Confirm a user registration with identity verification token.",
+        "operationId": "User.confirm",
+        "parameters": [
+          {
+            "name": "uid",
+            "in": "query",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "token",
+            "in": "query",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "redirect",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Request was successful"
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/users/resend-confirm-email": {
+      "post": {
+        "tags": [
+          "User"
+        ],
+        "summary": "Resend confirmation email",
+        "operationId": "User.resendEmail",
+        "parameters": [
+          {
+            "name": "email",
+            "in": "formData",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Request was successful",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/users/{id}/change-password": {
+      "post": {
+        "tags": [
+          "User"
+        ],
+        "summary": "User reset his/her password",
+        "operationId": "User.prototype.changePassword",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "User id",
+            "required": true,
+            "type": "string",
+            "format": "JSON"
+          },
+          {
+            "name": "arg",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Request was successful",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/users/{id}/check-password": {
+      "post": {
+        "tags": [
+          "User"
+        ],
+        "summary": "Check user password",
+        "operationId": "User.prototype.checkPassword",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "User id",
+            "required": true,
+            "type": "string",
+            "format": "JSON"
+          },
+          {
+            "name": "password",
+            "in": "formData",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Request was successful",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "valid": {
+                  "type": "boolean"
+                }
+              }
+            }
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/users/reset-password": {
+      "post": {
+        "tags": [
+          "User"
+        ],
+        "summary": "Reset user's password via a password-reset token.",
+        "operationId": "User.setResetPassword",
+        "parameters": [
+          {
+            "name": "newPassword",
+            "in": "formData",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Request was successful",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/users/{id}/suspend": {
+      "post": {
+        "tags": [
+          "User"
+        ],
+        "summary": "Suspend an user account",
+        "operationId": "User.prototype.suspendAccount",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "User id",
+            "required": true,
+            "type": "string",
+            "format": "JSON"
+          },
+          {
+            "name": "suspend",
+            "in": "formData",
+            "required": true,
+            "type": "boolean"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Request was successful",
+            "schema": {
+              "$ref": "#/definitions/User"
+            }
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/users/{id}/set-password": {
+      "post": {
+        "tags": [
+          "User"
+        ],
+        "summary": "set account password",
+        "operationId": "User.prototype.setPasswordWithoutOldPassword",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "User id",
+            "required": true,
+            "type": "string",
+            "format": "JSON"
+          },
+          {
+            "name": "password",
+            "in": "formData",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Request was successful",
+            "schema": {
+              "$ref": "#/definitions/User"
+            }
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/devices/{id}/broker": {
+      "get": {
+        "tags": [
+          "Device"
+        ],
+        "summary": "Fetches belongsTo relation broker.",
+        "operationId": "Device.prototype.__get__broker",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Device id",
+            "required": true,
+            "type": "string",
+            "format": "JSON"
+          },
+          {
+            "name": "refresh",
+            "in": "query",
+            "required": false,
+            "type": "boolean"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Request was successful",
+            "schema": {
+              "$ref": "#/definitions/Broker"
+            }
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/devices/{id}/user": {
+      "get": {
+        "tags": [
+          "Device"
+        ],
+        "summary": "Fetches belongsTo relation user.",
+        "operationId": "Device.prototype.__get__user",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Device id",
+            "required": true,
+            "type": "string",
+            "format": "JSON"
+          },
+          {
+            "name": "refresh",
+            "in": "query",
+            "required": false,
+            "type": "boolean"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Request was successful",
+            "schema": {
+              "$ref": "#/definitions/User"
+            }
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/devices/{id}/systems/{fk}": {
+      "get": {
+        "tags": [
+          "Device"
+        ],
+        "summary": "Find a related item by id for systems.",
+        "operationId": "Device.prototype.__findById__systems",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Device id",
+            "required": true,
+            "type": "string",
+            "format": "JSON"
+          },
+          {
+            "name": "fk",
+            "in": "path",
+            "description": "Foreign key for systems",
+            "required": true,
+            "type": "string",
+            "format": "JSON"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Request was successful",
+            "schema": {
+              "$ref": "#/definitions/System"
+            }
+          }
+        },
+        "deprecated": false
+      },
+      "delete": {
+        "tags": [
+          "Device"
+        ],
+        "summary": "Delete a related item by id for systems.",
+        "operationId": "Device.prototype.__destroyById__systems",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Device id",
+            "required": true,
+            "type": "string",
+            "format": "JSON"
+          },
+          {
+            "name": "fk",
+            "in": "path",
+            "description": "Foreign key for systems",
+            "required": true,
+            "type": "string",
+            "format": "JSON"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Request was successful"
+          }
+        },
+        "deprecated": false
+      },
+      "put": {
+        "tags": [
+          "Device"
+        ],
+        "summary": "Update a related item by id for systems.",
+        "operationId": "Device.prototype.__updateById__systems",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Device id",
+            "required": true,
+            "type": "string",
+            "format": "JSON"
+          },
+          {
+            "name": "fk",
+            "in": "path",
+            "description": "Foreign key for systems",
+            "required": true,
+            "type": "string",
+            "format": "JSON"
+          },
+          {
+            "name": "data",
+            "in": "body",
+            "required": false,
+            "schema": {
+              "$ref": "#/definitions/System"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Request was successful",
+            "schema": {
+              "$ref": "#/definitions/System"
+            }
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/devices/{id}/systems": {
+      "get": {
+        "tags": [
+          "Device"
+        ],
+        "summary": "Queries systems of Device.",
+        "operationId": "Device.prototype.__get__systems",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Device id",
+            "required": true,
+            "type": "string",
+            "format": "JSON"
+          },
+          {
+            "name": "filter",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "JSON"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Request was successful",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/System"
+              }
+            }
+          }
+        },
+        "deprecated": false
+      },
+      "post": {
+        "tags": [
+          "Device"
+        ],
+        "summary": "Creates a new instance in systems of this model.",
+        "operationId": "Device.prototype.__create__systems",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Device id",
+            "required": true,
+            "type": "string",
+            "format": "JSON"
+          },
+          {
+            "name": "data",
+            "in": "body",
+            "required": false,
+            "schema": {
+              "$ref": "#/definitions/System"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Request was successful",
+            "schema": {
+              "$ref": "#/definitions/System"
+            }
+          }
+        },
+        "deprecated": false
+      },
+      "delete": {
+        "tags": [
+          "Device"
+        ],
+        "summary": "Deletes all systems of this model.",
+        "operationId": "Device.prototype.__delete__systems",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Device id",
+            "required": true,
+            "type": "string",
+            "format": "JSON"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Request was successful"
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/devices/{id}/systems/count": {
+      "get": {
+        "tags": [
+          "Device"
+        ],
+        "summary": "Counts systems of Device.",
+        "operationId": "Device.prototype.__count__systems",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Device id",
+            "required": true,
+            "type": "string",
+            "format": "JSON"
+          },
+          {
+            "name": "where",
+            "in": "query",
+            "description": "Criteria to match model instances",
+            "required": false,
+            "type": "string",
+            "format": "JSON"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Request was successful",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "count": {
+                  "type": "number",
+                  "format": "double"
+                }
+              }
+            }
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/devices": {
+      "get": {
+        "tags": [
+          "Device"
+        ],
+        "summary": "Find all instances of the model matched by filter from the data source.",
+        "operationId": "Device.find",
+        "parameters": [
+          {
+            "name": "filter",
+            "in": "query",
+            "description": "Filter defining fields, where, include, order, offset, and limit - must be a JSON-encoded string (`{\"where\":{\"something\":\"value\"}}`).  See https://loopback.io/doc/en/lb3/Querying-data.html#using-stringified-json-in-rest-queries for more details.",
+            "required": false,
+            "type": "string",
+            "format": "JSON"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Request was successful",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Device"
+              }
+            }
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/devices/{id}": {
+      "delete": {
+        "tags": [
+          "Device"
+        ],
+        "summary": "Delete a model instance by {{id}} from the data source.",
+        "operationId": "Device.deleteById",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Model id",
+            "required": true,
+            "type": "string",
+            "format": "JSON"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Request was successful",
+            "schema": {
+              "type": "object"
+            }
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/devices/count": {
+      "get": {
+        "tags": [
+          "Device"
+        ],
+        "summary": "Count instances of the model matched by where from the data source.",
+        "operationId": "Device.count",
+        "parameters": [
+          {
+            "name": "where",
+            "in": "query",
+            "description": "Criteria to match model instances",
+            "required": false,
+            "type": "string",
+            "format": "JSON"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Request was successful",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "count": {
+                  "type": "number",
+                  "format": "double"
+                }
+              }
+            }
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/devices/{id}/attach-device": {
+      "put": {
+        "tags": [
+          "Device"
+        ],
+        "summary": "attach/remove a device to a client",
+        "operationId": "Device.prototype.attachDevice",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Device id",
+            "required": true,
+            "type": "string",
+            "format": "JSON"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": false,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "assign": {
+                  "type": "boolean"
+                },
+                "userId": {
+                  "type": "number",
+                  "format": "double"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "202": {
+            "description": "Request was successful",
+            "schema": {
+              "$ref": "#/definitions/Device"
+            }
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/devices/credentials": {
+      "put": {
+        "tags": [
+          "Device"
+        ],
+        "summary": "Create device credential",
+        "operationId": "Device.credentials",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": false,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "macAddress": {
+                  "type": "string"
+                },
+                "uuid": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Request was successful",
+            "schema": {
+              "type": "object"
+            }
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/authorizeddevices": {
+      "get": {
+        "tags": [
+          "AuthorizedDevice"
+        ],
+        "summary": "Find all instances of the model matched by filter from the data source.",
+        "operationId": "AuthorizedDevice.find",
+        "parameters": [
+          {
+            "name": "filter",
+            "in": "query",
+            "description": "Filter defining fields, where, include, order, offset, and limit - must be a JSON-encoded string (`{\"where\":{\"something\":\"value\"}}`).  See https://loopback.io/doc/en/lb3/Querying-data.html#using-stringified-json-in-rest-queries for more details.",
+            "required": false,
+            "type": "string",
+            "format": "JSON"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Request was successful",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/AuthorizedDevice"
+              }
+            }
+          }
+        },
+        "deprecated": false
+      },
+      "put": {
+        "tags": [
+          "AuthorizedDevice"
+        ],
+        "summary": "batch create or update authorized device",
+        "operationId": "AuthorizedDevice.upsertAuthorizeddevice",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": false,
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/x-any"
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Request was successful",
+            "schema": {
+              "type": "object"
+            }
+          }
+        },
+        "deprecated": false
+      },
+      "delete": {
+        "tags": [
+          "AuthorizedDevice"
+        ],
+        "summary": "batch delete authorized devices",
+        "operationId": "AuthorizedDevice.removeAuthorizeDevices",
+        "parameters": [
+          {
+            "name": "deviceIds",
+            "in": "formData",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Request was successful",
+            "schema": {
+              "type": "object"
+            }
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/authorizeddevices/{id}": {
+      "delete": {
+        "tags": [
+          "AuthorizedDevice"
+        ],
+        "summary": "Delete a model instance by {{id}} from the data source.",
+        "operationId": "AuthorizedDevice.deleteById",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Model id",
+            "required": true,
+            "type": "string",
+            "format": "JSON"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Request was successful",
+            "schema": {
+              "type": "object"
+            }
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/authorizeddevices/count": {
+      "get": {
+        "tags": [
+          "AuthorizedDevice"
+        ],
+        "summary": "Count instances of the model matched by where from the data source.",
+        "operationId": "AuthorizedDevice.count",
+        "parameters": [
+          {
+            "name": "where",
+            "in": "query",
+            "description": "Criteria to match model instances",
+            "required": false,
+            "type": "string",
+            "format": "JSON"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Request was successful",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "count": {
+                  "type": "number",
+                  "format": "double"
+                }
+              }
+            }
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/Containers": {
+      "get": {
+        "tags": [
+          "Container"
+        ],
+        "operationId": "Container.getContainers",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Request was successful",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/x-any"
+              }
+            }
+          }
+        },
+        "deprecated": false
+      },
+      "post": {
+        "tags": [
+          "Container"
+        ],
+        "operationId": "Container.createContainer",
+        "parameters": [
+          {
+            "name": "options",
+            "in": "body",
+            "required": false,
+            "schema": {
+              "type": "object"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Request was successful",
+            "schema": {
+              "type": "object"
+            }
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/Containers/{container}": {
+      "delete": {
+        "tags": [
+          "Container"
+        ],
+        "operationId": "Container.destroyContainer",
+        "parameters": [
+          {
+            "name": "container",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Request was successful",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "undefined": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        },
+        "deprecated": false
+      },
+      "get": {
+        "tags": [
+          "Container"
+        ],
+        "operationId": "Container.getContainer",
+        "parameters": [
+          {
+            "name": "container",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Request was successful",
+            "schema": {
+              "type": "object"
+            }
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/Containers/{container}/files": {
+      "get": {
+        "tags": [
+          "Container"
+        ],
+        "operationId": "Container.getFiles",
+        "parameters": [
+          {
+            "name": "container",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Request was successful",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/x-any"
+              }
+            }
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/Containers/{container}/files/{file}": {
+      "get": {
+        "tags": [
+          "Container"
+        ],
+        "operationId": "Container.getFile",
+        "parameters": [
+          {
+            "name": "container",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "file",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Request was successful",
+            "schema": {
+              "type": "object"
+            }
+          }
+        },
+        "deprecated": false
+      },
+      "delete": {
+        "tags": [
+          "Container"
+        ],
+        "operationId": "Container.removeFile",
+        "parameters": [
+          {
+            "name": "container",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "file",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Request was successful",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "undefined": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/Containers/{container}/upload": {
+      "post": {
+        "tags": [
+          "Container"
+        ],
+        "operationId": "Container.upload",
+        "parameters": [
+          {
+            "name": "container",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Request was successful",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "result": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/Containers/{container}/download/{file}": {
+      "get": {
+        "tags": [
+          "Container"
+        ],
+        "operationId": "Container.download",
+        "parameters": [
+          {
+            "name": "container",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "file",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Request was successful"
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/events": {
+      "get": {
+        "tags": [
+          "Event"
+        ],
+        "summary": "Find all instances of the model matched by filter from the data source.",
+        "operationId": "Event.find",
+        "parameters": [
+          {
+            "name": "filter",
+            "in": "query",
+            "description": "Filter defining fields, where, include, order, offset, and limit - must be a JSON-encoded string (`{\"where\":{\"something\":\"value\"}}`).  See https://loopback.io/doc/en/lb3/Querying-data.html#using-stringified-json-in-rest-queries for more details.",
+            "required": false,
+            "type": "string",
+            "format": "JSON"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Request was successful",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Event"
+              }
+            }
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/events/count": {
+      "get": {
+        "tags": [
+          "Event"
+        ],
+        "summary": "Count instances of the model matched by where from the data source.",
+        "operationId": "Event.count",
+        "parameters": [
+          {
+            "name": "where",
+            "in": "query",
+            "description": "Criteria to match model instances",
+            "required": false,
+            "type": "string",
+            "format": "JSON"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Request was successful",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "count": {
+                  "type": "number",
+                  "format": "double"
+                }
+              }
+            }
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/events/reads": {
+      "post": {
+        "tags": [
+          "Event"
+        ],
+        "summary": "batch update read/unread notification",
+        "operationId": "Event.readUpdates",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": false,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "read": {
+                  "type": "boolean"
+                },
+                "notifications": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Request was successful",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "success": {
+                  "type": "number",
+                  "format": "double"
+                }
+              }
+            }
+          }
+        },
+        "deprecated": false
+      }
+    }
+  },
+  "tags": [
+    {
+      "name": "User"
+    },
+    {
+      "name": "Device"
+    },
+    {
+      "name": "AuthorizedDevice"
+    },
+    {
+      "name": "Container"
+    },
+    {
+      "name": "Event"
+    }
+  ],
+  "consumes": [
+    "application/json",
+    "application/x-www-form-urlencoded",
+    "application/xml",
+    "text/xml"
+  ],
+  "produces": [
+    "application/json",
+    "application/xml",
+    "text/xml",
+    "application/javascript",
+    "text/javascript"
+  ],
+  "definitions": {
+    "x-any": {
+      "properties": {}
+    },
+    "Device": {
+      "properties": {
+        "id": {
+          "maxLength": 128,
+          "type": "string"
+        },
+        "brokerId": {
+          "maxLength": 36,
+          "type": "string"
+        },
+        "userId": {
+          "maxLength": 36,
+          "type": "number",
+          "format": "double"
+        },
+        "systemId": {
+          "maxLength": 128,
+          "type": "string"
+        },
+        "online": {
+          "default": false,
+          "type": "boolean"
+        },
+        "lastUpdateStatus": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "username": {
+          "maxLength": 255,
+          "type": "string"
+        },
+        "endpoint": {
+          "maxLength": 255,
+          "default": "localhost",
+          "type": "string"
+        },
+        "protocol": {
+          "maxLength": 6,
+          "default": "mqtt",
+          "type": "string"
+        },
+        "port": {
+          "maxLength": 5,
+          "default": "1883",
+          "type": "string"
+        },
+        "firmwareId": {
+          "maxLength": 255,
+          "type": "string"
+        },
+        "lastReportConfig": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "firmwareVersion": {
+          "maxLength": 255,
+          "type": "string"
+        },
+        "allowRemoteConfig": {
+          "type": "boolean"
+        },
+        "allowRemoteControl": {
+          "type": "boolean"
+        },
+        "name": {
+          "default": "unnamed",
+          "type": "string"
+        },
+        "connectedAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "created": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "updated": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "required": [
+        "id",
+        "username",
+        "name"
+      ],
+      "additionalProperties": false
+    },
+    "User": {
+      "properties": {
+        "id": {
+          "type": "number",
+          "format": "double"
+        },
+        "username": {
+          "maxLength": 255,
+          "type": "string"
+        },
+        "email": {
+          "type": "string"
+        },
+        "suspend": {
+          "default": false,
+          "type": "boolean"
+        },
+        "emailVerified": {
+          "default": false,
+          "type": "boolean"
+        },
+        "name": {
+          "maxLength": 256,
+          "type": "string"
+        },
+        "description": {
+          "maxLength": 512,
+          "type": "string"
+        },
+        "role": {
+          "maxLength": 36,
+          "default": "user",
+          "type": "string"
+        },
+        "parentId": {
+          "maxLength": 36,
+          "type": "string"
+        },
+        "address": {
+          "maxLength": 255,
+          "type": "string"
+        },
+        "phoneNumber": {
+          "maxLength": 20,
+          "type": "string"
+        },
+        "created": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "updated": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "required": [
+        "suspend",
+        "role"
+      ],
+      "additionalProperties": false
+    },
+    "AccessToken": {
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "ttl": {
+          "default": 1209600,
+          "description": "time to live in seconds (2 weeks by default)",
+          "type": "number",
+          "format": "double"
+        },
+        "scopes": {
+          "description": "Array of scopes granted to this access token.",
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "created": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "userId": {
+          "type": "number",
+          "format": "double"
+        }
+      },
+      "required": [
+        "id"
+      ],
+      "additionalProperties": false
+    },
+    "Broker": {
+      "properties": {
+        "id": {
+          "maxLength": 36,
+          "type": "string"
+        },
+        "timestamp": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "online": {
+          "default": false,
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "id",
+        "online"
+      ],
+      "additionalProperties": false
+    },
+    "System": {
+      "properties": {
+        "systemId": {
+          "maxLength": 128,
+          "type": "string"
+        },
+        "deviceId": {
+          "maxLength": 128,
+          "type": "string"
+        },
+        "userId": {
+          "maxLength": 40,
+          "type": "number",
+          "format": "double"
+        },
+        "name": {
+          "maxLength": 255,
+          "default": "BMS",
+          "type": "string"
+        },
+        "culture": {
+          "maxLength": 255,
+          "type": "string"
+        },
+        "timezone": {
+          "maxLength": 50,
+          "default": "Asia/Ho_Chi_Minh",
+          "type": "string"
+        },
+        "siteName": {
+          "maxLength": 255,
+          "type": "string"
+        },
+        "block": {
+          "default": 0,
+          "type": "number",
+          "format": "double"
+        },
+        "unit": {
+          "default": 0,
+          "type": "number",
+          "format": "double"
+        },
+        "r1": {
+          "default": 0,
+          "type": "number",
+          "format": "double"
+        },
+        "r2": {
+          "default": 0,
+          "type": "number",
+          "format": "double"
+        },
+        "vscale": {
+          "default": 0,
+          "type": "number",
+          "format": "double"
+        },
+        "address16": {
+          "default": 0,
+          "type": "number",
+          "format": "double"
+        },
+        "address24": {
+          "default": 0,
+          "type": "number",
+          "format": "double"
+        },
+        "address32": {
+          "default": 0,
+          "type": "number",
+          "format": "double"
+        },
+        "address40": {
+          "default": 0,
+          "type": "number",
+          "format": "double"
+        },
+        "enable": {
+          "default": false,
+          "type": "boolean"
+        },
+        "operationMode": {
+          "default": 0,
+          "type": "number",
+          "format": "double"
+        },
+        "refreshDuration": {
+          "default": 0,
+          "type": "number",
+          "format": "double"
+        },
+        "voltageLevel": {
+          "default": 0,
+          "type": "number",
+          "format": "double"
+        },
+        "deviceType": {
+          "type": "string"
+        },
+        "cableType": {
+          "type": "string"
+        },
+        "capacity": {
+          "default": 0,
+          "type": "number",
+          "format": "double"
+        },
+        "internetAvailable": {
+          "default": false,
+          "type": "boolean"
+        },
+        "wifiSignal": {
+          "default": 0,
+          "type": "number",
+          "format": "double"
+        },
+        "ssid": {
+          "type": "string"
+        },
+        "mobileSignal": {
+          "default": 0,
+          "type": "number",
+          "format": "double"
+        },
+        "rUpper": {
+          "default": 0,
+          "type": "number",
+          "format": "double"
+        },
+        "vUpper": {
+          "default": 0,
+          "type": "number",
+          "format": "double"
+        },
+        "vLower": {
+          "default": 0,
+          "type": "number",
+          "format": "double"
+        },
+        "eUpper": {
+          "default": 0,
+          "type": "number",
+          "format": "double"
+        },
+        "eLower": {
+          "default": 0,
+          "type": "number",
+          "format": "double"
+        },
+        "tUpper": {
+          "default": 0,
+          "type": "number",
+          "format": "double"
+        },
+        "tLower": {
+          "default": 0,
+          "type": "number",
+          "format": "double"
+        },
+        "error": {
+          "type": "string"
+        },
+        "id": {
+          "type": "number",
+          "format": "double"
+        },
+        "created": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "updated": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "required": [
+        "systemId",
+        "deviceId"
+      ],
+      "additionalProperties": false
+    },
+    "AuthorizedDevice": {
+      "properties": {
+        "uuid": {
+          "maxLength": 128,
+          "type": "string"
+        },
+        "macAddress": {
+          "maxLength": 40,
+          "type": "string"
+        },
+        "serialId": {
+          "maxLength": 255,
+          "type": "string"
+        },
+        "model": {
+          "maxLength": 255,
+          "type": "string"
+        },
+        "created": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "updated": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "required": [
+        "uuid",
+        "macAddress",
+        "serialId",
+        "model"
+      ],
+      "additionalProperties": false
+    },
+    "Event": {
+      "properties": {
+        "id": {
+          "type": "number",
+          "format": "double"
+        },
+        "type": {
+          "maxLength": 50,
+          "type": "string"
+        },
+        "systemId": {
+          "maxLength": 128,
+          "type": "string"
+        },
+        "userId": {
+          "maxLength": 40,
+          "type": "string"
+        },
+        "deviceId": {
+          "maxLength": 128,
+          "type": "string"
+        },
+        "unitId": {
+          "maxLength": 40,
+          "type": "string"
+        },
+        "stringId": {
+          "maxLength": 40,
+          "type": "string"
+        },
+        "blockId": {
+          "maxLength": 40,
+          "type": "string"
+        },
+        "vars": {
+          "default": {},
+          "type": "object"
+        },
+        "value": {
+          "type": "string"
+        },
+        "read": {
+          "default": false,
+          "type": "boolean"
+        },
+        "created": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "updated": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "required": [
+        "type",
+        "vars",
+        "read"
+      ],
+      "additionalProperties": false
+    }
+  }
+}

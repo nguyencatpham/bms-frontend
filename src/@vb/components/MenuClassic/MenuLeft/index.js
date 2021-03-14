@@ -18,7 +18,7 @@ const mapStateToProps = ({ menu, settings, user }) => ({
   menuColor: settings.menuColor,
   logo: settings.logo,
   version: settings.version,
-  role: user.role,
+  role: user.role
 })
 
 const MenuLeft = ({
@@ -34,7 +34,7 @@ const MenuLeft = ({
   menuColor,
   logo,
   version,
-  role,
+  role
 }) => {
   const [selectedKeys, setSelectedKeys] = useState(store.get('app.menu.selectedKeys') || [])
   const [openedKeys, setOpenedKeys] = useState(store.get('app.menu.openedKeys') || [])
@@ -65,8 +65,8 @@ const MenuLeft = ({
       type: 'settings/CHANGE_SETTING',
       payload: {
         setting: 'isMenuCollapsed',
-        value: !isMenuCollapsed,
-      },
+        value: !isMenuCollapsed
+      }
     })
     setOpenedKeys([])
   }
@@ -91,16 +91,16 @@ const MenuLeft = ({
         return (
           <Menu.Item key={key} disabled={disabled}>
             {item.target && (
-              <a href={url} target={item.target} rel="noopener noreferrer">
+              <a href={url} target={item.target} rel='noopener noreferrer'>
                 <span className={style.title}>{title}</span>
-                {count && <span className="badge badge-success ml-2">{count}</span>}
+                {count && <span className='badge badge-success ml-2'>{count}</span>}
                 {icon && <span className={`${icon} ${style.icon} icon-collapsed-hidden`} />}
               </a>
             )}
             {!item.target && (
               <Link to={url}>
                 <span className={style.title}>{title}</span>
-                {count && <span className="badge badge-success ml-2">{count}</span>}
+                {count && <span className='badge badge-success ml-2'>{count}</span>}
                 {icon && <span className={`${icon} ${style.icon} icon-collapsed-hidden`} />}
               </Link>
             )}
@@ -110,7 +110,7 @@ const MenuLeft = ({
       return (
         <Menu.Item key={key} disabled={disabled}>
           <span className={style.title}>{title}</span>
-          {count && <span className="badge badge-success ml-2">{count}</span>}
+          {count && <span className='badge badge-success ml-2'>{count}</span>}
           {icon && <span className={`${icon} ${style.icon} icon-collapsed-hidden`} />}
         </Menu.Item>
       )
@@ -122,7 +122,7 @@ const MenuLeft = ({
           const subMenuTitle = (
             <span key={menuItem.key}>
               <span className={style.title}>{menuItem.title}</span>
-              {menuItem.count && <span className="badge badge-success ml-2">{menuItem.count}</span>}
+              {menuItem.count && <span className='badge badge-success ml-2'>{menuItem.count}</span>}
               {menuItem.icon && <span className={`${menuItem.icon} ${style.icon}`} />}
             </span>
           )
@@ -143,7 +143,7 @@ const MenuLeft = ({
         const subMenuTitle = (
           <span key={menuItem.key}>
             <span className={style.title}>{menuItem.title}</span>
-            {menuItem.count && <span className="badge badge-success ml-2">{menuItem.count}</span>}
+            {menuItem.count && <span className='badge badge-success ml-2'>{menuItem.count}</span>}
             {menuItem.icon && <span className={`${menuItem.icon} ${style.icon}`} />}
           </span>
         )
@@ -159,18 +159,18 @@ const MenuLeft = ({
 
   const menuSettings = isMobileView
     ? {
-        width: leftMenuWidth,
-        collapsible: false,
-        collapsed: false,
-        onCollapse,
-      }
+      width: leftMenuWidth,
+      collapsible: false,
+      collapsed: false,
+      onCollapse
+    }
     : {
-        width: leftMenuWidth,
-        collapsible: true,
-        collapsed: isMenuCollapsed,
-        onCollapse,
-        breakpoint: 'lg',
-      }
+      width: leftMenuWidth,
+      collapsible: true,
+      collapsed: isMenuCollapsed,
+      onCollapse,
+      breakpoint: 'lg'
+    }
 
   return (
     <Layout.Sider
@@ -180,43 +180,43 @@ const MenuLeft = ({
         [style.gray]: menuColor === 'gray',
         [style.dark]: menuColor === 'dark',
         [style.unfixed]: isMenuUnfixed,
-        [style.shadow]: isMenuShadow,
+        [style.shadow]: isMenuShadow
       })}
     >
       <div
         className={style.menuOuter}
         style={{
           width: isMenuCollapsed && !isMobileView ? 80 : leftMenuWidth,
-          height: isMobileView || isMenuUnfixed ? 'calc(100% - 64px)' : 'calc(100% - 110px)',
+          height: isMobileView || isMenuUnfixed ? 'calc(100% - 64px)' : 'calc(100% - 110px)'
         }}
       >
         <div className={style.logoContainer}>
           <div className={style.logo}>
             <svg
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 24 24"
-              version="1.1"
-              height="24px"
-              width="24px"
+              xmlns='http://www.w3.org/2000/svg'
+              viewBox='0 0 24 24'
+              version='1.1'
+              height='24px'
+              width='24px'
             >
               <g>
                 <path
-                  fill="#4b7cf3"
-                  strokeWidth="1"
-                  stroke="#4b7cf3"
-                  d="M12,10.9c-0.1,0-0.2,0-0.2-0.1L3.5,6.1C3.4,6,3.3,5.8,3.3,5.6c0-0.2,0.1-0.3,0.2-0.4l8.2-4.7c0.2-0.1,0.3-0.1,0.5,0      l8.2,4.7c0.2,0.1,0.2,0.3,0.2,0.4S20.6,6,20.5,6.1l-8.2,4.7C12.2,10.8,12.1,10.9,12,10.9z M4.8,5.6L12,9.8l7.2-4.2L12,1.5      L4.8,5.6z"
+                  fill='#4b7cf3'
+                  strokeWidth='1'
+                  stroke='#4b7cf3'
+                  d='M12,10.9c-0.1,0-0.2,0-0.2-0.1L3.5,6.1C3.4,6,3.3,5.8,3.3,5.6c0-0.2,0.1-0.3,0.2-0.4l8.2-4.7c0.2-0.1,0.3-0.1,0.5,0      l8.2,4.7c0.2,0.1,0.2,0.3,0.2,0.4S20.6,6,20.5,6.1l-8.2,4.7C12.2,10.8,12.1,10.9,12,10.9z M4.8,5.6L12,9.8l7.2-4.2L12,1.5      L4.8,5.6z'
                 />
                 <path
-                  fill="#4b7cf3"
-                  strokeWidth="1"
-                  stroke="#4b7cf3"
-                  d="M13.6,23.6c-0.1,0-0.2,0-0.2-0.1c-0.2-0.1-0.2-0.3-0.2-0.4v-9.5c0-0.2,0.1-0.3,0.2-0.4l8.2-4.7c0.2-0.1,0.3-0.1,0.5,0      c0.2,0.1,0.2,0.3,0.2,0.4v9.5c0,0.2-0.1,0.3-0.3,0.4l-8.2,4.7C13.8,23.6,13.7,23.6,13.6,23.6z M14.1,13.9v8.3l7.2-4.2V9.8      L14.1,13.9z"
+                  fill='#4b7cf3'
+                  strokeWidth='1'
+                  stroke='#4b7cf3'
+                  d='M13.6,23.6c-0.1,0-0.2,0-0.2-0.1c-0.2-0.1-0.2-0.3-0.2-0.4v-9.5c0-0.2,0.1-0.3,0.2-0.4l8.2-4.7c0.2-0.1,0.3-0.1,0.5,0      c0.2,0.1,0.2,0.3,0.2,0.4v9.5c0,0.2-0.1,0.3-0.3,0.4l-8.2,4.7C13.8,23.6,13.7,23.6,13.6,23.6z M14.1,13.9v8.3l7.2-4.2V9.8      L14.1,13.9z'
                 />
                 <path
-                  fill="#4b7cf3"
-                  strokeWidth="1"
-                  stroke="#4b7cf3"
-                  d="M10.4,23.6c-0.1,0-0.2,0-0.2-0.1l-8.2-4.7c-0.2-0.1-0.3-0.3-0.3-0.4V8.9c0-0.2,0.1-0.3,0.2-0.4c0.2-0.1,0.3-0.1,0.5,0      l8.2,4.7c0.2,0.1,0.2,0.3,0.2,0.4v9.5c0,0.2-0.1,0.3-0.2,0.4C10.5,23.6,10.5,23.6,10.4,23.6z M2.7,18.1l7.2,4.2v-8.3L2.7,9.8      V18.1z"
+                  fill='#4b7cf3'
+                  strokeWidth='1'
+                  stroke='#4b7cf3'
+                  d='M10.4,23.6c-0.1,0-0.2,0-0.2-0.1l-8.2-4.7c-0.2-0.1-0.3-0.3-0.3-0.4V8.9c0-0.2,0.1-0.3,0.2-0.4c0.2-0.1,0.3-0.1,0.5,0      l8.2,4.7c0.2,0.1,0.2,0.3,0.2,0.4v9.5c0,0.2-0.1,0.3-0.2,0.4C10.5,23.6,10.5,23.6,10.4,23.6z M2.7,18.1l7.2,4.2v-8.3L2.7,9.8      V18.1z'
                 />
               </g>
             </svg>
@@ -230,19 +230,19 @@ const MenuLeft = ({
             selectedKeys={selectedKeys}
             openKeys={openedKeys}
             onOpenChange={onOpenChange}
-            mode="inline"
+            mode='inline'
             className={style.navigation}
-            inlineIndent="15"
+            inlineIndent='15'
           >
             {generateMenuItems()}
           </Menu>
           <div className={style.banner}>
             <p>Full access, lifetime updates, github issues, and extended licenses!</p>
             <a
-              href="https://themeforest.net/item/clean-ui-react-admin-template/21938700"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="btn btn-sm btn-success btn-rounded px-3"
+              href='https://themeforest.net/item/clean-ui-react-admin-template/21938700'
+              target='_blank'
+              rel='noopener noreferrer'
+              className='btn btn-sm btn-success btn-rounded px-3'
             >
               Get a license
             </a>
