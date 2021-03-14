@@ -154,6 +154,8 @@ export default function * rootSaga () {
     takeEvery(actions.FLUSH_PRE_CONFIRM, FLUSH_PRE_CONFIRM),
     takeEvery(actions.PRE_CONFIRM, PRE_CONFIRM),
     takeEvery(actions.CHANGE_PASSWORD, COMMON({ type: TYPES.USERS_POST_ID_CHANGE_PASSWORD, field: 'changepass' })),
-    takeEvery(actions.SET_PASSWORD, COMMON({ type: TYPES.USERS_POST_ID_SET_PASSWORD, field: 'setpass' }))
+    takeEvery(actions.SET_PASSWORD, COMMON({ type: TYPES.USERS_POST_ID_SET_PASSWORD, field: 'setpass' })),
+    takeEvery(actions.GET_DEVICES, COMMON({ type: TYPES.USERS_GET_ID_DEVICES, field: 'devices' })),
+    takeEvery(actions.COUNT_DEVICES, COMMON({ type: TYPES.USERS_GET_ID_DEVICES_COUNT, field: 'totalDevice' }))
   ])
 }

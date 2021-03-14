@@ -1,6 +1,6 @@
 /* eslint camelcase: 0 */
 /*
-    Total: 55 APIs
+    Total: 56 APIs
     version: "0.1.0",
     title: "bms-backend",
     description: "bms Backend API"
@@ -43,8 +43,9 @@ export const types = {
   DEVICES_POST_ID_SYSTEMS: 'DEVICES_POST_ID_SYSTEMS',
   DEVICES_DELETE_ID_SYSTEMS: 'DEVICES_DELETE_ID_SYSTEMS',
   DEVICES_GET_ID_SYSTEMS_COUNT: 'DEVICES_GET_ID_SYSTEMS_COUNT',
-  DEVICES_GET: 'DEVICES_GET',
+  DEVICES_GET_ID: 'DEVICES_GET_ID',
   DEVICES_DELETE_ID: 'DEVICES_DELETE_ID',
+  DEVICES_GET: 'DEVICES_GET',
   DEVICES_GET_COUNT: 'DEVICES_GET_COUNT',
   DEVICES_PUT_ID_ATTACH_DEVICE: 'DEVICES_PUT_ID_ATTACH_DEVICE',
   DEVICES_PUT_CREDENTIALS: 'DEVICES_PUT_CREDENTIALS',
@@ -248,15 +249,20 @@ export const apis = {
     method: 'GET',
     url: `${apiEndpoint}/api/devices/${id}/systems/count?${where ? `where=${encodeURIComponent(typeof where === 'object' ? JSON.stringify(where) : where)}` : ''}`
   }),
-  // Find all instances of the model matched by filter from the data source.
-  DEVICES_GET: ({ filter }) => ({
+  // Find a model instance by {{id}} from the data source.
+  DEVICES_GET_ID: ({ id, filter }) => ({
     method: 'GET',
-    url: `${apiEndpoint}/api/devices?${filter ? `filter=${encodeURIComponent(typeof filter === 'object' ? JSON.stringify(filter) : filter)}` : ''}`
+    url: `${apiEndpoint}/api/devices/${id}?${filter ? `filter=${encodeURIComponent(typeof filter === 'object' ? JSON.stringify(filter) : filter)}` : ''}`
   }),
   // Delete a model instance by {{id}} from the data source.
   DEVICES_DELETE_ID: ({ id }) => ({
     method: 'DELETE',
     url: `${apiEndpoint}/api/devices/${id}`
+  }),
+  // Find all instances of the model matched by filter from the data source.
+  DEVICES_GET: ({ filter }) => ({
+    method: 'GET',
+    url: `${apiEndpoint}/api/devices?${filter ? `filter=${encodeURIComponent(typeof filter === 'object' ? JSON.stringify(filter) : filter)}` : ''}`
   }),
   // Count instances of the model matched by where from the data source.
   DEVICES_GET_COUNT: ({ where }) => ({

@@ -1142,6 +1142,68 @@
         "deprecated": false
       }
     },
+    "/devices/{id}": {
+      "get": {
+        "tags": [
+          "Device"
+        ],
+        "summary": "Find a model instance by {{id}} from the data source.",
+        "operationId": "Device.findById",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Model id",
+            "required": true,
+            "type": "string",
+            "format": "JSON"
+          },
+          {
+            "name": "filter",
+            "in": "query",
+            "description": "Filter defining fields and include - must be a JSON-encoded string ({\"something\":\"value\"})",
+            "required": false,
+            "type": "string",
+            "format": "JSON"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Request was successful",
+            "schema": {
+              "$ref": "#/definitions/Device"
+            }
+          }
+        },
+        "deprecated": false
+      },
+      "delete": {
+        "tags": [
+          "Device"
+        ],
+        "summary": "Delete a model instance by {{id}} from the data source.",
+        "operationId": "Device.deleteById",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Model id",
+            "required": true,
+            "type": "string",
+            "format": "JSON"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Request was successful",
+            "schema": {
+              "type": "object"
+            }
+          }
+        },
+        "deprecated": false
+      }
+    },
     "/devices": {
       "get": {
         "tags": [
@@ -1167,34 +1229,6 @@
               "items": {
                 "$ref": "#/definitions/Device"
               }
-            }
-          }
-        },
-        "deprecated": false
-      }
-    },
-    "/devices/{id}": {
-      "delete": {
-        "tags": [
-          "Device"
-        ],
-        "summary": "Delete a model instance by {{id}} from the data source.",
-        "operationId": "Device.deleteById",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "description": "Model id",
-            "required": true,
-            "type": "string",
-            "format": "JSON"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Request was successful",
-            "schema": {
-              "type": "object"
             }
           }
         },

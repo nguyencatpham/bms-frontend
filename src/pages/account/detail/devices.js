@@ -2,8 +2,8 @@
 import React, { useState, useEffect } from 'react'
 import { Input, Table, Button, Form } from 'antd'
 import { connect } from 'react-redux'
-import { withRouter, Link } from 'react-router-dom'
 import { Helmet } from 'react-helmet'
+import { withRouter, useParams, Link } from 'react-router-dom'
 import { CloseOutlined, EditOutlined } from '@ant-design/icons'
 import { TIME_FORMAT } from 'constant'
 import moment from 'moment'
@@ -20,6 +20,7 @@ const mapStateToProps = ({ device, dispatch }) => {
 
 const DefaultPage = ({ list, loading, total, preConfirm, usernameOrEmail, dispatch }) => {
   const [form] = Form.useForm()
+  const { id } = useParams()
   const [modal, setModal] = useState()
   const [name, setName] = useState()
   const [pagination, setPagination] = useState({
@@ -115,12 +116,12 @@ const DefaultPage = ({ list, loading, total, preConfirm, usernameOrEmail, dispat
   }, [total, pagination, setPagination])
   useEffect(() => {
     dispatch({
-      type: 'device/COUNT',
-      payload: { where: (JSON.parse(payload.filter) || {}).where }
+      type: 'account/COUNT_DEVICES',
+      payload: { id, where: (JSON.parse(payload.filter) || {}).where }
     })
     dispatch({
-      type: 'device/LIST',
-      payload
+      type: 'account/GET_DEVICES',
+      payload: { ...payload, id }
     })
   }, [dispatch, payload])
 
@@ -134,7 +135,7 @@ const DefaultPage = ({ list, loading, total, preConfirm, usernameOrEmail, dispat
     }
     setPayload({
       ...payload,
-      filter: JSON.stringify({ include: [{ relation: 'devices' }], where: { and } })
+      filter: JSON.stringify({ include: [{ relation: 'systems' }], where: { and } })
     })
     // setQuery(and)
   }
