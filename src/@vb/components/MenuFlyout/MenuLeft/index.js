@@ -8,6 +8,7 @@ import { Layout, Avatar } from 'antd'
 import PerfectScrollbar from 'react-perfect-scrollbar'
 import { UserOutlined } from '@ant-design/icons'
 import style from './style.module.scss'
+import { ROLE } from 'constant'
 
 const { Sider } = Layout
 const mapStateToProps = ({ menu, settings, user }) => ({
@@ -18,7 +19,8 @@ const mapStateToProps = ({ menu, settings, user }) => ({
       settings.flyoutMenuType === 'compact' ||
       settings.isMenuCollapsed) &&
     !settings.isMobileView,
-  role: user.role
+  role: user.role,
+  user
 })
 
 const flyoutTimers = {}
@@ -30,7 +32,8 @@ const MenuLeft = ({
   location: { pathname },
   settings,
   flyoutActive,
-  role
+  role,
+  user
 }) => {
   const [activeSubmenu, setActiveSubmenu] = useState('')
   const [activeItem, setActiveItem] = useState('')
@@ -38,7 +41,6 @@ const MenuLeft = ({
 
   useEffect(() => {
     setActiveItems()
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pathname, menuData])
 
   const toggleMenu = (e) => {
@@ -351,9 +353,10 @@ const MenuLeft = ({
               shape='square'
               size='large'
               icon={<UserOutlined />}
+              src='/resources/images/avatars/1.jpg'
             />
-            <div className={style.air__menuLeft__user__name}>David Beckham</div>
-            <div className={style.air__menuLeft__user__role}>Administrator</div>
+            <div className={style.air__menuLeft__user__name}>{user.name || user.username}</div>
+            <div className={style.air__menuLeft__user__role}>{ROLE[user.role]}</div>
           </a>
           <PerfectScrollbar>
             <div id='menu-left-container' className={style.air__menuLeft__container}>

@@ -61,7 +61,11 @@ const ProfileMenu = ({ dispatch, user }) => {
   return (
     <Dropdown overlay={menu} trigger={['click']}>
       <div className={styles.dropdown}>
-        <Avatar className={styles.avatar} shape='square' size='large' icon={<UserOutlined />} />
+        <Avatar
+          className={styles.avatar} shape='square' size='large'
+          src='/resources/images/avatars/1.jpg'
+          icon={<UserOutlined />}
+        />
       </div>
     </Dropdown>
   )

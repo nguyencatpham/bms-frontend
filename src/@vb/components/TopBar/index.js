@@ -12,28 +12,28 @@ import style from './style.module.scss'
 const TopBar = () => {
   return (
     <div className={style.topbar}>
-      <div className="mr-4">
+      <div className='mr-4'>
         <FavPages />
       </div>
-      <div className="mr-auto mr-md-1">
+      <div className='mr-auto mr-md-1'>
         <Search />
       </div>
-      <div className="mr-4 d-none d-md-block">
+      <div className='mr-4 d-none d-md-block'>
         <IssuesHistory />
       </div>
-      <div className="mr-auto d-xl-block d-none">
+      <div className='mr-auto d-xl-block d-none'>
         <ProjectManagement />
       </div>
       {/* <div className="mr-3 d-none d-sm-block ml-auto">
         <Cart />
       </div> */}
-      <div className="mr-3 d-none d-sm-block">
+      <div className='mr-3 d-none d-sm-block'>
         <Actions />
       </div>
-      <div className="mr-3 d-none d-sm-block">
+      <div className='mr-3 d-none d-sm-block'>
         <LanguageSwitcher />
       </div>
-      <div className="">
+      <div className='profile-menu'>
         <UserMenu />
       </div>
     </div>

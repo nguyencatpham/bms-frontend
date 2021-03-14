@@ -1,17 +1,13 @@
 import React, { useState, useEffect } from 'react'
 import { Helmet } from 'react-helmet'
-import { Card, Button, Modal, Input, Form, Tabs } from 'antd'
+import { Button, Modal, Input, Form, Tabs } from 'antd'
 import { connect } from 'react-redux'
-import { withRouter, useParams, Link } from 'react-router-dom'
-import { TIME_FORMAT, ROLE } from 'constant'
-import { get } from 'lodash'
+import { withRouter, useParams } from 'react-router-dom'
 import { history } from 'index'
-import moment from 'moment'
 import General from 'components/kit/widgets/General/10v1'
 import General1 from 'components/kit/widgets/General/1'
 import General12v1 from 'components/kit/widgets/General/12v1'
 import List19 from 'components/kit/widgets/Lists/19'
-import General15 from 'components/kit/widgets/General/15'
 import DevicePage from './devices'
 import '../style.scss'
 
@@ -27,11 +23,10 @@ const mapStateToProps = ({ account, dispatch }) => {
 const DefaultPage = ({ loading, detail, dispatch }) => {
   const { id } = useParams()
   const [form] = Form.useForm()
-  const { name, role, suspend, description, phoneNumber, address, email, username, devices = [], created } = detail
+  const { name, role, suspend, description, phoneNumber, address, email, username, devices = [] } = detail
   const [showmodal, setShowmodal] = useState()
   const [modalChangePass, setShowmodalchangepass] = useState()
   const [tabKey, setTabKey] = useState('1')
-  const newCreated = moment(created).format(TIME_FORMAT)
   const onDelete = (suspend) => {
     dispatch({
       type: 'account/BAN',
@@ -221,7 +216,7 @@ const DefaultPage = ({ loading, detail, dispatch }) => {
                 message: 'Vui lòng nhập lại mật khẩu!'
               },
               ({ getFieldValue }) => ({
-                validator (rule, value) {
+                validator (value) {
                   if (!value || getFieldValue('password') === value) {
                     return Promise.resolve()
                   }
