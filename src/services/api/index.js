@@ -1,6 +1,6 @@
 /* eslint camelcase: 0 */
 /*
-    Total: 56 APIs
+    Total: 55 APIs
     version: "0.1.0",
     title: "bms-backend",
     description: "bms Backend API"
@@ -35,7 +35,6 @@ export const types = {
   USERS_POST_ID_SUSPEND: 'USERS_POST_ID_SUSPEND',
   USERS_POST_ID_SET_PASSWORD: 'USERS_POST_ID_SET_PASSWORD',
   DEVICES_GET_ID_BROKER: 'DEVICES_GET_ID_BROKER',
-  DEVICES_GET_ID_USER: 'DEVICES_GET_ID_USER',
   DEVICES_GET_ID_SYSTEMS_FK: 'DEVICES_GET_ID_SYSTEMS_FK',
   DEVICES_DELETE_ID_SYSTEMS_FK: 'DEVICES_DELETE_ID_SYSTEMS_FK',
   DEVICES_PUT_ID_SYSTEMS_FK: 'DEVICES_PUT_ID_SYSTEMS_FK',
@@ -47,13 +46,13 @@ export const types = {
   DEVICES_DELETE_ID: 'DEVICES_DELETE_ID',
   DEVICES_GET: 'DEVICES_GET',
   DEVICES_GET_COUNT: 'DEVICES_GET_COUNT',
-  DEVICES_PUT_ID_ATTACH_DEVICE: 'DEVICES_PUT_ID_ATTACH_DEVICE',
   DEVICES_PUT_CREDENTIALS: 'DEVICES_PUT_CREDENTIALS',
   AUTHORIZEDDEVICES_GET: 'AUTHORIZEDDEVICES_GET',
   AUTHORIZEDDEVICES_PUT: 'AUTHORIZEDDEVICES_PUT',
   AUTHORIZEDDEVICES_DELETE: 'AUTHORIZEDDEVICES_DELETE',
   AUTHORIZEDDEVICES_DELETE_ID: 'AUTHORIZEDDEVICES_DELETE_ID',
   AUTHORIZEDDEVICES_GET_COUNT: 'AUTHORIZEDDEVICES_GET_COUNT',
+  AUTHORIZEDDEVICES_PUT_ID_ATTACH_DEVICE: 'AUTHORIZEDDEVICES_PUT_ID_ATTACH_DEVICE',
   CONTAINERS_GET: 'CONTAINERS_GET',
   CONTAINERS_POST: 'CONTAINERS_POST',
   CONTAINERS_DELETE_CONTAINER: 'CONTAINERS_DELETE_CONTAINER',
@@ -207,11 +206,6 @@ export const apis = {
     method: 'GET',
     url: `${apiEndpoint}/api/devices/${id}/broker?${refresh ? `refresh=${encodeURIComponent(typeof refresh === 'object' ? JSON.stringify(refresh) : refresh)}` : ''}`
   }),
-  // Fetches belongsTo relation user.
-  DEVICES_GET_ID_USER: ({ id, refresh }) => ({
-    method: 'GET',
-    url: `${apiEndpoint}/api/devices/${id}/user?${refresh ? `refresh=${encodeURIComponent(typeof refresh === 'object' ? JSON.stringify(refresh) : refresh)}` : ''}`
-  }),
   // Find a related item by id for systems.
   DEVICES_GET_ID_SYSTEMS_FK: ({ id, fk }) => ({
     method: 'GET',
@@ -269,12 +263,6 @@ export const apis = {
     method: 'GET',
     url: `${apiEndpoint}/api/devices/count?${where ? `where=${encodeURIComponent(typeof where === 'object' ? JSON.stringify(where) : where)}` : ''}`
   }),
-  // attach/remove a device to a client
-  DEVICES_PUT_ID_ATTACH_DEVICE: ({ id, body }) => ({
-    method: 'PUT',
-    url: `${apiEndpoint}/api/devices/${id}/attach-device`,
-    body
-  }),
   // Create device credential
   DEVICES_PUT_CREDENTIALS: ({ body }) => ({
     method: 'PUT',
@@ -306,6 +294,12 @@ export const apis = {
   AUTHORIZEDDEVICES_GET_COUNT: ({ where }) => ({
     method: 'GET',
     url: `${apiEndpoint}/api/authorizeddevices/count?${where ? `where=${encodeURIComponent(typeof where === 'object' ? JSON.stringify(where) : where)}` : ''}`
+  }),
+  // attach/remove a device to a client
+  AUTHORIZEDDEVICES_PUT_ID_ATTACH_DEVICE: ({ id, body }) => ({
+    method: 'PUT',
+    url: `${apiEndpoint}/api/authorizeddevices/${id}/attach-device`,
+    body
   }),
   // undefined
   CONTAINERS_GET: () => ({

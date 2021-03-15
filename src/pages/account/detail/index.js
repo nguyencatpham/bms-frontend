@@ -8,7 +8,7 @@ import General from 'components/kit/widgets/General/10v1'
 import General1 from 'components/kit/widgets/General/1'
 import General12v1 from 'components/kit/widgets/General/12v1'
 import List19 from 'components/kit/widgets/Lists/19'
-import DevicePage from './devices'
+import DevicePage from './auth-device'
 import '../style.scss'
 
 const { Item } = Form
@@ -25,7 +25,6 @@ const DefaultPage = ({ loading, detail, dispatch }) => {
   const [form] = Form.useForm()
   const { name, role, suspend, description, phoneNumber, address, email, username, devices = [] } = detail
   const [showmodal, setShowmodal] = useState()
-  const [modalChangePass, setShowmodalchangepass] = useState()
   const [tabKey, setTabKey] = useState('1')
   const onDelete = (suspend) => {
     dispatch({
@@ -46,7 +45,6 @@ const DefaultPage = ({ loading, detail, dispatch }) => {
         password: body.password
       }
     })
-    setShowmodalchangepass(false)
   }
   const changeTab = key => {
     setTabKey(key)
@@ -58,19 +56,15 @@ const DefaultPage = ({ loading, detail, dispatch }) => {
     })
   }, [id, dispatch])
   const actions = [{
-    id: '__update',
-    name: 'Cập nhật',
-    action: () => { history.push(`account/${id}/update`) }
-  },
-  {
     id: '__suspend',
-    name: 'Chặn tài khoản',
+    name: suspend ? 'Hủy chặn tài khoản' : 'Chặn tài khoản',
+    color: suspend ? '#fa8c16' : '#f5222d',
     action: () => { setShowmodal(true) }
   },
   {
-    id: '__changepass',
-    name: 'Thay đổi mật khẩu',
-    action: () => { setShowmodalchangepass(true) }
+    id: '__attach_device',
+    name: 'Thêm thiết bị',
+    action: () => { history.push(`${window.location.pathname}/attach`) }
   }]
   return (
     <>
@@ -108,14 +102,15 @@ const DefaultPage = ({ loading, detail, dispatch }) => {
           </div>
           <div className='col-xl-8 col-lg-12'>
             <div className='card profile-general'>
-              <div class='card-header'>
-                <div class='vb__utils__heading'><strong>@{username} ({name || email})</strong>
-                  <div class='text-muted font-size-15'>{devices.length} devices</div>
+              <div className='card-header'>
+                <div className='vb__utils__heading'><strong>@{username} ({name || email})</strong>
+                  <div className='text-muted font-size-15'>{devices.length} thiết bị</div>
                 </div>
                 <Tabs activeKey={tabKey} className='mr-auto kit-tabs-bold' onChange={changeTab}>
                   <TabPane tab='Hệ thống' key='1' />
                   <TabPane tab='Cập nhật thông tin' key='2' />
                   <TabPane tab='Thay đổi mật khẩu' key='3' />
+                  <TabPane tab='Lịch sử hoạt động' key='4' />
                 </Tabs>
               </div>
               <div className='card-body'>
@@ -123,6 +118,9 @@ const DefaultPage = ({ loading, detail, dispatch }) => {
                   <div>
                     <DevicePage />
                   </div>
+                )}
+                {tabKey !== '1' && (
+                  <div>Chưa phát hành</div>
                 )}
               </div>
             </div>
@@ -156,82 +154,9 @@ const DefaultPage = ({ loading, detail, dispatch }) => {
           </Button>
         ]}
       >
-        <p>Xác nhận chặn tài khoản <br /> <span className='txt-orange' /> {name}</p>
+        <p>Xác nhận {suspend ?? 'hủy'} chặn tài khoản <br /> <span className='txt-orange' /> {name}</p>
 
       </Modal>
-      <Form
-        className='detail-form'
-        onFinish={onFinish}
-        form={form}
-      >
-        <Modal
-          className='modal-small'
-          title={<div><i className='i_password ico-white25' /><span>Đổi mật khẩu</span></div>}
-          visible={modalChangePass}
-          onCancel={() => setShowmodalchangepass(false)}
-          width={400}
-          footer={[
-            <Button
-              key='submit'
-              className='btn btn-create btn-save'
-              loading={loading}
-              onClick={() => form.submit()}
-            >
-              <i className='i_save_36 ico25' />
-              <strong>Xác nhận</strong>
-            </Button>,
-            <Button
-              key='cancel'
-              className='btn btn-create btn-cancel'
-              loading={loading}
-              onClick={() => setShowmodalchangepass(false)}
-            >
-              <i className='i_cancel ico25' />
-              <strong>Hủy</strong>
-            </Button>
-          ]}
-        >
-          <Item
-            name='password'
-            label='Mật khẩu'
-            rules={[
-              {
-                required: true,
-                message: 'Vui lòng nhập mật khẩu!'
-              }
-            ]}
-          >
-            <Input.Password
-              placeholder='******'
-              visibilityToggle
-            />
-          </Item>
-          <Item
-            name='confirm'
-            label='Nhập lại mật khẩu'
-            dependencies={['password']}
-            rules={[
-              {
-                required: true,
-                message: 'Vui lòng nhập lại mật khẩu!'
-              },
-              ({ getFieldValue }) => ({
-                validator (value) {
-                  if (!value || getFieldValue('password') === value) {
-                    return Promise.resolve()
-                  }
-                  return Promise.reject(new Error('Mật khẩu không khớp!'))
-                }
-              })
-            ]}
-          >
-            <Input.Password
-              placeholder='******'
-              visibilityToggle
-            />
-          </Item>
-        </Modal>
-      </Form>
     </>
   )
 }

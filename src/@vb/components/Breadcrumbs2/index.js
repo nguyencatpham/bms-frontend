@@ -73,11 +73,12 @@ const Breadcrumbs2 = (props) => {
       </li>
     )
   }
-  const addNew = () => {
-    history.push(`${window.location.pathname}/create`)
-  }
+
   const isCreatable = () => {
     const current = window.location.pathname
+    if (current.split('/').length !== 2) {
+      return false
+    }
     if (current === '/' ||
       current === '/dashboard' ||
       current.includes('create') ||
@@ -109,15 +110,26 @@ const Breadcrumbs2 = (props) => {
       </p> */}
       {isCreatable() &&
         <button
-          onClick={() => { addNew() }}
+          style={{ marginRight: 10 }}
+          onClick={() => { history.push(`${window.location.pathname}/create`) }}
           type='button'
-          className='btn btn-primary btn-with-addon mr-auto text-nowrap d-none d-md-block'
+          className='btn btn-primary btn-with-addon  text-nowrap d-none d-md-block'
         >
           <span className='btn-addon'>
             <i className='btn-addon-icon fe fe-plus-circle' />
           </span>
         Thêm mới
         </button>}
+      <button
+        onClick={() => { history.goBack() }}
+        type='button'
+        className='btn btn-default btn-with-addon mr-auto text-nowrap d-none d-md-block'
+      >
+        <span className='btn-addon'>
+          <i className='btn-addon-icon fe fe-plus-circle' />
+        </span>
+        Trở về
+      </button>
       <div className={`${styles.amount} mr-3 ml-auto d-none d-sm-flex`}>
         <p className={styles.amountText}>
           Tháng này

@@ -57,11 +57,6 @@ const routes = [
     exact: true
   },
   {
-    path: '/accounts/profile',
-    Component: lazy(() => import('pages/account/profile')),
-    exact: true
-  },
-  {
     path: '/accounts/:id',
     Component: lazy(() => import('pages/account/detail')),
     exact: true
@@ -69,6 +64,11 @@ const routes = [
   {
     path: '/accounts/:id/update',
     Component: lazy(() => import('pages/account/update')),
+    exact: true
+  },
+  {
+    path: '/accounts/:id/attach',
+    Component: lazy(() => import('pages/account/detail/device-attach')),
     exact: true
   }
 ]

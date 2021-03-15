@@ -14,7 +14,9 @@ const General10v1 = ({ name, role, actions }) => {
         {actions && actions.map(x => (
           <div key={x.id} style={{ marginBottom: 5, minWidth: 32 }}>
             <button
-              type='button' className={`btn btn-primary ${style.min200} ${style.btnWithAddon}`}
+              type='button'
+              style={{ backgroundColor: x.color }}
+              className={`btn btn-primary ${style.min200} ${style.btnWithAddon}`}
               onClick={() => x.action()}
             >
               <span className={`${style.btnAddon}`}>

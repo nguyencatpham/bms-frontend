@@ -11,6 +11,7 @@ import PreConfirm from 'components/pre-confirm'
 import '../style.scss'
 
 const { Item } = Form
+const { Search } = Input
 
 const mapStateToProps = ({ device, dispatch }) => {
   const { list, loading, total } = device
@@ -147,10 +148,10 @@ const DefaultPage = ({ list, loading, total, preConfirm, usernameOrEmail, dispat
           <div className='col-lg-12 col-md-12'>
             <div className='card'>
               <div className='card-body row'>
-                <div className='col-md-4'>
-                  <Input
+                <div className='col-md-8'>
+                  <Search
                     style={{ width: '100%' }}
-                    placeholder='Nhập tên người dùng'
+                    placeholder='Tìm theo tên hoặc mã thiết bị...'
                     value={name}
                     onChange={e => setName(e.target.value)}
                     allowClear

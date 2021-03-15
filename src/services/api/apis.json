@@ -36,7 +36,7 @@
           "200": {
             "description": "Request was successful",
             "schema": {
-              "$ref": "#/definitions/Device"
+              "$ref": "#/definitions/AuthorizedDevice"
             }
           }
         },
@@ -101,7 +101,7 @@
             "in": "body",
             "required": false,
             "schema": {
-              "$ref": "#/definitions/Device"
+              "$ref": "#/definitions/AuthorizedDevice"
             }
           }
         ],
@@ -109,7 +109,7 @@
           "200": {
             "description": "Request was successful",
             "schema": {
-              "$ref": "#/definitions/Device"
+              "$ref": "#/definitions/AuthorizedDevice"
             }
           }
         },
@@ -146,7 +146,7 @@
             "schema": {
               "type": "array",
               "items": {
-                "$ref": "#/definitions/Device"
+                "$ref": "#/definitions/AuthorizedDevice"
               }
             }
           }
@@ -173,7 +173,7 @@
             "in": "body",
             "required": false,
             "schema": {
-              "$ref": "#/definitions/Device"
+              "$ref": "#/definitions/AuthorizedDevice"
             }
           }
         ],
@@ -181,7 +181,7 @@
           "200": {
             "description": "Request was successful",
             "schema": {
-              "$ref": "#/definitions/Device"
+              "$ref": "#/definitions/AuthorizedDevice"
             }
           }
         },
@@ -862,40 +862,6 @@
         "deprecated": false
       }
     },
-    "/devices/{id}/user": {
-      "get": {
-        "tags": [
-          "Device"
-        ],
-        "summary": "Fetches belongsTo relation user.",
-        "operationId": "Device.prototype.__get__user",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "description": "Device id",
-            "required": true,
-            "type": "string",
-            "format": "JSON"
-          },
-          {
-            "name": "refresh",
-            "in": "query",
-            "required": false,
-            "type": "boolean"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Request was successful",
-            "schema": {
-              "$ref": "#/definitions/User"
-            }
-          }
-        },
-        "deprecated": false
-      }
-    },
     "/devices/{id}/systems/{fk}": {
       "get": {
         "tags": [
@@ -1269,51 +1235,6 @@
         "deprecated": false
       }
     },
-    "/devices/{id}/attach-device": {
-      "put": {
-        "tags": [
-          "Device"
-        ],
-        "summary": "attach/remove a device to a client",
-        "operationId": "Device.prototype.attachDevice",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "description": "Device id",
-            "required": true,
-            "type": "string",
-            "format": "JSON"
-          },
-          {
-            "name": "body",
-            "in": "body",
-            "required": false,
-            "schema": {
-              "type": "object",
-              "properties": {
-                "assign": {
-                  "type": "boolean"
-                },
-                "userId": {
-                  "type": "number",
-                  "format": "double"
-                }
-              }
-            }
-          }
-        ],
-        "responses": {
-          "202": {
-            "description": "Request was successful",
-            "schema": {
-              "$ref": "#/definitions/Device"
-            }
-          }
-        },
-        "deprecated": false
-      }
-    },
     "/devices/credentials": {
       "put": {
         "tags": [
@@ -1385,7 +1306,7 @@
           "AuthorizedDevice"
         ],
         "summary": "batch create or update authorized device",
-        "operationId": "AuthorizedDevice.upsertAuthorizeddevice",
+        "operationId": "AuthorizedDevice.upsertAuthorizedDevice",
         "parameters": [
           {
             "name": "body",
@@ -1490,6 +1411,51 @@
                   "format": "double"
                 }
               }
+            }
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/authorizeddevices/{id}/attach-device": {
+      "put": {
+        "tags": [
+          "AuthorizedDevice"
+        ],
+        "summary": "attach/remove a device to a client",
+        "operationId": "AuthorizedDevice.prototype.attachDevice",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "AuthorizedDevice id",
+            "required": true,
+            "type": "string",
+            "format": "JSON"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": false,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "assign": {
+                  "type": "boolean"
+                },
+                "userId": {
+                  "type": "number",
+                  "format": "double"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "202": {
+            "description": "Request was successful",
+            "schema": {
+              "$ref": "#/definitions/Device"
             }
           }
         },
@@ -1891,77 +1857,28 @@
     "x-any": {
       "properties": {}
     },
-    "Device": {
+    "AuthorizedDevice": {
       "properties": {
-        "id": {
+        "uuid": {
           "maxLength": 128,
           "type": "string"
         },
-        "brokerId": {
-          "maxLength": 36,
+        "macAddress": {
+          "maxLength": 40,
+          "type": "string"
+        },
+        "serialId": {
+          "maxLength": 255,
+          "type": "string"
+        },
+        "model": {
+          "maxLength": 255,
           "type": "string"
         },
         "userId": {
-          "maxLength": 36,
+          "maxLength": 40,
           "type": "number",
           "format": "double"
-        },
-        "systemId": {
-          "maxLength": 128,
-          "type": "string"
-        },
-        "online": {
-          "default": false,
-          "type": "boolean"
-        },
-        "lastUpdateStatus": {
-          "type": "string",
-          "format": "date-time"
-        },
-        "username": {
-          "maxLength": 255,
-          "type": "string"
-        },
-        "endpoint": {
-          "maxLength": 255,
-          "default": "localhost",
-          "type": "string"
-        },
-        "protocol": {
-          "maxLength": 6,
-          "default": "mqtt",
-          "type": "string"
-        },
-        "port": {
-          "maxLength": 5,
-          "default": "1883",
-          "type": "string"
-        },
-        "firmwareId": {
-          "maxLength": 255,
-          "type": "string"
-        },
-        "lastReportConfig": {
-          "type": "string",
-          "format": "date-time"
-        },
-        "firmwareVersion": {
-          "maxLength": 255,
-          "type": "string"
-        },
-        "allowRemoteConfig": {
-          "type": "boolean"
-        },
-        "allowRemoteControl": {
-          "type": "boolean"
-        },
-        "name": {
-          "default": "unnamed",
-          "type": "string"
-        },
-        "connectedAt": {
-          "type": "string",
-          "format": "date-time"
         },
         "created": {
           "type": "string",
@@ -1973,9 +1890,10 @@
         }
       },
       "required": [
-        "id",
-        "username",
-        "name"
+        "uuid",
+        "macAddress",
+        "serialId",
+        "model"
       ],
       "additionalProperties": false
     },
@@ -2275,23 +2193,76 @@
       ],
       "additionalProperties": false
     },
-    "AuthorizedDevice": {
+    "Device": {
       "properties": {
-        "uuid": {
+        "id": {
           "maxLength": 128,
           "type": "string"
         },
-        "macAddress": {
-          "maxLength": 40,
+        "brokerId": {
+          "maxLength": 36,
           "type": "string"
         },
-        "serialId": {
+        "userId": {
+          "maxLength": 36,
+          "type": "string"
+        },
+        "systemId": {
+          "maxLength": 128,
+          "type": "string"
+        },
+        "online": {
+          "default": false,
+          "type": "boolean"
+        },
+        "lastUpdateStatus": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "username": {
           "maxLength": 255,
           "type": "string"
         },
-        "model": {
+        "endpoint": {
+          "maxLength": 255,
+          "default": "localhost",
+          "type": "string"
+        },
+        "protocol": {
+          "maxLength": 6,
+          "default": "mqtt",
+          "type": "string"
+        },
+        "port": {
+          "maxLength": 5,
+          "default": "1883",
+          "type": "string"
+        },
+        "firmwareId": {
           "maxLength": 255,
           "type": "string"
+        },
+        "lastReportConfig": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "firmwareVersion": {
+          "maxLength": 255,
+          "type": "string"
+        },
+        "allowRemoteConfig": {
+          "type": "boolean"
+        },
+        "allowRemoteControl": {
+          "type": "boolean"
+        },
+        "name": {
+          "default": "unnamed",
+          "type": "string"
+        },
+        "connectedAt": {
+          "type": "string",
+          "format": "date-time"
         },
         "created": {
           "type": "string",
@@ -2303,10 +2274,9 @@
         }
       },
       "required": [
-        "uuid",
-        "macAddress",
-        "serialId",
-        "model"
+        "id",
+        "username",
+        "name"
       ],
       "additionalProperties": false
     },

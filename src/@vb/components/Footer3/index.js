@@ -54,7 +54,7 @@ const Footer = ({ settings: { isContentMaxWidth, logo, version } }) => {
             </div>
             <div className='col-md-12 col-lg-4'>
               <h5 className='font-weight-bold mb-4'>Về Chúng Tôi</h5>
-              <p>Với hơn 50 nhân viên tư vấn trên mọi phương diện, không chỉ là hướng dẫn và xử lý các vấn đề từ BSE, chúng tôi luôn mong muốn chia sẻ các kinh nghiệm giúp bạn quản lý hoạt động kinh doanh dễ dàng hơn.</p>
+              <p style={{ textAlign: 'justify' }}>Với hơn 50 nhân viên tư vấn trên mọi phương diện, không chỉ là hướng dẫn và xử lý các vấn đề từ BSE, chúng tôi luôn mong muốn chia sẻ các kinh nghiệm giúp bạn quản lý hoạt động kinh doanh dễ dàng hơn.</p>
             </div>
             <div className='col-md-6 col-lg-4'>
               <h5 className='font-weight-bold mb-4'>Đăng ký nhận tin</h5>
