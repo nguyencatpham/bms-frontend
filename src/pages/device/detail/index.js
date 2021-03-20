@@ -84,44 +84,18 @@ const DefaultPage = ({ loading, detail, device, system, blocks, dispatch }) => {
     color: '#f5222d',
     action: () => { setShowmodal(true) }
   }]
-  const supportCasesTableData = [
-    {
-      key: '1',
-      type: 'V0',
-      amount: faker.random.number()
-    },
-    {
-      key: '2',
-      type: 'E',
-      amount: faker.random.number()
-    },
-    {
-      key: '3',
-      type: 'SoC',
-      amount: faker.random.number()
-    },
-    {
-      key: '4',
-      type: 'R',
-      amount: faker.random.number()
-    },
-    {
-      key: '5',
-      type: 'T',
-      amount: faker.random.number()
-    },
-    {
-      key: '6',
-      type: 'Thời hạn bảo hành',
-      amount: ` Còn lại ${faker.random.number(24)} tháng`
-    },
-    {
-      key: '7',
-      type: 'Ngày sản xuất ',
-      amount: faker.date.recent().toLocaleDateString()
-    }
+  const _system = JSON.parse(JSON.stringify(system))
+  delete _system.blocks
+  delete _system.id
+  delete _system.deviceId
+  delete _system.systemId
+  delete _system.userId
 
-  ]
+  const supportCasesTableData = Object.keys(_system).map((value, index) => ({
+    key: `${index}`,
+    type: value,
+    amount: system[value] || '-'
+  }))
   const supportCasesTableColumns = [
     {
       title: 'Loại',
@@ -134,9 +108,9 @@ const DefaultPage = ({ loading, detail, device, system, blocks, dispatch }) => {
       dataIndex: 'amount',
       render: amount => {
         if (amount === 'Negative') {
-          return <span className='text-danger font-weight-bold'>{amount}</span>
+          return <span className='text-capital text-danger font-weight-bold'>{amount}</span>
         }
-        return <span className='text-primary font-weight-bold'>{amount}</span>
+        return <span className='text-capital text-primary font-weight-bold'>{amount}</span>
       }
     }
   ]
@@ -163,12 +137,13 @@ const DefaultPage = ({ loading, detail, device, system, blocks, dispatch }) => {
             <div className='card'>
               <div className='card-header border-0 pb-0'>
                 <div className='cui__utils__heading mb-0'>
-                  <strong className='text-uppercase font-size-16'>Thông tin chi tiết</strong>
+                  <strong className='text-uppercase font-size-16'>Thông số cấu hình</strong>
                 </div>
               </div>
               <div className='card-body'>
                 <div className='mb-3'>
                   <Table
+                    className='text-capital'
                     dataSource={supportCasesTableData}
                     columns={supportCasesTableColumns}
                     pagination={false}

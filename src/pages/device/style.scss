@@ -4,6 +4,9 @@
         background-color: #bfbfbf !important;
     }
 }
+.text-capital{
+    text-transform: capitalize;
+}
 .break-word {
     max-width: 100px;
     word-break: break-all;

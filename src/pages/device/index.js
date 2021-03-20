@@ -36,20 +36,49 @@ const DefaultPage = ({ list, loading, total, preConfirm, usernameOrEmail, dispat
   const [payload, setPayload] = useState({
     skip: pagination.pageSize * (pagination.current - 1),
     limit: pagination.pageSize,
-    filter: JSON.stringify({ include: [{ relation: 'devices' }] })
+    filter: JSON.stringify({
+      include: [{
+        relation: 'devices',
+        scope: {
+          include: [{
+            relation: 'systems',
+            scope: {
+              include: [{
+                relation: 'blocks'
+              }]
+            }
+          }]
+        }
+      }]
+    })
   })
 
   const columns = [
+    {
+      title: '',
+      dataIndex: 'index',
+      key: 'index',
+      render: (text, item) => (
+        <Avatar
+          shape='square'
+          size='large'
+          icon={<UserOutlined />}
+          src={`/resources/images/battery.png`}
+        />
+      )
+    },
     {
       title: 'Hệ thống',
       dataIndex: 'name',
       key: 'name',
       render: (text, item) => {
-        const id = get(item.devices, ['0', 'id'], 'Chưa kích hoạt')
-        if (item.devices.length) {
-          return <Link className='break-word' to={`/devices/${id}`}>{id}</Link>
+        const device = get(item.devices, ['0'], {})
+        const name = get(device.systems, ['0', 'name'], 'Chưa kích hoạt')
+
+        if (device.systems) {
+          return <Link className='break-word' to={`/devices/${item.uuid}`}>{name}</Link>
         } else {
-          return <span>{id}</span>
+          return <span>{name}</span>
         }
       }
     },
@@ -163,7 +192,22 @@ const DefaultPage = ({ list, loading, total, preConfirm, usernameOrEmail, dispat
     }
     setPayload({
       ...payload,
-      filter: JSON.stringify({ include: [{ relation: 'devices' }], where: { and } })
+      filter: JSON.stringify({
+        include: [{
+        relation: 'devices',
+        scope: {
+          include: [{
+            relation: 'systems',
+            scope: {
+              include: [{
+                relation: 'blocks'
+              }]
+            }
+          }]
+        }
+        }],
+        where: { and }
+      })
     })
     // setQuery(and)
   }

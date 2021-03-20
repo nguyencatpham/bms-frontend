@@ -1,0 +1,16 @@
+version: "3.3"
+services:
+  bms-frontend:
+    build: .
+    container_name: bms-frontend
+    # image: bms
+    stop_signal: SIGINT
+    restart: always
+    ports:
+      - "8080:80"
+    environment:
+      REACT_APP_API_URL: http://34.87.20.124
+      REACT_APP_ALERT_RANGE: 10
+    volumes:
+      - .:/opt/bms-backend
+      - /opt/bms-backend/node_modules
