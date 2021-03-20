@@ -1,6 +1,6 @@
 /* eslint camelcase: 0 */
 /*
-    Total: 55 APIs
+    Total: 102 APIs
     version: "0.1.0",
     title: "bms-backend",
     description: "bms Backend API"
@@ -38,6 +38,7 @@ export const types = {
   DEVICES_GET_ID_SYSTEMS_FK: 'DEVICES_GET_ID_SYSTEMS_FK',
   DEVICES_DELETE_ID_SYSTEMS_FK: 'DEVICES_DELETE_ID_SYSTEMS_FK',
   DEVICES_PUT_ID_SYSTEMS_FK: 'DEVICES_PUT_ID_SYSTEMS_FK',
+  DEVICES_GET_ID_AUTHORIZEDDEVICE: 'DEVICES_GET_ID_AUTHORIZEDDEVICE',
   DEVICES_GET_ID_SYSTEMS: 'DEVICES_GET_ID_SYSTEMS',
   DEVICES_POST_ID_SYSTEMS: 'DEVICES_POST_ID_SYSTEMS',
   DEVICES_DELETE_ID_SYSTEMS: 'DEVICES_DELETE_ID_SYSTEMS',
@@ -47,10 +48,56 @@ export const types = {
   DEVICES_GET: 'DEVICES_GET',
   DEVICES_GET_COUNT: 'DEVICES_GET_COUNT',
   DEVICES_PUT_CREDENTIALS: 'DEVICES_PUT_CREDENTIALS',
+  SYSTEMS_GET_ID_USER: 'SYSTEMS_GET_ID_USER',
+  SYSTEMS_POST: 'SYSTEMS_POST',
+  SYSTEMS_PATCH: 'SYSTEMS_PATCH',
+  SYSTEMS_PUT: 'SYSTEMS_PUT',
+  SYSTEMS_GET: 'SYSTEMS_GET',
+  SYSTEMS_POST_REPLACEORCREATE: 'SYSTEMS_POST_REPLACEORCREATE',
+  SYSTEMS_POST_UPSERTWITHWHERE: 'SYSTEMS_POST_UPSERTWITHWHERE',
+  SYSTEMS_GET_ID_EXISTS: 'SYSTEMS_GET_ID_EXISTS',
+  SYSTEMS_HEAD_ID: 'SYSTEMS_HEAD_ID',
+  SYSTEMS_GET_ID: 'SYSTEMS_GET_ID',
+  SYSTEMS_PUT_ID: 'SYSTEMS_PUT_ID',
+  SYSTEMS_DELETE_ID: 'SYSTEMS_DELETE_ID',
+  SYSTEMS_PATCH_ID: 'SYSTEMS_PATCH_ID',
+  SYSTEMS_POST_ID_REPLACE: 'SYSTEMS_POST_ID_REPLACE',
+  SYSTEMS_GET_FINDONE: 'SYSTEMS_GET_FINDONE',
+  SYSTEMS_POST_UPDATE: 'SYSTEMS_POST_UPDATE',
+  SYSTEMS_GET_COUNT: 'SYSTEMS_GET_COUNT',
+  SYSTEMS_POST_CHANGE_STREAM: 'SYSTEMS_POST_CHANGE_STREAM',
+  SYSTEMS_GET_CHANGE_STREAM: 'SYSTEMS_GET_CHANGE_STREAM',
+  BLOCKS_POST: 'BLOCKS_POST',
+  BLOCKS_PATCH: 'BLOCKS_PATCH',
+  BLOCKS_PUT: 'BLOCKS_PUT',
+  BLOCKS_GET: 'BLOCKS_GET',
+  BLOCKS_POST_REPLACEORCREATE: 'BLOCKS_POST_REPLACEORCREATE',
+  BLOCKS_POST_UPSERTWITHWHERE: 'BLOCKS_POST_UPSERTWITHWHERE',
+  BLOCKS_GET_ID_EXISTS: 'BLOCKS_GET_ID_EXISTS',
+  BLOCKS_HEAD_ID: 'BLOCKS_HEAD_ID',
+  BLOCKS_GET_ID: 'BLOCKS_GET_ID',
+  BLOCKS_PUT_ID: 'BLOCKS_PUT_ID',
+  BLOCKS_DELETE_ID: 'BLOCKS_DELETE_ID',
+  BLOCKS_PATCH_ID: 'BLOCKS_PATCH_ID',
+  BLOCKS_POST_ID_REPLACE: 'BLOCKS_POST_ID_REPLACE',
+  BLOCKS_GET_FINDONE: 'BLOCKS_GET_FINDONE',
+  BLOCKS_POST_UPDATE: 'BLOCKS_POST_UPDATE',
+  BLOCKS_GET_COUNT: 'BLOCKS_GET_COUNT',
+  BLOCKS_POST_CHANGE_STREAM: 'BLOCKS_POST_CHANGE_STREAM',
+  BLOCKS_GET_CHANGE_STREAM: 'BLOCKS_GET_CHANGE_STREAM',
+  AUTHORIZEDDEVICES_GET_ID_USER: 'AUTHORIZEDDEVICES_GET_ID_USER',
+  AUTHORIZEDDEVICES_GET_ID_DEVICES_FK: 'AUTHORIZEDDEVICES_GET_ID_DEVICES_FK',
+  AUTHORIZEDDEVICES_DELETE_ID_DEVICES_FK: 'AUTHORIZEDDEVICES_DELETE_ID_DEVICES_FK',
+  AUTHORIZEDDEVICES_PUT_ID_DEVICES_FK: 'AUTHORIZEDDEVICES_PUT_ID_DEVICES_FK',
+  AUTHORIZEDDEVICES_GET_ID_DEVICES: 'AUTHORIZEDDEVICES_GET_ID_DEVICES',
+  AUTHORIZEDDEVICES_POST_ID_DEVICES: 'AUTHORIZEDDEVICES_POST_ID_DEVICES',
+  AUTHORIZEDDEVICES_DELETE_ID_DEVICES: 'AUTHORIZEDDEVICES_DELETE_ID_DEVICES',
+  AUTHORIZEDDEVICES_GET_ID_DEVICES_COUNT: 'AUTHORIZEDDEVICES_GET_ID_DEVICES_COUNT',
+  AUTHORIZEDDEVICES_GET_ID: 'AUTHORIZEDDEVICES_GET_ID',
+  AUTHORIZEDDEVICES_DELETE_ID: 'AUTHORIZEDDEVICES_DELETE_ID',
   AUTHORIZEDDEVICES_GET: 'AUTHORIZEDDEVICES_GET',
   AUTHORIZEDDEVICES_PUT: 'AUTHORIZEDDEVICES_PUT',
   AUTHORIZEDDEVICES_DELETE: 'AUTHORIZEDDEVICES_DELETE',
-  AUTHORIZEDDEVICES_DELETE_ID: 'AUTHORIZEDDEVICES_DELETE_ID',
   AUTHORIZEDDEVICES_GET_COUNT: 'AUTHORIZEDDEVICES_GET_COUNT',
   AUTHORIZEDDEVICES_PUT_ID_ATTACH_DEVICE: 'AUTHORIZEDDEVICES_PUT_ID_ATTACH_DEVICE',
   CONTAINERS_GET: 'CONTAINERS_GET',
@@ -222,6 +269,11 @@ export const apis = {
     url: `${apiEndpoint}/api/devices/${id}/systems/${fk}`,
     body: data
   }),
+  // Fetches belongsTo relation authorizedDevice.
+  DEVICES_GET_ID_AUTHORIZEDDEVICE: ({ id, refresh }) => ({
+    method: 'GET',
+    url: `${apiEndpoint}/api/devices/${id}/authorizedDevice?${refresh ? `refresh=${encodeURIComponent(typeof refresh === 'object' ? JSON.stringify(refresh) : refresh)}` : ''}`
+  }),
   // Queries systems of Device.
   DEVICES_GET_ID_SYSTEMS: ({ id, filter }) => ({
     method: 'GET',
@@ -269,6 +321,263 @@ export const apis = {
     url: `${apiEndpoint}/api/devices/credentials`,
     body
   }),
+  // Fetches belongsTo relation user.
+  SYSTEMS_GET_ID_USER: ({ id, refresh }) => ({
+    method: 'GET',
+    url: `${apiEndpoint}/api/systems/${id}/user?${refresh ? `refresh=${encodeURIComponent(typeof refresh === 'object' ? JSON.stringify(refresh) : refresh)}` : ''}`
+  }),
+  // Create a new instance of the model and persist it into the data source.
+  SYSTEMS_POST: ({ data }) => ({
+    method: 'POST',
+    url: `${apiEndpoint}/api/systems`,
+    body: data
+  }),
+  // Patch an existing model instance or insert a new one into the data source.
+  SYSTEMS_PATCH: ({ data }) => ({
+    method: 'PATCH',
+    url: `${apiEndpoint}/api/systems`,
+    body: data
+  }),
+  // Replace an existing model instance or insert a new one into the data source.
+  SYSTEMS_PUT: ({ data }) => ({
+    method: 'PUT',
+    url: `${apiEndpoint}/api/systems`,
+    body: data
+  }),
+  // Find all instances of the model matched by filter from the data source.
+  SYSTEMS_GET: ({ filter }) => ({
+    method: 'GET',
+    url: `${apiEndpoint}/api/systems?${filter ? `filter=${encodeURIComponent(typeof filter === 'object' ? JSON.stringify(filter) : filter)}` : ''}`
+  }),
+  // Replace an existing model instance or insert a new one into the data source.
+  SYSTEMS_POST_REPLACEORCREATE: ({ data }) => ({
+    method: 'POST',
+    url: `${apiEndpoint}/api/systems/replaceOrCreate`,
+    body: data
+  }),
+  // Update an existing model instance or insert a new one into the data source based on the where criteria.
+  SYSTEMS_POST_UPSERTWITHWHERE: ({ where, data }) => ({
+    method: 'POST',
+    url: `${apiEndpoint}/api/systems/upsertWithWhere?${where ? `where=${encodeURIComponent(typeof where === 'object' ? JSON.stringify(where) : where)}` : ''}`,
+    body: data
+  }),
+  // Check whether a model instance exists in the data source.
+  SYSTEMS_GET_ID_EXISTS: ({ id }) => ({
+    method: 'GET',
+    url: `${apiEndpoint}/api/systems/${id}/exists`
+  }),
+  // Check whether a model instance exists in the data source.
+  SYSTEMS_HEAD_ID: ({ id }) => ({
+    method: 'HEAD',
+    url: `${apiEndpoint}/api/systems/${id}`
+  }),
+  // Find a model instance by {{id}} from the data source.
+  SYSTEMS_GET_ID: ({ id, filter }) => ({
+    method: 'GET',
+    url: `${apiEndpoint}/api/systems/${id}?${filter ? `filter=${encodeURIComponent(typeof filter === 'object' ? JSON.stringify(filter) : filter)}` : ''}`
+  }),
+  // Replace attributes for a model instance and persist it into the data source.
+  SYSTEMS_PUT_ID: ({ id, data }) => ({
+    method: 'PUT',
+    url: `${apiEndpoint}/api/systems/${id}`,
+    body: data
+  }),
+  // Delete a model instance by {{id}} from the data source.
+  SYSTEMS_DELETE_ID: ({ id }) => ({
+    method: 'DELETE',
+    url: `${apiEndpoint}/api/systems/${id}`
+  }),
+  // Patch attributes for a model instance and persist it into the data source.
+  SYSTEMS_PATCH_ID: ({ id, data }) => ({
+    method: 'PATCH',
+    url: `${apiEndpoint}/api/systems/${id}`,
+    body: data
+  }),
+  // Replace attributes for a model instance and persist it into the data source.
+  SYSTEMS_POST_ID_REPLACE: ({ id, data }) => ({
+    method: 'POST',
+    url: `${apiEndpoint}/api/systems/${id}/replace`,
+    body: data
+  }),
+  // Find first instance of the model matched by filter from the data source.
+  SYSTEMS_GET_FINDONE: ({ filter }) => ({
+    method: 'GET',
+    url: `${apiEndpoint}/api/systems/findOne?${filter ? `filter=${encodeURIComponent(typeof filter === 'object' ? JSON.stringify(filter) : filter)}` : ''}`
+  }),
+  // Update instances of the model matched by {{where}} from the data source.
+  SYSTEMS_POST_UPDATE: ({ where, data }) => ({
+    method: 'POST',
+    url: `${apiEndpoint}/api/systems/update?${where ? `where=${encodeURIComponent(typeof where === 'object' ? JSON.stringify(where) : where)}` : ''}`,
+    body: data
+  }),
+  // Count instances of the model matched by where from the data source.
+  SYSTEMS_GET_COUNT: ({ where }) => ({
+    method: 'GET',
+    url: `${apiEndpoint}/api/systems/count?${where ? `where=${encodeURIComponent(typeof where === 'object' ? JSON.stringify(where) : where)}` : ''}`
+  }),
+  // Create a change stream.
+  SYSTEMS_POST_CHANGE_STREAM: ({ options }) => ({
+    method: 'POST',
+    url: `${apiEndpoint}/api/systems/change-stream`,
+    body: { options }
+  }),
+  // Create a change stream.
+  SYSTEMS_GET_CHANGE_STREAM: ({ options }) => ({
+    method: 'GET',
+    url: `${apiEndpoint}/api/systems/change-stream?${options ? `options=${encodeURIComponent(typeof options === 'object' ? JSON.stringify(options) : options)}` : ''}`
+  }),
+  // Create a new instance of the model and persist it into the data source.
+  BLOCKS_POST: ({ data }) => ({
+    method: 'POST',
+    url: `${apiEndpoint}/api/blocks`,
+    body: data
+  }),
+  // Patch an existing model instance or insert a new one into the data source.
+  BLOCKS_PATCH: ({ data }) => ({
+    method: 'PATCH',
+    url: `${apiEndpoint}/api/blocks`,
+    body: data
+  }),
+  // Replace an existing model instance or insert a new one into the data source.
+  BLOCKS_PUT: ({ data }) => ({
+    method: 'PUT',
+    url: `${apiEndpoint}/api/blocks`,
+    body: data
+  }),
+  // Find all instances of the model matched by filter from the data source.
+  BLOCKS_GET: ({ filter }) => ({
+    method: 'GET',
+    url: `${apiEndpoint}/api/blocks?${filter ? `filter=${encodeURIComponent(typeof filter === 'object' ? JSON.stringify(filter) : filter)}` : ''}`
+  }),
+  // Replace an existing model instance or insert a new one into the data source.
+  BLOCKS_POST_REPLACEORCREATE: ({ data }) => ({
+    method: 'POST',
+    url: `${apiEndpoint}/api/blocks/replaceOrCreate`,
+    body: data
+  }),
+  // Update an existing model instance or insert a new one into the data source based on the where criteria.
+  BLOCKS_POST_UPSERTWITHWHERE: ({ where, data }) => ({
+    method: 'POST',
+    url: `${apiEndpoint}/api/blocks/upsertWithWhere?${where ? `where=${encodeURIComponent(typeof where === 'object' ? JSON.stringify(where) : where)}` : ''}`,
+    body: data
+  }),
+  // Check whether a model instance exists in the data source.
+  BLOCKS_GET_ID_EXISTS: ({ id }) => ({
+    method: 'GET',
+    url: `${apiEndpoint}/api/blocks/${id}/exists`
+  }),
+  // Check whether a model instance exists in the data source.
+  BLOCKS_HEAD_ID: ({ id }) => ({
+    method: 'HEAD',
+    url: `${apiEndpoint}/api/blocks/${id}`
+  }),
+  // Find a model instance by {{id}} from the data source.
+  BLOCKS_GET_ID: ({ id, filter }) => ({
+    method: 'GET',
+    url: `${apiEndpoint}/api/blocks/${id}?${filter ? `filter=${encodeURIComponent(typeof filter === 'object' ? JSON.stringify(filter) : filter)}` : ''}`
+  }),
+  // Replace attributes for a model instance and persist it into the data source.
+  BLOCKS_PUT_ID: ({ id, data }) => ({
+    method: 'PUT',
+    url: `${apiEndpoint}/api/blocks/${id}`,
+    body: data
+  }),
+  // Delete a model instance by {{id}} from the data source.
+  BLOCKS_DELETE_ID: ({ id }) => ({
+    method: 'DELETE',
+    url: `${apiEndpoint}/api/blocks/${id}`
+  }),
+  // Patch attributes for a model instance and persist it into the data source.
+  BLOCKS_PATCH_ID: ({ id, data }) => ({
+    method: 'PATCH',
+    url: `${apiEndpoint}/api/blocks/${id}`,
+    body: data
+  }),
+  // Replace attributes for a model instance and persist it into the data source.
+  BLOCKS_POST_ID_REPLACE: ({ id, data }) => ({
+    method: 'POST',
+    url: `${apiEndpoint}/api/blocks/${id}/replace`,
+    body: data
+  }),
+  // Find first instance of the model matched by filter from the data source.
+  BLOCKS_GET_FINDONE: ({ filter }) => ({
+    method: 'GET',
+    url: `${apiEndpoint}/api/blocks/findOne?${filter ? `filter=${encodeURIComponent(typeof filter === 'object' ? JSON.stringify(filter) : filter)}` : ''}`
+  }),
+  // Update instances of the model matched by {{where}} from the data source.
+  BLOCKS_POST_UPDATE: ({ where, data }) => ({
+    method: 'POST',
+    url: `${apiEndpoint}/api/blocks/update?${where ? `where=${encodeURIComponent(typeof where === 'object' ? JSON.stringify(where) : where)}` : ''}`,
+    body: data
+  }),
+  // Count instances of the model matched by where from the data source.
+  BLOCKS_GET_COUNT: ({ where }) => ({
+    method: 'GET',
+    url: `${apiEndpoint}/api/blocks/count?${where ? `where=${encodeURIComponent(typeof where === 'object' ? JSON.stringify(where) : where)}` : ''}`
+  }),
+  // Create a change stream.
+  BLOCKS_POST_CHANGE_STREAM: ({ options }) => ({
+    method: 'POST',
+    url: `${apiEndpoint}/api/blocks/change-stream`,
+    body: { options }
+  }),
+  // Create a change stream.
+  BLOCKS_GET_CHANGE_STREAM: ({ options }) => ({
+    method: 'GET',
+    url: `${apiEndpoint}/api/blocks/change-stream?${options ? `options=${encodeURIComponent(typeof options === 'object' ? JSON.stringify(options) : options)}` : ''}`
+  }),
+  // Fetches belongsTo relation user.
+  AUTHORIZEDDEVICES_GET_ID_USER: ({ id, refresh }) => ({
+    method: 'GET',
+    url: `${apiEndpoint}/api/authorizeddevices/${id}/user?${refresh ? `refresh=${encodeURIComponent(typeof refresh === 'object' ? JSON.stringify(refresh) : refresh)}` : ''}`
+  }),
+  // Find a related item by id for devices.
+  AUTHORIZEDDEVICES_GET_ID_DEVICES_FK: ({ id, fk }) => ({
+    method: 'GET',
+    url: `${apiEndpoint}/api/authorizeddevices/${id}/devices/${fk}`
+  }),
+  // Delete a related item by id for devices.
+  AUTHORIZEDDEVICES_DELETE_ID_DEVICES_FK: ({ id, fk }) => ({
+    method: 'DELETE',
+    url: `${apiEndpoint}/api/authorizeddevices/${id}/devices/${fk}`
+  }),
+  // Update a related item by id for devices.
+  AUTHORIZEDDEVICES_PUT_ID_DEVICES_FK: ({ id, fk, data }) => ({
+    method: 'PUT',
+    url: `${apiEndpoint}/api/authorizeddevices/${id}/devices/${fk}`,
+    body: data
+  }),
+  // Queries devices of AuthorizedDevice.
+  AUTHORIZEDDEVICES_GET_ID_DEVICES: ({ id, filter }) => ({
+    method: 'GET',
+    url: `${apiEndpoint}/api/authorizeddevices/${id}/devices?${filter ? `filter=${encodeURIComponent(typeof filter === 'object' ? JSON.stringify(filter) : filter)}` : ''}`
+  }),
+  // Creates a new instance in devices of this model.
+  AUTHORIZEDDEVICES_POST_ID_DEVICES: ({ id, data }) => ({
+    method: 'POST',
+    url: `${apiEndpoint}/api/authorizeddevices/${id}/devices`,
+    body: data
+  }),
+  // Deletes all devices of this model.
+  AUTHORIZEDDEVICES_DELETE_ID_DEVICES: ({ id }) => ({
+    method: 'DELETE',
+    url: `${apiEndpoint}/api/authorizeddevices/${id}/devices`
+  }),
+  // Counts devices of AuthorizedDevice.
+  AUTHORIZEDDEVICES_GET_ID_DEVICES_COUNT: ({ id, where }) => ({
+    method: 'GET',
+    url: `${apiEndpoint}/api/authorizeddevices/${id}/devices/count?${where ? `where=${encodeURIComponent(typeof where === 'object' ? JSON.stringify(where) : where)}` : ''}`
+  }),
+  // Find a model instance by {{id}} from the data source.
+  AUTHORIZEDDEVICES_GET_ID: ({ id, filter }) => ({
+    method: 'GET',
+    url: `${apiEndpoint}/api/authorizeddevices/${id}?${filter ? `filter=${encodeURIComponent(typeof filter === 'object' ? JSON.stringify(filter) : filter)}` : ''}`
+  }),
+  // Delete a model instance by {{id}} from the data source.
+  AUTHORIZEDDEVICES_DELETE_ID: ({ id }) => ({
+    method: 'DELETE',
+    url: `${apiEndpoint}/api/authorizeddevices/${id}`
+  }),
   // Find all instances of the model matched by filter from the data source.
   AUTHORIZEDDEVICES_GET: ({ filter }) => ({
     method: 'GET',
@@ -284,11 +593,6 @@ export const apis = {
   AUTHORIZEDDEVICES_DELETE: ({ deviceIds }) => ({
     method: 'DELETE',
     url: `${apiEndpoint}/api/authorizeddevices`
-  }),
-  // Delete a model instance by {{id}} from the data source.
-  AUTHORIZEDDEVICES_DELETE_ID: ({ id }) => ({
-    method: 'DELETE',
-    url: `${apiEndpoint}/api/authorizeddevices/${id}`
   }),
   // Count instances of the model matched by where from the data source.
   AUTHORIZEDDEVICES_GET_COUNT: ({ where }) => ({

@@ -56,6 +56,7 @@ export default function * rootSaga () {
   yield all([
     takeEvery(actions.COUNT, COMMON({ type: TYPES.AUTHORIZEDDEVICES_GET_COUNT, field: 'total' })),
     takeEvery(actions.LIST, COMMON({ type: TYPES.AUTHORIZEDDEVICES_GET, field: 'list' })),
+    takeEvery(actions.DETAIL, COMMON({ type: TYPES.AUTHORIZEDDEVICES_GET_ID, field: 'detail' })),
     takeEvery(actions.ATTACH, COMMON({ type: TYPES.AUTHORIZEDDEVICES_PUT_ID_ATTACH_DEVICE, field: 'detail' })),
     takeEvery(actions.DELETE, COMMON({ type: TYPES.AUTHORIZEDDEVICES_DELETE_ID, field: 'id' }))
   ])

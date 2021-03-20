@@ -10,7 +10,7 @@ const List19 = () => {
           <div className={`${style.donut} ${style.danger} mr-3`} />
         </div>
         <div>
-          Mất kết nối với trạm điều khiển trung tâm
+          Đăng xuất khỏi hệ thống
         </div>
       </li>
       <li className={style.item}>
@@ -18,7 +18,7 @@ const List19 = () => {
         <div className={style.itemSeparator}>
           <div className={`${style.donut} ${style.danger} mr-3`} />
         </div>
-        <div>Cảnh báo quá nhiệt</div>
+        <div>Điều khiển Hệ thống A</div>
       </li>
       <li className={style.item}>
         <div className={`${style.itemTime} mr-3`}>14:26</div>
@@ -26,7 +26,7 @@ const List19 = () => {
           <div className={`${style.donut} ${style.danger} mr-3`} />
         </div>
         <div>
-          Cảnh báo sắp hết pin
+          Truy xuất lịch sử dữ liệu ắc quy
         </div>
       </li>
       <li className={style.item}>
@@ -35,7 +35,7 @@ const List19 = () => {
           <div className={`${style.donut} ${style.danger} mr-3`} />
         </div>
         <div>
-        Thiết bị Online
+        Đăng nhập vào hệ thống
         </div>
       </li>
     </ul>

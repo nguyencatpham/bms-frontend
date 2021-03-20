@@ -14,8 +14,8 @@ import './style.scss'
 const { Item } = Form
 const { Option } = Select
 
-const mapStateToProps = ({ account, user, dispatch }) => {
-  const { list, loading, total, preConfirm } = account
+const mapStateToProps = ({ authDevice, user, dispatch }) => {
+  const { list, loading, total, preConfirm } = authDevice
   const { list: users, username, email } = user
   const usernameOrEmail = username || email
 
@@ -41,54 +41,58 @@ const DefaultPage = ({ list, loading, total, preConfirm, usernameOrEmail, dispat
 
   const columns = [
     {
-      title: '',
-      dataIndex: 'index',
-      key: 'index',
-      render: (text, item) => (
-        <Avatar
-          shape='square'
-          size='large'
-          icon={<UserOutlined />}
-          src={`/resources/images/avatars/${Math.floor(Math.random() * 5) + 1}.jpg`}
-        />
-      )
-    },
-    {
-      title: 'Tài khoản',
+      title: 'Hệ thống',
       dataIndex: 'name',
       key: 'name',
-      render: (text, item) => <Link className='break-word' to={`/accounts/${item.id}`}>{text || item.username || item.email}</Link>
-
-    },
-    {
-      title: 'Vai trò',
-      dataIndex: 'role',
-      key: 'role',
-      render: (x) => <span className='break-word '>{ROLE[x]}</span>
-    },
-    {
-      title: 'Hệ thống',
-      dataIndex: 'devices',
-      key: 'devices',
-      render: (devices) => {
-        const text = get(devices, ['0', 'name'], '---')
-        return <span className='break-word text-center'>{text}</span>
+      render: (text, item) => {
+        const id = get(item.devices, ['0', 'id'], 'Chưa kích hoạt')
+        if (item.devices.length) {
+          return <Link className='break-word' to={`/devices/${id}`}>{id}</Link>
+        } else {
+          return <span>{id}</span>
+        }
       }
     },
     {
-      title: 'Ngày tạo',
+      title: 'Mã thiết bị',
+      dataIndex: 'macAddress',
+      key: 'macAddress',
+      render: (text, item) => <Link className='break-word' to={`/devices/${item.uuid}`}>{text}</Link>
+    },
+    {
+      title: 'Trạng thái',
+      dataIndex: 'online',
+      key: 'online',
+      render: (text, item) => {
+        const online = get(item.devices, ['0', 'online'])
+        return <div className={`square ${online ? 'square-online' : 'square-offline'}`} />
+      }
+    },
+    {
+      title: 'Cập nhật lân cuối',
+      dataIndex: 'lastUpdateStatus',
+      key: 'lastUpdateStatus',
+      render: (text, item) => {
+        const name = get(item.devices, ['0', 'lastUpdateStatus'])
+        return <span>{name || '---'}</span>
+      }
+    },
+    {
+      title: 'Thời gian đăng ký',
       dataIndex: 'created',
       key: 'created',
-      render: (x) => {
-        return <span className='break-word '>{moment(x).format(TIME_FORMAT)}</span>
+      render: (text, item) => {
+        const name = get(item.devices, ['0', 'created'])
+        return <span>{name || '---'}</span>
       }
     },
     {
-      title: 'Ghi chú',
-      dataIndex: 'note',
-      key: 'description',
-      render: (x) => {
-        return <span className='break-word ' style={{ color: '#f5222d' }}>{x}</span>
+      title: 'Phiên bản',
+      dataIndex: 'firmwareVersion',
+      key: 'firmwareVersion',
+      render: (text, item) => {
+        const name = get(item.devices, ['0', 'firmwareVersion'])
+        return <span>{name || '---'}</span>
       }
     },
     {
@@ -99,7 +103,6 @@ const DefaultPage = ({ list, loading, total, preConfirm, usernameOrEmail, dispat
         return (
           <div className='action-group break-word'>
             <div>
-              <Link to={`/accounts/${item.id}/update`}><EditOutlined className='ico18 ico-blue mr20' /></Link>
               <CloseOutlined className='ico18 ico-red' onClick={() => setModal(item)} />
 
             </div>
@@ -108,6 +111,7 @@ const DefaultPage = ({ list, loading, total, preConfirm, usernameOrEmail, dispat
       }
     }
   ]
+
   const onTableChange = pagination => {
     setPagination(pagination)
     const { filter } = payload
@@ -119,7 +123,7 @@ const DefaultPage = ({ list, loading, total, preConfirm, usernameOrEmail, dispat
 
   const onDelete = ({ id, password }) => {
     dispatch({
-      type: 'account/DELETE',
+      type: 'authDevice/DELETE',
       payload: {
         id,
         body: {
@@ -137,11 +141,11 @@ const DefaultPage = ({ list, loading, total, preConfirm, usernameOrEmail, dispat
   }, [total, pagination, setPagination])
   useEffect(() => {
     dispatch({
-      type: 'account/COUNT',
+      type: 'authDevice/COUNT',
       payload: { where: (JSON.parse(payload.filter) || {}).where }
     })
     dispatch({
-      type: 'account/LIST',
+      type: 'authDevice/LIST',
       payload
     })
   }, [dispatch, payload])
@@ -152,7 +156,7 @@ const DefaultPage = ({ list, loading, total, preConfirm, usernameOrEmail, dispat
     }
     const and = []
     if (name) {
-      and.push({ or: [{ name: { like: `%${name}%` } }, { username: { like: `%${name}%` } }, { email: { like: `%${name}%` } }] })
+      and.push({ or: [{ name: { like: `%${name}%` } }, { macAddress: { like: `%${name}%` } }, { model: { like: `%${name}%` } }] })
     }
     if (roles.length) {
       and.push({ role: { inq: roles } })
@@ -165,35 +169,21 @@ const DefaultPage = ({ list, loading, total, preConfirm, usernameOrEmail, dispat
   }
   return (
     <>
-      <div className='account' onKeyUp={onSearch}>
-        <Helmet title='Quản lý tài khoản' />
+      <div className='device-page' onKeyUp={onSearch}>
+        <Helmet title='Quản lý thiết bị' />
         <div className='row'>
           <div className='col-lg-12 col-md-12'>
-            <h5 className='text-dark mb-4 text-uppercase'>Quản lý tài khoản</h5>
+            <h5 className='text-dark mb-4 text-uppercase'>Quản lý thiết bị</h5>
             <div className='card'>
               <div className='card-body row'>
-                <div className='col-md-4'>
+                <div className='col-md-8'>
                   <Input
                     style={{ width: '100%' }}
-                    placeholder='Nhập tên người dùng'
+                    placeholder='Nhập tên hoặc mã thiết bị, hệ thống'
                     value={name}
                     onChange={e => setName(e.target.value)}
                     allowClear
                   />
-                </div>
-                <div className='col-md-4'>
-                  <Select
-                    mode='multiple'
-                    allowClear
-                    style={{ width: '100%' }}
-                    placeholder='Vai trò'
-                    value={roles}
-                    onChange={setRoles}
-                  >
-                    {Object.keys(ROLE).map(x => (
-                      <Option key={x} value={x}>{ROLE[x]}</Option>
-                    ))}
-                  </Select>
                 </div>
                 <div className='col-md-4'>
                   <Button className='btn btn-primary btn-filter' autoFocus onClick={onSearch}><i className='i_search small' />Tìm</Button>
@@ -202,16 +192,6 @@ const DefaultPage = ({ list, loading, total, preConfirm, usernameOrEmail, dispat
             </div>
           </div>
         </div>
-        {/* <div className='account-top'>
-          <div className='title-header'>
-            <div className='grid-view'>
-              <div className='' />
-              <div className='text-right fl-right' style={{ marginBottom: 10 }}>
-                <Link className='btn btn-primary' to='/accounts/create'><i className='i_user ico25' />Thêm tài khoản</Link>
-              </div>
-            </div>
-          </div>
-        </div> */}
         <div className='card'>
           <div className='card-body'>
             <Table

@@ -70,6 +70,27 @@ const routes = [
     path: '/accounts/:id/attach',
     Component: lazy(() => import('pages/account/detail/device-attach')),
     exact: true
+  },
+
+  {
+    path: '/devices',
+    Component: lazy(() => import('pages/device')),
+    exact: true
+  },
+  {
+    path: '/devices/create',
+    Component: lazy(() => import('pages/device/create')),
+    exact: true
+  },
+  {
+    path: '/devices/:id',
+    Component: lazy(() => import('pages/device/detail')),
+    exact: true
+  },
+  {
+    path: '/devices/:id/update',
+    Component: lazy(() => import('pages/device/update')),
+    exact: true
   }
 ]
 

@@ -12,6 +12,12 @@ export default async function getMenuData () {
       key: '__user',
       url: '/accounts',
       icon: 'fe fe-user'
+    },
+    {
+      title: 'Thiết bị',
+      key: '__device',
+      url: '/devices',
+      icon: 'bx-bxs-car-battery'
     }
 
     // VB:REPLACE-END:MENU-CONFIG

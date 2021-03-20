@@ -971,6 +971,40 @@
         "deprecated": false
       }
     },
+    "/devices/{id}/authorizedDevice": {
+      "get": {
+        "tags": [
+          "Device"
+        ],
+        "summary": "Fetches belongsTo relation authorizedDevice.",
+        "operationId": "Device.prototype.__get__authorizedDevice",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Device id",
+            "required": true,
+            "type": "string",
+            "format": "JSON"
+          },
+          {
+            "name": "refresh",
+            "in": "query",
+            "required": false,
+            "type": "boolean"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Request was successful",
+            "schema": {
+              "$ref": "#/definitions/AuthorizedDevice"
+            }
+          }
+        },
+        "deprecated": false
+      }
+    },
     "/devices/{id}/systems": {
       "get": {
         "tags": [
@@ -1271,6 +1305,1540 @@
         "deprecated": false
       }
     },
+    "/systems/{id}/user": {
+      "get": {
+        "tags": [
+          "System"
+        ],
+        "summary": "Fetches belongsTo relation user.",
+        "operationId": "System.prototype.__get__user",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "System id",
+            "required": true,
+            "type": "string",
+            "format": "JSON"
+          },
+          {
+            "name": "refresh",
+            "in": "query",
+            "required": false,
+            "type": "boolean"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Request was successful",
+            "schema": {
+              "$ref": "#/definitions/User"
+            }
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/systems": {
+      "post": {
+        "tags": [
+          "System"
+        ],
+        "summary": "Create a new instance of the model and persist it into the data source.",
+        "operationId": "System.create",
+        "parameters": [
+          {
+            "name": "data",
+            "in": "body",
+            "description": "Model instance data",
+            "required": false,
+            "schema": {
+              "description": "Model instance data",
+              "$ref": "#/definitions/System"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Request was successful",
+            "schema": {
+              "$ref": "#/definitions/System"
+            }
+          }
+        },
+        "deprecated": false
+      },
+      "patch": {
+        "tags": [
+          "System"
+        ],
+        "summary": "Patch an existing model instance or insert a new one into the data source.",
+        "operationId": "System.patchOrCreate",
+        "parameters": [
+          {
+            "name": "data",
+            "in": "body",
+            "description": "Model instance data",
+            "required": false,
+            "schema": {
+              "description": "Model instance data",
+              "$ref": "#/definitions/System"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Request was successful",
+            "schema": {
+              "$ref": "#/definitions/System"
+            }
+          }
+        },
+        "deprecated": false
+      },
+      "put": {
+        "tags": [
+          "System"
+        ],
+        "summary": "Replace an existing model instance or insert a new one into the data source.",
+        "operationId": "System.replaceOrCreate__put_systems",
+        "parameters": [
+          {
+            "name": "data",
+            "in": "body",
+            "description": "Model instance data",
+            "required": false,
+            "schema": {
+              "description": "Model instance data",
+              "$ref": "#/definitions/System"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Request was successful",
+            "schema": {
+              "$ref": "#/definitions/System"
+            }
+          }
+        },
+        "deprecated": false
+      },
+      "get": {
+        "tags": [
+          "System"
+        ],
+        "summary": "Find all instances of the model matched by filter from the data source.",
+        "operationId": "System.find",
+        "parameters": [
+          {
+            "name": "filter",
+            "in": "query",
+            "description": "Filter defining fields, where, include, order, offset, and limit - must be a JSON-encoded string (`{\"where\":{\"something\":\"value\"}}`).  See https://loopback.io/doc/en/lb3/Querying-data.html#using-stringified-json-in-rest-queries for more details.",
+            "required": false,
+            "type": "string",
+            "format": "JSON"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Request was successful",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/System"
+              }
+            }
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/systems/replaceOrCreate": {
+      "post": {
+        "tags": [
+          "System"
+        ],
+        "summary": "Replace an existing model instance or insert a new one into the data source.",
+        "operationId": "System.replaceOrCreate__post_systems_replaceOrCreate",
+        "parameters": [
+          {
+            "name": "data",
+            "in": "body",
+            "description": "Model instance data",
+            "required": false,
+            "schema": {
+              "description": "Model instance data",
+              "$ref": "#/definitions/System"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Request was successful",
+            "schema": {
+              "$ref": "#/definitions/System"
+            }
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/systems/upsertWithWhere": {
+      "post": {
+        "tags": [
+          "System"
+        ],
+        "summary": "Update an existing model instance or insert a new one into the data source based on the where criteria.",
+        "operationId": "System.upsertWithWhere",
+        "parameters": [
+          {
+            "name": "where",
+            "in": "query",
+            "description": "Criteria to match model instances",
+            "required": false,
+            "type": "string",
+            "format": "JSON"
+          },
+          {
+            "name": "data",
+            "in": "body",
+            "description": "An object of model property name/value pairs",
+            "required": false,
+            "schema": {
+              "description": "An object of model property name/value pairs",
+              "$ref": "#/definitions/System"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Request was successful",
+            "schema": {
+              "$ref": "#/definitions/System"
+            }
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/systems/{id}/exists": {
+      "get": {
+        "tags": [
+          "System"
+        ],
+        "summary": "Check whether a model instance exists in the data source.",
+        "operationId": "System.exists__get_systems_{id}_exists",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Model id",
+            "required": true,
+            "type": "string",
+            "format": "JSON"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Request was successful",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "exists": {
+                  "type": "boolean"
+                }
+              }
+            }
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/systems/{id}": {
+      "head": {
+        "tags": [
+          "System"
+        ],
+        "summary": "Check whether a model instance exists in the data source.",
+        "operationId": "System.exists__head_systems_{id}",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Model id",
+            "required": true,
+            "type": "string",
+            "format": "JSON"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Request was successful",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "exists": {
+                  "type": "boolean"
+                }
+              }
+            }
+          }
+        },
+        "deprecated": false
+      },
+      "get": {
+        "tags": [
+          "System"
+        ],
+        "summary": "Find a model instance by {{id}} from the data source.",
+        "operationId": "System.findById",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Model id",
+            "required": true,
+            "type": "string",
+            "format": "JSON"
+          },
+          {
+            "name": "filter",
+            "in": "query",
+            "description": "Filter defining fields and include - must be a JSON-encoded string ({\"something\":\"value\"})",
+            "required": false,
+            "type": "string",
+            "format": "JSON"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Request was successful",
+            "schema": {
+              "$ref": "#/definitions/System"
+            }
+          }
+        },
+        "deprecated": false
+      },
+      "put": {
+        "tags": [
+          "System"
+        ],
+        "summary": "Replace attributes for a model instance and persist it into the data source.",
+        "operationId": "System.replaceById__put_systems_{id}",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Model id",
+            "required": true,
+            "type": "string",
+            "format": "JSON"
+          },
+          {
+            "name": "data",
+            "in": "body",
+            "description": "Model instance data",
+            "required": false,
+            "schema": {
+              "description": "Model instance data",
+              "$ref": "#/definitions/System"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Request was successful",
+            "schema": {
+              "$ref": "#/definitions/System"
+            }
+          }
+        },
+        "deprecated": false
+      },
+      "delete": {
+        "tags": [
+          "System"
+        ],
+        "summary": "Delete a model instance by {{id}} from the data source.",
+        "operationId": "System.deleteById",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Model id",
+            "required": true,
+            "type": "string",
+            "format": "JSON"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Request was successful",
+            "schema": {
+              "type": "object"
+            }
+          }
+        },
+        "deprecated": false
+      },
+      "patch": {
+        "tags": [
+          "System"
+        ],
+        "summary": "Patch attributes for a model instance and persist it into the data source.",
+        "operationId": "System.prototype.patchAttributes",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "System id",
+            "required": true,
+            "type": "string",
+            "format": "JSON"
+          },
+          {
+            "name": "data",
+            "in": "body",
+            "description": "An object of model property name/value pairs",
+            "required": false,
+            "schema": {
+              "description": "An object of model property name/value pairs",
+              "$ref": "#/definitions/System"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Request was successful",
+            "schema": {
+              "$ref": "#/definitions/System"
+            }
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/systems/{id}/replace": {
+      "post": {
+        "tags": [
+          "System"
+        ],
+        "summary": "Replace attributes for a model instance and persist it into the data source.",
+        "operationId": "System.replaceById__post_systems_{id}_replace",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Model id",
+            "required": true,
+            "type": "string",
+            "format": "JSON"
+          },
+          {
+            "name": "data",
+            "in": "body",
+            "description": "Model instance data",
+            "required": false,
+            "schema": {
+              "description": "Model instance data",
+              "$ref": "#/definitions/System"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Request was successful",
+            "schema": {
+              "$ref": "#/definitions/System"
+            }
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/systems/findOne": {
+      "get": {
+        "tags": [
+          "System"
+        ],
+        "summary": "Find first instance of the model matched by filter from the data source.",
+        "operationId": "System.findOne",
+        "parameters": [
+          {
+            "name": "filter",
+            "in": "query",
+            "description": "Filter defining fields, where, include, order, offset, and limit - must be a JSON-encoded string (`{\"where\":{\"something\":\"value\"}}`).  See https://loopback.io/doc/en/lb3/Querying-data.html#using-stringified-json-in-rest-queries for more details.",
+            "required": false,
+            "type": "string",
+            "format": "JSON"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Request was successful",
+            "schema": {
+              "$ref": "#/definitions/System"
+            }
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/systems/update": {
+      "post": {
+        "tags": [
+          "System"
+        ],
+        "summary": "Update instances of the model matched by {{where}} from the data source.",
+        "operationId": "System.updateAll",
+        "parameters": [
+          {
+            "name": "where",
+            "in": "query",
+            "description": "Criteria to match model instances",
+            "required": false,
+            "type": "string",
+            "format": "JSON"
+          },
+          {
+            "name": "data",
+            "in": "body",
+            "description": "An object of model property name/value pairs",
+            "required": false,
+            "schema": {
+              "description": "An object of model property name/value pairs",
+              "$ref": "#/definitions/System"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Request was successful",
+            "schema": {
+              "description": "Information related to the outcome of the operation",
+              "type": "object",
+              "properties": {
+                "count": {
+                  "description": "The number of instances updated",
+                  "type": "number",
+                  "format": "double"
+                }
+              }
+            }
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/systems/count": {
+      "get": {
+        "tags": [
+          "System"
+        ],
+        "summary": "Count instances of the model matched by where from the data source.",
+        "operationId": "System.count",
+        "parameters": [
+          {
+            "name": "where",
+            "in": "query",
+            "description": "Criteria to match model instances",
+            "required": false,
+            "type": "string",
+            "format": "JSON"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Request was successful",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "count": {
+                  "type": "number",
+                  "format": "double"
+                }
+              }
+            }
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/systems/change-stream": {
+      "post": {
+        "tags": [
+          "System"
+        ],
+        "summary": "Create a change stream.",
+        "operationId": "System.createChangeStream__post_systems_change-stream",
+        "parameters": [
+          {
+            "name": "options",
+            "in": "formData",
+            "required": false,
+            "type": "string",
+            "format": "JSON"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Request was successful",
+            "schema": {
+              "type": "file"
+            }
+          }
+        },
+        "deprecated": false
+      },
+      "get": {
+        "tags": [
+          "System"
+        ],
+        "summary": "Create a change stream.",
+        "operationId": "System.createChangeStream__get_systems_change-stream",
+        "parameters": [
+          {
+            "name": "options",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "JSON"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Request was successful",
+            "schema": {
+              "type": "file"
+            }
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/blocks": {
+      "post": {
+        "tags": [
+          "Block"
+        ],
+        "summary": "Create a new instance of the model and persist it into the data source.",
+        "operationId": "Block.create",
+        "parameters": [
+          {
+            "name": "data",
+            "in": "body",
+            "description": "Model instance data",
+            "required": false,
+            "schema": {
+              "description": "Model instance data",
+              "$ref": "#/definitions/Block"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Request was successful",
+            "schema": {
+              "$ref": "#/definitions/Block"
+            }
+          }
+        },
+        "deprecated": false
+      },
+      "patch": {
+        "tags": [
+          "Block"
+        ],
+        "summary": "Patch an existing model instance or insert a new one into the data source.",
+        "operationId": "Block.patchOrCreate",
+        "parameters": [
+          {
+            "name": "data",
+            "in": "body",
+            "description": "Model instance data",
+            "required": false,
+            "schema": {
+              "description": "Model instance data",
+              "$ref": "#/definitions/Block"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Request was successful",
+            "schema": {
+              "$ref": "#/definitions/Block"
+            }
+          }
+        },
+        "deprecated": false
+      },
+      "put": {
+        "tags": [
+          "Block"
+        ],
+        "summary": "Replace an existing model instance or insert a new one into the data source.",
+        "operationId": "Block.replaceOrCreate__put_blocks",
+        "parameters": [
+          {
+            "name": "data",
+            "in": "body",
+            "description": "Model instance data",
+            "required": false,
+            "schema": {
+              "description": "Model instance data",
+              "$ref": "#/definitions/Block"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Request was successful",
+            "schema": {
+              "$ref": "#/definitions/Block"
+            }
+          }
+        },
+        "deprecated": false
+      },
+      "get": {
+        "tags": [
+          "Block"
+        ],
+        "summary": "Find all instances of the model matched by filter from the data source.",
+        "operationId": "Block.find",
+        "parameters": [
+          {
+            "name": "filter",
+            "in": "query",
+            "description": "Filter defining fields, where, include, order, offset, and limit - must be a JSON-encoded string (`{\"where\":{\"something\":\"value\"}}`).  See https://loopback.io/doc/en/lb3/Querying-data.html#using-stringified-json-in-rest-queries for more details.",
+            "required": false,
+            "type": "string",
+            "format": "JSON"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Request was successful",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Block"
+              }
+            }
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/blocks/replaceOrCreate": {
+      "post": {
+        "tags": [
+          "Block"
+        ],
+        "summary": "Replace an existing model instance or insert a new one into the data source.",
+        "operationId": "Block.replaceOrCreate__post_blocks_replaceOrCreate",
+        "parameters": [
+          {
+            "name": "data",
+            "in": "body",
+            "description": "Model instance data",
+            "required": false,
+            "schema": {
+              "description": "Model instance data",
+              "$ref": "#/definitions/Block"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Request was successful",
+            "schema": {
+              "$ref": "#/definitions/Block"
+            }
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/blocks/upsertWithWhere": {
+      "post": {
+        "tags": [
+          "Block"
+        ],
+        "summary": "Update an existing model instance or insert a new one into the data source based on the where criteria.",
+        "operationId": "Block.upsertWithWhere",
+        "parameters": [
+          {
+            "name": "where",
+            "in": "query",
+            "description": "Criteria to match model instances",
+            "required": false,
+            "type": "string",
+            "format": "JSON"
+          },
+          {
+            "name": "data",
+            "in": "body",
+            "description": "An object of model property name/value pairs",
+            "required": false,
+            "schema": {
+              "description": "An object of model property name/value pairs",
+              "$ref": "#/definitions/Block"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Request was successful",
+            "schema": {
+              "$ref": "#/definitions/Block"
+            }
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/blocks/{id}/exists": {
+      "get": {
+        "tags": [
+          "Block"
+        ],
+        "summary": "Check whether a model instance exists in the data source.",
+        "operationId": "Block.exists__get_blocks_{id}_exists",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Model id",
+            "required": true,
+            "type": "string",
+            "format": "JSON"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Request was successful",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "exists": {
+                  "type": "boolean"
+                }
+              }
+            }
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/blocks/{id}": {
+      "head": {
+        "tags": [
+          "Block"
+        ],
+        "summary": "Check whether a model instance exists in the data source.",
+        "operationId": "Block.exists__head_blocks_{id}",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Model id",
+            "required": true,
+            "type": "string",
+            "format": "JSON"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Request was successful",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "exists": {
+                  "type": "boolean"
+                }
+              }
+            }
+          }
+        },
+        "deprecated": false
+      },
+      "get": {
+        "tags": [
+          "Block"
+        ],
+        "summary": "Find a model instance by {{id}} from the data source.",
+        "operationId": "Block.findById",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Model id",
+            "required": true,
+            "type": "string",
+            "format": "JSON"
+          },
+          {
+            "name": "filter",
+            "in": "query",
+            "description": "Filter defining fields and include - must be a JSON-encoded string ({\"something\":\"value\"})",
+            "required": false,
+            "type": "string",
+            "format": "JSON"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Request was successful",
+            "schema": {
+              "$ref": "#/definitions/Block"
+            }
+          }
+        },
+        "deprecated": false
+      },
+      "put": {
+        "tags": [
+          "Block"
+        ],
+        "summary": "Replace attributes for a model instance and persist it into the data source.",
+        "operationId": "Block.replaceById__put_blocks_{id}",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Model id",
+            "required": true,
+            "type": "string",
+            "format": "JSON"
+          },
+          {
+            "name": "data",
+            "in": "body",
+            "description": "Model instance data",
+            "required": false,
+            "schema": {
+              "description": "Model instance data",
+              "$ref": "#/definitions/Block"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Request was successful",
+            "schema": {
+              "$ref": "#/definitions/Block"
+            }
+          }
+        },
+        "deprecated": false
+      },
+      "delete": {
+        "tags": [
+          "Block"
+        ],
+        "summary": "Delete a model instance by {{id}} from the data source.",
+        "operationId": "Block.deleteById",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Model id",
+            "required": true,
+            "type": "string",
+            "format": "JSON"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Request was successful",
+            "schema": {
+              "type": "object"
+            }
+          }
+        },
+        "deprecated": false
+      },
+      "patch": {
+        "tags": [
+          "Block"
+        ],
+        "summary": "Patch attributes for a model instance and persist it into the data source.",
+        "operationId": "Block.prototype.patchAttributes",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Block id",
+            "required": true,
+            "type": "string",
+            "format": "JSON"
+          },
+          {
+            "name": "data",
+            "in": "body",
+            "description": "An object of model property name/value pairs",
+            "required": false,
+            "schema": {
+              "description": "An object of model property name/value pairs",
+              "$ref": "#/definitions/Block"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Request was successful",
+            "schema": {
+              "$ref": "#/definitions/Block"
+            }
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/blocks/{id}/replace": {
+      "post": {
+        "tags": [
+          "Block"
+        ],
+        "summary": "Replace attributes for a model instance and persist it into the data source.",
+        "operationId": "Block.replaceById__post_blocks_{id}_replace",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Model id",
+            "required": true,
+            "type": "string",
+            "format": "JSON"
+          },
+          {
+            "name": "data",
+            "in": "body",
+            "description": "Model instance data",
+            "required": false,
+            "schema": {
+              "description": "Model instance data",
+              "$ref": "#/definitions/Block"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Request was successful",
+            "schema": {
+              "$ref": "#/definitions/Block"
+            }
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/blocks/findOne": {
+      "get": {
+        "tags": [
+          "Block"
+        ],
+        "summary": "Find first instance of the model matched by filter from the data source.",
+        "operationId": "Block.findOne",
+        "parameters": [
+          {
+            "name": "filter",
+            "in": "query",
+            "description": "Filter defining fields, where, include, order, offset, and limit - must be a JSON-encoded string (`{\"where\":{\"something\":\"value\"}}`).  See https://loopback.io/doc/en/lb3/Querying-data.html#using-stringified-json-in-rest-queries for more details.",
+            "required": false,
+            "type": "string",
+            "format": "JSON"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Request was successful",
+            "schema": {
+              "$ref": "#/definitions/Block"
+            }
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/blocks/update": {
+      "post": {
+        "tags": [
+          "Block"
+        ],
+        "summary": "Update instances of the model matched by {{where}} from the data source.",
+        "operationId": "Block.updateAll",
+        "parameters": [
+          {
+            "name": "where",
+            "in": "query",
+            "description": "Criteria to match model instances",
+            "required": false,
+            "type": "string",
+            "format": "JSON"
+          },
+          {
+            "name": "data",
+            "in": "body",
+            "description": "An object of model property name/value pairs",
+            "required": false,
+            "schema": {
+              "description": "An object of model property name/value pairs",
+              "$ref": "#/definitions/Block"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Request was successful",
+            "schema": {
+              "description": "Information related to the outcome of the operation",
+              "type": "object",
+              "properties": {
+                "count": {
+                  "description": "The number of instances updated",
+                  "type": "number",
+                  "format": "double"
+                }
+              }
+            }
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/blocks/count": {
+      "get": {
+        "tags": [
+          "Block"
+        ],
+        "summary": "Count instances of the model matched by where from the data source.",
+        "operationId": "Block.count",
+        "parameters": [
+          {
+            "name": "where",
+            "in": "query",
+            "description": "Criteria to match model instances",
+            "required": false,
+            "type": "string",
+            "format": "JSON"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Request was successful",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "count": {
+                  "type": "number",
+                  "format": "double"
+                }
+              }
+            }
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/blocks/change-stream": {
+      "post": {
+        "tags": [
+          "Block"
+        ],
+        "summary": "Create a change stream.",
+        "operationId": "Block.createChangeStream__post_blocks_change-stream",
+        "parameters": [
+          {
+            "name": "options",
+            "in": "formData",
+            "required": false,
+            "type": "string",
+            "format": "JSON"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Request was successful",
+            "schema": {
+              "type": "file"
+            }
+          }
+        },
+        "deprecated": false
+      },
+      "get": {
+        "tags": [
+          "Block"
+        ],
+        "summary": "Create a change stream.",
+        "operationId": "Block.createChangeStream__get_blocks_change-stream",
+        "parameters": [
+          {
+            "name": "options",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "JSON"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Request was successful",
+            "schema": {
+              "type": "file"
+            }
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/authorizeddevices/{id}/user": {
+      "get": {
+        "tags": [
+          "AuthorizedDevice"
+        ],
+        "summary": "Fetches belongsTo relation user.",
+        "operationId": "AuthorizedDevice.prototype.__get__user",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "AuthorizedDevice id",
+            "required": true,
+            "type": "string",
+            "format": "JSON"
+          },
+          {
+            "name": "refresh",
+            "in": "query",
+            "required": false,
+            "type": "boolean"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Request was successful",
+            "schema": {
+              "$ref": "#/definitions/User"
+            }
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/authorizeddevices/{id}/devices/{fk}": {
+      "get": {
+        "tags": [
+          "AuthorizedDevice"
+        ],
+        "summary": "Find a related item by id for devices.",
+        "operationId": "AuthorizedDevice.prototype.__findById__devices",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "AuthorizedDevice id",
+            "required": true,
+            "type": "string",
+            "format": "JSON"
+          },
+          {
+            "name": "fk",
+            "in": "path",
+            "description": "Foreign key for devices",
+            "required": true,
+            "type": "string",
+            "format": "JSON"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Request was successful",
+            "schema": {
+              "$ref": "#/definitions/Device"
+            }
+          }
+        },
+        "deprecated": false
+      },
+      "delete": {
+        "tags": [
+          "AuthorizedDevice"
+        ],
+        "summary": "Delete a related item by id for devices.",
+        "operationId": "AuthorizedDevice.prototype.__destroyById__devices",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "AuthorizedDevice id",
+            "required": true,
+            "type": "string",
+            "format": "JSON"
+          },
+          {
+            "name": "fk",
+            "in": "path",
+            "description": "Foreign key for devices",
+            "required": true,
+            "type": "string",
+            "format": "JSON"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Request was successful"
+          }
+        },
+        "deprecated": false
+      },
+      "put": {
+        "tags": [
+          "AuthorizedDevice"
+        ],
+        "summary": "Update a related item by id for devices.",
+        "operationId": "AuthorizedDevice.prototype.__updateById__devices",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "AuthorizedDevice id",
+            "required": true,
+            "type": "string",
+            "format": "JSON"
+          },
+          {
+            "name": "fk",
+            "in": "path",
+            "description": "Foreign key for devices",
+            "required": true,
+            "type": "string",
+            "format": "JSON"
+          },
+          {
+            "name": "data",
+            "in": "body",
+            "required": false,
+            "schema": {
+              "$ref": "#/definitions/Device"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Request was successful",
+            "schema": {
+              "$ref": "#/definitions/Device"
+            }
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/authorizeddevices/{id}/devices": {
+      "get": {
+        "tags": [
+          "AuthorizedDevice"
+        ],
+        "summary": "Queries devices of AuthorizedDevice.",
+        "operationId": "AuthorizedDevice.prototype.__get__devices",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "AuthorizedDevice id",
+            "required": true,
+            "type": "string",
+            "format": "JSON"
+          },
+          {
+            "name": "filter",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "JSON"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Request was successful",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Device"
+              }
+            }
+          }
+        },
+        "deprecated": false
+      },
+      "post": {
+        "tags": [
+          "AuthorizedDevice"
+        ],
+        "summary": "Creates a new instance in devices of this model.",
+        "operationId": "AuthorizedDevice.prototype.__create__devices",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "AuthorizedDevice id",
+            "required": true,
+            "type": "string",
+            "format": "JSON"
+          },
+          {
+            "name": "data",
+            "in": "body",
+            "required": false,
+            "schema": {
+              "$ref": "#/definitions/Device"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Request was successful",
+            "schema": {
+              "$ref": "#/definitions/Device"
+            }
+          }
+        },
+        "deprecated": false
+      },
+      "delete": {
+        "tags": [
+          "AuthorizedDevice"
+        ],
+        "summary": "Deletes all devices of this model.",
+        "operationId": "AuthorizedDevice.prototype.__delete__devices",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "AuthorizedDevice id",
+            "required": true,
+            "type": "string",
+            "format": "JSON"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Request was successful"
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/authorizeddevices/{id}/devices/count": {
+      "get": {
+        "tags": [
+          "AuthorizedDevice"
+        ],
+        "summary": "Counts devices of AuthorizedDevice.",
+        "operationId": "AuthorizedDevice.prototype.__count__devices",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "AuthorizedDevice id",
+            "required": true,
+            "type": "string",
+            "format": "JSON"
+          },
+          {
+            "name": "where",
+            "in": "query",
+            "description": "Criteria to match model instances",
+            "required": false,
+            "type": "string",
+            "format": "JSON"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Request was successful",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "count": {
+                  "type": "number",
+                  "format": "double"
+                }
+              }
+            }
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/authorizeddevices/{id}": {
+      "get": {
+        "tags": [
+          "AuthorizedDevice"
+        ],
+        "summary": "Find a model instance by {{id}} from the data source.",
+        "operationId": "AuthorizedDevice.findById",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Model id",
+            "required": true,
+            "type": "string",
+            "format": "JSON"
+          },
+          {
+            "name": "filter",
+            "in": "query",
+            "description": "Filter defining fields and include - must be a JSON-encoded string ({\"something\":\"value\"})",
+            "required": false,
+            "type": "string",
+            "format": "JSON"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Request was successful",
+            "schema": {
+              "$ref": "#/definitions/AuthorizedDevice"
+            }
+          }
+        },
+        "deprecated": false
+      },
+      "delete": {
+        "tags": [
+          "AuthorizedDevice"
+        ],
+        "summary": "Delete a model instance by {{id}} from the data source.",
+        "operationId": "AuthorizedDevice.deleteById",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Model id",
+            "required": true,
+            "type": "string",
+            "format": "JSON"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Request was successful",
+            "schema": {
+              "type": "object"
+            }
+          }
+        },
+        "deprecated": false
+      }
+    },
     "/authorizeddevices": {
       "get": {
         "tags": [
@@ -1346,34 +2914,6 @@
         ],
         "responses": {
           "204": {
-            "description": "Request was successful",
-            "schema": {
-              "type": "object"
-            }
-          }
-        },
-        "deprecated": false
-      }
-    },
-    "/authorizeddevices/{id}": {
-      "delete": {
-        "tags": [
-          "AuthorizedDevice"
-        ],
-        "summary": "Delete a model instance by {{id}} from the data source.",
-        "operationId": "AuthorizedDevice.deleteById",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "description": "Model id",
-            "required": true,
-            "type": "string",
-            "format": "JSON"
-          }
-        ],
-        "responses": {
-          "200": {
             "description": "Request was successful",
             "schema": {
               "type": "object"
@@ -1831,6 +3371,12 @@
       "name": "Device"
     },
     {
+      "name": "System"
+    },
+    {
+      "name": "Block"
+    },
+    {
       "name": "AuthorizedDevice"
     },
     {
@@ -2271,12 +3817,117 @@
         "updated": {
           "type": "string",
           "format": "date-time"
+        },
+        "macAddress": {
+          "type": "string"
         }
       },
       "required": [
         "id",
         "username",
         "name"
+      ],
+      "additionalProperties": false
+    },
+    "Block": {
+      "properties": {
+        "macAddress": {
+          "maxLength": 36,
+          "type": "string"
+        },
+        "deviceId": {
+          "maxLength": 128,
+          "type": "string"
+        },
+        "systemId": {
+          "maxLength": 128,
+          "type": "string"
+        },
+        "stringId": {
+          "maxLength": 36,
+          "type": "string"
+        },
+        "unitId": {
+          "maxLength": 36,
+          "type": "string"
+        },
+        "r1": {
+          "default": 0,
+          "type": "number",
+          "format": "double"
+        },
+        "r2": {
+          "default": 0,
+          "type": "number",
+          "format": "double"
+        },
+        "vscale": {
+          "default": 0,
+          "type": "number",
+          "format": "double"
+        },
+        "address16": {
+          "default": 0,
+          "type": "number",
+          "format": "double"
+        },
+        "address24": {
+          "default": 0,
+          "type": "number",
+          "format": "double"
+        },
+        "address32": {
+          "default": 0,
+          "type": "number",
+          "format": "double"
+        },
+        "address40": {
+          "default": 0,
+          "type": "number",
+          "format": "double"
+        },
+        "enable": {
+          "default": false,
+          "type": "boolean"
+        },
+        "operationMode": {
+          "default": "unknown",
+          "type": "string"
+        },
+        "voltageLevel": {
+          "default": 0,
+          "type": "number",
+          "format": "double"
+        },
+        "deviceType": {
+          "default": "unknown",
+          "type": "string"
+        },
+        "cableType": {
+          "default": "unknown",
+          "type": "string"
+        },
+        "capacity": {
+          "default": 0,
+          "type": "number",
+          "format": "double"
+        },
+        "id": {
+          "type": "number",
+          "format": "double"
+        },
+        "created": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "updated": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "required": [
+        "deviceId",
+        "systemId"
       ],
       "additionalProperties": false
     },
