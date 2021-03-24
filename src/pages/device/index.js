@@ -58,14 +58,20 @@ const DefaultPage = ({ list, loading, total, preConfirm, usernameOrEmail, dispat
       title: '',
       dataIndex: 'index',
       key: 'index',
-      render: (text, item) => (
-        <Avatar
-          shape='square'
-          size='large'
-          icon={<UserOutlined />}
-          src={`/resources/images/battery.png`}
-        />
-      )
+      render: (text, item) => {
+        const device = get(item.devices, ['0'], {})
+
+        return (
+          <Link className='break-word' to={device.systems ? `/devices/${item.uuid}` : '#'}>
+            <Avatar
+              shape='square'
+              size='large'
+              icon={<UserOutlined />}
+              src='/resources/images/battery.png'
+            />
+          </Link>
+        )
+      }
     },
     {
       title: 'Hệ thống',
@@ -85,8 +91,7 @@ const DefaultPage = ({ list, loading, total, preConfirm, usernameOrEmail, dispat
     {
       title: 'Mã thiết bị',
       dataIndex: 'macAddress',
-      key: 'macAddress',
-      render: (text, item) => <Link className='break-word' to={`/devices/${item.uuid}`}>{text}</Link>
+      key: 'macAddress'
     },
     {
       title: 'Trạng thái',
@@ -102,8 +107,8 @@ const DefaultPage = ({ list, loading, total, preConfirm, usernameOrEmail, dispat
       dataIndex: 'lastUpdateStatus',
       key: 'lastUpdateStatus',
       render: (text, item) => {
-        const name = get(item.devices, ['0', 'lastUpdateStatus'])
-        return <span>{name || '---'}</span>
+        const lastUpdateStatus = get(item.devices, ['0', 'lastUpdateStatus'])
+        return <span className='break-word '>{lastUpdateStatus ? moment(text).format(TIME_FORMAT) : '---'}</span>
       }
     },
     {
@@ -111,8 +116,8 @@ const DefaultPage = ({ list, loading, total, preConfirm, usernameOrEmail, dispat
       dataIndex: 'created',
       key: 'created',
       render: (text, item) => {
-        const name = get(item.devices, ['0', 'created'])
-        return <span>{name || '---'}</span>
+        const created = get(item.devices, ['0', 'created'])
+        return <span className='break-word '>{created ? moment(text).format(TIME_FORMAT) : '---'}</span>
       }
     },
     {
@@ -132,7 +137,7 @@ const DefaultPage = ({ list, loading, total, preConfirm, usernameOrEmail, dispat
         return (
           <div className='action-group break-word'>
             <div>
-              <CloseOutlined className='ico18 ico-red' onClick={() => setModal(item)} />
+              <CloseOutlined className='ico18 ico-red' onClick={() => setModal(item.uuid)} />
 
             </div>
           </div>
@@ -150,11 +155,11 @@ const DefaultPage = ({ list, loading, total, preConfirm, usernameOrEmail, dispat
     setPayload({ ...payload, filter: JSON.stringify(_filter) })
   }
 
-  const onDelete = ({ id, password }) => {
+  const onDelete = ({ password }) => {
     dispatch({
       type: 'authDevice/DELETE',
       payload: {
-        id,
+        id: modal,
         body: {
           username: usernameOrEmail,
           password
@@ -194,17 +199,17 @@ const DefaultPage = ({ list, loading, total, preConfirm, usernameOrEmail, dispat
       ...payload,
       filter: JSON.stringify({
         include: [{
-        relation: 'devices',
-        scope: {
-          include: [{
-            relation: 'systems',
-            scope: {
-              include: [{
-                relation: 'blocks'
-              }]
-            }
-          }]
-        }
+          relation: 'devices',
+          scope: {
+            include: [{
+              relation: 'systems',
+              scope: {
+                include: [{
+                  relation: 'blocks'
+                }]
+              }
+            }]
+          }
         }],
         where: { and }
       })
@@ -267,7 +272,7 @@ const DefaultPage = ({ list, loading, total, preConfirm, usernameOrEmail, dispat
           <Item
             name='id'
             label=''
-            initialValue={modal.id}
+            initialValue={modal}
           >
             <Input style={{ display: 'none' }} />
           </Item>

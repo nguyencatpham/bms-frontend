@@ -14,6 +14,10 @@ export default function (state = initialState, action) {
       state.list.find(x => x.uuid === action.payload.detail.uuid).userId = action.payload.detail.userId
       return state
     }
+    case actions.SET_DELETE: {
+      console.log(state.list, action)
+      return { ...state, list: state.list.filter(x => x.uuid !== action.payload.id) }
+    }
     default:
       return state
   }
