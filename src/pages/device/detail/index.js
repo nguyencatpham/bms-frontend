@@ -4,14 +4,16 @@ import { Button, Modal, Table, Form, Tabs } from 'antd'
 import { connect } from 'react-redux'
 import { withRouter, useParams } from 'react-router-dom'
 import { history } from 'index'
+import { get } from 'lodash'
+import { TIME_FORMAT } from 'constant'
+
 import General from 'components/kit/widgets/General/10v1'
 import General1 from 'components/kit/widgets/General/1'
-import General12v1 from 'components/kit/widgets/General/12v1'
+import TotalBlock from 'components/kit/widgets/General/totalBlock'
 import List19 from 'components/kit/widgets/Lists/19'
-import faker from 'faker'
-import ChartPage from './chart'
+import moment from 'moment'
+import SystemPage from './system'
 import '../style.scss'
-import { get } from 'lodash'
 
 const { Item } = Form
 const { TabPane } = Tabs
@@ -65,12 +67,7 @@ const DefaultPage = ({ loading, detail, device, system, blocks, dispatch }) => {
             relation: 'devices',
             scope: {
               include: [{
-                relation: 'systems',
-                scope: {
-                  include: [{
-                    relation: 'blocks'
-                  }]
-                }
+                relation: 'systems'
               }]
             }
           }]
@@ -78,9 +75,18 @@ const DefaultPage = ({ loading, detail, device, system, blocks, dispatch }) => {
       }
     })
   }, [id, dispatch])
+
+  useEffect(() => {
+    dispatch({
+      type: 'system/GET_BLOCKS',
+      payload: {
+        id
+      }
+    })
+  }, [id, dispatch])
   const actions = [{
     id: '__remove',
-    name: 'Xóa thiết bị',
+    name: 'Gỡ thiết bị',
     color: '#f5222d',
     action: () => { setShowmodal(true) }
   }]
@@ -106,9 +112,12 @@ const DefaultPage = ({ loading, detail, device, system, blocks, dispatch }) => {
       title: 'Thông số',
       key: 'amount',
       dataIndex: 'amount',
-      render: amount => {
+      render: (amount, item) => {
         if (amount === 'Negative') {
           return <span className='text-capital text-danger font-weight-bold'>{amount}</span>
+        }
+        if (item.type === 'created' || item.type === 'updated') {
+          return <span className='text-capital text-primary font-weight-bold'>{amount ? moment(amount).format(TIME_FORMAT) : '---'}</span>
         }
         return <span className='text-capital text-primary font-weight-bold'>{amount}</span>
       }
@@ -124,15 +133,16 @@ const DefaultPage = ({ loading, detail, device, system, blocks, dispatch }) => {
             <div className='card profile-general'>
               <div className='card-body'>
                 <General
-                  avatar='/resources/images/battery.png'
+                  avatar='/resources/images/system.png'
                   name={name || macAddress || uuid}
                   role={updated}
                   actions={actions}
+                  width={200}
                 />
               </div>
             </div>
             <div className='card text-white bg-primary'>
-              <General12v1 />
+              <TotalBlock />
             </div>
             <div className='card'>
               <div className='card-header border-0 pb-0'>
@@ -171,13 +181,11 @@ const DefaultPage = ({ loading, detail, device, system, blocks, dispatch }) => {
                 </Tabs>
               </div>
               <div className='card-body'>
-                {tabKey === '2' && (
-                  <div>
-                    <ChartPage />
-                  </div>
+                {tabKey === '1' && (
+                  <SystemPage />
                 )}
-                {tabKey !== '1' && (
-                  <div>Chưa phát hành</div>
+                {tabKey === '2' && (
+                  <div />
                 )}
               </div>
             </div>

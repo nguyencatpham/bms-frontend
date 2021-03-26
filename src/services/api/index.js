@@ -1,6 +1,6 @@
 /* eslint camelcase: 0 */
 /*
-    Total: 102 APIs
+    Total: 98 APIs
     version: "0.1.0",
     title: "bms-backend",
     description: "bms Backend API"
@@ -49,24 +49,20 @@ export const types = {
   DEVICES_GET_COUNT: 'DEVICES_GET_COUNT',
   DEVICES_PUT_CREDENTIALS: 'DEVICES_PUT_CREDENTIALS',
   SYSTEMS_GET_ID_USER: 'SYSTEMS_GET_ID_USER',
+  SYSTEMS_GET_ID_DEVICE: 'SYSTEMS_GET_ID_DEVICE',
+  SYSTEMS_GET_ID_BLOCKS_FK: 'SYSTEMS_GET_ID_BLOCKS_FK',
+  SYSTEMS_DELETE_ID_BLOCKS_FK: 'SYSTEMS_DELETE_ID_BLOCKS_FK',
+  SYSTEMS_PUT_ID_BLOCKS_FK: 'SYSTEMS_PUT_ID_BLOCKS_FK',
+  SYSTEMS_GET_ID_BLOCKS: 'SYSTEMS_GET_ID_BLOCKS',
+  SYSTEMS_POST_ID_BLOCKS: 'SYSTEMS_POST_ID_BLOCKS',
+  SYSTEMS_GET_ID_BLOCKS_COUNT: 'SYSTEMS_GET_ID_BLOCKS_COUNT',
   SYSTEMS_POST: 'SYSTEMS_POST',
-  SYSTEMS_PATCH: 'SYSTEMS_PATCH',
-  SYSTEMS_PUT: 'SYSTEMS_PUT',
   SYSTEMS_GET: 'SYSTEMS_GET',
-  SYSTEMS_POST_REPLACEORCREATE: 'SYSTEMS_POST_REPLACEORCREATE',
-  SYSTEMS_POST_UPSERTWITHWHERE: 'SYSTEMS_POST_UPSERTWITHWHERE',
-  SYSTEMS_GET_ID_EXISTS: 'SYSTEMS_GET_ID_EXISTS',
-  SYSTEMS_HEAD_ID: 'SYSTEMS_HEAD_ID',
   SYSTEMS_GET_ID: 'SYSTEMS_GET_ID',
-  SYSTEMS_PUT_ID: 'SYSTEMS_PUT_ID',
   SYSTEMS_DELETE_ID: 'SYSTEMS_DELETE_ID',
-  SYSTEMS_PATCH_ID: 'SYSTEMS_PATCH_ID',
-  SYSTEMS_POST_ID_REPLACE: 'SYSTEMS_POST_ID_REPLACE',
-  SYSTEMS_GET_FINDONE: 'SYSTEMS_GET_FINDONE',
-  SYSTEMS_POST_UPDATE: 'SYSTEMS_POST_UPDATE',
   SYSTEMS_GET_COUNT: 'SYSTEMS_GET_COUNT',
-  SYSTEMS_POST_CHANGE_STREAM: 'SYSTEMS_POST_CHANGE_STREAM',
-  SYSTEMS_GET_CHANGE_STREAM: 'SYSTEMS_GET_CHANGE_STREAM',
+  SYSTEMS_GET_ID_TSDATA: 'SYSTEMS_GET_ID_TSDATA',
+  BLOCKS_GET_ID_SYSTEM: 'BLOCKS_GET_ID_SYSTEM',
   BLOCKS_POST: 'BLOCKS_POST',
   BLOCKS_PATCH: 'BLOCKS_PATCH',
   BLOCKS_PUT: 'BLOCKS_PUT',
@@ -326,21 +322,46 @@ export const apis = {
     method: 'GET',
     url: `${apiEndpoint}/api/systems/${id}/user?${refresh ? `refresh=${encodeURIComponent(typeof refresh === 'object' ? JSON.stringify(refresh) : refresh)}` : ''}`
   }),
+  // Fetches belongsTo relation device.
+  SYSTEMS_GET_ID_DEVICE: ({ id, refresh }) => ({
+    method: 'GET',
+    url: `${apiEndpoint}/api/systems/${id}/device?${refresh ? `refresh=${encodeURIComponent(typeof refresh === 'object' ? JSON.stringify(refresh) : refresh)}` : ''}`
+  }),
+  // Find a related item by id for blocks.
+  SYSTEMS_GET_ID_BLOCKS_FK: ({ id, fk }) => ({
+    method: 'GET',
+    url: `${apiEndpoint}/api/systems/${id}/blocks/${fk}`
+  }),
+  // Delete a related item by id for blocks.
+  SYSTEMS_DELETE_ID_BLOCKS_FK: ({ id, fk }) => ({
+    method: 'DELETE',
+    url: `${apiEndpoint}/api/systems/${id}/blocks/${fk}`
+  }),
+  // Update a related item by id for blocks.
+  SYSTEMS_PUT_ID_BLOCKS_FK: ({ id, fk, data }) => ({
+    method: 'PUT',
+    url: `${apiEndpoint}/api/systems/${id}/blocks/${fk}`,
+    body: data
+  }),
+  // get blocks data
+  SYSTEMS_GET_ID_BLOCKS: ({ id }) => ({
+    method: 'GET',
+    url: `${apiEndpoint}/api/systems/${id}/blocks`
+  }),
+  // Creates a new instance in blocks of this model.
+  SYSTEMS_POST_ID_BLOCKS: ({ id, data }) => ({
+    method: 'POST',
+    url: `${apiEndpoint}/api/systems/${id}/blocks`,
+    body: data
+  }),
+  // Counts blocks of System.
+  SYSTEMS_GET_ID_BLOCKS_COUNT: ({ id, where }) => ({
+    method: 'GET',
+    url: `${apiEndpoint}/api/systems/${id}/blocks/count?${where ? `where=${encodeURIComponent(typeof where === 'object' ? JSON.stringify(where) : where)}` : ''}`
+  }),
   // Create a new instance of the model and persist it into the data source.
   SYSTEMS_POST: ({ data }) => ({
     method: 'POST',
-    url: `${apiEndpoint}/api/systems`,
-    body: data
-  }),
-  // Patch an existing model instance or insert a new one into the data source.
-  SYSTEMS_PATCH: ({ data }) => ({
-    method: 'PATCH',
-    url: `${apiEndpoint}/api/systems`,
-    body: data
-  }),
-  // Replace an existing model instance or insert a new one into the data source.
-  SYSTEMS_PUT: ({ data }) => ({
-    method: 'PUT',
     url: `${apiEndpoint}/api/systems`,
     body: data
   }),
@@ -349,82 +370,30 @@ export const apis = {
     method: 'GET',
     url: `${apiEndpoint}/api/systems?${filter ? `filter=${encodeURIComponent(typeof filter === 'object' ? JSON.stringify(filter) : filter)}` : ''}`
   }),
-  // Replace an existing model instance or insert a new one into the data source.
-  SYSTEMS_POST_REPLACEORCREATE: ({ data }) => ({
-    method: 'POST',
-    url: `${apiEndpoint}/api/systems/replaceOrCreate`,
-    body: data
-  }),
-  // Update an existing model instance or insert a new one into the data source based on the where criteria.
-  SYSTEMS_POST_UPSERTWITHWHERE: ({ where, data }) => ({
-    method: 'POST',
-    url: `${apiEndpoint}/api/systems/upsertWithWhere?${where ? `where=${encodeURIComponent(typeof where === 'object' ? JSON.stringify(where) : where)}` : ''}`,
-    body: data
-  }),
-  // Check whether a model instance exists in the data source.
-  SYSTEMS_GET_ID_EXISTS: ({ id }) => ({
-    method: 'GET',
-    url: `${apiEndpoint}/api/systems/${id}/exists`
-  }),
-  // Check whether a model instance exists in the data source.
-  SYSTEMS_HEAD_ID: ({ id }) => ({
-    method: 'HEAD',
-    url: `${apiEndpoint}/api/systems/${id}`
-  }),
   // Find a model instance by {{id}} from the data source.
   SYSTEMS_GET_ID: ({ id, filter }) => ({
     method: 'GET',
     url: `${apiEndpoint}/api/systems/${id}?${filter ? `filter=${encodeURIComponent(typeof filter === 'object' ? JSON.stringify(filter) : filter)}` : ''}`
-  }),
-  // Replace attributes for a model instance and persist it into the data source.
-  SYSTEMS_PUT_ID: ({ id, data }) => ({
-    method: 'PUT',
-    url: `${apiEndpoint}/api/systems/${id}`,
-    body: data
   }),
   // Delete a model instance by {{id}} from the data source.
   SYSTEMS_DELETE_ID: ({ id }) => ({
     method: 'DELETE',
     url: `${apiEndpoint}/api/systems/${id}`
   }),
-  // Patch attributes for a model instance and persist it into the data source.
-  SYSTEMS_PATCH_ID: ({ id, data }) => ({
-    method: 'PATCH',
-    url: `${apiEndpoint}/api/systems/${id}`,
-    body: data
-  }),
-  // Replace attributes for a model instance and persist it into the data source.
-  SYSTEMS_POST_ID_REPLACE: ({ id, data }) => ({
-    method: 'POST',
-    url: `${apiEndpoint}/api/systems/${id}/replace`,
-    body: data
-  }),
-  // Find first instance of the model matched by filter from the data source.
-  SYSTEMS_GET_FINDONE: ({ filter }) => ({
-    method: 'GET',
-    url: `${apiEndpoint}/api/systems/findOne?${filter ? `filter=${encodeURIComponent(typeof filter === 'object' ? JSON.stringify(filter) : filter)}` : ''}`
-  }),
-  // Update instances of the model matched by {{where}} from the data source.
-  SYSTEMS_POST_UPDATE: ({ where, data }) => ({
-    method: 'POST',
-    url: `${apiEndpoint}/api/systems/update?${where ? `where=${encodeURIComponent(typeof where === 'object' ? JSON.stringify(where) : where)}` : ''}`,
-    body: data
-  }),
   // Count instances of the model matched by where from the data source.
   SYSTEMS_GET_COUNT: ({ where }) => ({
     method: 'GET',
     url: `${apiEndpoint}/api/systems/count?${where ? `where=${encodeURIComponent(typeof where === 'object' ? JSON.stringify(where) : where)}` : ''}`
   }),
-  // Create a change stream.
-  SYSTEMS_POST_CHANGE_STREAM: ({ options }) => ({
-    method: 'POST',
-    url: `${apiEndpoint}/api/systems/change-stream`,
-    body: { options }
-  }),
-  // Create a change stream.
-  SYSTEMS_GET_CHANGE_STREAM: ({ options }) => ({
+  // get timeserial data
+  SYSTEMS_GET_ID_TSDATA: ({ id, start, end, macAddress, unitId, stringId, type, limit }) => ({
     method: 'GET',
-    url: `${apiEndpoint}/api/systems/change-stream?${options ? `options=${encodeURIComponent(typeof options === 'object' ? JSON.stringify(options) : options)}` : ''}`
+    url: `${apiEndpoint}/api/systems/${id}/tsdata?${start ? `start=${encodeURIComponent(typeof start === 'object' ? JSON.stringify(start) : start)}&` : ''}${end ? `end=${encodeURIComponent(typeof end === 'object' ? JSON.stringify(end) : end)}&` : ''}${macAddress ? `macAddress=${encodeURIComponent(typeof macAddress === 'object' ? JSON.stringify(macAddress) : macAddress)}&` : ''}${unitId ? `unitId=${encodeURIComponent(typeof unitId === 'object' ? JSON.stringify(unitId) : unitId)}&` : ''}${stringId ? `stringId=${encodeURIComponent(typeof stringId === 'object' ? JSON.stringify(stringId) : stringId)}&` : ''}${type ? `type=${encodeURIComponent(typeof type === 'object' ? JSON.stringify(type) : type)}&` : ''}${limit ? `limit=${encodeURIComponent(typeof limit === 'object' ? JSON.stringify(limit) : limit)}` : ''}`
+  }),
+  // Fetches belongsTo relation system.
+  BLOCKS_GET_ID_SYSTEM: ({ id, refresh }) => ({
+    method: 'GET',
+    url: `${apiEndpoint}/api/blocks/${id}/system?${refresh ? `refresh=${encodeURIComponent(typeof refresh === 'object' ? JSON.stringify(refresh) : refresh)}` : ''}`
   }),
   // Create a new instance of the model and persist it into the data source.
   BLOCKS_POST: ({ data }) => ({

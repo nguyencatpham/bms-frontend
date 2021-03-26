@@ -67,7 +67,7 @@ const DefaultPage = ({ list, loading, total, preConfirm, usernameOrEmail, dispat
               shape='square'
               size='large'
               icon={<UserOutlined />}
-              src='/resources/images/battery.png'
+              src='/resources/images/system.png'
             />
           </Link>
         )

@@ -1,0 +1,14 @@
+.battery-cell-panel{
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+.cell-item{
+    color: white;
+}
+.battery-pagination{
+    margin-bottom: 20px!important;
+    padding-bottom: 20px;
+    margin-right: 10px!important;
+    text-align: right;
+}

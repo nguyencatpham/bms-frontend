@@ -1339,59 +1339,102 @@
         "deprecated": false
       }
     },
-    "/systems": {
-      "post": {
+    "/systems/{id}/device": {
+      "get": {
         "tags": [
           "System"
         ],
-        "summary": "Create a new instance of the model and persist it into the data source.",
-        "operationId": "System.create",
+        "summary": "Fetches belongsTo relation device.",
+        "operationId": "System.prototype.__get__device",
         "parameters": [
           {
-            "name": "data",
-            "in": "body",
-            "description": "Model instance data",
+            "name": "id",
+            "in": "path",
+            "description": "System id",
+            "required": true,
+            "type": "string",
+            "format": "JSON"
+          },
+          {
+            "name": "refresh",
+            "in": "query",
             "required": false,
-            "schema": {
-              "description": "Model instance data",
-              "$ref": "#/definitions/System"
-            }
+            "type": "boolean"
           }
         ],
         "responses": {
           "200": {
             "description": "Request was successful",
             "schema": {
-              "$ref": "#/definitions/System"
+              "$ref": "#/definitions/Device"
+            }
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/systems/{id}/blocks/{fk}": {
+      "get": {
+        "tags": [
+          "System"
+        ],
+        "summary": "Find a related item by id for blocks.",
+        "operationId": "System.prototype.__findById__blocks",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "System id",
+            "required": true,
+            "type": "string",
+            "format": "JSON"
+          },
+          {
+            "name": "fk",
+            "in": "path",
+            "description": "Foreign key for blocks",
+            "required": true,
+            "type": "string",
+            "format": "JSON"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Request was successful",
+            "schema": {
+              "$ref": "#/definitions/Block"
             }
           }
         },
         "deprecated": false
       },
-      "patch": {
+      "delete": {
         "tags": [
           "System"
         ],
-        "summary": "Patch an existing model instance or insert a new one into the data source.",
-        "operationId": "System.patchOrCreate",
+        "summary": "Delete a related item by id for blocks.",
+        "operationId": "System.prototype.__destroyById__blocks",
         "parameters": [
           {
-            "name": "data",
-            "in": "body",
-            "description": "Model instance data",
-            "required": false,
-            "schema": {
-              "description": "Model instance data",
-              "$ref": "#/definitions/System"
-            }
+            "name": "id",
+            "in": "path",
+            "description": "System id",
+            "required": true,
+            "type": "string",
+            "format": "JSON"
+          },
+          {
+            "name": "fk",
+            "in": "path",
+            "description": "Foreign key for blocks",
+            "required": true,
+            "type": "string",
+            "format": "JSON"
           }
         ],
         "responses": {
-          "200": {
-            "description": "Request was successful",
-            "schema": {
-              "$ref": "#/definitions/System"
-            }
+          "204": {
+            "description": "Request was successful"
           }
         },
         "deprecated": false
@@ -1400,8 +1443,156 @@
         "tags": [
           "System"
         ],
-        "summary": "Replace an existing model instance or insert a new one into the data source.",
-        "operationId": "System.replaceOrCreate__put_systems",
+        "summary": "Update a related item by id for blocks.",
+        "operationId": "System.prototype.__updateById__blocks",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "System id",
+            "required": true,
+            "type": "string",
+            "format": "JSON"
+          },
+          {
+            "name": "fk",
+            "in": "path",
+            "description": "Foreign key for blocks",
+            "required": true,
+            "type": "string",
+            "format": "JSON"
+          },
+          {
+            "name": "data",
+            "in": "body",
+            "required": false,
+            "schema": {
+              "$ref": "#/definitions/Block"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Request was successful",
+            "schema": {
+              "$ref": "#/definitions/Block"
+            }
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/systems/{id}/blocks": {
+      "get": {
+        "tags": [
+          "System"
+        ],
+        "summary": "get blocks data",
+        "operationId": "System.prototype.getBlocks",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "System id",
+            "required": true,
+            "type": "string",
+            "format": "JSON"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Request was successful",
+            "schema": {
+              "$ref": "#/definitions/Block"
+            }
+          }
+        },
+        "deprecated": false
+      },
+      "post": {
+        "tags": [
+          "System"
+        ],
+        "summary": "Creates a new instance in blocks of this model.",
+        "operationId": "System.prototype.__create__blocks",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "System id",
+            "required": true,
+            "type": "string",
+            "format": "JSON"
+          },
+          {
+            "name": "data",
+            "in": "body",
+            "required": false,
+            "schema": {
+              "$ref": "#/definitions/Block"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Request was successful",
+            "schema": {
+              "$ref": "#/definitions/Block"
+            }
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/systems/{id}/blocks/count": {
+      "get": {
+        "tags": [
+          "System"
+        ],
+        "summary": "Counts blocks of System.",
+        "operationId": "System.prototype.__count__blocks",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "System id",
+            "required": true,
+            "type": "string",
+            "format": "JSON"
+          },
+          {
+            "name": "where",
+            "in": "query",
+            "description": "Criteria to match model instances",
+            "required": false,
+            "type": "string",
+            "format": "JSON"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Request was successful",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "count": {
+                  "type": "number",
+                  "format": "double"
+                }
+              }
+            }
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/systems": {
+      "post": {
+        "tags": [
+          "System"
+        ],
+        "summary": "Create a new instance of the model and persist it into the data source.",
+        "operationId": "System.create",
         "parameters": [
           {
             "name": "data",
@@ -1454,139 +1645,7 @@
         "deprecated": false
       }
     },
-    "/systems/replaceOrCreate": {
-      "post": {
-        "tags": [
-          "System"
-        ],
-        "summary": "Replace an existing model instance or insert a new one into the data source.",
-        "operationId": "System.replaceOrCreate__post_systems_replaceOrCreate",
-        "parameters": [
-          {
-            "name": "data",
-            "in": "body",
-            "description": "Model instance data",
-            "required": false,
-            "schema": {
-              "description": "Model instance data",
-              "$ref": "#/definitions/System"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Request was successful",
-            "schema": {
-              "$ref": "#/definitions/System"
-            }
-          }
-        },
-        "deprecated": false
-      }
-    },
-    "/systems/upsertWithWhere": {
-      "post": {
-        "tags": [
-          "System"
-        ],
-        "summary": "Update an existing model instance or insert a new one into the data source based on the where criteria.",
-        "operationId": "System.upsertWithWhere",
-        "parameters": [
-          {
-            "name": "where",
-            "in": "query",
-            "description": "Criteria to match model instances",
-            "required": false,
-            "type": "string",
-            "format": "JSON"
-          },
-          {
-            "name": "data",
-            "in": "body",
-            "description": "An object of model property name/value pairs",
-            "required": false,
-            "schema": {
-              "description": "An object of model property name/value pairs",
-              "$ref": "#/definitions/System"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Request was successful",
-            "schema": {
-              "$ref": "#/definitions/System"
-            }
-          }
-        },
-        "deprecated": false
-      }
-    },
-    "/systems/{id}/exists": {
-      "get": {
-        "tags": [
-          "System"
-        ],
-        "summary": "Check whether a model instance exists in the data source.",
-        "operationId": "System.exists__get_systems_{id}_exists",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "description": "Model id",
-            "required": true,
-            "type": "string",
-            "format": "JSON"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Request was successful",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "exists": {
-                  "type": "boolean"
-                }
-              }
-            }
-          }
-        },
-        "deprecated": false
-      }
-    },
     "/systems/{id}": {
-      "head": {
-        "tags": [
-          "System"
-        ],
-        "summary": "Check whether a model instance exists in the data source.",
-        "operationId": "System.exists__head_systems_{id}",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "description": "Model id",
-            "required": true,
-            "type": "string",
-            "format": "JSON"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Request was successful",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "exists": {
-                  "type": "boolean"
-                }
-              }
-            }
-          }
-        },
-        "deprecated": false
-      },
       "get": {
         "tags": [
           "System"
@@ -1621,42 +1680,6 @@
         },
         "deprecated": false
       },
-      "put": {
-        "tags": [
-          "System"
-        ],
-        "summary": "Replace attributes for a model instance and persist it into the data source.",
-        "operationId": "System.replaceById__put_systems_{id}",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "description": "Model id",
-            "required": true,
-            "type": "string",
-            "format": "JSON"
-          },
-          {
-            "name": "data",
-            "in": "body",
-            "description": "Model instance data",
-            "required": false,
-            "schema": {
-              "description": "Model instance data",
-              "$ref": "#/definitions/System"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Request was successful",
-            "schema": {
-              "$ref": "#/definitions/System"
-            }
-          }
-        },
-        "deprecated": false
-      },
       "delete": {
         "tags": [
           "System"
@@ -1678,154 +1701,6 @@
             "description": "Request was successful",
             "schema": {
               "type": "object"
-            }
-          }
-        },
-        "deprecated": false
-      },
-      "patch": {
-        "tags": [
-          "System"
-        ],
-        "summary": "Patch attributes for a model instance and persist it into the data source.",
-        "operationId": "System.prototype.patchAttributes",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "description": "System id",
-            "required": true,
-            "type": "string",
-            "format": "JSON"
-          },
-          {
-            "name": "data",
-            "in": "body",
-            "description": "An object of model property name/value pairs",
-            "required": false,
-            "schema": {
-              "description": "An object of model property name/value pairs",
-              "$ref": "#/definitions/System"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Request was successful",
-            "schema": {
-              "$ref": "#/definitions/System"
-            }
-          }
-        },
-        "deprecated": false
-      }
-    },
-    "/systems/{id}/replace": {
-      "post": {
-        "tags": [
-          "System"
-        ],
-        "summary": "Replace attributes for a model instance and persist it into the data source.",
-        "operationId": "System.replaceById__post_systems_{id}_replace",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "description": "Model id",
-            "required": true,
-            "type": "string",
-            "format": "JSON"
-          },
-          {
-            "name": "data",
-            "in": "body",
-            "description": "Model instance data",
-            "required": false,
-            "schema": {
-              "description": "Model instance data",
-              "$ref": "#/definitions/System"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Request was successful",
-            "schema": {
-              "$ref": "#/definitions/System"
-            }
-          }
-        },
-        "deprecated": false
-      }
-    },
-    "/systems/findOne": {
-      "get": {
-        "tags": [
-          "System"
-        ],
-        "summary": "Find first instance of the model matched by filter from the data source.",
-        "operationId": "System.findOne",
-        "parameters": [
-          {
-            "name": "filter",
-            "in": "query",
-            "description": "Filter defining fields, where, include, order, offset, and limit - must be a JSON-encoded string (`{\"where\":{\"something\":\"value\"}}`).  See https://loopback.io/doc/en/lb3/Querying-data.html#using-stringified-json-in-rest-queries for more details.",
-            "required": false,
-            "type": "string",
-            "format": "JSON"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Request was successful",
-            "schema": {
-              "$ref": "#/definitions/System"
-            }
-          }
-        },
-        "deprecated": false
-      }
-    },
-    "/systems/update": {
-      "post": {
-        "tags": [
-          "System"
-        ],
-        "summary": "Update instances of the model matched by {{where}} from the data source.",
-        "operationId": "System.updateAll",
-        "parameters": [
-          {
-            "name": "where",
-            "in": "query",
-            "description": "Criteria to match model instances",
-            "required": false,
-            "type": "string",
-            "format": "JSON"
-          },
-          {
-            "name": "data",
-            "in": "body",
-            "description": "An object of model property name/value pairs",
-            "required": false,
-            "schema": {
-              "description": "An object of model property name/value pairs",
-              "$ref": "#/definitions/System"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Request was successful",
-            "schema": {
-              "description": "Information related to the outcome of the operation",
-              "type": "object",
-              "properties": {
-                "count": {
-                  "description": "The number of instances updated",
-                  "type": "number",
-                  "format": "double"
-                }
-              }
             }
           }
         },
@@ -1866,52 +1741,107 @@
         "deprecated": false
       }
     },
-    "/systems/change-stream": {
-      "post": {
-        "tags": [
-          "System"
-        ],
-        "summary": "Create a change stream.",
-        "operationId": "System.createChangeStream__post_systems_change-stream",
-        "parameters": [
-          {
-            "name": "options",
-            "in": "formData",
-            "required": false,
-            "type": "string",
-            "format": "JSON"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Request was successful",
-            "schema": {
-              "type": "file"
-            }
-          }
-        },
-        "deprecated": false
-      },
+    "/systems/{id}/tsdata": {
       "get": {
         "tags": [
           "System"
         ],
-        "summary": "Create a change stream.",
-        "operationId": "System.createChangeStream__get_systems_change-stream",
+        "summary": "get timeserial data",
+        "operationId": "System.prototype.getTSData",
         "parameters": [
           {
-            "name": "options",
-            "in": "query",
-            "required": false,
+            "name": "id",
+            "in": "path",
+            "description": "System id",
+            "required": true,
             "type": "string",
             "format": "JSON"
+          },
+          {
+            "name": "start",
+            "in": "query",
+            "required": true,
+            "type": "string",
+            "format": "date-time"
+          },
+          {
+            "name": "end",
+            "in": "query",
+            "required": true,
+            "type": "string",
+            "format": "date-time"
+          },
+          {
+            "name": "macAddress",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "unitId",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "stringId",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "type",
+            "in": "query",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "type": "number",
+            "format": "double"
           }
         ],
         "responses": {
           "200": {
             "description": "Request was successful",
             "schema": {
-              "type": "file"
+              "$ref": "#/definitions/tsdata"
+            }
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/blocks/{id}/system": {
+      "get": {
+        "tags": [
+          "Block"
+        ],
+        "summary": "Fetches belongsTo relation system.",
+        "operationId": "Block.prototype.__get__system",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Block id",
+            "required": true,
+            "type": "string",
+            "format": "JSON"
+          },
+          {
+            "name": "refresh",
+            "in": "query",
+            "required": false,
+            "type": "boolean"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Request was successful",
+            "schema": {
+              "$ref": "#/definitions/System"
             }
           }
         },
@@ -3720,10 +3650,6 @@
         "error": {
           "type": "string"
         },
-        "id": {
-          "type": "number",
-          "format": "double"
-        },
         "created": {
           "type": "string",
           "format": "date-time"
@@ -3817,9 +3743,6 @@
         "updated": {
           "type": "string",
           "format": "date-time"
-        },
-        "macAddress": {
-          "type": "string"
         }
       },
       "required": [
@@ -3928,6 +3851,80 @@
       "required": [
         "deviceId",
         "systemId"
+      ],
+      "additionalProperties": false
+    },
+    "tsdata": {
+      "properties": {
+        "deviceId": {
+          "type": "string"
+        },
+        "systemId": {
+          "type": "string"
+        },
+        "macAddress": {
+          "type": "string"
+        },
+        "unitId": {
+          "type": "string"
+        },
+        "stringId": {
+          "type": "string"
+        },
+        "timestamp": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "r1": {
+          "type": "number",
+          "format": "double"
+        },
+        "r2": {
+          "type": "number",
+          "format": "double"
+        },
+        "v0": {
+          "type": "number",
+          "format": "double"
+        },
+        "v1": {
+          "type": "number",
+          "format": "double"
+        },
+        "v2": {
+          "type": "number",
+          "format": "double"
+        },
+        "e": {
+          "type": "number",
+          "format": "double"
+        },
+        "soc": {
+          "type": "number",
+          "format": "double"
+        },
+        "r": {
+          "type": "number",
+          "format": "double"
+        },
+        "t": {
+          "type": "number",
+          "format": "double"
+        },
+        "vscale": {
+          "type": "number",
+          "format": "double"
+        },
+        "blkCapacity": {
+          "type": "number",
+          "format": "double"
+        }
+      },
+      "required": [
+        "deviceId",
+        "systemId",
+        "macAddress",
+        "timestamp"
       ],
       "additionalProperties": false
     },

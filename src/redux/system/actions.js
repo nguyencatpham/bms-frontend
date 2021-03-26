@@ -1,0 +1,18 @@
+export const ENTITY = 'system'
+const actions = {
+  // SET
+  SET_STATE: `${ENTITY}/SET_STATE`,
+  SET_LIST_STATE: `${ENTITY}/SET_LIST_STATE`,
+  // GET
+  COUNT: `${ENTITY}/COUNT`,
+  LIST: `${ENTITY}/LIST`,
+  DETAIL: `${ENTITY}/DETAIL`,
+  CREATE: `${ENTITY}/CREATE`,
+  UPDATE: `${ENTITY}/UPDATE`,
+  DELETE: `${ENTITY}/DELETE`,
+  ATTACH: `${ENTITY}/ATTACH`,
+  GET_BLOCKS: `${ENTITY}/GET_BLOCKS`,
+  GET_TSDATA: `${ENTITY}/GET_TSDATA`
+}
+
+export default actions

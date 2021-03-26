@@ -6,6 +6,7 @@ import settings from './settings/reducers'
 import account from './account/reducers'
 import device from './device/reducers'
 import authDevice from './authDevice/reducers'
+import system from './system/reducers'
 
 export default history =>
   combineReducers({
@@ -15,5 +16,6 @@ export default history =>
     settings,
     account,
     device,
-    authDevice
+    authDevice,
+    system
   })
