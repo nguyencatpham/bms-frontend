@@ -1,21 +1,21 @@
 import React, { useState, useEffect } from 'react'
 import { Helmet } from 'react-helmet'
-import { Button, Modal, Table, Form, Tabs } from 'antd'
+import { Button, Modal, Table, Tabs } from 'antd'
 import { connect } from 'react-redux'
 import { withRouter, useParams } from 'react-router-dom'
-import { history } from 'index'
 import { get } from 'lodash'
 import { TIME_FORMAT } from 'constant'
 
 import General from 'components/kit/widgets/General/10v1'
-import General1 from 'components/kit/widgets/General/1'
 import TotalBlock from 'components/kit/widgets/General/totalBlock'
 import List19 from 'components/kit/widgets/Lists/19'
 import moment from 'moment'
 import SystemPage from './system'
+import SettingPage from './setting'
+import HistoryPage from './history'
+import AlertPage from './alert'
 import '../style.scss'
 
-const { Item } = Form
 const { TabPane } = Tabs
 
 const mapStateToProps = ({ authDevice, dispatch }) => {
@@ -27,10 +27,9 @@ const mapStateToProps = ({ authDevice, dispatch }) => {
   return { loading, detail, device, system, blocks, dispatch }
 }
 
-const DefaultPage = ({ loading, detail, device, system, blocks, dispatch }) => {
+const DefaultPage = ({ loading, detail, system, dispatch }) => {
   const { id } = useParams()
-  const [form] = Form.useForm()
-  const { macAddress, uuid, serialId, model, updated, devices = [] } = detail
+  const { macAddress, uuid, model, updated, devices = [] } = detail
   const { name } = system
   const [showmodal, setShowmodal] = useState()
   const [tabKey, setTabKey] = useState('1')
@@ -43,16 +42,6 @@ const DefaultPage = ({ loading, detail, device, system, blocks, dispatch }) => {
       }
     })
     setShowmodal(false)
-  }
-  const onFinish = body => {
-    console.log('bod', body)
-    dispatch({
-      type: 'device/SET_PASSWORD',
-      payload: {
-        id,
-        password: body.password
-      }
-    })
   }
   const changeTab = key => {
     setTabKey(key)
@@ -96,6 +85,19 @@ const DefaultPage = ({ loading, detail, device, system, blocks, dispatch }) => {
   delete _system.deviceId
   delete _system.systemId
   delete _system.userId
+  delete _system.created
+  delete _system.error
+  delete _system.block
+  delete _system.unit
+  delete _system.enable
+  delete _system.address16
+  delete _system.address24
+  delete _system.address32
+  delete _system.address40
+  delete _system.internetAvailable
+  delete _system.wifiSignal
+  delete _system.ssid
+  delete _system.mobileSignal
 
   const supportCasesTableData = Object.keys(_system).map((value, index) => ({
     key: `${index}`,
@@ -161,11 +163,6 @@ const DefaultPage = ({ loading, detail, device, system, blocks, dispatch }) => {
                 </div>
               </div>
             </div>
-            <div className='card'>
-              <div className='card-body'>
-                <List19 />
-              </div>
-            </div>
           </div>
           <div className='col-xl-8 col-lg-12'>
             <div className='card profile-general'>
@@ -175,8 +172,8 @@ const DefaultPage = ({ loading, detail, device, system, blocks, dispatch }) => {
                 </div>
                 <Tabs activeKey={tabKey} className='mr-auto kit-tabs-bold' onChange={changeTab}>
                   <TabPane tab='Hệ thống' key='1' />
-                  <TabPane tab='Trạng thái' key='2' />
-                  <TabPane tab='Cấu hình' key='3' />
+                  <TabPane tab='Cấu hình' key='2' />
+                  <TabPane tab='Cảnh báo' key='3' />
                   <TabPane tab='Lịch sử hoạt động' key='4' />
                 </Tabs>
               </div>
@@ -185,7 +182,13 @@ const DefaultPage = ({ loading, detail, device, system, blocks, dispatch }) => {
                   <SystemPage />
                 )}
                 {tabKey === '2' && (
-                  <div />
+                  <SettingPage />
+                )}
+                {tabKey === '3' && (
+                  <AlertPage />
+                )}
+                {tabKey === '4' && (
+                  <HistoryPage />
                 )}
               </div>
             </div>

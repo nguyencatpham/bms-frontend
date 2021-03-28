@@ -1814,6 +1814,86 @@
         "deprecated": false
       }
     },
+    "/systems/{id}/events": {
+      "get": {
+        "tags": [
+          "System"
+        ],
+        "summary": "get events data",
+        "operationId": "System.prototype.getEvents",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "System id",
+            "required": true,
+            "type": "string",
+            "format": "JSON"
+          },
+          {
+            "name": "start",
+            "in": "query",
+            "required": true,
+            "type": "string",
+            "format": "date-time"
+          },
+          {
+            "name": "end",
+            "in": "query",
+            "required": true,
+            "type": "string",
+            "format": "date-time"
+          },
+          {
+            "name": "macAddress",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "unitId",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "stringId",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "priority",
+            "in": "query",
+            "required": true,
+            "type": "string",
+            "format": "JSON"
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "type": "number",
+            "format": "double"
+          },
+          {
+            "name": "isAsc",
+            "in": "query",
+            "required": false,
+            "type": "boolean"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Request was successful",
+            "schema": {
+              "$ref": "#/definitions/Event"
+            }
+          }
+        },
+        "deprecated": false
+      }
+    },
     "/blocks/{id}/system": {
       "get": {
         "tags": [
@@ -3930,12 +4010,12 @@
     },
     "Event": {
       "properties": {
-        "id": {
+        "priority": {
+          "default": 2,
           "type": "number",
           "format": "double"
         },
         "type": {
-          "maxLength": 50,
           "type": "string"
         },
         "systemId": {
@@ -3958,20 +4038,31 @@
           "maxLength": 40,
           "type": "string"
         },
-        "blockId": {
+        "macAddress": {
           "maxLength": 40,
           "type": "string"
         },
-        "vars": {
+        "metadata": {
           "default": {},
           "type": "object"
         },
-        "value": {
+        "title": {
+          "type": "string"
+        },
+        "body": {
           "type": "string"
         },
         "read": {
           "default": false,
           "type": "boolean"
+        },
+        "timestamp": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "id": {
+          "type": "number",
+          "format": "double"
         },
         "created": {
           "type": "string",
@@ -3984,7 +4075,7 @@
       },
       "required": [
         "type",
-        "vars",
+        "metadata",
         "read"
       ],
       "additionalProperties": false

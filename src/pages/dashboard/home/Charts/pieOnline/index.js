@@ -83,8 +83,8 @@ const Chart9 = () => {
 
   return (
     <div>
-      <div className='text-dark font-size-18 font-weight-bold mb-1'>Thống kê số lượng ắc quy</div>
-      <div className='text-gray-6 mb-2'>Thống kê số lượng ắc quy trong hệ thống.</div>
+      <div className='text-dark font-size-18 font-weight-bold mb-1'>Hệ thống</div>
+      <div className='text-gray-6 mb-2'>Thống kê số lượng hệ thống đã triển khai.</div>
       <div className='d-flex flex-wrap align-items-center'>
         <div className='mr-3 mt-3 mb-3 position-relative'>
           <Pie

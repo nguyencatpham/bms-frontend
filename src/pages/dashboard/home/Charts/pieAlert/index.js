@@ -1,102 +1,77 @@
-import React, { useState, useEffect } from 'react'
-import { Pie } from 'react-chartjs-2'
-import faker from 'faker'
+import React, { useLayoutEffect, useRef } from 'react'
+import * as am4core from '@amcharts/amcharts4/core'
+import * as am4charts from '@amcharts/amcharts4/charts'
+import am4themesAnimated from '@amcharts/amcharts4/themes/animated'
 import style from './style.module.scss'
+
+am4core.useTheme(am4themesAnimated)
 
 const Chart9 = () => {
   const tooltip = React.createRef()
-  const [myRef, setMyRef] = useState(null)
-  const [legend, setLegend] = useState(undefined)
+  const chart = useRef(null)
 
-  useEffect(() => {
-    const leg = generateLegend()
-    setLegend(leg)
-  })
+  useLayoutEffect(() => {
+    const armChart = am4core.create('chartdiv', am4charts.XYChart)
+    const data = [{
+      country: 'Lithuania',
+      litres: 501.9
+    }, {
+      country: 'Czechia',
+      litres: 301.9
+    }, {
+      country: 'Ireland',
+      litres: 201.1
+    }, {
+      country: 'Germany',
+      litres: 165.8
+    }, {
+      country: 'Australia',
+      litres: 139.9
+    }, {
+      country: 'Austria',
+      litres: 128.3
+    }, {
+      country: 'UK',
+      litres: 99
+    }, {
+      country: 'Belgium',
+      litres: 60
+    }, {
+      country: 'The Netherlands',
+      litres: 50
+    }]
+    chart.current = armChart
+    chart.current.data = data
+    // Set inner radius
+    chart.current.innerRadius = am4core.percent(50)
 
-  const setTextInputRef = element => {
-    setMyRef(element)
-  }
+    // Add and configure Series
+    const pieSeries = chart.current.series.push(new am4charts.PieSeries())
+    pieSeries.dataFields.value = 'litres'
+    pieSeries.dataFields.category = 'country'
+    pieSeries.slices.template.stroke = am4core.color('#fff')
+    pieSeries.slices.template.strokeWidth = 2
+    pieSeries.slices.template.strokeOpacity = 1
 
-  const generateLegend = () => {
-    if (!myRef) return null
-    return myRef.chartInstance.generateLegend()
-  }
+    // This creates initial animation
+    pieSeries.hiddenState.properties.opacity = 1
+    pieSeries.hiddenState.properties.endAngle = -90
+    pieSeries.hiddenState.properties.startAngle = -90
 
-  const createMarkup = () => {
-    return { __html: legend }
-  }
-
-  const data = {
-    labels: ['12 Báo động', '30 Cảnh báo', '129 Bình thường'],
-    datasets: [
-      {
-        data: [faker.random.number(1000), faker.random.number(1000), faker.random.number(1000)],
-        backgroundColor: ['#f5222d', '#fadb14', '#52c41a'],
-        borderColor: '#fff',
-        borderWidth: 2,
-        hoverBorderWidth: 0,
-        borderAlign: 'inner'
-      }
-    ]
-  }
-
-  const options = {
-    animation: true,
-    responsive: true,
-    cutoutPercentage: 70,
-    legend: {
-      display: false
-    },
-    tooltips: {
-      enabled: false,
-      custom: tooltipData => {
-        const tooltipEl = tooltip.current
-        tooltipEl.style.opacity = 1
-        if (tooltipData.opacity === 0) {
-          tooltipEl.style.opacity = 0
-        }
-      },
-      callbacks: {
-        label: (tooltipItem, itemData) => {
-          const dataset = itemData.datasets[0]
-          const value = dataset.data[tooltipItem.index]
-          tooltip.current.innerHTML = value
-        }
-      }
-    },
-    legendCallback: chart => {
-      const { labels } = chart.data
-      let legendMarkup = []
-      const dataset = chart.data.datasets[0]
-      legendMarkup.push('<div class="kit__c9__chartLegend flex-shrink-0">')
-      let legends = labels.map((label, index) => {
-        const color = dataset.backgroundColor[index]
-        return `<div class="d-flex align-items-center flex-nowrap mt-2 mb-2"><div class="tablet mr-3" style="background-color: ${color}"></div>${label}</div>`
-      })
-      legends = legends.join('')
-      legendMarkup.push(legends)
-      legendMarkup.push('</div>')
-      legendMarkup = legendMarkup.join('')
-      return legendMarkup
+    return () => {
+      armChart.dispose()
     }
-  }
+  }, [])
 
   return (
     <div>
       <div className='text-dark font-size-18 font-weight-bold mb-1'>Thống kê cảnh báo</div>
-      <div className='text-gray-6 mb-2'>Thống kê cảnh báo trong tháng qua.</div>
+      <div className='text-gray-6 mb-2'>Thống kê cảnh báo của bình ắc quy.</div>
       <div className='d-flex flex-wrap align-items-center'>
         <div className='mr-3 mt-3 mb-3 position-relative'>
-          <Pie
-            ref={element => setTextInputRef(element)}
-            data={data}
-            options={options}
-            width={140}
-            height={140}
-          />
+          <div id='chartdiv' style={{ width: '100%', height: '500px' }} />
           <div className={`${style.tooltip} text-gray-5 font-size-28`} ref={tooltip} />
         </div>
-        <div dangerouslySetInnerHTML={createMarkup()} />
       </div>
     </div>
   )

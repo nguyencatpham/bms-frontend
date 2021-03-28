@@ -1,23 +1,25 @@
 
 import React, { useState, useEffect } from 'react'
-import { Avatar, Input, Select, Table, Button, Form } from 'antd'
+import { Avatar, Input, Table, Button, Form } from 'antd'
 import { connect } from 'react-redux'
-import { UserOutlined, CloseOutlined, EditOutlined } from '@ant-design/icons'
+import { UserOutlined, CloseOutlined } from '@ant-design/icons'
 import { withRouter, Link } from 'react-router-dom'
 import { Helmet } from 'react-helmet'
-import { TIME_FORMAT, ROLE } from 'constant'
+import { TIME_FORMAT } from 'constant'
 import moment from 'moment'
 import PreConfirm from 'components/pre-confirm'
 import { get } from 'lodash'
 import './style.scss'
 
 const { Item } = Form
-const { Option } = Select
 
 const mapStateToProps = ({ authDevice, user, dispatch }) => {
-  const { list, loading, total, preConfirm } = authDevice
+  let { list, loading, total, preConfirm } = authDevice
   const { list: users, username, email } = user
   const usernameOrEmail = username || email
+  if (typeof total === 'object') {
+    total = total.count
+  }
 
   return { list, loading, total, users, preConfirm, usernameOrEmail, dispatch }
 }
@@ -26,16 +28,14 @@ const DefaultPage = ({ list, loading, total, preConfirm, usernameOrEmail, dispat
   const [form] = Form.useForm()
   const [modal, setModal] = useState()
   const [name, setName] = useState()
-  const [roles, setRoles] = useState([])
+  const [roles] = useState([])
   const [pagination, setPagination] = useState({
     current: 1,
     pageSize: 10,
     total: 0,
-    showTotal: (total, range) => `${range[0]}-${range[1]} trên ${total} tài khoản`
+    showTotal: (total, range) => `${range[0]}-${range[1]} trên ${total} thiết bị`
   })
   const [payload, setPayload] = useState({
-    skip: pagination.pageSize * (pagination.current - 1),
-    limit: pagination.pageSize,
     filter: JSON.stringify({
       include: [{
         relation: 'devices',
@@ -49,7 +49,10 @@ const DefaultPage = ({ list, loading, total, preConfirm, usernameOrEmail, dispat
             }
           }]
         }
-      }]
+      }],
+      skip: (pagination.current - 1) * pagination.pageSize,
+      limit: pagination.pageSize,
+      order: ['created DESC']
     })
   })
 
@@ -211,10 +214,12 @@ const DefaultPage = ({ list, loading, total, preConfirm, usernameOrEmail, dispat
             }]
           }
         }],
-        where: { and }
+        where: { and },
+        skip: 0,
+        limit: pagination.pageSize,
+        order: ['created DESC']
       })
     })
-    // setQuery(and)
   }
   return (
     <>

@@ -12,7 +12,9 @@ const actions = {
   DELETE: `${ENTITY}/DELETE`,
   ATTACH: `${ENTITY}/ATTACH`,
   GET_BLOCKS: `${ENTITY}/GET_BLOCKS`,
-  GET_TSDATA: `${ENTITY}/GET_TSDATA`
+  GET_TSDATA: `${ENTITY}/GET_TSDATA`,
+  HISTORY: `${ENTITY}/HISTORY`,
+  GET_ALERT: `${ENTITY}/GET_ALERT`
 }
 
 export default actions

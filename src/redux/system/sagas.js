@@ -61,6 +61,7 @@ export default function * rootSaga () {
     takeEvery(actions.DETAIL, COMMON({ type: TYPES.SYSTEMS_GET_ID, field: 'detail' })),
     takeEvery(actions.DELETE, COMMON({ type: TYPES.SYSTEMS_DELETE_ID, field: 'id' })),
     takeEvery(actions.GET_BLOCKS, COMMON({ type: TYPES.SYSTEMS_GET_ID_BLOCKS, field: 'blocks' })),
-    takeEvery(actions.GET_TSDATA, COMMON({ type: TYPES.SYSTEMS_GET_ID_TSDATA, field: 'tsdata' }))
+    takeEvery(actions.GET_TSDATA, COMMON({ type: TYPES.SYSTEMS_GET_ID_TSDATA, field: 'tsdata' })),
+    takeEvery(actions.HISTORY, COMMON({ type: TYPES.SYSTEMS_GET_ID_EVENTS, field: 'histories' }))
   ])
 }

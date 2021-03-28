@@ -2,17 +2,13 @@ import React, { useState } from 'react'
 import { Helmet } from 'react-helmet'
 import List12 from 'components/kit/widgets/Lists/12'
 import List15 from 'components/kit/widgets/Lists/15'
-import Chart1 from './Charts/1'
 import Chart2 from './Charts/2'
 import PieAlert from './Charts/pieAlert'
 import PieOnline from './Charts/pieOnline'
 import BarLine from './Charts/barline'
-import faker from 'faker'
-import { Pagination, DatePicker, Select } from 'antd'
+import { Pagination } from 'antd'
 import InfoModal from './info'
 import './style.scss'
-const { RangePicker } = DatePicker
-const { Option } = Select
 
 const ExtraAppsGoogleAnalytics = () => {
   const [modal, setModal] = useState()
@@ -58,44 +54,7 @@ const ExtraAppsGoogleAnalytics = () => {
       <Helmet title='Hệ thống quản lý ắc quy' />
       <div className='row'>
         <div className='col-lg-12 col-md-12'>
-          <h5 className='text-dark mb-4 text-uppercase'>Hệ thống quản lý ắc quy</h5>
-          <div className='card'>
-            <div className='card-body row'>
-              <div className='col-md-3'>
-                <RangePicker />
-              </div>
-              <div className='col-md-3'>
-                <Select
-                  mode='multiple'
-                  allowClear
-                  style={{ width: '100%' }}
-                  placeholder='System'
-                >
-                  <Option>SESAN4_220KV_BMS1</Option>
-                </Select>
-              </div>
-              <div className='col-md-3'>
-                <Select
-                  mode='multiple'
-                  allowClear
-                  style={{ width: '100%' }}
-                  placeholder='Unit'
-                >
-                  <Option>Local Unit</Option>
-                </Select>
-              </div>
-              <div className='col-md-3'>
-                <Select
-                  mode='multiple'
-                  allowClear
-                  style={{ width: '100%' }}
-                  placeholder='Block'
-                >
-                  <Option>Block 1</Option>
-                </Select>
-              </div>
-            </div>
-          </div>
+          <h5 className='text-dark mb-4 text-uppercase'>Hệ thống quản lý và giám sát bình ắc quy</h5>
         </div>
         <div className='col-xl-8 col-lg-12'>
           <div className='row'>
@@ -154,7 +113,7 @@ const ExtraAppsGoogleAnalytics = () => {
           </div>
         </div>
         <div className='col-xl-4 col-lg-12'>
-          <h5 className='text-dark mb-4'>Trạng thái Ắc quy</h5>
+          <h5 className='text-dark mb-4'>Hệ thống đã triển khai</h5>
           <div className='card'>
             <div className='card-body battery-cell-panel'>
               {batteryCellStatus}

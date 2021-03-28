@@ -17,7 +17,13 @@ export default async function getMenuData () {
       title: 'Thiết bị',
       key: '__device',
       url: '/devices',
-      icon: 'bx-bxs-car-battery'
+      icon: 'fe fe-airplay'
+    },
+    {
+      title: 'Thông báo',
+      key: '__event',
+      url: '/events',
+      icon: 'fe fe-alert-circle'
     }
 
     // VB:REPLACE-END:MENU-CONFIG

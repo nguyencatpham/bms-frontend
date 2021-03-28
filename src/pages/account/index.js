@@ -15,10 +15,12 @@ const { Item } = Form
 const { Option } = Select
 
 const mapStateToProps = ({ account, user, dispatch }) => {
-  const { list, loading, total, preConfirm } = account
+  let { list, loading, total, preConfirm } = account
   const { list: users, username, email } = user
   const usernameOrEmail = username || email
-
+  if (typeof total === 'object') {
+    total = total.count
+  }
   return { list, loading, total, users, preConfirm, usernameOrEmail, dispatch }
 }
 
@@ -36,7 +38,12 @@ const DefaultPage = ({ list, loading, total, preConfirm, usernameOrEmail, dispat
   const [payload, setPayload] = useState({
     skip: pagination.pageSize * (pagination.current - 1),
     limit: pagination.pageSize,
-    filter: JSON.stringify({ include: [{ relation: 'devices' }] })
+    filter: JSON.stringify({
+      include: [{ relation: 'devices' }],
+      skip: (pagination.current - 1) * pagination.pageSize,
+      limit: pagination.pageSize,
+      order: ['created DESC']
+    })
   })
 
   const columns = [
@@ -159,7 +166,13 @@ const DefaultPage = ({ list, loading, total, preConfirm, usernameOrEmail, dispat
     }
     setPayload({
       ...payload,
-      filter: JSON.stringify({ include: [{ relation: 'devices' }], where: { and } })
+      filter: JSON.stringify({
+        include: [{ relation: 'devices' }],
+        where: { and },
+        skip: 0,
+        limit: pagination.pageSize,
+        order: ['created DESC']
+      })
     })
     // setQuery(and)
   }

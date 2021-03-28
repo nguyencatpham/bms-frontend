@@ -1,6 +1,6 @@
 /* eslint camelcase: 0 */
 /*
-    Total: 98 APIs
+    Total: 99 APIs
     version: "0.1.0",
     title: "bms-backend",
     description: "bms Backend API"
@@ -62,6 +62,7 @@ export const types = {
   SYSTEMS_DELETE_ID: 'SYSTEMS_DELETE_ID',
   SYSTEMS_GET_COUNT: 'SYSTEMS_GET_COUNT',
   SYSTEMS_GET_ID_TSDATA: 'SYSTEMS_GET_ID_TSDATA',
+  SYSTEMS_GET_ID_EVENTS: 'SYSTEMS_GET_ID_EVENTS',
   BLOCKS_GET_ID_SYSTEM: 'BLOCKS_GET_ID_SYSTEM',
   BLOCKS_POST: 'BLOCKS_POST',
   BLOCKS_PATCH: 'BLOCKS_PATCH',
@@ -389,6 +390,11 @@ export const apis = {
   SYSTEMS_GET_ID_TSDATA: ({ id, start, end, macAddress, unitId, stringId, type, limit }) => ({
     method: 'GET',
     url: `${apiEndpoint}/api/systems/${id}/tsdata?${start ? `start=${encodeURIComponent(typeof start === 'object' ? JSON.stringify(start) : start)}&` : ''}${end ? `end=${encodeURIComponent(typeof end === 'object' ? JSON.stringify(end) : end)}&` : ''}${macAddress ? `macAddress=${encodeURIComponent(typeof macAddress === 'object' ? JSON.stringify(macAddress) : macAddress)}&` : ''}${unitId ? `unitId=${encodeURIComponent(typeof unitId === 'object' ? JSON.stringify(unitId) : unitId)}&` : ''}${stringId ? `stringId=${encodeURIComponent(typeof stringId === 'object' ? JSON.stringify(stringId) : stringId)}&` : ''}${type ? `type=${encodeURIComponent(typeof type === 'object' ? JSON.stringify(type) : type)}&` : ''}${limit ? `limit=${encodeURIComponent(typeof limit === 'object' ? JSON.stringify(limit) : limit)}` : ''}`
+  }),
+  // get events data
+  SYSTEMS_GET_ID_EVENTS: ({ id, start, end, macAddress, unitId, stringId, priority, limit, isAsc }) => ({
+    method: 'GET',
+    url: `${apiEndpoint}/api/systems/${id}/events?${start ? `start=${encodeURIComponent(typeof start === 'object' ? JSON.stringify(start) : start)}&` : ''}${end ? `end=${encodeURIComponent(typeof end === 'object' ? JSON.stringify(end) : end)}&` : ''}${macAddress ? `macAddress=${encodeURIComponent(typeof macAddress === 'object' ? JSON.stringify(macAddress) : macAddress)}&` : ''}${unitId ? `unitId=${encodeURIComponent(typeof unitId === 'object' ? JSON.stringify(unitId) : unitId)}&` : ''}${stringId ? `stringId=${encodeURIComponent(typeof stringId === 'object' ? JSON.stringify(stringId) : stringId)}&` : ''}${priority ? `priority=${encodeURIComponent(typeof priority === 'object' ? JSON.stringify(priority) : priority)}&` : ''}${limit ? `limit=${encodeURIComponent(typeof limit === 'object' ? JSON.stringify(limit) : limit)}&` : ''}${isAsc ? `isAsc=${encodeURIComponent(typeof isAsc === 'object' ? JSON.stringify(isAsc) : isAsc)}` : ''}`
   }),
   // Fetches belongsTo relation system.
   BLOCKS_GET_ID_SYSTEM: ({ id, refresh }) => ({
