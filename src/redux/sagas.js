@@ -6,7 +6,8 @@ import account from './account/sagas'
 import device from './device/sagas'
 import authDevice from './authDevice/sagas'
 import system from './system/sagas'
+import event from './event/sagas'
 
 export default function * rootSaga () {
-  yield all([user(), menu(), settings(), account(), device(), authDevice(), system()])
+  yield all([user(), menu(), settings(), account(), device(), authDevice(), system(), event()])
 }

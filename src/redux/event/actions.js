@@ -1,4 +1,4 @@
-export const ENTITY = 'system'
+export const ENTITY = 'event'
 const actions = {
   // SET
   SET_STATE: `${ENTITY}/SET_STATE`,
@@ -9,13 +9,7 @@ const actions = {
   DETAIL: `${ENTITY}/DETAIL`,
   CREATE: `${ENTITY}/CREATE`,
   UPDATE: `${ENTITY}/UPDATE`,
-  DELETE: `${ENTITY}/DELETE`,
-  ATTACH: `${ENTITY}/ATTACH`,
-  GET_BLOCKS: `${ENTITY}/GET_BLOCKS`,
-  GET_TSDATA: `${ENTITY}/GET_TSDATA`,
-  HISTORY: `${ENTITY}/HISTORY`,
-  EVENT: `${ENTITY}/EVENT`,
-  GET_ALERT: `${ENTITY}/GET_ALERT`
+  DELETE: `${ENTITY}/DELETE`
 }
 
 export default actions

@@ -15,7 +15,6 @@ import Localization from './localization'
 import Router from './router'
 import * as serviceWorker from './serviceWorker'
 import PackageJson from '../package.json'
-
 // mocking api
 // import 'services/axios/fakeApi'
 

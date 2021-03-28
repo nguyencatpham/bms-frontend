@@ -8,7 +8,6 @@ import { TIME_FORMAT } from 'constant'
 
 import General from 'components/kit/widgets/General/10v1'
 import TotalBlock from 'components/kit/widgets/General/totalBlock'
-import List19 from 'components/kit/widgets/Lists/19'
 import moment from 'moment'
 import SystemPage from './system'
 import SettingPage from './setting'
@@ -18,16 +17,15 @@ import '../style.scss'
 
 const { TabPane } = Tabs
 
-const mapStateToProps = ({ authDevice, dispatch }) => {
+const mapStateToProps = ({ authDevice, system: sys, dispatch }) => {
   const { loading, detail } = authDevice
   const device = get(detail.devices, ['0'], {})
   const system = get(device.systems, ['0'], {})
-  const blocks = system.blocks
-
+  const { blocks = [] } = sys
   return { loading, detail, device, system, blocks, dispatch }
 }
 
-const DefaultPage = ({ loading, detail, system, dispatch }) => {
+const DefaultPage = ({ loading, detail, system, blocks, dispatch }) => {
   const { id } = useParams()
   const { macAddress, uuid, model, updated, devices = [] } = detail
   const { name } = system
@@ -144,7 +142,10 @@ const DefaultPage = ({ loading, detail, system, dispatch }) => {
               </div>
             </div>
             <div className='card text-white bg-primary'>
-              <TotalBlock />
+              <TotalBlock
+                online={blocks.length}
+                total={blocks.length}
+              />
             </div>
             <div className='card'>
               <div className='card-header border-0 pb-0'>

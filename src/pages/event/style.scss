@@ -1,0 +1,66 @@
+.color-grey {
+    background-color: #bfbfbf;
+    td {
+        background-color: #bfbfbf !important;
+    }
+}
+.color-orange {
+    background-color: #ffd666;
+    td {
+        background-color: #ffd666 !important;
+    }
+}
+.color-green {
+    background-color:none;
+    td {
+        background-color:none !important;
+    }
+}
+.break-word {
+    max-width: 100px;
+    word-break: break-all;
+}
+.display-grid {
+    display: grid!important;
+    grid-template-columns: 30% 1fr;
+}
+.profile-general::before{
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background-color: #e4e9f0;
+    overflow: hidden;
+    border-top-left-radius: 6px;
+    border-top-right-radius: 6px;
+    // .card-top-primary:before, .card-top-secondary:before {
+      background-color: var(--vb-color-primary)!important;
+    // }
+  }
+.detail-page{
+    .square {
+        position: relative;
+        padding-left: 2rem;
+        font-size: 1.13rem;
+    }
+    .square::before {
+        position: absolute;
+        top: 0;
+        left: 10px;
+        content: '';
+        display: block;
+        float: left;
+        height: 1rem;
+        width: 1rem;
+        background: #389e0d;
+        border-radius: 4px;
+    }
+    .square-online::before{
+        background: #389e0d;
+    }
+    .square-offline::before{
+        background: #8c8c8c;
+    }
+}

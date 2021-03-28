@@ -71,7 +71,6 @@ const routes = [
     Component: lazy(() => import('pages/account/detail/device-attach')),
     exact: true
   },
-
   {
     path: '/devices',
     Component: lazy(() => import('pages/device')),
@@ -90,6 +89,11 @@ const routes = [
   {
     path: '/devices/:id/update',
     Component: lazy(() => import('pages/device/update')),
+    exact: true
+  },
+  {
+    path: '/events',
+    Component: lazy(() => import('pages/event')),
     exact: true
   }
 ]
