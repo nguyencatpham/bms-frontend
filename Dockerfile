@@ -1,5 +1,5 @@
 # build stage
-FROM --platform=$BUILDPLATFORM node:12.13.0-buster as build-stage
+FROM node:12.13.0-buster as build-stage
 
 ARG TARGETPLATFORM
 ARG BUILDPLATFORM
