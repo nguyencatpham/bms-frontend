@@ -1,3 +1,4 @@
+import { get } from 'lodash'
 import apiClient from 'services/axios'
 import store from 'store'
 
@@ -65,10 +66,11 @@ export async function currentAccount (id) {
   const filter = JSON.stringify({ include: [] })
 
   return apiClient
-    .get(`/api/users/${id}?filter=${filter}`)
+    .get(`/api/users/${id}`)
     .then(response => {
       if (response) {
         store.set('user.state', JSON.stringify(response.data))
+        store.set('user.role', get(response.data, ['role']))
         return response.data
       }
       return false

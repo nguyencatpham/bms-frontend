@@ -1,4 +1,4 @@
-const ENTITY = 'account'
+export const ENTITY = 'account'
 const actions = {
   // SET
   SET_STATE: `${ENTITY}/SET_STATE`,

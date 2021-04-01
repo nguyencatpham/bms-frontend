@@ -1,17 +1,14 @@
+import store from 'store'
+
 export default async function getMenuData () {
-  return [
+  const role = store.get('user.role')
+  const menu = [
     // VB:REPLACE-START:MENU-CONFIG
     {
       title: 'Trang chủ',
       key: '__dashboard',
       url: '/dashboard',
       icon: 'fe fe-home'
-    },
-    {
-      title: 'Khách hàng',
-      key: '__user',
-      url: '/accounts',
-      icon: 'fe fe-user'
     },
     {
       title: 'Thiết bị',
@@ -25,7 +22,26 @@ export default async function getMenuData () {
       url: '/events',
       icon: 'fe fe-alert-circle'
     }
-
-    // VB:REPLACE-END:MENU-CONFIG
   ]
+  switch (role) {
+    case 'admin':
+      menu.push({
+        title: 'Khách hàng',
+        key: '__user',
+        url: '/accounts',
+        icon: 'fe fe-user'
+      })
+      break
+    case 'client':
+      menu.push({
+        title: 'Nhân viên',
+        key: '__user',
+        url: '/accounts',
+        icon: 'fe fe-user'
+      })
+      break
+    default:
+      break
+  }
+  return menu
 }

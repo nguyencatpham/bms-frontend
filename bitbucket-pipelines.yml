@@ -1,0 +1,19 @@
+# This is an example Starter pipeline configuration
+# Use a skeleton to build, test and deploy using manual and parallel steps
+# -----
+# You can specify a custom docker image from Docker Hub as your build environment.
+image: atlassian/default-image:2
+
+pipelines:
+  default:
+    - parallel:
+      - step:
+          name: 'Build'
+          services:
+            - docker
+          script:
+            - echo "Building project.."
+            - docker build -t $CONTAINER_IMAGE .
+            - docker login -u $REGISTRY -p $PASSWORD
+            - docker tag $CONTAINER_IMAGE $REGISTRY/$CONTAINER_IMAGE:latest
+            - docker push $REGISTRY/$CONTAINER_IMAGE:latest

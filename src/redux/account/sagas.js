@@ -5,11 +5,11 @@ import store from 'store'
 import { TYPES, callApi } from 'services'
 import { preConfirm } from 'services/jwt'
 
-import actions from './actions'
+import actions, { ENTITY } from './actions'
 
 function * FLUSH_PRE_CONFIRM () {
   yield put({
-    type: 'account/SET_STATE',
+    type: `${ENTITY}/SET_STATE`,
     payload: {
       preConfirm: null,
       success: false
@@ -22,7 +22,7 @@ function * PRE_CONFIRM ({ payload }) {
   const success = yield call(preConfirm, payload.password)
   if (!success) {
     yield put({
-      type: 'account/SET_STATE',
+      type: `${ENTITY}/SET_STATE`,
       payload: {
         preConfirm: true
       }
@@ -33,7 +33,7 @@ function * PRE_CONFIRM ({ payload }) {
     })
   } else {
     yield put({
-      type: 'account/SET_STATE',
+      type: `${ENTITY}/SET_STATE`,
       payload: {
         success: true
       }
@@ -54,7 +54,7 @@ export const COMMON = ({ type, field, actionType }) => {
         const success = yield call(preConfirm, password)
         if (!success) {
           yield put({
-            type: 'account/SET_STATE',
+            type: `${ENTITY}/SET_STATE`,
             payload: {
               preConfirm: true
             }
@@ -82,7 +82,7 @@ export const COMMON = ({ type, field, actionType }) => {
       }
 
       if (type.toLowerCase().indexOf('delete') > -1) {
-        actionType = 'account/SET_LIST_STATE'
+        actionType = `${ENTITY}/SET_LIST_STATE`
         response = payload.id
       }
       if (field === 'list') {
@@ -90,7 +90,7 @@ export const COMMON = ({ type, field, actionType }) => {
         response = response.filter(x => x.id !== userId)
       }
       yield put({
-        type: actionType || 'account/SET_STATE',
+        type: actionType || `${ENTITY}/SET_STATE`,
         payload: {
           [field]: response
         }
@@ -109,7 +109,8 @@ export const COMMON = ({ type, field, actionType }) => {
           message: 'Thành công!',
           description: `Tài khoản ${response.name} đã được tạo thành công!`
         })
-        history.push(`/accounts/${response.id}`)
+        const role = store.get('user.role')
+        if (role === 'admin') { history.push(`/accounts/${response.id}`) }
       }
       if (type.toLowerCase().indexOf('change') > -1 ||
         type.toLowerCase().indexOf('patch') > -1 ||
@@ -118,7 +119,8 @@ export const COMMON = ({ type, field, actionType }) => {
           message: 'Thành công!',
           description: `Tài khoản ${response.name} đã được cập nhật thành công!`
         })
-        history.push(`/accounts/${response.id}`)
+        const role = store.get('user.role')
+        if (role === 'admin') { history.push(`/accounts/${response.id}`) }
       }
       if (type.toLowerCase().indexOf('delete') > -1) {
         notification.success({
@@ -135,7 +137,7 @@ export const COMMON = ({ type, field, actionType }) => {
 }
 function * loading (isLoading = false) {
   yield put({
-    type: 'account/SET_STATE',
+    type: `${ENTITY}/SET_STATE`,
     payload: {
       loading: isLoading
     }

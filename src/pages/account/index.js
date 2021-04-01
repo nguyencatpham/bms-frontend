@@ -16,15 +16,15 @@ const { Option } = Select
 
 const mapStateToProps = ({ account, user, dispatch }) => {
   let { list, loading, total, preConfirm } = account
-  const { list: users, username, email } = user
+  const { list: users, username, email, role } = user
   const usernameOrEmail = username || email
   if (typeof total === 'object') {
     total = total.count
   }
-  return { list, loading, total, users, preConfirm, usernameOrEmail, dispatch }
+  return { list, loading, total, users, preConfirm, usernameOrEmail, role, dispatch }
 }
 
-const DefaultPage = ({ list, loading, total, preConfirm, usernameOrEmail, dispatch }) => {
+const DefaultPage = ({ list, loading, total, preConfirm, usernameOrEmail, role, dispatch }) => {
   const [form] = Form.useForm()
   const [modal, setModal] = useState()
   const [name, setName] = useState()
@@ -64,8 +64,12 @@ const DefaultPage = ({ list, loading, total, preConfirm, usernameOrEmail, dispat
       title: 'Tài khoản',
       dataIndex: 'name',
       key: 'name',
-      render: (text, item) => <Link className='break-word' to={`/accounts/${item.id}`}>{text || item.username || item.email}</Link>
-
+      render: (text, item) => {
+        if (role === 'admin') {
+          return <Link className='break-word' to={`/accounts/${item.id}`}>{text || item.username || item.email}</Link>
+        }
+        return text
+      }
     },
     {
       title: 'Vai trò',
