@@ -1,0 +1,27 @@
+image: veriksys/did-boot
+
+stages:
+  - build_and_publish
+
+services:
+  - docker:dind
+
+variables:
+  CONTAINER_IMAGE: registry.gitlab.com/nguyencatpham/bms-frontend:$CI_BUILD_REF_NAME
+  # https://gitlab.com/gitlab-org/gitlab-ce/issues/64959
+  DOCKER_TLS_CERTDIR: ""
+
+before_script:
+  - docker info
+
+publish_docker_registry_job:
+  stage: build_and_publish
+  script:
+    - echo $CONTAINER_IMAGE
+    - npm install
+    - npm run build
+    - docker version
+    - docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN registry.gitlab.com
+    - docker build -t $CONTAINER_IMAGE .
+    - docker push $CONTAINER_IMAGE
+  when: manual
