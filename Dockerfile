@@ -14,6 +14,8 @@
 
 # # production stage
 FROM nginx:stable-alpine as production-stage
+RUN npm install --silent
+RUN npm build
 COPY ./build /usr/share/nginx/html
 COPY nginx.conf /etc/nginx/conf.d/default.conf
 COPY entrypoint.sh /usr/bin/
