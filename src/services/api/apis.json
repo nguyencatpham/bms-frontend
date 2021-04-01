@@ -1894,6 +1894,63 @@
         "deprecated": false
       }
     },
+    "/systems/alertChart": {
+      "get": {
+        "tags": [
+          "System"
+        ],
+        "summary": "get system alertChart",
+        "operationId": "System.alertChart",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Request was successful",
+            "schema": {
+              "type": "object"
+            }
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/systems/alertStats": {
+      "get": {
+        "tags": [
+          "System"
+        ],
+        "summary": "get system alertStats",
+        "operationId": "System.alertStats",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Request was successful",
+            "schema": {
+              "type": "object"
+            }
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/systems/stats": {
+      "get": {
+        "tags": [
+          "System"
+        ],
+        "summary": "get system stats",
+        "operationId": "System.stats",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Request was successful",
+            "schema": {
+              "type": "object"
+            }
+          }
+        },
+        "deprecated": false
+      }
+    },
     "/blocks/{id}/system": {
       "get": {
         "tags": [
@@ -4059,24 +4116,13 @@
         "timestamp": {
           "type": "string",
           "format": "date-time"
-        },
-        "id": {
-          "type": "number",
-          "format": "double"
-        },
-        "created": {
-          "type": "string",
-          "format": "date-time"
-        },
-        "updated": {
-          "type": "string",
-          "format": "date-time"
         }
       },
       "required": [
         "type",
         "metadata",
-        "read"
+        "read",
+        "timestamp"
       ],
       "additionalProperties": false
     }

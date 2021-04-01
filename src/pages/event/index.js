@@ -19,8 +19,10 @@ import './style.scss'
 window.jQuery = window.$ = jQuery
 
 const mapStateToProps = ({ event, dispatch }) => {
-  const { list, loading, total } = event
-
+  let { list, loading, total } = event
+  if (typeof total === 'object') {
+    total = total.count
+  }
   return { list, loading, total, dispatch }
 }
 

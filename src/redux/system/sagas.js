@@ -63,6 +63,9 @@ export default function * rootSaga () {
     takeEvery(actions.GET_BLOCKS, COMMON({ type: TYPES.SYSTEMS_GET_ID_BLOCKS, field: 'blocks' })),
     takeEvery(actions.GET_TSDATA, COMMON({ type: TYPES.SYSTEMS_GET_ID_TSDATA, field: 'tsdata' })),
     takeEvery(actions.HISTORY, COMMON({ type: TYPES.SYSTEMS_GET_ID_EVENTS, field: 'histories' })),
-    takeEvery(actions.EVENT, COMMON({ type: TYPES.SYSTEMS_GET_ID_EVENTS, field: 'events' }))
+    takeEvery(actions.EVENT, COMMON({ type: TYPES.SYSTEMS_GET_ID_EVENTS, field: 'events' })),
+    takeEvery(actions.ALERT_COUNT, COMMON({ type: TYPES.SYSTEMS_GET_ALERTSTATS, field: 'alertCount' })),
+    takeEvery(actions.ALERT_STATS, COMMON({ type: TYPES.SYSTEMS_GET_ALERTCHART, field: 'alertStats' })),
+    takeEvery(actions.SYSTEM_STATS, COMMON({ type: TYPES.SYSTEMS_GET_STATS, field: 'stats' }))
   ])
 }

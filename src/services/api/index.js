@@ -1,6 +1,6 @@
 /* eslint camelcase: 0 */
 /*
-    Total: 99 APIs
+    Total: 102 APIs
     version: "0.1.0",
     title: "bms-backend",
     description: "bms Backend API"
@@ -63,6 +63,9 @@ export const types = {
   SYSTEMS_GET_COUNT: 'SYSTEMS_GET_COUNT',
   SYSTEMS_GET_ID_TSDATA: 'SYSTEMS_GET_ID_TSDATA',
   SYSTEMS_GET_ID_EVENTS: 'SYSTEMS_GET_ID_EVENTS',
+  SYSTEMS_GET_ALERTCHART: 'SYSTEMS_GET_ALERTCHART',
+  SYSTEMS_GET_ALERTSTATS: 'SYSTEMS_GET_ALERTSTATS',
+  SYSTEMS_GET_STATS: 'SYSTEMS_GET_STATS',
   BLOCKS_GET_ID_SYSTEM: 'BLOCKS_GET_ID_SYSTEM',
   BLOCKS_POST: 'BLOCKS_POST',
   BLOCKS_PATCH: 'BLOCKS_PATCH',
@@ -395,6 +398,21 @@ export const apis = {
   SYSTEMS_GET_ID_EVENTS: ({ id, start, end, macAddress, unitId, stringId, priority, limit, isAsc }) => ({
     method: 'GET',
     url: `${apiEndpoint}/api/systems/${id}/events?${start ? `start=${encodeURIComponent(typeof start === 'object' ? JSON.stringify(start) : start)}&` : ''}${end ? `end=${encodeURIComponent(typeof end === 'object' ? JSON.stringify(end) : end)}&` : ''}${macAddress ? `macAddress=${encodeURIComponent(typeof macAddress === 'object' ? JSON.stringify(macAddress) : macAddress)}&` : ''}${unitId ? `unitId=${encodeURIComponent(typeof unitId === 'object' ? JSON.stringify(unitId) : unitId)}&` : ''}${stringId ? `stringId=${encodeURIComponent(typeof stringId === 'object' ? JSON.stringify(stringId) : stringId)}&` : ''}${priority ? `priority=${encodeURIComponent(typeof priority === 'object' ? JSON.stringify(priority) : priority)}&` : ''}${limit ? `limit=${encodeURIComponent(typeof limit === 'object' ? JSON.stringify(limit) : limit)}&` : ''}${isAsc ? `isAsc=${encodeURIComponent(typeof isAsc === 'object' ? JSON.stringify(isAsc) : isAsc)}` : ''}`
+  }),
+  // get system alertChart
+  SYSTEMS_GET_ALERTCHART: () => ({
+    method: 'GET',
+    url: `${apiEndpoint}/api/systems/alertChart`
+  }),
+  // get system alertStats
+  SYSTEMS_GET_ALERTSTATS: () => ({
+    method: 'GET',
+    url: `${apiEndpoint}/api/systems/alertStats`
+  }),
+  // get system stats
+  SYSTEMS_GET_STATS: () => ({
+    method: 'GET',
+    url: `${apiEndpoint}/api/systems/stats`
   }),
   // Fetches belongsTo relation system.
   BLOCKS_GET_ID_SYSTEM: ({ id, refresh }) => ({
