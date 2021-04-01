@@ -1,5 +1,5 @@
 # build stage
-FROM node:12.13.0-buster as build-stage
+FROM node:10.24.0-alpine3.11 as build-stage
 
 ARG TARGETPLATFORM
 ARG BUILDPLATFORM
