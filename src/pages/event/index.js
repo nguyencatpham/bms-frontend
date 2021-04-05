@@ -14,8 +14,9 @@ import jQuery from 'jquery'
 import 'bootstrap/dist/css/bootstrap.css'
 // you will also need the css that comes with bootstrap-daterangepicker
 import 'bootstrap-daterangepicker/daterangepicker.css'
+import style from './style.module.scss'
 
-import './style.scss'
+// import './style.scss'
 window.jQuery = window.$ = jQuery
 
 const mapStateToProps = ({ event, dispatch }) => {
@@ -95,11 +96,59 @@ const DefaultPage = ({ list, loading, total, dispatch }) => {
       dataIndex: 'title',
       key: 'title',
       // width: 500,
-      render: (x, item) =>
-        <div>
-          <p>{item.title}</p>
-          <small>{item.body}</small>
-        </div>
+      render: (text, x) => {
+        switch (x.priority) {
+          case 1:
+            return (
+              <li className={style.item}>
+                <div className={`${style.itemLink} ${style.alert}`}>
+                  <div className={`${style.itemCover} ${style.alertIcon} mr-3`}>
+                    <img src='/resources/images/alert.png' alt='Hands' width='40px' />
+                  </div>
+                  <div>
+                    <div className={`${style.title} `}>{x.title}</div>
+                    <div>
+                      {`${x.body} vào lúc ${moment(x.timestamp).format(TIME_FORMAT)}`}
+                    </div>
+                  </div>
+                </div>
+              </li>
+            )
+          case 2:
+            return (
+              <li className={style.item}>
+                <div className={`${style.itemLink} ${style.warning}`}>
+                  <div className={`${style.itemCover} ${style.alertIcon} mr-3`}>
+                    <img src='/resources/images/warning.png' alt='Hands' width='40px' />
+                  </div>
+                  <div>
+                    <div className={`${style.title} `}>{x.title}</div>
+                    <div>
+                      {`${x.body} vào lúc ${moment(x.timestamp).format(TIME_FORMAT)}`}
+                    </div>
+                  </div>
+                </div>
+              </li>
+            )
+          case 0:
+          default:
+            return (
+              <li className={style.item}>
+                <div className={`${style.itemLink} ${style.offline}`}>
+                  <div className={`${style.itemCover} ${style.alertIcon} mr-3`}>
+                    <img src='/resources/images/alert.png' alt='Hands' width='40px' />
+                  </div>
+                  <div>
+                    <div className={`${style.title} `}>{x.title}</div>
+                    <div>
+                      {`${x.body} vào lúc ${moment(x.timestamp).format(TIME_FORMAT)}`}
+                    </div>
+                  </div>
+                </div>
+              </li>
+            )
+        }
+      }
     }
   ]
   const onTableChange = pagination => {

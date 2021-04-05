@@ -63,14 +63,6 @@ const DefaultPage = ({ loading, detail, system, blocks, dispatch }) => {
     })
   }, [id, dispatch])
 
-  useEffect(() => {
-    dispatch({
-      type: 'system/GET_BLOCKS',
-      payload: {
-        id
-      }
-    })
-  }, [id, dispatch])
   const actions = [{
     id: '__remove',
     name: 'Gỡ thiết bị',

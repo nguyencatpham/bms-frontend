@@ -6,6 +6,7 @@ import { Helmet } from 'react-helmet'
 import { withRouter, useParams, Link } from 'react-router-dom'
 import PreConfirm from 'components/pre-confirm'
 import '../style.scss'
+import { get } from 'lodash'
 
 const { Item } = Form
 const { Search } = Input
@@ -31,7 +32,19 @@ const DefaultPage = ({ list, loading, total, preConfirm, usernameOrEmail, dispat
     skip: pagination.pageSize * (pagination.current - 1),
     limit: pagination.pageSize,
     filter: JSON.stringify({
-      include: [{ relation: 'devices' }],
+      include: [{
+        relation: 'devices',
+        scope: {
+          include: [{
+            relation: 'systems',
+            scope: {
+              include: [{
+                relation: 'blocks'
+              }]
+            }
+          }]
+        }
+      }],
       where: { or: [{ userId: null }, { userId: id }] }
     })
   })
@@ -45,14 +58,22 @@ const DefaultPage = ({ list, loading, total, preConfirm, usernameOrEmail, dispat
 
     },
     {
-      title: 'Serial',
-      dataIndex: 'serialId',
-      key: 'serialId'
+      title: 'Name',
+      dataIndex: 'name',
+      key: 'name',
+      render: (text, item) => {
+        const name = get(item.devices, ['0', 'systems', '0', 'name'])
+        return <span>{name || 'Chưa xác định'}</span>
+      }
     },
     {
-      title: 'model',
-      dataIndex: 'model',
-      key: 'model'
+      title: 'Site',
+      dataIndex: 'siteName',
+      key: 'siteName',
+      render: (text, item) => {
+        const name = get(item.devices, ['0', 'systems', '0', 'siteName'])
+        return <span>{name || 'Chưa xác định'}</span>
+      }
     },
     {
       title: 'Trạng thái',
@@ -149,7 +170,19 @@ const DefaultPage = ({ list, loading, total, preConfirm, usernameOrEmail, dispat
     setPayload({
       ...payload,
       filter: JSON.stringify({
-        include: [{ relation: 'devices' }],
+        include: [{
+          relation: 'devices',
+          scope: {
+            include: [{
+              relation: 'systems',
+              scope: {
+                include: [{
+                  relation: 'blocks'
+                }]
+              }
+            }]
+          }
+        }],
         where: { and }
       })
     })
@@ -166,7 +199,7 @@ const DefaultPage = ({ list, loading, total, preConfirm, usernameOrEmail, dispat
                 <div className='col-md-8'>
                   <Search
                     style={{ width: '100%' }}
-                    placeholder='Tìm theo tên hoặc mã thiết bị...'
+                    placeholder='Tìm theo mã thiết bị...'
                     value={name}
                     onChange={e => setName(e.target.value)}
                     allowClear

@@ -1,6 +1,6 @@
 /* eslint camelcase: 0 */
 /*
-    Total: 102 APIs
+    Total: 103 APIs
     version: "0.1.0",
     title: "bms-backend",
     description: "bms Backend API"
@@ -85,6 +85,7 @@ export const types = {
   BLOCKS_GET_COUNT: 'BLOCKS_GET_COUNT',
   BLOCKS_POST_CHANGE_STREAM: 'BLOCKS_POST_CHANGE_STREAM',
   BLOCKS_GET_CHANGE_STREAM: 'BLOCKS_GET_CHANGE_STREAM',
+  BLOCKS_GET_STATS: 'BLOCKS_GET_STATS',
   AUTHORIZEDDEVICES_GET_ID_USER: 'AUTHORIZEDDEVICES_GET_ID_USER',
   AUTHORIZEDDEVICES_GET_ID_DEVICES_FK: 'AUTHORIZEDDEVICES_GET_ID_DEVICES_FK',
   AUTHORIZEDDEVICES_DELETE_ID_DEVICES_FK: 'AUTHORIZEDDEVICES_DELETE_ID_DEVICES_FK',
@@ -518,6 +519,11 @@ export const apis = {
   BLOCKS_GET_CHANGE_STREAM: ({ options }) => ({
     method: 'GET',
     url: `${apiEndpoint}/api/blocks/change-stream?${options ? `options=${encodeURIComponent(typeof options === 'object' ? JSON.stringify(options) : options)}` : ''}`
+  }),
+  // get block stats
+  BLOCKS_GET_STATS: () => ({
+    method: 'GET',
+    url: `${apiEndpoint}/api/blocks/stats`
   }),
   // Fetches belongsTo relation user.
   AUTHORIZEDDEVICES_GET_ID_USER: ({ id, refresh }) => ({

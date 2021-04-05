@@ -8,6 +8,7 @@ import device from './device/reducers'
 import authDevice from './authDevice/reducers'
 import system from './system/reducers'
 import event from './event/reducers'
+import block from './block/reducers'
 
 export default history =>
   combineReducers({
@@ -19,5 +20,6 @@ export default history =>
     device,
     authDevice,
     system,
-    event
+    event,
+    block
   })

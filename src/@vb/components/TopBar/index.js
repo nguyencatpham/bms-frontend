@@ -13,16 +13,16 @@ const TopBar = () => {
   return (
     <div className={style.topbar}>
       <div className='mr-4'>
-        <FavPages />
+        {/* <FavPages /> */}
       </div>
       <div className='mr-auto mr-md-1'>
         <Search />
       </div>
       <div className='mr-4 d-none d-md-block'>
-        <IssuesHistory />
+        {/* <IssuesHistory /> */}
       </div>
       <div className='mr-auto d-xl-block d-none'>
-        <ProjectManagement />
+        {/* <ProjectManagement /> */}
       </div>
       {/* <div className="mr-3 d-none d-sm-block ml-auto">
         <Cart />

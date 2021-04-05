@@ -1,7 +1,6 @@
 import React from 'react'
 import { ROLE } from 'constant'
 import style from './style.module.scss'
-import { history } from 'index'
 
 const General10v1 = ({ avatar, name, role, actions, width, rootAction }) => {
   return (

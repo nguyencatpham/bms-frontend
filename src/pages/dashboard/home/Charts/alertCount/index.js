@@ -1,10 +1,10 @@
-import config from 'config/config'
 import React, { useState, useEffect } from 'react'
 import { Pie } from 'react-chartjs-2'
+import config from 'config/config'
 import style from './style.module.scss'
 
 const DefaultPage = (stats = {}) => {
-  const { healthy = 0, unhealthy = 0, deployed = 0 } = stats
+  const { normal = 0, warning = 0, alert = 0 } = stats
   const tooltip = React.createRef()
   const [myRef, setMyRef] = useState(null)
   const [legend, setLegend] = useState(undefined)
@@ -29,11 +29,11 @@ const DefaultPage = (stats = {}) => {
   }
   useEffect(() => {
     const data = {
-      labels: [`${healthy} Đang hoạt động`, `${unhealthy} Mất kết nối`, `${deployed} Đã triển khai`],
+      labels: [`${alert} Báo động`, `${warning} Cảnh báo`, `${normal} Bình thường`],
       datasets: [
         {
-          data: [healthy, unhealthy, 0],
-          backgroundColor: [config.COLOR.normal, config.COLOR.offline, '#f0f0f0'],
+          data: [alert, warning, normal],
+          backgroundColor: [config.COLOR.alert, config.COLOR.warning, config.COLOR.normal],
           borderColor: '#fff',
           borderWidth: 2,
           hoverBorderWidth: 0,
@@ -42,7 +42,7 @@ const DefaultPage = (stats = {}) => {
       ]
     }
     setdata(data)
-  }, [healthy, unhealthy, deployed])
+  }, [normal, warning, alert])
 
   const options = {
     animation: true,
@@ -87,8 +87,8 @@ const DefaultPage = (stats = {}) => {
 
   return (
     <div>
-      <div className='text-dark font-size-18 font-weight-bold mb-1'>Hệ thống</div>
-      <div className='text-gray-6 mb-2'>Thống kê số lượng hệ thống đã triển khai.</div>
+      <div className='text-dark font-size-18 font-weight-bold mb-1'>Cảnh báo</div>
+      <div className='text-gray-6 mb-2'>Thống kê bình ắc quy đang gặp ra sự cố.</div>
       <div className='d-flex flex-wrap align-items-center'>
         <div className='mr-3 mt-3 mb-3 position-relative'>
           <Pie

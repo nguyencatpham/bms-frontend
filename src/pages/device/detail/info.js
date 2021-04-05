@@ -33,12 +33,6 @@ const DefaultPage = ({ modal, setModal, tsdata, dispatch }) => {
 
   useLayoutEffect(() => {
     const armChart = am4core.create('chartdiv', am4charts.XYChart)
-    const data = []
-    let visits = 10
-    for (let i = 1; i < 366; i++) {
-      visits += Math.round((Math.random() < 0.5 ? 1 : -1) * Math.random() * 10)
-      data.push({ timestamp: new Date(2018, 0, i), name: 'name' + i, v0: visits })
-    }
 
     chart.current = armChart
     // chart.current.data = data

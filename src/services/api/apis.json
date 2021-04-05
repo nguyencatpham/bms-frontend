@@ -2564,6 +2564,25 @@
         "deprecated": false
       }
     },
+    "/blocks/stats": {
+      "get": {
+        "tags": [
+          "Block"
+        ],
+        "summary": "get block stats",
+        "operationId": "Block.stats",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Request was successful",
+            "schema": {
+              "type": "object"
+            }
+          }
+        },
+        "deprecated": false
+      }
+    },
     "/authorizeddevices/{id}/user": {
       "get": {
         "tags": [
@@ -3634,11 +3653,6 @@
           "maxLength": 128,
           "type": "string"
         },
-        "userId": {
-          "maxLength": 40,
-          "type": "number",
-          "format": "double"
-        },
         "name": {
           "maxLength": 255,
           "default": "BMS",
@@ -3787,6 +3801,10 @@
         "error": {
           "type": "string"
         },
+        "userId": {
+          "type": "number",
+          "format": "double"
+        },
         "created": {
           "type": "string",
           "format": "date-time"
@@ -3809,10 +3827,6 @@
           "type": "string"
         },
         "brokerId": {
-          "maxLength": 36,
-          "type": "string"
-        },
-        "userId": {
           "maxLength": 36,
           "type": "string"
         },
@@ -3968,6 +3982,11 @@
           "type": "string"
         },
         "capacity": {
+          "default": 0,
+          "type": "number",
+          "format": "double"
+        },
+        "alertType": {
           "default": 0,
           "type": "number",
           "format": "double"

@@ -1,76 +1,89 @@
-import React, { useLayoutEffect, useRef } from 'react'
-import * as am4core from '@amcharts/amcharts4/core'
-import * as am4charts from '@amcharts/amcharts4/charts'
-import am4themesAnimated from '@amcharts/amcharts4/themes/animated'
+import React, { useEffect, useLayoutEffect, useRef, useState } from 'react'
 import style from './style.module.scss'
+import Highcharts from 'highcharts'
+import HighchartsReact from 'highcharts-react-official'
 
-am4core.useTheme(am4themesAnimated)
-
-const Chart9 = () => {
-  const tooltip = React.createRef()
-  const chart = useRef(null)
-
-  useLayoutEffect(() => {
-    const armChart = am4core.create('chartdiv', am4charts.XYChart)
-    const data = [{
-      country: 'Lithuania',
-      litres: 501.9
-    }, {
-      country: 'Czechia',
-      litres: 301.9
-    }, {
-      country: 'Ireland',
-      litres: 201.1
-    }, {
-      country: 'Germany',
-      litres: 165.8
-    }, {
-      country: 'Australia',
-      litres: 139.9
-    }, {
-      country: 'Austria',
-      litres: 128.3
-    }, {
-      country: 'UK',
-      litres: 99
-    }, {
-      country: 'Belgium',
-      litres: 60
-    }, {
-      country: 'The Netherlands',
-      litres: 50
+const Chart9 = (stats = {}) => {
+  const { normal = 0, warning = 0, alert = 0 } = stats
+  const chartComponent = useRef(null)
+  const [options, setChartOptions] = useState({
+    chart: {
+      plotBackgroundColor: null,
+      plotBorderWidth: 0,
+      plotShadow: false
+    },
+    title: {
+      text: 'Thống kê<br>Cảnh báo<br>',
+      align: 'center',
+      verticalAlign: 'middle',
+      y: 60
+    },
+    tooltip: {
+      pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+    },
+    accessibility: {
+      point: {
+        valueSuffix: '%'
+      }
+    },
+    plotOptions: {
+      pie: {
+        dataLabels: {
+          enabled: true,
+          distance: -50,
+          style: {
+            fontWeight: 'bold',
+            color: 'white'
+          }
+        },
+        startAngle: -90,
+        endAngle: 90,
+        center: ['50%', '75%'],
+        size: '110%'
+      }
+    },
+    series: [{
+      type: 'pie',
+      name: 'Blocks',
+      innerSize: '50%',
+      data: [
+        ['Chrome', 58.9],
+        ['Firefox', 13.29],
+        ['Internet Explorer', 13],
+        ['Edge', 3.78],
+        ['Safari', 3.42],
+        {
+          name: 'Other',
+          y: 7.61,
+          dataLabels: {
+            enabled: false
+          }
+        }
+      ]
     }]
-    chart.current = armChart
-    chart.current.data = data
-    // Set inner radius
-    chart.current.innerRadius = am4core.percent(50)
+  })
+  useEffect(() => {
+    const series = [{
+      type: 'pie',
+      name: 'Blocks',
+      innerSize: '50%',
+      data: [
+        ['Bình thường', normal],
+        ['Cảnh báo', warning],
+        ['Báo động', alert]
+      ]
+    }]
 
-    // Add and configure Series
-    const pieSeries = chart.current.series.push(new am4charts.PieSeries())
-    pieSeries.dataFields.value = 'litres'
-    pieSeries.dataFields.category = 'country'
-    pieSeries.slices.template.stroke = am4core.color('#fff')
-    pieSeries.slices.template.strokeWidth = 2
-    pieSeries.slices.template.strokeOpacity = 1
-
-    // This creates initial animation
-    pieSeries.hiddenState.properties.opacity = 1
-    pieSeries.hiddenState.properties.endAngle = -90
-    pieSeries.hiddenState.properties.startAngle = -90
-
-    return () => {
-      armChart.dispose()
-    }
-  }, [])
-
+    setChartOptions({ ...options, series })
+  }, [stats])
   return (
     <div>
-      <div className='text-dark font-size-18 font-weight-bold mb-1'>Thống kê cảnh báo</div>
+      <div className='text-dark font-size-18 font-weight-bold mb-1'>Thống kê cảnh báo conto</div>
       <div className='text-gray-6 mb-2'>Thống kê cảnh báo của bình ắc quy.</div>
       <div className='d-flex flex-wrap align-items-center'>
         <div className='mr-3 mt-3 mb-3 position-relative'>
-          <div id='chartdiv' style={{ width: '100%', height: '500px' }} />
-          <div className={`${style.tooltip} text-gray-5 font-size-28`} ref={tooltip} />
+          <HighchartsReact ref={chartComponent} highcharts={Highcharts} options={options} />
+          <div className={`${style.tooltip} text-gray-5 font-size-28`} />
         </div>
       </div>
     </div>

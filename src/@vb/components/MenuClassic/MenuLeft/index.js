@@ -236,7 +236,7 @@ const MenuLeft = ({
           >
             {generateMenuItems()}
           </Menu>
-          <div className={style.banner}>
+          {/* <div className={style.banner}>
             <p>Full access, lifetime updates, github issues, and extended licenses!</p>
             <a
               href='https://themeforest.net/item/clean-ui-react-admin-template/21938700'
@@ -246,7 +246,7 @@ const MenuLeft = ({
             >
               Get a license
             </a>
-          </div>
+          </div> */}
         </PerfectScrollbar>
       </div>
     </Layout.Sider>
