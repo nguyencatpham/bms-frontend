@@ -1,28 +1,28 @@
 import React, { useState, useEffect } from 'react'
 import { Helmet } from 'react-helmet'
-import { Button, Modal, Input, Form, Tabs } from 'antd'
+import { Button, Modal, Form, Tabs } from 'antd'
 import { connect } from 'react-redux'
 import { withRouter, useParams } from 'react-router-dom'
 import { history } from 'index'
 import General from 'components/kit/widgets/General/10v1'
 import General1 from 'components/kit/widgets/General/1'
 import General12v1 from 'components/kit/widgets/General/12v1'
-import List19 from 'components/kit/widgets/Lists/19'
 import DevicePage from './auth-device'
 import '../style.scss'
 
-const { Item } = Form
 const { TabPane } = Tabs
 
-const mapStateToProps = ({ account, dispatch }) => {
+const mapStateToProps = ({ account, authDevice, dispatch }) => {
   const { loading, detail } = account
+  const { list } = authDevice
+  const deviceCount = list.length || 0
 
-  return { loading, detail, dispatch }
+  return { loading, detail, deviceCount, dispatch }
 }
 
-const DefaultPage = ({ loading, detail, dispatch }) => {
+const DefaultPage = ({ loading, detail, deviceCount, dispatch }) => {
   const { id } = useParams()
-  const [form] = Form.useForm()
+  const [] = Form.useForm()
   const { name, role, suspend, description, phoneNumber, address, email, username, devices = [] } = detail
   const [showmodal, setShowmodal] = useState()
   const [tabKey, setTabKey] = useState('1')
@@ -35,16 +35,6 @@ const DefaultPage = ({ loading, detail, dispatch }) => {
       }
     })
     setShowmodal(false)
-  }
-  const onFinish = body => {
-    console.log('bod', body)
-    dispatch({
-      type: 'account/SET_PASSWORD',
-      payload: {
-        id,
-        password: body.password
-      }
-    })
   }
   const changeTab = key => {
     setTabKey(key)
@@ -83,7 +73,7 @@ const DefaultPage = ({ loading, detail, dispatch }) => {
               </div>
             </div>
             <div className='card text-white bg-primary'>
-              <General12v1 />
+              <General12v1 device={deviceCount} />
             </div>
             <div className='card'>
               <div className='card-body'>
@@ -94,11 +84,11 @@ const DefaultPage = ({ loading, detail, dispatch }) => {
                 />
               </div>
             </div>
-            <div className='card'>
+            {/* <div className='card'>
               <div className='card-body'>
                 <List19 />
               </div>
-            </div>
+            </div> */}
           </div>
           <div className='col-xl-8 col-lg-12'>
             <div className='card profile-general'>

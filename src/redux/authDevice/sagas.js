@@ -9,6 +9,13 @@ export const COMMON = ({ type, field, actionType }) => {
   return function * ({ payload }) {
     yield loading(true)
     const response = yield call(callApi, { type, payload })
+    if (field === 'create') {
+      notification.success({
+        message: 'Thành công!',
+        description: 'Thiết bị đã được tạo thành công!'
+      })
+      history.goBack()
+    }
     if (response) {
       if (type.toLowerCase().indexOf('attach') > -1) {
         actionType = `${ENTITY}/SET_LIST_STATE`
@@ -19,10 +26,10 @@ export const COMMON = ({ type, field, actionType }) => {
           [field]: response
         }
       })
-      if (type.toLowerCase().indexOf('post') > -1) {
+      if (type.toLowerCase().indexOf('post') > -1 || field === 'create') {
         notification.success({
           message: 'Thành công!',
-          description: `${ENTITY} ${response.macAddress} đã được tạo thành công!`
+          description: 'Thiết bị đã được tạo thành công!'
         })
         history.push(`/${ENTITY}s/${response.id}`)
       }
@@ -31,11 +38,10 @@ export const COMMON = ({ type, field, actionType }) => {
         type.toLowerCase().indexOf('put') > -1) {
         notification.success({
           message: 'Thành công!',
-          description: `${ENTITY} ${response.macAddress} đã được cập nhật thành công!`
+          description: 'Thiết bị đã được cập nhật thành công!'
         })
       }
       if (type.toLowerCase().indexOf('delete') > -1) {
-        console.log('conto')
         yield put({
           type: `${ENTITY}/SET_DELETE`,
           payload
@@ -60,6 +66,7 @@ function * loading (isLoading = false) {
 export default function * rootSaga () {
   yield all([
     takeEvery(actions.COUNT, COMMON({ type: TYPES.AUTHORIZEDDEVICES_GET_COUNT, field: 'total' })),
+    takeEvery(actions.CREATE, COMMON({ type: TYPES.AUTHORIZEDDEVICES_PUT, field: 'create' })),
     takeEvery(actions.LIST, COMMON({ type: TYPES.AUTHORIZEDDEVICES_GET, field: 'list' })),
     takeEvery(actions.DETAIL, COMMON({ type: TYPES.AUTHORIZEDDEVICES_GET_ID, field: 'detail' })),
     takeEvery(actions.ATTACH, COMMON({ type: TYPES.AUTHORIZEDDEVICES_PUT_ID_ATTACH_DEVICE, field: 'detail' })),

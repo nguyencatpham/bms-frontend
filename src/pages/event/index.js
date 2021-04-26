@@ -101,10 +101,8 @@ const DefaultPage = ({ list, loading, total, dispatch }) => {
           case 1:
             return (
               <li className={style.item}>
-                <div className={`${style.itemLink} ${style.alert}`}>
-                  <div className={`${style.itemCover} ${style.alertIcon} mr-3`}>
-                    <img src='/resources/images/alert.png' alt='Hands' width='40px' />
-                  </div>
+                <div className={`${style.itemLink} `}>
+                  <div className={`${style.itemCover} ${style.alertIcon} mr-3`} />
                   <div>
                     <div className={`${style.title} `}>{x.title}</div>
                     <div>
@@ -117,10 +115,8 @@ const DefaultPage = ({ list, loading, total, dispatch }) => {
           case 2:
             return (
               <li className={style.item}>
-                <div className={`${style.itemLink} ${style.warning}`}>
-                  <div className={`${style.itemCover} ${style.alertIcon} mr-3`}>
-                    <img src='/resources/images/warning.png' alt='Hands' width='40px' />
-                  </div>
+                <div className={`${style.itemLink}`}>
+                  <div className={`${style.itemCover} ${style.alertIcon} mr-3`} />
                   <div>
                     <div className={`${style.title} `}>{x.title}</div>
                     <div>
@@ -135,9 +131,7 @@ const DefaultPage = ({ list, loading, total, dispatch }) => {
             return (
               <li className={style.item}>
                 <div className={`${style.itemLink} ${style.offline}`}>
-                  <div className={`${style.itemCover} ${style.alertIcon} mr-3`}>
-                    <img src='/resources/images/alert.png' alt='Hands' width='40px' />
-                  </div>
+                  <div className={`${style.itemCover} ${style.alertIcon} mr-3`} />
                   <div>
                     <div className={`${style.title} `}>{x.title}</div>
                     <div>
@@ -261,11 +255,12 @@ const DefaultPage = ({ list, loading, total, dispatch }) => {
               columns={columns}
               onChange={onTableChange}
               rowClassName={(record) => {
-                switch (record.type) {
-                  case 'OFFLINE':
-                    return 'color-grey'
+                switch (record.priority) {
+                  case 3:
+                    return style.offline
+                  case 2:
+                  case 1:
                   case 'ONLINE':
-                    return 'color-green'
                   default:
                     return ''
                 }

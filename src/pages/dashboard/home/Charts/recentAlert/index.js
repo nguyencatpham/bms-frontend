@@ -33,7 +33,7 @@ const DefaultPage = ({ list, dispatch }) => {
     switch (x.priority) {
       case 1:
         return (
-          <li className={style.item}>
+          <li key={x.id} className={style.item}>
             <div className={`${style.itemLink} ${style.alert}`}>
               <div className={`${style.itemCover} ${style.alertIcon} mr-3`}>
                 <img src='/resources/images/alert.png' alt='Hands' width='40px' />

@@ -1,12 +1,9 @@
 import React, { useState, useEffect } from 'react'
-import List12 from 'components/kit/widgets/Lists/12'
-import RecentAlert from 'components/kit/widgets/Lists/recentAlert'
-import Chart2 from './Charts/2'
+import RecentAlert from './Charts/recentAlert'
 import BlockStatus from './Charts/blockStatus'
 import PieAlert from './Charts/alertCount'
 import PieOnline from './Charts/pieOnline'
 import BarLine from './Charts/barline'
-import { Pagination } from 'antd'
 import InfoModal from '../../device/detail/info'
 
 import { connect } from 'react-redux'
@@ -27,7 +24,7 @@ const mapStateToProps = ({ authDevice, user, system, dispatch }) => {
   return { list, loading, total, users, preConfirm, usernameOrEmail, role, stats, alertCount, alertStats, dispatch }
 }
 
-const DefaultPage = ({ total, role, stats, alertCount, alertStats, dispatch }) => {
+const DefaultPage = ({ total, stats, alertCount, dispatch }) => {
   const [modal, setModal] = useState()
   const [pagination, setPagination] = useState({
     current: 1,

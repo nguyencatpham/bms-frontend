@@ -1,23 +1,23 @@
 import React from 'react'
 
-const General12v1 = () => {
+const General12v1 = ({ device = 0 }) => {
   return (
-    <div className="card-body">
-      <div className="d-flex mb-1">
-        <div className="text-uppercase font-weight-bold mr-auto">Revenue</div>
-        <div>+20% Goal Reached</div>
+    <div className='card-body'>
+      <div className='d-flex mb-1'>
+        <div className='text-uppercase font-weight-bold mr-auto'>Thiết bị</div>
+        <div />
       </div>
-      <div className="d-flex mb-2">
-        <div className="font-size-24 font-weight-bold mr-auto">+3,125</div>
-        <div className="font-size-24">5,000</div>
+      <div className='d-flex mb-2'>
+        <div className='font-size-24 font-weight-bold mr-auto'>{device}</div>
+        <div className='font-size-24' />
       </div>
-      <div className="progress">
+      <div className='progress'>
         <div
-          className="progress-bar bg-success"
+          className='progress-bar bg-success'
           style={{
-            width: '60%',
+            width: device ? '100%' : '0%'
           }}
-          role="progressbar"
+          role='progressbar'
           aria-valuenow={60}
           aria-valuemin={0}
           aria-valuemax={100}

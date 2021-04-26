@@ -7,7 +7,8 @@ import { withRouter, useParams, Link } from 'react-router-dom'
 import PreConfirm from 'components/pre-confirm'
 import '../style.scss'
 import { get } from 'lodash'
-import { ROLE } from 'constant'
+import moment from 'moment'
+import { ROLE, TIME_FORMAT } from 'constant'
 
 const { Item } = Form
 const { Search } = Input
@@ -74,7 +75,7 @@ const DefaultPage = ({ list, loading, total, role, preConfirm, usernameOrEmail, 
       key: 'lastUpdateStatus',
       render: (text, item) => {
         const name = get(item.devices, ['0', 'lastUpdateStatus'])
-        return <span>{name}</span>
+        return <span>{moment(name).format(TIME_FORMAT)}</span>
       }
     },
     {
@@ -83,7 +84,7 @@ const DefaultPage = ({ list, loading, total, role, preConfirm, usernameOrEmail, 
       key: 'created',
       render: (text, item) => {
         const name = get(item.devices, ['0', 'created'])
-        return <span>{name}</span>
+        return <span>{moment(name).format(TIME_FORMAT)}</span>
       }
     },
     {

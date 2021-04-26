@@ -14,7 +14,6 @@ import 'bootstrap/dist/css/bootstrap.css'
 // you will also need the css that comes with bootstrap-daterangepicker
 import 'bootstrap-daterangepicker/daterangepicker.css'
 
-import '../style.scss'
 import { TIME_FORMAT } from 'constant'
 // expose jQuery to window for debugging
 window.jQuery = window.$ = jQuery
@@ -36,6 +35,7 @@ const DefaultPage = ({ modal, setModal, tsdata, dispatch }) => {
 
     chart.current = armChart
     // chart.current.data = data
+    console.log('test', tsdata)
     chart.current.data = tsdata.map(({ timestamp, v0, e, soc, r, t }) => ({ timestamp: new Date(timestamp), v0, e, soc, r, t }))
     chart.current.paddingRight = 20
     // Create axes
@@ -74,7 +74,7 @@ const DefaultPage = ({ modal, setModal, tsdata, dispatch }) => {
   }, [tsdata])
 
   // Create series
-  const createAxisAndSeries = (valueAxis, field, name, opposite, bullet) => {
+  const createAxisAndSeries = (valueAxis, field, name, opposite) => {
     const series = chart.current.series.push(new am4charts.LineSeries())
     series.dataFields.dateX = 'timestamp'
     series.dataFields.valueY = field

@@ -14,6 +14,7 @@ import SettingPage from './setting'
 import HistoryPage from './history'
 import AlertPage from './alert'
 import '../style.scss'
+import config from 'config/config'
 
 const { TabPane } = Tabs
 
@@ -66,7 +67,7 @@ const DefaultPage = ({ loading, detail, system, blocks, dispatch }) => {
   const actions = [{
     id: '__remove',
     name: 'Gỡ thiết bị',
-    color: '#f5222d',
+    color: config.COLOR.alert,
     action: () => { setShowmodal(true) }
   }]
   const _system = JSON.parse(JSON.stringify(system))

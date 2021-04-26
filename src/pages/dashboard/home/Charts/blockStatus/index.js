@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
 import { Pagination } from 'antd'
-import InfoModal from 'pages/device/detail/info'
+import InfoModal from './info'
 import config from 'config/config'
 
 const mapStateToProps = ({ block, dispatch }) => {
@@ -55,6 +55,21 @@ const DefaultPage = ({ list, loading, total, dispatch }) => {
       payload
     })
   }, [payload])
+  // polling
+  useEffect(() => {
+    const interval = setInterval(() => {
+      dispatch({
+        type: 'block/COUNT',
+        payload: { where: (JSON.parse(payload.filter) || {}).where }
+      })
+      dispatch({
+        type: 'block/LIST',
+        payload
+      })
+    }, 10000)
+    return () => clearInterval(interval)
+  }, [payload, dispatch])
+  console.log('modal', modal)
   return (
     <>
       <div className='card'>
@@ -63,7 +78,7 @@ const DefaultPage = ({ list, loading, total, dispatch }) => {
         <div className='card-body battery-cell-panel'>
           {list.map(x => (
             <div
-              key={x.id}
+              key={x.id + x.macAddress}
               className='card cell-item'
               onClick={() => setModal(x)}
               style={{ background: getColor(x.alertType), cursor: 'pointer' }}

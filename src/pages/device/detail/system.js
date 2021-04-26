@@ -42,15 +42,14 @@ const DefaultPage = ({ blocks, dispatch }) => {
         <div className='row'>
           {
             blocks.map(x => {
-              console.log('al', x.alertType)
-              let avatar = '/resources/images/battery.png'
+              let avatar = '/resources/images/battery-icon.png'
               if (x.alertType === 1) {
-                avatar = '/resources/images/battery-greered.png'
+                avatar = '/resources/images/battery-icon-red.png'
               } else if (x.alertType === 2) {
-                avatar = '/resources/images/battery-orange.png'
+                avatar = '/resources/images/battery-icon-yellow.png'
               }
               return (
-                <div key={x.id} className='col-xl-2 col-lg-2 col-md-2 col-xs-6'>
+                <div key={x.macAddress} className='col-xl-2 col-lg-2 col-md-2 col-xs-6'>
                   <div className='card'>
                     <General
                       avatar={avatar}

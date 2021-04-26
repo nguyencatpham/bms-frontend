@@ -219,7 +219,7 @@ const DefaultPage = ({ list, loading, total, preConfirm, usernameOrEmail, role, 
             </div>
           </div>
         </div>
-        {/* <div className='account-top'>
+        <div className='account-top'>
           <div className='title-header'>
             <div className='grid-view'>
               <div className='' />
@@ -228,7 +228,7 @@ const DefaultPage = ({ list, loading, total, preConfirm, usernameOrEmail, role, 
               </div>
             </div>
           </div>
-        </div> */}
+        </div>
         <div className='card'>
           <div className='card-body'>
             <Table

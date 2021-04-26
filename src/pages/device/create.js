@@ -2,38 +2,35 @@ import React from 'react'
 import { Helmet } from 'react-helmet'
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
-import { Form, Input, Button, Card, Select } from 'antd'
+import { Form, Input, Button, Card } from 'antd'
 import { history } from 'index'
-import { ROLE } from 'constant'
 import './style.scss'
 
 const { Item } = Form
-const { TextArea } = Input
-const { Option } = Select
 
 const mapStateToProps = ({ device, user, dispatch }) => {
   const { loading, detail } = device
-  const { role } = user
-  return { loading, detail, role, dispatch }
+  const { role, id: userId } = user
+  return { loading, detail, role, userId, dispatch }
 }
-const DefaultPage = ({ loading, detail, role, dispatch }) => {
+const DefaultPage = ({ userId, dispatch }) => {
   const [form] = Form.useForm()
   const onFinish = values => {
     delete values.role
     delete values.confirm
     dispatch({
-      type: 'device/CREATE',
-      payload: { body: { ...values } }
+      type: 'authDevice/CREATE',
+      payload: { body: [{ ...values }] }
     })
   }
   return (
     <>
       <div className='detail-page device-create-page'>
         <Helmet title='Tài khoản | Tạo mới' />
-        <h3 className='form-title'><i className='i_user_8 ico30' />QUẢN LÝ TÀI KHOẢN</h3>
+        <h3 className='form-title'><i className='i_user_8 ico30' />QUẢN LÝ THIẾT BỊ</h3>
         <div className='card-content'>
           <div className='card-bg'>
-            <Card title='Thêm tài khoản'>
+            <Card title='Thêm thiết bị'>
               <Form
                 className='detail-form'
                 onFinish={onFinish}
@@ -43,126 +40,65 @@ const DefaultPage = ({ loading, detail, role, dispatch }) => {
                   <div className='col-lg-8 col-md-8 offset-md-2'>
                     <Item
                       className='display-grid grid-row'
-                      name='name'
-                      label='Họ tên'
+                      name='uuid'
+                      label='UUID'
                       rules={[
                         {
                           required: true,
-                          message: 'Vui lòng nhập tên!'
+                          message: 'Vui lòng nhập UUID!'
                         }, {
                           max: 256,
-                          message: 'Tên quá dài!'
+                          message: 'UUID quá dài!'
                         }
                       ]}
                     >
                       <Input
-                        placeholder='Nhập họ tên...'
+                        placeholder='Nhập UUID'
                       />
                     </Item>
                     <Item
                       className='display-grid grid-row'
-                      name='address'
-                      label='Địa chỉ'
+                      name='macAddress'
+                      label='Địa chỉ Mac'
                       rules={[
                         {
                           required: true,
-                          message: 'Vui lòng nhập địa chỉ!'
+                          message: 'Vui lòng nhập địa chỉ mac address!'
                         }
                       ]}
                     >
                       <Input
-                        placeholder='Nhập địa chỉ...'
+                        placeholder='Nhập địa chỉ MAC...'
                       />
                     </Item>
                     <Item
                       className='display-grid grid-row'
-                      name='role'
-                      label='Vai trò'
-                      initialValue={
-                        ROLE[role] === ROLE.admin ? ROLE.client : ROLE.user
-                      }
-                    >
-                      <Select
-                        disabled options={Object.keys(ROLE).map(x => (
-                          <Option key={x} value={x}>{ROLE[x]}</Option>
-                        ))}
-                      />
-                    </Item>
-                    <Item
-                      className='display-grid grid-row'
-                      name='description'
-                      label='Ghi chú'
+                      name='serialId'
+                      label='Serial'
                       rules={[
                         {
                           required: true,
-                          message: 'Vui lòng nhập ghi chú!'
-                        },
-                        {
-                          message: 'ghi chú quá dài!',
-                          max: 512
+                          message: 'Vui lòng nhập Serial!'
                         }
                       ]}
                     >
-                      <TextArea
-                        placeholder='Nhập ghi chú...'
-                        autoSize={{ minRows: 3, maxRows: 5 }}
+                      <Input
+                        placeholder='Nhập Serial...'
                       />
                     </Item>
                     <Item
                       className='display-grid grid-row'
-                      name='username'
-                      label='Tên đăng nhập'
+                      name='model'
+                      label='model'
                       rules={[
                         {
                           required: true,
-                          message: 'Vui lòng nhập tên đăng nhập!'
-                        }, {
-                          max: 255,
-                          message: 'Tên đăng nhập quá dài!'
+                          message: 'Vui lòng nhập model!'
                         }
                       ]}
                     >
-                      <Input />
-                    </Item>
-                    <Item
-                      className='display-grid grid-row'
-                      name='password'
-                      label='Mật khẩu'
-                      rules={[
-                        {
-                          required: true,
-                          message: 'Vui lòng nhập mật khẩu!'
-                        }
-                      ]}
-                    >
-                      <Input.Password
-                        placeholder='******'
-                        visibilityToggle
-                      />
-                    </Item>
-                    <Item
-                      className='display-grid grid-row'
-                      name='confirm'
-                      label='Nhập lại mật khẩu'
-                      dependencies={['password']}
-                      rules={[
-                        {
-                          required: true,
-                          message: 'Vui lòng nhập lại mật khẩu!'
-                        },
-                        ({ getFieldValue }) => ({
-                          validator (value) {
-                            if (!value || getFieldValue('password') === getFieldValue('confirm')) {
-                              return Promise.resolve()
-                            }
-                            return Promise.reject(new Error('Mật khẩu không khớp!'))
-                          }
-                        })
-                      ]}
-                    >
-                      <Input.Password
-                        placeholder='******'
-                        visibilityToggle
+                      <Input
+                        placeholder='Nhập model...'
                       />
                     </Item>
                     <div className='text-right fl-right btn-footer btn-group-footer'>
