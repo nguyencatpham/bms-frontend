@@ -43,5 +43,11 @@ export default async function getMenuData () {
     default:
       break
   }
+  menu.push({
+    title: 'Đăng xuất',
+    key: '__logout',
+    url: '/logout',
+    icon: 'fe fe-alert-circle'
+  })
   return menu
 }

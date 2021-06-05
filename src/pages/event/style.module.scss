@@ -21,7 +21,7 @@
   flex-wrap: nowrap;
   color: inherit;
   // padding-top: rem(30);
-  padding-bottom: rem(25);
+  // padding-bottom: rem(25);
   &:hover,
   &:focus {
     color: inherit;
@@ -66,4 +66,10 @@
   .item {
     border-bottom: 1px solid $dark-gray-4;
   }
+}
+.eventTr{
+  height: 40px;
+}
+.conto{
+  padding-left: 100px!important;
 }

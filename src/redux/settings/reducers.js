@@ -16,10 +16,10 @@ const initialState = {
     // VB:REPLACE-START:SETTINGS
     authProvider: 'jwt',
     logo: 'Binh Son BMS',
-    version: 'fluent',
+    version: 'v2.0.0',
     theme: 'default',
     locale: 'vi-VN',
-    isSidebarOpen: true,
+    isSidebarOpen: false,
     isSupportChatOpen: false,
     isMobileView: false,
     isMobileMenuOpen: false,
@@ -28,7 +28,7 @@ const initialState = {
     preselectedVariant: 'default',
     menuLayoutType: 'left',
     routerAnimation: 'slide-fadein-up',
-    menuColor: 'gray',
+    menuColor: 'dark',
     authPagesColor: 'gray',
     isAuthTopbar: true,
     primaryColor: '#4b7cf3',
@@ -38,8 +38,8 @@ const initialState = {
     isTopbarFixed: true,
     isTopbarSeparated: false,
     isGrayTopbar: true,
-    isContentMaxWidth: false,
-    isAppMaxWidth: false,
+    isContentMaxWidth: true,
+    isAppMaxWidth: true,
     isGrayBackground: false,
     isCardShadow: true,
     isSquaredBorders: false,
@@ -49,13 +49,13 @@ const initialState = {
     layoutBreadcrumbs: 'v2',
     layoutFooter: 'v3',
     flyoutMenuType: 'flyout',
-    flyoutMenuColor: 'blue',
+    flyoutMenuColor: 'dark'
 
     // VB:REPLACE-END:SETTINGS
-  }),
+  })
 }
 
-export default function settingsReducer(state = initialState, action) {
+export default function settingsReducer (state = initialState, action) {
   switch (action.type) {
     case actions.SET_STATE:
       return { ...state, ...action.payload }

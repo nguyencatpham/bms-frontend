@@ -6,7 +6,7 @@ import style from './style.module.scss'
 import { TIME_FORMAT } from 'constant'
 
 const mapStateToProps = ({ user, event, dispatch }) => {
-  const { list } = event
+  const { list = [] } = event
   return { list, user, dispatch }
 }
 
@@ -35,13 +35,13 @@ const DefaultPage = ({ list, dispatch }) => {
         return (
           <li key={x.id} className={style.item}>
             <div className={`${style.itemLink} ${style.alert}`}>
-              <div className={`${style.itemCover} ${style.alertIcon} mr-3`}>
-                <img src='/resources/images/alert.png' alt='Hands' width='40px' />
-              </div>
+              {/* <div className={`${style.itemCover} ${style.alertIcon} mr-3`}>
+              </div> */}
               <div>
-                <div className={`${style.title} `}>{x.title}</div>
                 <div>
-                  {`${x.body} vào lúc ${moment(x.timestamp).format(TIME_FORMAT)}`}
+                  <h4 className={`${style.title} `}><img src='/resources/images/alert.png' width='40px' />{x.title}</h4>
+                  <p>{x.body}</p>
+                  <p>{moment(x.timestamp).format(TIME_FORMAT)}</p>
                 </div>
               </div>
             </div>
@@ -66,15 +66,12 @@ const DefaultPage = ({ list, dispatch }) => {
       case 0:
       default:
         return (
-          <li className={style.item}>
-            <div className={`${style.itemLink} ${style.offline}`}>
-              <div className={`${style.itemCover} ${style.alertIcon} mr-3`}>
-                <img src='/resources/images/alert.png' alt='Hands' width='40px' />
-              </div>
-              <div>
-                <div className={`${style.title} `}>{x.title}</div>
-                <div>
-                  {`${x.body} vào lúc ${moment(x.timestamp).format(TIME_FORMAT)}`}
+          <li key={x.deviceId} className=''>
+            <div className='dashboard-event'>
+              <div className='card' style={{ marginBottom: 10, backgroundColor: 'antiquewhite' }}>
+                <div className='card-body' style={{ padding: '10px' }}>
+                  <img src='/resources/images/alert.png' width='20px' /><span> Hệ thống <strong> {(x.metadata || {}).name}</strong>  cảnh báo <strong className='text-red'>{x.body}</strong></span>
+                  <div className='time-ago'>{moment(x.timestamp).locale('vi').fromNow()}</div>
                 </div>
               </div>
             </div>
@@ -83,7 +80,7 @@ const DefaultPage = ({ list, dispatch }) => {
     }
   })
   return (
-    <ul className='list-unstyled'>
+    <ul className='list-unstyled' style={{ marginBottom: 0 }}>
       {components}
       {!components.length && 'Không có cảnh báo gần đây.'}
     </ul>

@@ -257,12 +257,12 @@ const DefaultPage = ({ list, loading, total, dispatch }) => {
               rowClassName={(record) => {
                 switch (record.priority) {
                   case 3:
-                    return style.offline
+                    return `${style.offline} ${style.eventTr} `
                   case 2:
                   case 1:
                   case 'ONLINE':
                   default:
-                    return ''
+                    return ` ${style.eventTr} `
                 }
               }}
               ellipsis

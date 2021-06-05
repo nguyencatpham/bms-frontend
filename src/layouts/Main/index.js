@@ -130,11 +130,11 @@ const MainLayout = ({
         {layoutMenu === 'flyout' && <MenuFlyout />}
         {layoutMenu === 'simply' && <MenuSimply />}
         <Layout>
-          {layoutTopbar === 'v1' && (
+          {/* {layoutTopbar === 'v1' && (
             <TopbarWrapper>
               <TopBar />
             </TopbarWrapper>
-          )}
+          )} */}
           {layoutBreadcrumbs === 'v1' && <Breadcrumbs />}
           {layoutBreadcrumbs === 'v2' && <Breadcrumbs2 />}
           <Layout.Content className='vb__layout__content'>{children}</Layout.Content>
@@ -150,7 +150,7 @@ const MainLayout = ({
           )}
           {layoutFooter === 'v3' && (
             <Layout.Footer>
-              <Footer3 />
+              {/* <Footer3 /> */}
             </Layout.Footer>
           )}
           {layoutFooter === 'v4' && (

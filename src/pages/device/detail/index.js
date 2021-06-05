@@ -126,11 +126,11 @@ const DefaultPage = ({ loading, detail, system, blocks, dispatch }) => {
             <div className='card profile-general'>
               <div className='card-body'>
                 <General
-                  avatar='/resources/images/system.png'
+                  avatar='/resources/images/battery-icon.png'
                   name={name || macAddress || uuid}
                   role={updated}
                   actions={actions}
-                  width={200}
+                  width={100}
                 />
               </div>
             </div>

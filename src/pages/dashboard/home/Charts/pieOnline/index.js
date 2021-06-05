@@ -95,8 +95,8 @@ const DefaultPage = (stats = {}) => {
             ref={element => setTextInputRef(element)}
             data={data}
             options={options}
-            width={140}
-            height={140}
+            width={200}
+            height={200}
           />
           <div className={`${style.tooltip} text-gray-5 font-size-28`} ref={tooltip} />
         </div>

@@ -70,7 +70,7 @@ const DefaultPage = ({ list, loading, total, preConfirm, usernameOrEmail, dispat
               shape='square'
               size='large'
               icon={<UserOutlined />}
-              src='/resources/images/system.png'
+              src='/resources/images/battery-icon.png'
             />
           </Link>
         )
@@ -114,24 +114,24 @@ const DefaultPage = ({ list, loading, total, preConfirm, usernameOrEmail, dispat
         return <span className='break-word '>{lastUpdateStatus ? moment(text).format(TIME_FORMAT) : '---'}</span>
       }
     },
-    {
-      title: 'Thời gian đăng ký',
-      dataIndex: 'created',
-      key: 'created',
-      render: (text, item) => {
-        const created = get(item.devices, ['0', 'created'])
-        return <span className='break-word '>{created ? moment(text).format(TIME_FORMAT) : '---'}</span>
-      }
-    },
-    {
-      title: 'Phiên bản',
-      dataIndex: 'firmwareVersion',
-      key: 'firmwareVersion',
-      render: (text, item) => {
-        const name = get(item.devices, ['0', 'firmwareVersion'])
-        return <span>{name || '---'}</span>
-      }
-    },
+    // {
+    //   title: 'Thời gian đăng ký',
+    //   dataIndex: 'created',
+    //   key: 'created',
+    //   render: (text, item) => {
+    //     const created = get(item.devices, ['0', 'created'])
+    //     return <span className='break-word '>{created ? moment(text).format(TIME_FORMAT) : '---'}</span>
+    //   }
+    // },
+    // {
+    //   title: 'Phiên bản',
+    //   dataIndex: 'firmwareVersion',
+    //   key: 'firmwareVersion',
+    //   render: (text, item) => {
+    //     const name = get(item.devices, ['0', 'firmwareVersion'])
+    //     return <span>{name || '---'}</span>
+    //   }
+    // },
     {
       title: 'Thao tác',
       dataIndex: 'action',

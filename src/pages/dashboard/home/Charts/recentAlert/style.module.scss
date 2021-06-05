@@ -67,3 +67,9 @@
     border-bottom: 1px solid $dark-gray-4;
   }
 }
+.i_warning:before {
+	content: "\e020";
+}
+.filled {
+  fill: currentColor;
+}

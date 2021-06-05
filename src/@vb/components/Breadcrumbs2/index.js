@@ -130,7 +130,7 @@ const Breadcrumbs2 = (props) => {
         </span>
         Trở về
       </button>
-      <div className={`${styles.amount} mr-3 ml-auto d-none d-sm-flex`}>
+      {/* <div className={`${styles.amount} mr-3 ml-auto d-none d-sm-flex`}>
         <p className={styles.amountText}>
           Tháng này
           <span className={styles.amountValue}>$251.12</span>
@@ -143,8 +143,8 @@ const Breadcrumbs2 = (props) => {
           <i className={styles.amountGraphItem} style={{ height: '50%' }} />
           <i className={styles.amountGraphItem} style={{ height: '65%' }} />
         </div>
-      </div>
-      <div className={`${styles.amount} d-none d-sm-flex`}>
+      </div> */}
+      {/* <div className={`${styles.amount} d-none d-sm-flex`}>
         <p className={styles.amountText}>
           Tháng trước
           <span className={styles.amountValue}>$12,256.12</span>
@@ -157,7 +157,7 @@ const Breadcrumbs2 = (props) => {
           <i className={styles.amountGraphItem} style={{ height: '100%' }} />
           <i className={styles.amountGraphItem} style={{ height: '85%' }} />
         </div>
-      </div>
+      </div> */}
     </div>
   )
 }
