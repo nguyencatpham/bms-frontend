@@ -26,7 +26,7 @@ const initialState = {
     isMenuCollapsed: false,
     isPreselectedOpen: false,
     preselectedVariant: 'default',
-    menuLayoutType: 'left',
+    menuLayoutType: 'top',
     routerAnimation: 'slide-fadein-up',
     menuColor: 'dark',
     authPagesColor: 'gray',

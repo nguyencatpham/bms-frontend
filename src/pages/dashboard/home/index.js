@@ -51,6 +51,8 @@ const mapStateToProps = ({ authDevice, user, system, dispatch }) => {
 }
 
 const DefaultPage = ({ total, stats, alertCount, dispatch }) => {
+  const { healthy = 0, unhealthy = 0, deployed = 0 } = stats
+  const { normal = 0, warning = 0, alert = 0 } = stats
   const [tabKey, setTabKey] = useState('1')
   const [range, setRange] = useState({})
   const [blockState, setBlockState] = useState(false)
@@ -132,7 +134,7 @@ const DefaultPage = ({ total, stats, alertCount, dispatch }) => {
                     <img src='/resources/images/deployed.svg' />
                   </div>
                   <div className='stats-body'>
-                    <h1>200</h1>
+                    <h1>{deployed}</h1>
                     <p>Đã triển khai</p>
                   </div>
                 </div>
@@ -145,7 +147,7 @@ const DefaultPage = ({ total, stats, alertCount, dispatch }) => {
                     <img src='/resources/images/connected.svg' />
                   </div>
                   <div className='stats-body'>
-                    <h1>200</h1>
+                    <h1>{healthy}</h1>
                     <p>Đang hoạt động</p>
                   </div>
                 </div>
@@ -158,7 +160,7 @@ const DefaultPage = ({ total, stats, alertCount, dispatch }) => {
                     <img src='/resources/images/disconnected.svg' />
                   </div>
                   <div className='stats-body'>
-                    <h1>200</h1>
+                    <h1>{unhealthy}</h1>
                     <p>Mất kết nối</p>
                   </div>
                 </div>
@@ -173,7 +175,7 @@ const DefaultPage = ({ total, stats, alertCount, dispatch }) => {
                     <img src='/resources/images/warning.svg' />
                   </div>
                   <div className='stats-body'>
-                    <h1>200</h1>
+                    <h1>{warning}</h1>
                     <p>Báo động</p>
                   </div>
                 </div>
@@ -186,7 +188,7 @@ const DefaultPage = ({ total, stats, alertCount, dispatch }) => {
                     <img src='/resources/images/alert.svg' />
                   </div>
                   <div className='stats-body'>
-                    <h1>200</h1>
+                    <h1>{alert}</h1>
                     <p>Cảnh báo</p>
                   </div>
                 </div>
@@ -199,7 +201,7 @@ const DefaultPage = ({ total, stats, alertCount, dispatch }) => {
                     <img src='/resources/images/normal.svg' />
                   </div>
                   <div className='stats-body'>
-                    <h1>200</h1>
+                    <h1>{normal}</h1>
                     <p>Bình thường</p>
                   </div>
                 </div>
