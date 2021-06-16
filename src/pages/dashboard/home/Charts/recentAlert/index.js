@@ -8,7 +8,7 @@ const mapStateToProps = ({ user, event, dispatch }) => {
   return { list, user, dispatch }
 }
 
-const DefaultPage = ({ list, dispatch }) => {
+const DefaultPage = ({ list, systemId, priority, dispatch }) => {
   useEffect(() => {
     const start = moment().add('-7', 'days').toISOString()
     const end = moment().toISOString()
@@ -19,19 +19,21 @@ const DefaultPage = ({ list, dispatch }) => {
           skip: 0,
           limit: 10,
           where: {
-            timestamp: { between: [start, end] }
+            timestamp: { between: [start, end] },
+            systemId,
+            priority
           },
           order: ['timestamp DESC']
         })
       }
     })
-  }, [dispatch])
-
-  const components = list.map(x => {
+  }, [systemId, priority, dispatch])
+  console.log(list)
+  const components = list.map((x, i) => {
     switch (x.priority) {
       case 1:
         return (
-          <li key={x.deviceId} className=''>
+          <li key={i} className=''>
             <div className='dashboard-event'>
               <div className='card' style={{ marginBottom: 10, backgroundColor: '#f773754f' }}>
                 <div className='card-body' style={{ padding: '10px' }}>
@@ -44,7 +46,7 @@ const DefaultPage = ({ list, dispatch }) => {
         )
       case 2:
         return (
-          <li key={x.deviceId} className=''>
+          <li key={i} className=''>
             <div className='dashboard-event'>
               <div className='card' style={{ marginBottom: 10, backgroundColor: 'antiquewhite' }}>
                 <div className='card-body' style={{ padding: '10px' }}>
@@ -57,7 +59,7 @@ const DefaultPage = ({ list, dispatch }) => {
         )
       case 3:
         return (
-          <li key={x.deviceId} className=''>
+          <li key={i} className=''>
             <div className='dashboard-event'>
               <div className='card' style={{ marginBottom: 10, backgroundColor: 'antiquewhite' }}>
                 <div className='card-body' style={{ padding: '10px' }}>
@@ -71,7 +73,7 @@ const DefaultPage = ({ list, dispatch }) => {
       case 0:
       default:
         return (
-          <li key={x.deviceId} className=''>
+          <li key={i} className=''>
             <div className='dashboard-event'>
               <div className='card' style={{ marginBottom: 10, backgroundColor: '#b5aea5' }}>
                 <div className='card-body' style={{ padding: '10px' }}>

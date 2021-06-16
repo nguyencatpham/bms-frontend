@@ -66,6 +66,7 @@ export default function * rootSaga () {
     takeEvery(actions.EVENT, COMMON({ type: TYPES.SYSTEMS_GET_ID_EVENTS, field: 'events' })),
     takeEvery(actions.ALERT_COUNT, COMMON({ type: TYPES.SYSTEMS_GET_ALERTSTATS, field: 'alertCount' })),
     takeEvery(actions.ALERT_STATS, COMMON({ type: TYPES.SYSTEMS_GET_ALERTCHART, field: 'alertStats' })),
-    takeEvery(actions.SYSTEM_STATS, COMMON({ type: TYPES.SYSTEMS_GET_STATS, field: 'stats' }))
+    takeEvery(actions.SYSTEM_STATS, COMMON({ type: TYPES.SYSTEMS_GET_STATS, field: 'stats' })),
+    takeEvery(actions.ALERT_COUNT_BY_SYSTEM, COMMON({ type: TYPES.SYSTEMS_GET_ALERTSTATS, field: 'alertCountBySystem' }))
   ])
 }

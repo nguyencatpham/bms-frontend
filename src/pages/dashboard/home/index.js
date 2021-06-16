@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react'
 import RecentAlert from './Charts/recentAlert'
 import BlockStatus from './Charts/blockStatus'
-import InfoModal from './Charts/blockStatus/info'
+import BlockAlertStatus from './Charts/blockAlertStatus'
+import ChartViewer from './Charts/blockStatus/info'
+// import ChartViewer from './timeseries'
 // import PieAlert from './Charts/alertCount'
 // import PieOnline from './Charts/pieOnline'
 // import BarLine from './Charts/barline'
@@ -17,6 +19,7 @@ import InfoModal from './Charts/blockStatus/info'
 // import Zoomable from './Charts/armchart/zoomable'
 
 import Donut from './dounut'
+import RadiaBar from './radialbar'
 import Area from './area'
 
 import { connect } from 'react-redux'
@@ -41,20 +44,22 @@ const { TabPane } = Tabs
 const mapStateToProps = ({ authDevice, user, system, dispatch }) => {
   let { list, loading, total, preConfirm } = authDevice
   const { list: users, username, email, role } = user
-  const { stats = {}, alertCount = {}, alertStats = [] } = system
+  const { stats = {}, alertCount = {}, alertCountBySystem = {}, list: systems = [] } = system
   const usernameOrEmail = username || email
   if (typeof total === 'object') {
     total = total.count
   }
 
-  return { list, loading, total, users, preConfirm, usernameOrEmail, role, stats, alertCount, alertStats, dispatch }
+  return { list, loading, total, users, preConfirm, usernameOrEmail, role, stats, alertCount, alertCountBySystem, systems, dispatch }
 }
 
-const DefaultPage = ({ total, stats, alertCount, dispatch }) => {
+const DefaultPage = ({ total, stats, systems, alertCount, alertCountBySystem, dispatch }) => {
   const { healthy = 0, unhealthy = 0, deployed = 0 } = stats
-  const { normal = 0, warning = 0, alert = 0 } = stats
+  const { normal = 0, warning = 0, alert = 0 } = alertCount
+  const { normal: normalBySystem = 0, warning: warningBySystem = 0, alert: alertBySystem = 0 } = alertCountBySystem
   const [tabKey, setTabKey] = useState('1')
   const [range, setRange] = useState({})
+  const [systemId, setSystemId] = useState()
   const [blockState, setBlockState] = useState(false)
   const [pagination, setPagination] = useState({
     current: 1,
@@ -105,14 +110,35 @@ const DefaultPage = ({ total, stats, alertCount, dispatch }) => {
       payload
     })
     dispatch({
-      type: 'system/ALERT_STATS',
-      payload
+      type: 'system/ALERT_COUNT_BY_SYSTEM',
+      payload: {
+        systemId
+      }
+    })
+    dispatch({
+      type: 'system/LIST',
+      payload: {
+        filter: { fields: { systemId: true, name: true } }
+      }
     })
     dispatch({
       type: 'system/SYSTEM_STATS',
       payload
     })
   }, [dispatch, payload])
+  useEffect(() => {
+    if (systems.length) {
+      setSystemId(systems[0].value)
+    }
+  }, [systems])
+  useEffect(() => {
+    dispatch({
+      type: 'system/ALERT_COUNT_BY_SYSTEM',
+      payload: {
+        systemId
+      }
+    })
+  }, [systemId])
 
   return (
     <>
@@ -125,7 +151,7 @@ const DefaultPage = ({ total, stats, alertCount, dispatch }) => {
         </div>
 
         {/* stats box */}
-        <div clasName='stats-box'>
+        <div className='stats-box'>
           <div className='row'>
             <div className='col-md-4 col-lg-4'>
               <div className='card'>
@@ -209,7 +235,7 @@ const DefaultPage = ({ total, stats, alertCount, dispatch }) => {
             </div>
           </div>
         </div>
-        {/* Pie chart */}
+        {/* stats % chart */}
         <div className='deploy-pie-chart row'>
           <div className='col-md-6 col-lg-6'>
             <div className='card'>
@@ -221,7 +247,10 @@ const DefaultPage = ({ total, stats, alertCount, dispatch }) => {
                 </div>
               </div>
               <div className='card-body'>
-                <Donut />
+                <RadiaBar
+                  series={[100, Math.ceil(healthy / deployed) * 100 || 0, Math.ceil(unhealthy / deployed) * 100 || 0]}
+                  labels={['Đã triển khai', 'Đang hoạt động', 'Mất kết nối']}
+                />
               </div>
             </div>
           </div>
@@ -238,8 +267,9 @@ const DefaultPage = ({ total, stats, alertCount, dispatch }) => {
                           >
                         </div>
                         <Select
-                          value={1}
-                          options={[{ label: 'conto', value: 1 }]}
+                          value={systemId}
+                          onChange={setSystemId}
+                          options={systems.map(x => ({ label: x.name, value: x.systemId }))}
                           style={{ minWidth: 150, marginLeft: 20 }}
                         />
                       </div>
@@ -248,7 +278,10 @@ const DefaultPage = ({ total, stats, alertCount, dispatch }) => {
                 </div>
               </div>
               <div className='card-body'>
-                <Donut />
+                <Donut
+                  series={[normalBySystem, warningBySystem, alertBySystem]}
+                  labels={['Bình thường', 'Cảnh báo', 'Báo động']}
+                />
               </div>
             </div>
           </div>
@@ -266,8 +299,9 @@ const DefaultPage = ({ total, stats, alertCount, dispatch }) => {
                       >
                     </div>
                     <Select
-                      value={1}
-                      options={[{ label: 'conto', value: 1 }]}
+                      value={systemId}
+                      onChange={setSystemId}
+                      options={systems.map(x => ({ label: x.name, value: x.systemId }))}
                       style={{ minWidth: 150, marginLeft: 20 }}
                     />
                   </div>
@@ -291,8 +325,9 @@ const DefaultPage = ({ total, stats, alertCount, dispatch }) => {
                           >
                         </div>
                         <Select
-                          value={1}
-                          options={[{ label: 'conto', value: 1 }]}
+                          value={systemId}
+                          onChange={setSystemId}
+                          options={systems.map(x => ({ label: x.name, value: x.systemId }))}
                           style={{ minWidth: 135, marginLeft: 20 }}
                         />
                       </div>
@@ -300,8 +335,8 @@ const DefaultPage = ({ total, stats, alertCount, dispatch }) => {
                   </div>
                 </div>
                 <Tabs activeKey={tabKey} className='mr-auto kit-tabs-bold' onChange={changeTab}>
-                  <TabPane tab='Cảnh báo' key='1' />
-                  <TabPane tab='Báo động' key='2' />
+                  <TabPane tab='Báo động' key='1' />
+                  <TabPane tab='Cảnh báo' key='2' />
                 </Tabs>
               </div>
               <div
@@ -312,10 +347,10 @@ const DefaultPage = ({ total, stats, alertCount, dispatch }) => {
                 }}
               >
                 {tabKey === '1' && (
-                  <RecentAlert type='warning' />
+                  <RecentAlert type='alert' priority={1} systemId={systemId} />
                 )}
                 {tabKey === '2' && (
-                  <RecentAlert type='alert' />
+                  <RecentAlert type='warning' priority={2} systemId={systemId} />
                 )}
               </div>
             </div>
@@ -334,15 +369,16 @@ const DefaultPage = ({ total, stats, alertCount, dispatch }) => {
                       >
                     </div>
                     <Select
-                      value={1}
-                      options={[{ label: 'conto', value: 1 }]}
+                      value={systemId}
+                      onChange={setSystemId}
+                      options={systems.map(x => ({ label: x.name, value: x.systemId }))}
                       style={{ minWidth: 150, marginLeft: 20 }}
                     />
                   </div>
                 </div>
               </div>
               <div className='card-body'>
-                <BlockStatus setBlockState={setBlockState} />
+                <BlockAlertStatus setBlockState={setBlockState} systemId={systemId} />
               </div>
             </div>
           </div>
@@ -357,15 +393,16 @@ const DefaultPage = ({ total, stats, alertCount, dispatch }) => {
                       >
                     </div>
                     <Select
-                      value={1}
-                      options={[{ label: 'conto', value: 1 }]}
+                      value={systemId}
+                      onChange={setSystemId}
+                      options={systems.map(x => ({ label: x.name, value: x.systemId }))}
                       style={{ minWidth: 150, marginLeft: 20 }}
                     />
                   </div>
                 </div>
               </div>
               <div className='card-body'>
-                <BlockStatus setBlockState={setBlockState} />
+                <BlockStatus setBlockState={setBlockState} systemId={systemId} />
               </div>
             </div>
           </div>
@@ -382,11 +419,6 @@ const DefaultPage = ({ total, stats, alertCount, dispatch }) => {
                         </strong
                         >
                       </div>
-                      <Select
-                        value={1}
-                        options={[{ label: 'conto', value: 1 }]}
-                        style={{ minWidth: 150, marginLeft: 20 }}
-                      />
                       <div
                         style={{ minWidth: 550 }}
                       >
@@ -404,11 +436,9 @@ const DefaultPage = ({ total, stats, alertCount, dispatch }) => {
                     </div>
                   </div>
                 </div>
-                <div
-                  className='card-body'
-                >
+                <div className='card-body'>
                   <div>
-                    <InfoModal modal={blockState} range={range} />
+                    <ChartViewer modal={blockState} range={range} />
                   </div>
                 </div>
               </div>

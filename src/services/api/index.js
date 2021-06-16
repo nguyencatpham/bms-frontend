@@ -1,7 +1,7 @@
 /* eslint camelcase: 0 */
 /*
-    Total: 103 APIs
-    version: "0.1.0",
+    Total: 104 APIs
+    version: "0.1.1",
     title: "bms-backend",
     description: "bms Backend API"
 */
@@ -101,6 +101,7 @@ export const types = {
   AUTHORIZEDDEVICES_DELETE: 'AUTHORIZEDDEVICES_DELETE',
   AUTHORIZEDDEVICES_GET_COUNT: 'AUTHORIZEDDEVICES_GET_COUNT',
   AUTHORIZEDDEVICES_PUT_ID_ATTACH_DEVICE: 'AUTHORIZEDDEVICES_PUT_ID_ATTACH_DEVICE',
+  AUTHORIZEDDEVICES_PUT_PROVISION: 'AUTHORIZEDDEVICES_PUT_PROVISION',
   CONTAINERS_GET: 'CONTAINERS_GET',
   CONTAINERS_POST: 'CONTAINERS_POST',
   CONTAINERS_DELETE_CONTAINER: 'CONTAINERS_DELETE_CONTAINER',
@@ -406,9 +407,9 @@ export const apis = {
     url: `${apiEndpoint}/api/systems/alertChart`
   }),
   // get system alertStats
-  SYSTEMS_GET_ALERTSTATS: () => ({
+  SYSTEMS_GET_ALERTSTATS: ({ systemId }) => ({
     method: 'GET',
-    url: `${apiEndpoint}/api/systems/alertStats`
+    url: `${apiEndpoint}/api/systems/alertStats?${systemId ? `systemId=${encodeURIComponent(typeof systemId === 'object' ? JSON.stringify(systemId) : systemId)}` : ''}`
   }),
   // get system stats
   SYSTEMS_GET_STATS: () => ({
@@ -602,6 +603,12 @@ export const apis = {
   AUTHORIZEDDEVICES_PUT_ID_ATTACH_DEVICE: ({ id, body }) => ({
     method: 'PUT',
     url: `${apiEndpoint}/api/authorizeddevices/${id}/attach-device`,
+    body
+  }),
+  // create or update authorized device
+  AUTHORIZEDDEVICES_PUT_PROVISION: ({ body }) => ({
+    method: 'PUT',
+    url: `${apiEndpoint}/api/authorizeddevices/provision`,
     body
   }),
   // undefined

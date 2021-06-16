@@ -5,7 +5,7 @@ import { Pagination } from 'antd'
 import config from 'config/config'
 
 const mapStateToProps = ({ block, dispatch }) => {
-  let { list, loading, total } = block
+  let { loading, hasAlertList: list = [], hasAlertCount: total } = block
   if (typeof total === 'object') {
     total = total.count
   }
@@ -26,11 +26,21 @@ const DefaultPage = ({ total, list, loading, setBlockState, systemId, dispatch }
       limit: pagination.pageSize,
       where: {
         systemId,
-        alertType: 0
+        alertType: { inq: [1, 2, 3] }
       },
       order: ['alertType DESC', 'id ASC']
     })
   })
+  const getColor = (type) => {
+    switch (type) {
+      case 1:
+        return config.COLOR.alert
+      case 2:
+        return config.COLOR.warning
+      default:
+        return config.COLOR.offline
+    }
+  }
   useEffect(() => {
     if (total !== pagination.total) {
       setPagination({ ...pagination, total })
@@ -39,11 +49,11 @@ const DefaultPage = ({ total, list, loading, setBlockState, systemId, dispatch }
 
   useEffect(() => {
     dispatch({
-      type: 'block/COUNT',
+      type: 'block/HAS_ALERT_COUNT',
       payload: { where: (JSON.parse(payload.filter) || {}).where }
     })
     dispatch({
-      type: 'block/LIST',
+      type: 'block/HAS_ALERT_LIST',
       payload
     })
   }, [payload])
@@ -55,7 +65,7 @@ const DefaultPage = ({ total, list, loading, setBlockState, systemId, dispatch }
           ...filter,
           where: {
             systemId,
-            alertType: 0
+            alertType: { inq: [1, 2, 3] }
           }
         })
       })
@@ -80,14 +90,24 @@ const DefaultPage = ({ total, list, loading, setBlockState, systemId, dispatch }
       <div className='card' style={{ minHeight: '270px' }}>
         <div className='card-body battery-cell-panel'>
           {list.map(x => (
-            <div
-              key={x.id + x.macAddress}
-              className='card cell-item'
-              onClick={() => setBlockState(x)}
-              style={{ cursor: 'pointer' }}
-            >
-              <div style={{ backgroundColor: config.COLOR.normal, color: 'white' }} className='card-body'>{x.id}</div>
-            </div>
+            <>
+              <div
+                key={x.id + x.macAddress}
+                className='card cell-item'
+                onClick={() => setBlockState(x)}
+                style={{ cursor: 'pointer' }}
+              >
+                <div style={{ backgroundColor: getColor(x.alertType), color: 'white' }} className='card-body'>{x.id}</div>
+              </div>
+              <div
+                key={x.id + x.macAddress}
+                className='card cell-item'
+                onClick={() => setBlockState(x)}
+                style={{ cursor: 'pointer' }}
+              >
+                <div style={{ backgroundColor: getColor(x.alertType), color: 'white' }} className='card-body'>{x.id}</div>
+              </div>
+            </>
           ))}
         </div>
         <Pagination className='battery-pagination' {...pagination} />

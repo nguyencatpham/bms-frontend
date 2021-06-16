@@ -2,16 +2,32 @@
 import React from 'react'
 import Chart from 'react-apexcharts'
 
-const Donut = () => {
+const ChartPage = ({ series, labels }) => {
   const config = {
-    options: {},
-    series: [44, 55, 41, 17, 15],
-    labels: ['A', 'B', 'C', 'D', 'E']
+    series,
+    options: {
+      chart: {
+        type: 'donut'
+      },
+      labels,
+      colors: ['#75cb6e', '#faad14', '#f64b4e'],
+      responsive: [{
+        breakpoint: 480,
+        options: {
+          chart: {
+            width: 200
+          },
+          legend: {
+            position: 'bottom'
+          }
+        }
+      }]
+    }
   }
   return (
-    <div className='donut'>
-      <Chart options={config.options} series={config.series} type='donut' width='380' />
+    <div className='chart-page'>
+      <Chart options={config.options} series={config.series} type='donut' />
     </div>
   )
 }
-export default Donut
+export default ChartPage

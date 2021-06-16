@@ -1,11 +1,16 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useRef, useLayoutEffect } from 'react'
 import { Table } from 'antd'
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
 import moment from 'moment'
+import * as am4core from '@amcharts/amcharts4/core'
+import * as am4charts from '@amcharts/amcharts4/charts'
+import am4themesAnimated from '@amcharts/amcharts4/themes/animated'
 import Series from './series'
 
 import { TIME_FORMAT } from 'constant'
+
+am4core.useTheme(am4themesAnimated)
 
 const mapStateToProps = ({ system, dispatch }) => {
   const { tsdata = [] } = system
@@ -14,6 +19,68 @@ const mapStateToProps = ({ system, dispatch }) => {
 
 const DefaultPage = ({ modal, tsdata, range, dispatch }) => {
   const [info, setInfo] = useState([])
+  const chart = useRef(null)
+
+  useLayoutEffect(() => {
+    const armChart = am4core.create('chartdiv', am4charts.XYChart)
+
+    chart.current = armChart
+    // chart.current.data = data
+    console.log('test', tsdata)
+    chart.current.data = tsdata.map(({ timestamp, v0, e, soc, r, t }) => ({ timestamp: new Date(timestamp), v0, e, soc, r, t }))
+    chart.current.paddingRight = 20
+    // Create axes
+    const dateAxis = chart.current.xAxes.push(new am4charts.DateAxis())
+    dateAxis.renderer.minGridDistance = 50
+    dateAxis.renderer.grid.template.location = 0
+    dateAxis.minZoomCount = 5
+    // this makes the data to be grouped
+    dateAxis.groupData = true
+
+    const valueAxis = chart.current.yAxes.push(new am4charts.ValueAxis())
+    if (chart.current.yAxes.indexOf(valueAxis) !== 0) {
+      valueAxis.syncWithAxis = chart.current.yAxes.getIndex(0)
+    }
+
+    createAxisAndSeries(valueAxis, 'v0', 'VO', false, 'circle')
+    createAxisAndSeries(valueAxis, 'e', 'E', false, 'triangle')
+    createAxisAndSeries(valueAxis, 'r', 'R', false, 'rectangle')
+    createAxisAndSeries(valueAxis, 't', 'T', false, 'rectangle')
+
+    const valueAxis2 = chart.current.yAxes.push(new am4charts.ValueAxis())
+    createAxisAndSeries(valueAxis2, 'soc', 'SoC', true, 'rectangle')
+    chart.current.cursor = new am4charts.XYCursor()
+    chart.current.cursor.xAxis = dateAxis
+    chart.current.legend = new am4charts.Legend()
+    const scrollbarX = new am4core.Scrollbar()
+    scrollbarX.marginBottom = 20
+    chart.current.scrollbarX = scrollbarX
+
+    return () => {
+      armChart.dispose()
+    }
+  }, [])
+  useLayoutEffect(() => {
+    chart.current.data = tsdata.map(({ timestamp, v0, e, soc, r, t }) => ({ timestamp: new Date(timestamp), v0, e, soc, r, t }))
+  }, [tsdata])
+
+  // Create series
+  const createAxisAndSeries = (valueAxis, field, name, opposite) => {
+    const series = chart.current.series.push(new am4charts.LineSeries())
+    series.dataFields.dateX = 'timestamp'
+    series.dataFields.valueY = field
+    series.tooltipText = '{name}: [bold]{valueY}[/]'
+    series.tooltip.pointerOrientation = 'vertical'
+    series.tooltip.background.fillOpacity = 0.5
+    series.name = name
+    series.yAxis = valueAxis
+    series.showOnInit = true
+
+    valueAxis.renderer.line.strokeOpacity = 1
+    valueAxis.renderer.line.stroke = series.stroke
+    valueAxis.renderer.labels.template.fill = series.stroke
+    valueAxis.renderer.opposite = opposite
+  }
 
   const columns = [
     {
@@ -72,6 +139,7 @@ const DefaultPage = ({ modal, tsdata, range, dispatch }) => {
         <div className='col-md-8 col-xs-12'>
           <div>
             <Series />
+            {/* <div id='chartdiv' style={{ width: '100%', height: '500px' }} /> */}
           </div>
         </div>
         <div className='col-md-4 col-xs-12'>

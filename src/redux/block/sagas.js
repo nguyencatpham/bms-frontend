@@ -57,7 +57,9 @@ function * loading (isLoading = false) {
 export default function * rootSaga () {
   yield all([
     takeEvery(actions.COUNT, COMMON({ type: TYPES.BLOCKS_GET_COUNT, field: 'total' })),
+    takeEvery(actions.HAS_ALERT_COUNT, COMMON({ type: TYPES.BLOCKS_GET_COUNT, field: 'hasAlertTotal' })),
     takeEvery(actions.LIST, COMMON({ type: TYPES.BLOCKS_GET, field: 'list' })),
+    takeEvery(actions.HAS_ALERT_LIST, COMMON({ type: TYPES.BLOCKS_GET, field: 'hasAlertList' })),
     takeEvery(actions.DETAIL, COMMON({ type: TYPES.BLOCKS_GET_ID, field: 'detail' })),
     takeEvery(actions.DELETE, COMMON({ type: TYPES.BLOCKS_DELETE_ID, field: 'id' })),
     takeEvery(actions.STATS, COMMON({ type: TYPES.BLOCKS_GET_STATS, field: 'stats' }))

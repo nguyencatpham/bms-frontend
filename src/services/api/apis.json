@@ -1,7 +1,7 @@
 {
   "swagger": "2.0",
   "info": {
-    "version": "0.1.0",
+    "version": "0.1.1",
     "title": "bms-backend",
     "description": "bms Backend API"
   },
@@ -1920,7 +1920,14 @@
         ],
         "summary": "get system alertStats",
         "operationId": "System.alertStats",
-        "parameters": [],
+        "parameters": [
+          {
+            "name": "systemId",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          }
+        ],
         "responses": {
           "200": {
             "description": "Request was successful",
@@ -3082,6 +3089,39 @@
             "description": "Request was successful",
             "schema": {
               "$ref": "#/definitions/Device"
+            }
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/authorizeddevices/provision": {
+      "put": {
+        "tags": [
+          "AuthorizedDevice"
+        ],
+        "summary": "create or update authorized device",
+        "operationId": "AuthorizedDevice.provisionDevice",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": false,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "token": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Request was successful",
+            "schema": {
+              "type": "object"
             }
           }
         },
