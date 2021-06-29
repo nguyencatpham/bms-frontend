@@ -3,7 +3,6 @@ import { Table } from 'antd'
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
 import moment from 'moment'
-import faker from 'faker'
 import Series from './series'
 
 import { TIME_FORMAT } from 'constant'
@@ -80,7 +79,7 @@ const DefaultPage = ({ modal, tsdata, range, dispatch }) => {
     if (info.length && info.every(x => x.type !== 'V0')) {
       setInfo([...latestValue, ...info])
     }
-  }, [tsdata])
+  }, [info])
   return (
     <div className='container block-info'>
       <div className='row'>
