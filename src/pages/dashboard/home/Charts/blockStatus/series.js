@@ -27,7 +27,7 @@ const Donut = ({ data = [] }) => {
       },
       {
         name: 'R',
-        data: data.map(x => x.t)
+        data: data.map(x => x.r)
       }
     ],
     stroke: {

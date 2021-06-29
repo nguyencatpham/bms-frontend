@@ -9,22 +9,35 @@ import { TIME_FORMAT } from 'constant'
 
 const mapStateToProps = ({ system, dispatch }) => {
   const { tsdata = [] } = system
-  return { tsdata, dispatch }
-}
-
-const DefaultPage = ({ modal, tsdata, range, dispatch }) => {
-  const [info, setInfo] = useState([])
-  const last = tsdata.length > 0 ? tsdata[tsdata.length - 1] : { v0: 0, e: 0, r: 0 }
-  const latestValue = [{
+  let latestValue = [{
     type: 'V0',
-    amount: last.v0
+    amount: 0
   }, {
     type: 'E',
-    amount: last.e
+    amount: 0
   }, {
     type: 'R',
-    amount: last.r
+    amount: 0
   }]
+  if (tsdata.length) {
+    const last = tsdata[tsdata.length - 1]
+    latestValue = [{
+      type: 'V0',
+      amount: last.v0
+    }, {
+      type: 'E',
+      amount: last.e
+    }, {
+      type: 'R',
+      amount: last.r
+    }]
+  }
+  return { tsdata, latestValue, dispatch }
+}
+
+const DefaultPage = ({ modal, tsdata, range, latestValue, dispatch }) => {
+  const [info, setInfo] = useState([])
+
   const columns = [
     {
       title: 'Loại',
@@ -73,13 +86,9 @@ const DefaultPage = ({ modal, tsdata, range, dispatch }) => {
         type: key,
         amount: modal[key]
       }))
-    setInfo(blockInfo)
-  }, [modal.id])
-  useEffect(() => {
-    if (info.length && info.every(x => x.type !== 'V0')) {
-      setInfo([...latestValue, ...info])
-    }
-  }, [info])
+    setInfo([...latestValue, ...blockInfo])
+  }, [modal.id, latestValue])
+
   return (
     <div className='container block-info'>
       <div className='row'>

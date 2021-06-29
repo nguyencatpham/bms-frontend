@@ -23,10 +23,10 @@ const ChartPage = ({ series }) => {
           },
           dataLabels: {
             name: {
-              show: false
+              show: true
             },
             value: {
-              show: false
+              show: true
             }
           }
         }
@@ -47,7 +47,7 @@ const ChartPage = ({ series }) => {
           size: 0
         },
         formatter: function (seriesName, opts) {
-          return seriesName + ':  ' + opts.w.globals.series[opts.seriesIndex]
+          return seriesName + ':  ' + opts.w.globals.series[opts.seriesIndex] + '%'
         },
         itemMargin: {
           vertical: 3

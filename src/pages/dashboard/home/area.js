@@ -4,12 +4,32 @@ import Chart from 'react-apexcharts'
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
 import moment from 'moment'
+import _ from 'lodash'
 
 const mapStateToProps = ({ user, event, dispatch }) => {
-  const { listTimeSeries: list = [] } = event
-  return { list, user, dispatch }
+  const { listTimeSeries = [] } = event
+  const dayName = item => moment(item.timestamp, 'YYYY-MM-DD').format('DD/MM')
+  const list = _.groupBy(listTimeSeries, dayName) || []
+  const timestamps = Object.keys(list)
+  const warnings = []
+  const disconnects = []
+  const alerts = []
+
+  Object.keys(list).forEach(dayName => {
+    warnings.push(_.sumBy(list[dayName], item => {
+      return item.priority === 2
+    }))
+    alerts.push(_.sumBy(list[dayName], item => {
+      return item.priority === 1
+    }))
+    disconnects.push(_.sumBy(list[dayName], item => {
+      return item.priority === 3
+    }))
+  })
+  console.log('conto', timestamps, warnings, disconnects, alerts)
+  return { list, user, timestamps, warnings, disconnects, alerts, dispatch }
 }
-const DefaultPage = ({ list, systemId, dispatch }) => {
+const DefaultPage = ({ list, systemId, timestamps, warnings, disconnects, alerts, dispatch }) => {
   useEffect(() => {
     const start = moment().add('-30', 'days').toISOString()
     const end = moment().toISOString()
@@ -18,7 +38,7 @@ const DefaultPage = ({ list, systemId, dispatch }) => {
       payload: {
         filter: JSON.stringify({
           skip: 0,
-          limit: 10000,
+          limit: 1000,
           fields: {
             priority: true,
             timestamp: true
@@ -74,22 +94,22 @@ const DefaultPage = ({ list, systemId, dispatch }) => {
       },
       xaxis: {
         type: 'datetime',
-        categories: list.map(x => moment(x.timestamp))
+        categories: timestamps
       }
     },
     colors: ['#75cb6e', '#faad14', '#f64b4e'],
     series: [
       {
         name: 'Báo động',
-        data: list.filter(x => x.priority === 1).map(x => x.priority)
+        data: alerts
       },
       {
         name: 'Cảnh báo',
-        data: list.filter(x => x.priority === 2).map(x => x.priority)
+        data: warnings
       },
       {
         name: 'Mất kết nối',
-        data: list.filter(x => x.priority === 3).map(x => x.priority)
+        data: disconnects
       }
     ]
   }
