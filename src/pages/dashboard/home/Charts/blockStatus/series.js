@@ -1,17 +1,11 @@
 
 import React from 'react'
 import Chart from 'react-apexcharts'
-import faker from 'faker'
 import moment from 'moment'
+import { SHORT_DATE_FORMAT } from 'constant'
 
-const data = []
-for (let i = 0; i < 1000; i++) {
-  data.push({
-    x: Math.floor(Date.now() / 1000) + i * 60,
-    y: faker.random.number({ min: 1 })
-  })
-}
-const Donut = () => {
+const Donut = ({ data = [] }) => {
+  console.log(data)
   const config = {
     chart: {
       height: 350,
@@ -21,23 +15,28 @@ const Donut = () => {
     dataLabels: {
       enabled: false
     },
-    colors: ['#FF1654', '#247BA0'],
+    colors: ['#52c41a', '#096dd9', '#fa8c16'],
     series: [
       {
-        name: 'Series A',
-        data: [1.4, 2, 2.5, 1.5, 2.5, 2.8, 3.8, 4.6]
+        name: 'Vo',
+        data: data.map(x => x.v0)
       },
       {
-        name: 'Series C',
-        data: [3.4, 3, 4.5, 2.5, 1.5, 3.8, 3.8, 4.6]
+        name: 'E',
+        data: data.map(x => x.e)
       },
       {
-        name: 'Series B',
-        data: [20, 29, 37, 36, 44, 45, 50, 58]
+        name: 'R',
+        data: data.map(x => x.t)
       }
     ],
     stroke: {
-      width: [4, 4]
+      show: true,
+      // curve: 'smooth',
+      // lineCap: 'butt',
+      colors: undefined,
+      width: 2,
+      dashArray: 0
     },
     plotOptions: {
       bar: {
@@ -45,49 +44,70 @@ const Donut = () => {
       }
     },
     xaxis: {
-      categories: [2009, 2010, 2011, 2012, 2013, 2014, 2015, 2016]
+      categories: data.map(x => moment(x.timestamp).format(SHORT_DATE_FORMAT))
     },
     yaxis: [
       {
-        axisTicks: {
-          show: true
-        },
-        axisBorder: {
-          show: true,
-          color: '#FF1654'
-        },
-        labels: {
-          style: {
-            colors: '#FF1654'
-          }
-        },
-        title: {
-          text: 'Series A',
-          style: {
-            color: '#FF1654'
-          }
-        }
+        // axisTicks: {
+        //   show: true
+        // }
+        // axisBorder: {
+        //   show: true,
+        //   color: '#FF1654'
+        // }
+        // labels: {
+        //   style: {
+        //     colors: '#FF1654'
+        //   }
+        // }
+        // title: {
+        //   text: 'Vo',
+        //   style: {
+        //     color: '#FF1654'
+        //   }
+        // }
       },
+      // {
+      //   // opposite: true,
+      //   axisTicks: {
+      //     show: true
+      //   },
+      //   axisBorder: {
+      //     show: true,
+      //     color: '#247BA0'
+      //   },
+      //   labels: {
+      //     style: {
+      //       colors: '#247BA0'
+      //     }
+      //   },
+      //   title: {
+      //     text: 'E',
+      //     style: {
+      //       color: '#247BA0'
+      //     }
+      //   }
+      // },
       {
-        opposite: true,
-        axisTicks: {
-          show: true
-        },
-        axisBorder: {
-          show: true,
-          color: '#247BA0'
-        },
-        labels: {
-          style: {
-            colors: '#247BA0'
-          }
-        },
-        title: {
-          text: 'Series B',
-          style: {
-            color: '#247BA0'
-          }
-        }
+        opposite: true
+        // axisTicks: {
+        //   show: true
+        // },
+        // axisBorder: {
+        //   show: true,
+        //   color: '#247BA0'
+        // }
+        // labels: {
+        //   style: {
+        //     colors: '#247BA0'
+        //   }
+        // },
+        // title: {
+        //   text: 'R',
+        //   style: {
+        //     color: '#247BA0'
+        //   }
+        // }
       }
     ],
     tooltip: {

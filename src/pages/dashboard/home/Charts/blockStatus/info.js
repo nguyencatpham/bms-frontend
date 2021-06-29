@@ -3,6 +3,7 @@ import { Table } from 'antd'
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
 import moment from 'moment'
+import faker from 'faker'
 import Series from './series'
 
 import { TIME_FORMAT } from 'constant'
@@ -14,7 +15,17 @@ const mapStateToProps = ({ system, dispatch }) => {
 
 const DefaultPage = ({ modal, tsdata, range, dispatch }) => {
   const [info, setInfo] = useState([])
-
+  const last = tsdata.length > 0 ? tsdata[tsdata.length - 1] : { v0: 0, e: 0, r: 0 }
+  const latestValue = [{
+    type: 'V0',
+    amount: last.v0
+  }, {
+    type: 'E',
+    amount: last.e
+  }, {
+    type: 'R',
+    amount: last.r
+  }]
   const columns = [
     {
       title: 'Loại',
@@ -65,13 +76,17 @@ const DefaultPage = ({ modal, tsdata, range, dispatch }) => {
       }))
     setInfo(blockInfo)
   }, [modal.id])
-
+  useEffect(() => {
+    if (info.length && info.every(x => x.type !== 'V0')) {
+      setInfo([...latestValue, ...info])
+    }
+  }, [tsdata])
   return (
     <div className='container block-info'>
       <div className='row'>
         <div className='col-md-8 col-xs-12'>
           <div>
-            <Series />
+            <Series data={tsdata} />
           </div>
         </div>
         <div className='col-md-4 col-xs-12'>
@@ -95,6 +110,7 @@ const DefaultPage = ({ modal, tsdata, range, dispatch }) => {
                   pagination={false}
                 />
               </div>
+
             </div>
           </div>
         </div>

@@ -57,6 +57,7 @@ function * loading (isLoading = false) {
 export default function * rootSaga () {
   yield all([
     takeEvery(actions.COUNT, COMMON({ type: TYPES.EVENTS_GET_COUNT, field: 'total' })),
-    takeEvery(actions.LIST, COMMON({ type: TYPES.EVENTS_GET, field: 'list' }))
+    takeEvery(actions.LIST, COMMON({ type: TYPES.EVENTS_GET, field: 'list' })),
+    takeEvery(actions.LIST_TIMESERIES, COMMON({ type: TYPES.EVENTS_GET, field: 'listTimeSeries' }))
   ])
 }

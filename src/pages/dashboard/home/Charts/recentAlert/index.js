@@ -23,12 +23,20 @@ const DefaultPage = ({ list, systemId, priority, dispatch }) => {
             systemId,
             priority
           },
+          fields: {
+            priority: true,
+            type: true,
+            systemId: true,
+            metadata: true,
+            title: true,
+            body: true,
+            timestamp: true
+          },
           order: ['timestamp DESC']
         })
       }
     })
   }, [systemId, priority, dispatch])
-  console.log(list)
   const components = list.map((x, i) => {
     switch (x.priority) {
       case 1:

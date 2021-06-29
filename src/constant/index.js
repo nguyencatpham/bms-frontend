@@ -1,6 +1,7 @@
 export const HOCHIMINH_CENTER = [10.7682231, 106.7045727]
 export const TIME_FORMAT = 'DD/MM/YYYY HH:mm'
 export const DATE_FORMAT = 'DD/MM/YYYY'
+export const SHORT_DATE_FORMAT = 'DD/MM HH:mm'
 
 export const ROLE = {
   admin: 'Quản trị viên', // Tất cả

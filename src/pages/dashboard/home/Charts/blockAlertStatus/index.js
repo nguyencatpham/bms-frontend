@@ -99,14 +99,6 @@ const DefaultPage = ({ total, list, loading, setBlockState, systemId, dispatch }
               >
                 <div style={{ backgroundColor: getColor(x.alertType), color: 'white' }} className='card-body'>{x.id}</div>
               </div>
-              <div
-                key={x.id + x.macAddress}
-                className='card cell-item'
-                onClick={() => setBlockState(x)}
-                style={{ cursor: 'pointer' }}
-              >
-                <div style={{ backgroundColor: getColor(x.alertType), color: 'white' }} className='card-body'>{x.id}</div>
-              </div>
             </>
           ))}
         </div>
