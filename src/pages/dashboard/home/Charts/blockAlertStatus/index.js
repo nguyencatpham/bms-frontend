@@ -4,26 +4,37 @@ import { withRouter } from 'react-router-dom'
 import { Pagination } from 'antd'
 import config from 'config/config'
 
-const mapStateToProps = ({ block, dispatch }) => {
-  let { loading, hasAlertList: list = [], hasAlertCount: total } = block
+const mapStateToProps = ({ block, user, dispatch }) => {
+  let { loading, hasAlertList: list = [], hasAlertTotal: total } = block
   if (typeof total === 'object') {
     total = total.count
   }
+  const include = []
+  // const { role } = user
+  // if (role !== 'admin') {
+  //   include = {
+  //     relation: 'system',
+  //     scope: {
+  //       where: { userId: user.id }
+  //     }
+  //   }
+  // }
 
-  return { list, loading, total, dispatch }
+  return { list, loading, total, include, dispatch }
 }
 
-const DefaultPage = ({ total, list, loading, setBlockState, systemId, dispatch }) => {
+const DefaultPage = ({ total = 0, list, loading, setBlockState, systemId, include, dispatch }) => {
   const [pagination, setPagination] = useState({
     current: 1,
     pageSize: 24,
-    total: 0,
+    total,
     showTotal: (total, range) => `${range[0]}-${range[1]} trên ${total} thiết bị`
   })
   const [payload, setPayload] = useState({
     filter: JSON.stringify({
       skip: (pagination.current - 1) * pagination.pageSize,
       limit: pagination.pageSize,
+      include,
       where: {
         systemId,
         alertType: { inq: [1, 2, 3] }
@@ -71,6 +82,16 @@ const DefaultPage = ({ total, list, loading, setBlockState, systemId, dispatch }
       })
     }
   }, [systemId])
+  function changePage (current) {
+    const filter = JSON.parse(payload.filter)
+    setPagination({ ...pagination, current })
+    setPayload({
+      filter: JSON.stringify({
+        ...filter,
+        skip: (current - 1) * pagination.pageSize
+      })
+    })
+  }
   // polling
   // useEffect(() => {
   //   const interval = setInterval(() => {
@@ -102,7 +123,7 @@ const DefaultPage = ({ total, list, loading, setBlockState, systemId, dispatch }
             </>
           ))}
         </div>
-        <Pagination className='battery-pagination' {...pagination} />
+        <Pagination className='battery-pagination' {...pagination} onChange={changePage} />
       </div>
     </>
   )

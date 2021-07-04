@@ -13,11 +13,11 @@ const mapStateToProps = ({ block, dispatch }) => {
   return { list, loading, total, dispatch }
 }
 
-const DefaultPage = ({ total, list, loading, setBlockState, systemId, dispatch }) => {
+const DefaultPage = ({ total = 0, list, loading, setBlockState, systemId, dispatch }) => {
   const [pagination, setPagination] = useState({
     current: 1,
     pageSize: 24,
-    total: 0,
+    total,
     showTotal: (total, range) => `${range[0]}-${range[1]} trên ${total} thiết bị`
   })
   const [payload, setPayload] = useState({
@@ -61,6 +61,16 @@ const DefaultPage = ({ total, list, loading, setBlockState, systemId, dispatch }
       })
     }
   }, [systemId])
+  function changePage (current) {
+    const filter = JSON.parse(payload.filter)
+    setPagination({ ...pagination, current })
+    setPayload({
+      filter: JSON.stringify({
+        ...filter,
+        skip: (current - 1) * pagination.pageSize
+      })
+    })
+  }
   // polling
   // useEffect(() => {
   //   const interval = setInterval(() => {
@@ -90,7 +100,7 @@ const DefaultPage = ({ total, list, loading, setBlockState, systemId, dispatch }
             </div>
           ))}
         </div>
-        <Pagination className='battery-pagination' {...pagination} />
+        <Pagination className='battery-pagination' {...pagination} onChange={changePage} />
       </div>
     </>
   )

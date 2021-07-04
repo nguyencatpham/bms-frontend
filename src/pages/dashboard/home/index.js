@@ -365,8 +365,7 @@ const DefaultPage = ({ total, stats, systems, alertCount, alertCountBySystem, di
                   <div className='display-flex'>
                     <div className='cui__utils__heading mb-0'>
                       <strong className='txt-blue'><i className='i_place_15 ico30' /> TRẠNG THÁI BATTERY VƯỢT NGƯỠNG
-                      </strong
-                      >
+                      </strong>
                     </div>
                     <Select
                       value={systemId}

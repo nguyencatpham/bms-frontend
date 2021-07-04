@@ -38,7 +38,7 @@ const ChartPage = ({ series }) => {
         floating: true,
         fontSize: '16px',
         position: 'left',
-        offsetX: 160,
+        offsetX: 0,
         offsetY: 15,
         labels: {
           useSeriesColors: true
