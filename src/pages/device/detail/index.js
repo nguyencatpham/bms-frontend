@@ -140,7 +140,7 @@ const DefaultPage = ({ loading, detail, system, blocks, dispatch }) => {
                 total={blocks.length}
               />
             </div>
-            <div className='card'>
+            {/* <div className='card'>
               <div className='card-header border-0 pb-0'>
                 <div className='cui__utils__heading mb-0'>
                   <strong className='text-uppercase font-size-16'>Thông số cấu hình</strong>
@@ -156,7 +156,7 @@ const DefaultPage = ({ loading, detail, system, blocks, dispatch }) => {
                   />
                 </div>
               </div>
-            </div>
+            </div> */}
           </div>
           <div className='col-xl-8 col-lg-12'>
             <div className='card profile-general'>
