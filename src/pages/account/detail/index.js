@@ -8,6 +8,10 @@ import General from 'components/kit/widgets/General/10v1'
 import General1 from 'components/kit/widgets/General/1'
 import General12v1 from 'components/kit/widgets/General/12v1'
 import DevicePage from './auth-device'
+import UpdateInfo from './update-info'
+import ChangePassword from './change-password'
+import Activities from './activities'
+import SuspendButton from './suspendButton'
 import '../style.scss'
 
 const { TabPane } = Tabs
@@ -45,17 +49,18 @@ const DefaultPage = ({ loading, detail, deviceCount, dispatch }) => {
       payload: { id, filter: JSON.stringify({ include: [{ relation: 'devices' }] }) }
     })
   }, [id, dispatch])
-  const actions = [{
-    id: '__suspend',
-    name: suspend ? 'Hủy chặn tài khoản' : 'Chặn tài khoản',
-    color: suspend ? '#fa8c16' : '#f5222d',
-    action: () => { setShowmodal(true) }
-  },
+  const actions = [
   {
     id: '__attach_device',
     name: 'Thêm thiết bị',
     action: () => { history.push(`${window.location.pathname}/attach`) }
   }]
+  const suspendAction = {
+    id: '__suspend',
+    name: suspend ? 'Hủy chặn tài khoản' : 'Chặn tài khoản',
+    btnClass: suspend ? 'btn-warning' : 'btn-danger',
+    action: () => { setShowmodal(true) }
+  }
   return (
     <>
       <div className='detail-page account'>
@@ -70,6 +75,7 @@ const DefaultPage = ({ loading, detail, deviceCount, dispatch }) => {
                   role={role}
                   actions={actions}
                 />
+                <SuspendButton suspendAction={suspendAction} />
               </div>
             </div>
             <div className='card text-white bg-primary'>
@@ -94,7 +100,7 @@ const DefaultPage = ({ loading, detail, deviceCount, dispatch }) => {
             <div className='card profile-general'>
               <div className='card-header'>
                 <div className='vb__utils__heading'><strong>@{username} ({name || email})</strong>
-                  <div className='text-muted font-size-15'>{devices.length} thiết bị</div>
+                  {/* <div className='text-muted font-size-15'>{devices.length} thiết bị</div> */}
                 </div>
                 <Tabs activeKey={tabKey} className='mr-auto kit-tabs-bold' onChange={changeTab}>
                   <TabPane tab='Hệ thống' key='1' />
@@ -104,13 +110,25 @@ const DefaultPage = ({ loading, detail, deviceCount, dispatch }) => {
                 </Tabs>
               </div>
               <div className='card-body'>
-                {tabKey === '1' && (
+              {tabKey === '1' && (
                   <div>
                     <DevicePage />
                   </div>
                 )}
-                {tabKey !== '1' && (
-                  <div>Chưa phát hành</div>
+                {tabKey === '2' && (
+                  <div>
+                    <UpdateInfo />
+                  </div>
+                )}
+                {tabKey === '3' && (
+                  <div>
+                    <ChangePassword />
+                  </div>
+                )}
+                {tabKey === '4' && (
+                  <div>
+                    <Activities />
+                  </div>
                 )}
               </div>
             </div>
@@ -144,7 +162,7 @@ const DefaultPage = ({ loading, detail, deviceCount, dispatch }) => {
           </Button>
         ]}
       >
-        <p>Xác nhận {suspend ?? 'hủy'} chặn tài khoản <br /> <span className='txt-orange' /> {name}</p>
+        <p>Xác nhận {suspend ? 'hủy' : ''} chặn tài khoản <strong>{name}</strong></p>
 
       </Modal>
     </>
