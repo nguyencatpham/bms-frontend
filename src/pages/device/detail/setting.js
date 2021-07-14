@@ -84,22 +84,13 @@ const DefaultPage = ({ system, dispatch }) => {
     <>
       <div className='detail-page device'>
         <Helmet title='Thông tin thiết bị' />
-        <div className='card'>
-          <div className='card-header border-0 pb-0'>
-            <div className='cui__utils__heading mb-0'>
-              <strong className='text-uppercase font-size-16'>Thông số cấu hình</strong>
-            </div>
-          </div>
-          <div className='card-body'>
-            <div className='mb-3'>
-              <Table
-                className='text-capital'
-                dataSource={data}
-                columns={columns}
-                pagination={false}
-              />
-            </div>
-          </div>
+        <div className='mx-2'>
+          <Table
+            className='text-capital'
+            dataSource={data}
+            columns={columns}
+            pagination={false}
+          />
         </div>
       </div>
     </>
