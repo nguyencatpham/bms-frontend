@@ -191,21 +191,23 @@ const DefaultPage = ({ list, loading, total, preConfirm, usernameOrEmail, dispat
   return (
     <>
       <div className='device' onKeyUp={onSearch}>
-        <Helmet title='Quản lý tài khoản' />
+        <Helmet title='Gắn thiết bị' />
         <div className='row'>
           <div className='col-lg-12 col-md-12'>
             <div className='card'>
-              <div className='card-body row'>
-                <div className='col-md-8'>
-                  <Search
-                    style={{ width: '100%' }}
-                    placeholder='Tìm theo mã thiết bị...'
-                    value={name}
-                    onChange={e => setName(e.target.value)}
-                    allowClear
-                  />
+              <div className='card-body d-flex justify-content-between flex-column flex-md-row'>
+                <div className="d-flex justify-content-between w-100 flex-column flex-md-row">
+                  <div className='w-100'>
+                    <Input
+                      style={{ width: '100%' }}
+                      placeholder='Tìm theo mã thiết bị...'
+                      value={name}
+                      onChange={e => setName(e.target.value)}
+                      allowClear
+                    />
+                  </div>
                 </div>
-                <div className='col-md-4'>
+                <div className='ml-md-3 ml-0 mt-3 mt-md-0'>
                   <Button className='btn btn-primary btn-filter' autoFocus onClick={onSearch}><i className='i_search small' />Tìm</Button>
                 </div>
               </div>
@@ -215,7 +217,7 @@ const DefaultPage = ({ list, loading, total, preConfirm, usernameOrEmail, dispat
         <div className='card'>
           <div className='card-body'>
             <Table
-              className='table-responsive'
+              className='custom-table table-responsive'
               rowKey={x => x.uuid}
               dataSource={list}
               pagination={{ ...pagination, showSizeChanger: true }}
