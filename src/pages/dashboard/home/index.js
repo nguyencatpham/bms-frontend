@@ -127,10 +127,10 @@ const DefaultPage = ({ total, stats, systems, alertCount, alertCountBySystem, di
     })
   }, [dispatch, payload])
   useEffect(() => {
-    if (systems.length) {
-      setSystemId(systems[0].value)
+    if (systems.length && !systemId) {
+      setSystemId(systems[0].systemId)
     }
-  }, [systems])
+  }, [systemId, systems])
   useEffect(() => {
     dispatch({
       type: 'system/ALERT_COUNT_BY_SYSTEM',
@@ -139,7 +139,6 @@ const DefaultPage = ({ total, stats, systems, alertCount, alertCountBySystem, di
       }
     })
   }, [systemId])
-  console.log('#######', healthy, unhealthy, deployed)
   return (
     <>
       <div>
