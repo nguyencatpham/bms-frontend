@@ -52,3 +52,17 @@
         background: #8c8c8c;
     }
 }
+
+.custom-table {
+    thead th {
+        white-space: nowrap;
+
+        &:last-child {
+            width: 1%;
+        }
+    }
+
+    tbody td {
+        white-space: nowrap;
+    }
+}
