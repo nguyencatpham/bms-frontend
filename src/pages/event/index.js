@@ -1,6 +1,6 @@
 
 import React, { useState, useEffect } from 'react'
-import { Input, Table, Button } from 'antd'
+import { Input, Table, Button, Pagination } from 'antd'
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
 import { Helmet } from 'react-helmet'
@@ -15,6 +15,7 @@ import 'bootstrap/dist/css/bootstrap.css'
 // you will also need the css that comes with bootstrap-daterangepicker
 import 'bootstrap-daterangepicker/daterangepicker.css'
 import style from './style.module.scss'
+import './style.scss'
 
 // import './style.scss'
 window.jQuery = window.$ = jQuery
@@ -34,7 +35,7 @@ const DefaultPage = ({ list, loading, total, dispatch }) => {
     current: 1,
     pageSize: 10,
     total: 0,
-    showTotal: (total, range) => `${range[0]}-${range[1]} trên ${total} cảnh báo`
+    // showTotal: (total, range) => `${range[0]}-${range[1]} trên ${total} cảnh báo`
   })
   const [payload, setPayload] = useState({
     skip: pagination.pageSize * (pagination.current - 1),
@@ -53,7 +54,7 @@ const DefaultPage = ({ list, loading, total, dispatch }) => {
       key: 'timestamp',
       // width: 200,
       render: (x) => {
-        return <span className='break-word '>{moment(x).format(TIME_FORMAT)}</span>
+        return <span className='break-word'>{moment(x).format(TIME_FORMAT)}</span>
       }
     },
     {
@@ -101,10 +102,10 @@ const DefaultPage = ({ list, loading, total, dispatch }) => {
           case 1:
             return (
               <li className={style.item}>
-                <div className={`${style.itemLink} `}>
+                <div >
                   <div className={`${style.itemCover} ${style.alertIcon} mr-3`} />
                   <div>
-                    <div className={`${style.title} `}>{x.title}</div>
+                    <div><strong>{x.title}</strong></div>
                     <div>
                       {`${x.body} vào lúc ${moment(x.timestamp).format(TIME_FORMAT)}`}
                     </div>
@@ -115,10 +116,10 @@ const DefaultPage = ({ list, loading, total, dispatch }) => {
           case 2:
             return (
               <li className={style.item}>
-                <div className={`${style.itemLink}`}>
+                <div >
                   <div className={`${style.itemCover} ${style.alertIcon} mr-3`} />
                   <div>
-                    <div className={`${style.title} `}>{x.title}</div>
+                    <div><strong>{x.title}</strong></div>
                     <div>
                       {`${x.body} vào lúc ${moment(x.timestamp).format(TIME_FORMAT)}`}
                     </div>
@@ -130,10 +131,10 @@ const DefaultPage = ({ list, loading, total, dispatch }) => {
           default:
             return (
               <li className={style.item}>
-                <div className={`${style.itemLink} ${style.offline}`}>
+                <div >
                   <div className={`${style.itemCover} ${style.alertIcon} mr-3`} />
                   <div>
-                    <div className={`${style.title} `}>{x.title}</div>
+                    <div><strong>{x.title}</strong></div>
                     <div>
                       {`${x.body} vào lúc ${moment(x.timestamp).format(TIME_FORMAT)}`}
                     </div>
@@ -214,30 +215,32 @@ const DefaultPage = ({ list, loading, total, dispatch }) => {
   }
   return (
     <>
-      <div className='account' onKeyUp={onSearch}>
+      <div className='event' onKeyUp={onSearch}>
         <Helmet title='Thống kê cảnh báo' />
         <div className='row'>
           <div className='col-lg-12 col-md-12'>
             <h5 className='text-dark mb-4 text-uppercase'>Thống kê cảnh báo</h5>
             <div className='card'>
-              <div className='card-body row'>
-                <div className='col-md-4'>
-                  <DateRangePicker
-                    onApply={onFilter}
-                  >
-                    <input type='text' className='form-control' />
-                  </DateRangePicker>
+              <div className='card-body d-flex justify-content-between flex-column flex-md-row'>
+                <div className="d-flex justify-content-between w-100 flex-column flex-md-row">
+                  <div className='w-100'>
+                    <DateRangePicker
+                      onApply={onFilter}
+                    >
+                      <input style={{borderRadius: '8px'}} type='text' className='form-control' />
+                    </DateRangePicker>
+                  </div>
+                  <div className='w-100 ml-md-3 ml-0 mt-3 mt-md-0'>
+                    <Input
+                      style={{ width: '100%' }}
+                      placeholder='Hệ thống'
+                      value={name}
+                      onChange={e => setName(e.target.value)}
+                      allowClear
+                    />
+                  </div>
                 </div>
-                <div className='col-md-4'>
-                  <Input
-                    style={{ width: '100%' }}
-                    placeholder='Hệ thống'
-                    value={name}
-                    onChange={e => setName(e.target.value)}
-                    allowClear
-                  />
-                </div>
-                <div className='col-md-4'>
+                <div className='ml-md-3 ml-0 mt-3 mt-md-0'>
                   <Button className='btn btn-primary btn-filter' autoFocus onClick={onSearch}><i className='i_search small' />Tìm</Button>
                 </div>
               </div>
@@ -247,10 +250,10 @@ const DefaultPage = ({ list, loading, total, dispatch }) => {
         <div className='card'>
           <div className='card-body'>
             <Table
-              className='table-responsive'
+              className='custom-table table table-responsive'
               rowKey={x => x.timestamp}
               dataSource={list}
-              pagination={{ ...pagination, showSizeChanger: true }}
+              pagination={{ ...pagination, showSizeChanger: true, responsive: true }}
               loading={loading}
               columns={columns}
               onChange={onTableChange}
