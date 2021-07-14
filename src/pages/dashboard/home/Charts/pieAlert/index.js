@@ -1,4 +1,4 @@
-import React, { useEffect, useLayoutEffect, useRef, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import style from './style.module.scss'
 import Highcharts from 'highcharts'
 import HighchartsReact from 'highcharts-react-official'
@@ -78,7 +78,7 @@ const Chart9 = (stats = {}) => {
   }, [stats])
   return (
     <div>
-      <div className='text-dark font-size-18 font-weight-bold mb-1'>Thống kê cảnh báo conto</div>
+      <div className='text-dark font-size-18 font-weight-bold mb-1'>Thống kê cảnh báo</div>
       <div className='text-gray-6 mb-2'>Thống kê cảnh báo của bình ắc quy.</div>
       <div className='d-flex flex-wrap align-items-center'>
         <div className='mr-3 mt-3 mb-3 position-relative'>

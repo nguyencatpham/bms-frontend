@@ -26,7 +26,6 @@ const mapStateToProps = ({ user, event, dispatch }) => {
       return item.priority === 3
     }))
   })
-  console.log('conto', timestamps, warnings, disconnects, alerts)
   return { list, user, timestamps, warnings, disconnects, alerts, dispatch }
 }
 const DefaultPage = ({ list, systemId, timestamps, warnings, disconnects, alerts, dispatch }) => {

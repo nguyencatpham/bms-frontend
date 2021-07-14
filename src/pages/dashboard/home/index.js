@@ -139,7 +139,7 @@ const DefaultPage = ({ total, stats, systems, alertCount, alertCountBySystem, di
       }
     })
   }, [systemId])
-
+  console.log('#######', healthy, unhealthy, deployed)
   return (
     <>
       <div>
@@ -248,7 +248,7 @@ const DefaultPage = ({ total, stats, systems, alertCount, alertCountBySystem, di
               </div>
               <div className='card-body'>
                 <RadiaBar
-                  series={[100, Math.ceil(healthy / deployed) * 100 || 0, Math.ceil(unhealthy / deployed) * 100 || 0]}
+                  series={[100, Math.round((healthy / deployed) * 100) || 0, Math.round((unhealthy / deployed) * 100) || 0]}
                   labels={['Đã triển khai', 'Đang hoạt động', 'Mất kết nối']}
                 />
               </div>
