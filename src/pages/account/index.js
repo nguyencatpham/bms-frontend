@@ -108,11 +108,14 @@ const DefaultPage = ({ list, loading, total, preConfirm, usernameOrEmail, role, 
       key: 'action',
       render: (text, item) => {
         return (
-          <div className='action-group break-word'>
-            <div>
-              <Link to={`/accounts/${item.id}/update`}><EditOutlined className='ico18 ico-blue mr20' /></Link>
-              <CloseOutlined className='ico18 ico-red' onClick={() => setModal(item)} />
-
+          <div width="1%" className='action-group break-word'>
+            <div style={{fontSize: '1.3rem'}} className="d-flex justify-content-between align-items-center mx-1">
+              <Link to={`/accounts/${item.id}/update`}>
+                <EditOutlined className='ico18 ico-blue' />
+              </Link>
+              <div>
+                <CloseOutlined className='ico18 ico-red text-danger' onClick={() => setModal(item)} />
+              </div>
             </div>
           </div>
         )
@@ -188,43 +191,36 @@ const DefaultPage = ({ list, loading, total, preConfirm, usernameOrEmail, role, 
           <div className='col-lg-12 col-md-12'>
             <h5 className='text-dark mb-4 text-uppercase'>Quản lý tài khoản</h5>
             <div className='card'>
-              <div className='card-body row'>
-                <div className='col-md-4'>
-                  <Input
-                    style={{ width: '100%' }}
-                    placeholder='Nhập tên người dùng'
-                    value={name}
-                    onChange={e => setName(e.target.value)}
-                    allowClear
-                  />
+              <div className='card-body d-flex justify-content-between flex-column flex-md-row'>
+                <div className="d-flex justify-content-between w-100 flex-column flex-md-row">
+                  <div className='w-100'>
+                    <Input
+                      style={{ width: '100%' }}
+                      placeholder='Nhập tên người dùng'
+                      value={name}
+                      onChange={e => setName(e.target.value)}
+                      allowClear
+                    />
+                  </div>
+                  <div className='w-100 ml-md-3 ml-0 mt-3 mt-md-0'>
+                    <Select
+                      mode='multiple'
+                      allowClear
+                      style={{ width: '100%' }}
+                      placeholder='Vai trò'
+                      value={roles}
+                      onChange={setRoles}
+                    >
+                      {Object.keys(ROLE).map(x => (
+                        <Option key={x} value={x}>{ROLE[x]}</Option>
+                      ))}
+                    </Select>
+                  </div>
                 </div>
-                <div className='col-md-4'>
-                  <Select
-                    mode='multiple'
-                    allowClear
-                    style={{ width: '100%' }}
-                    placeholder='Vai trò'
-                    value={roles}
-                    onChange={setRoles}
-                  >
-                    {Object.keys(ROLE).map(x => (
-                      <Option key={x} value={x}>{ROLE[x]}</Option>
-                    ))}
-                  </Select>
-                </div>
-                <div className='col-md-4'>
+                
+                <div className='ml-md-3 ml-0 mt-3 mt-md-0'>
                   <Button className='btn btn-primary btn-filter' autoFocus onClick={onSearch}><i className='i_search small' />Tìm</Button>
                 </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div className='account-top'>
-          <div className='title-header'>
-            <div className='grid-view'>
-              <div className='' />
-              <div className='text-right fl-right' style={{ marginBottom: 10 }}>
-                <Link className='btn btn-primary' to='/accounts/create'><i className='i_user ico25' />Thêm tài khoản</Link>
               </div>
             </div>
           </div>
@@ -232,7 +228,7 @@ const DefaultPage = ({ list, loading, total, preConfirm, usernameOrEmail, role, 
         <div className='card'>
           <div className='card-body'>
             <Table
-              className='table-responsive'
+              className='custom-table table-responsive'
               rowKey={x => x.id}
               dataSource={list}
               pagination={{ ...pagination, showSizeChanger: true }}
