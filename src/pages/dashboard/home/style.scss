@@ -28,15 +28,25 @@
 .stats-block {
   display: flex;
   align-items: center;
-  justify-content: space-around;
+  // padding-left: 2.2rem;
+  // justify-content: space-around;
   .stats-icon img {
     width: 70px;
+    margin-top: 0.8rem;
+    margin-bottom: 0.8rem;
+    margin-left: 2.2rem;
   }
   .stats-body {
+    margin-left: 2.4rem;
     h1 {
       font-weight: 600;
+      margin-bottom: 0;
     }
     p {
+      color: #000;
+      font-weight: 600;
+      margin-top: 0.7rem;
+      margin-bottom: 0;
       font-size: 17px;
       text-transform: uppercase;
     }
