@@ -104,6 +104,15 @@ export const COMMON = ({ type, field, actionType }) => {
         yield loading(false)
         return
       }
+      if (type.toLowerCase().indexOf('set_password') > -1) {
+        notification.success({
+          message: 'Thành công!',
+          description: `Tài khoản ${response.name} đã được cập nhật mật khẩu thành công!`
+        })
+        const role = store.get('user.role')
+        if (role === 'admin') { history.push(`/accounts/${response.id}`) }
+        return false
+      }
       if (type.toLowerCase().indexOf('post') > -1) {
         notification.success({
           message: 'Thành công!',
