@@ -10,7 +10,7 @@ const mapStateToProps = ({ user, event, dispatch }) => {
   const { listTimeSeries = [] } = event
   const dayName = item => moment(item.timestamp, 'YYYY-MM-DD').format('DD/MM')
   const list = _.groupBy(listTimeSeries, dayName) || []
-  const timestamps = Object.keys(list)
+  const timestamps = Object.keys(list).reverse()
   const warnings = []
   const disconnects = []
   const alerts = []
@@ -67,48 +67,21 @@ const DefaultPage = ({ list, systemId, timestamps, warnings, disconnects, alerts
           autoSelected: 'zoom'
         }
       },
-      dataLabels: {
-        enabled: false
-      },
-      markers: {
-        size: 0
-      },
-      fill: {
-        type: 'gradient',
-        gradient: {
-          shadeIntensity: 1,
-          inverseColors: false,
-          opacityFrom: 0.5,
-          opacityTo: 0,
-          stops: [0, 90, 100]
-        }
-      },
-      tooltip: {
-        shared: false,
-        y: {
-          formatter: function (val) {
-            return (val / 1000000).toFixed(0)
-          }
-        }
-      },
-      xaxis: {
-        type: 'datetime',
-        categories: timestamps
-      }
+      labels: timestamps,
     },
     colors: ['#75cb6e', '#faad14', '#f64b4e'],
     series: [
       {
         name: 'Báo động',
-        data: alerts
+        data: alerts.reverse()
       },
       {
         name: 'Cảnh báo',
-        data: warnings
+        data: warnings.reverse()
       },
       {
         name: 'Mất kết nối',
-        data: disconnects
+        data: disconnects.reverse()
       }
     ]
   }
