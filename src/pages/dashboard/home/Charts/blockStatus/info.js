@@ -99,13 +99,14 @@ const DefaultPage = ({ modal, tsdata, range, latestValue, dispatch }) => {
         </div>
         <div className='col-md-4 col-xs-12'>
           <div className='card'>
-            <div className='card-header border-0 block-detail'>
-              <div className='cui__utils__heading mb-0'>
-                <strong className='text-uppercase font-size-16'>Thông tin chi tiết</strong>
+            <div className='custom-card-header card-header'>
+              <div className='d-flex align-item-center justify-content-between'>
+                <div className='d-flex align-items-center'>
+              <strong className='text-uppercase font-size-16'>Thông tin chi tiết</strong>
               </div>
             </div>
-            <div
-              className='card-body' style={{
+            </div>
+            <div className='card-body' style={{
                 maxHeight: '380px',
                 overflowY: 'auto'
               }}
@@ -118,7 +119,6 @@ const DefaultPage = ({ modal, tsdata, range, latestValue, dispatch }) => {
                   pagination={false}
                 />
               </div>
-
             </div>
           </div>
         </div>
