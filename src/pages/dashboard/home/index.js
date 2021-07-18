@@ -238,8 +238,8 @@ const DefaultPage = ({ total, stats, systems, alertCount, alertCountBySystem, di
         <div className='deploy-pie-chart row'>
           <div className='col-md-6 col-lg-6'>
             <div className='card'>
-              <div className='card-header block-pie-system'>
-                <div className='cui__utils__heading mb-0'>
+              <div className='custom-card-header card-header block-pie-system'>
+                        <div className='d-flex align-items-center'>
                   <strong className='txt-blue'><i className='i_place_15 ico30' /> THỐNG KÊ TÌNH TRẠNG HỆ THỐNG
                   </strong
                   >
@@ -255,25 +255,19 @@ const DefaultPage = ({ total, stats, systems, alertCount, alertCountBySystem, di
           </div>
           <div className='col-md-6 col-lg-6'>
             <div className='card'>
-              <div className='card-header'>
-                <div className='container-fluid form-header form-header-inline'>
-                  <div className='row'>
-                    <div className='form-header-left'>
-                      <div className='display-flex'>
-                        <div className='cui__utils__heading mb-0'>
-                          <strong className='txt-blue'><i className='i_place_15 ico30' /> THỐNG KÊ TÌNH TRẠNG BLOCK
-                          </strong
-                          >
-                        </div>
-                        <Select
-                          value={systemId}
-                          onChange={setSystemId}
-                          options={systems.map(x => ({ label: x.name, value: x.systemId }))}
-                          style={{ minWidth: 150, marginLeft: 20 }}
-                        />
-                      </div>
-                    </div>
+              <div className='custom-card-header card-header'>
+                <div className='d-flex align-item-center justify-content-between'>
+                  <div className='d-flex align-items-center'>
+                    <strong className='txt-blue'><i className='i_place_15 ico30' /> THỐNG KÊ TÌNH TRẠNG BLOCK
+                    </strong
+                    >
                   </div>
+                  <Select
+                    value={systemId}
+                    onChange={setSystemId}
+                    options={systems.map(x => ({ label: x.name, value: x.systemId }))}
+                    style={{ minWidth: 150, marginLeft: 20 }}
+                  />
                 </div>
               </div>
               <div className='card-body'>
@@ -289,21 +283,17 @@ const DefaultPage = ({ total, stats, systems, alertCount, alertCountBySystem, di
         <div className='block-area-chart row'>
           <div className='col-md-8 col-lg-8'>
             <div className='card'>
-              <div className='card-header block-pie-system'>
-                <div className='form-header-left'>
-                  <div className='display-flex'>
-                    <div className='cui__utils__heading mb-0'>
-                      <strong className='txt-blue'><i className='i_place_15 ico30' /> THỐNG KÊ TÌNH TRẠNG BLOCK
-                      </strong
-                      >
-                    </div>
-                    <Select
-                      value={systemId}
-                      onChange={setSystemId}
-                      options={systems.map(x => ({ label: x.name, value: x.systemId }))}
-                      style={{ minWidth: 150, marginLeft: 20 }}
-                    />
+              <div className='custom-card-header card-header block-pie-system'>
+                <div className='d-flex align-item-center justify-content-between'>
+                  <div className='d-flex align-items-center'>
+                    <strong className='txt-blue'><i className='i_place_15 ico30' /> THỐNG KÊ TÌNH TRẠNG BLOCK</strong>
                   </div>
+                  <Select
+                    value={systemId}
+                    onChange={setSystemId}
+                    options={systems.map(x => ({ label: x.name, value: x.systemId }))}
+                    style={{ minWidth: 150, marginLeft: 20 }}
+                  />
                 </div>
               </div>
               <div className='card-body'>
@@ -313,25 +303,18 @@ const DefaultPage = ({ total, stats, systems, alertCount, alertCountBySystem, di
           </div>
           <div className='col-md-4 col-lg-4'>
             <div className='card'>
-              <div className='card-header'>
-                <div className='container-fluid form-header form-header-inline'>
-                  <div className='row'>
-                    <div className='form-header-left'>
-                      <div className='display-flex'>
-                        <div className='cui__utils__heading mb-0'>
-                          <strong className='txt-blue'><i className='i_place_15 ico30' /> CẢNH BÁO GẦN ĐÂY
-                          </strong
-                          >
-                        </div>
-                        <Select
-                          value={systemId}
-                          onChange={setSystemId}
-                          options={systems.map(x => ({ label: x.name, value: x.systemId }))}
-                          style={{ minWidth: 135, marginLeft: 20 }}
-                        />
-                      </div>
-                    </div>
+              <div className='custom-card-header card-header'>
+                <div className='d-flex align-item-center justify-content-between'>
+                  <div className='d-flex align-items-center'>
+                    <strong className='txt-blue'><i className='i_place_15 ico30' /> CẢNH BÁO GẦN ĐÂY
+                    </strong>
                   </div>
+                  <Select
+                    value={systemId}
+                    onChange={setSystemId}
+                    options={systems.map(x => ({ label: x.name, value: x.systemId }))}
+                    style={{ minWidth: 135, marginLeft: 20 }}
+                  />
                 </div>
                 <Tabs activeKey={tabKey} className='mr-auto kit-tabs-bold' onChange={changeTab}>
                   <TabPane tab='Báo động' key='1' />
@@ -359,20 +342,17 @@ const DefaultPage = ({ total, stats, systems, alertCount, alertCountBySystem, di
         <div className='block-status row'>
           <div className='col-md-6 col-lg-6'>
             <div className='card '>
-              <div className='card-header block-pie-system'>
-                <div className='form-header-left'>
-                  <div className='display-flex'>
-                    <div className='cui__utils__heading mb-0'>
-                      <strong className='txt-blue'><i className='i_place_15 ico30' /> TRẠNG THÁI BATTERY VƯỢT NGƯỠNG
-                      </strong>
-                    </div>
-                    <Select
-                      value={systemId}
-                      onChange={setSystemId}
-                      options={systems.map(x => ({ label: x.name, value: x.systemId }))}
-                      style={{ minWidth: 150, marginLeft: 20 }}
-                    />
+              <div className='custom-card-header card-header block-pie-system'>
+                <div className='d-flex align-item-center justify-content-between'>
+                  <div className='d-flex align-items-center'>
+                    <strong className='txt-blue'><i className='i_place_15 ico30' /> TRẠNG THÁI BATTERY VƯỢT NGƯỠNG</strong>
                   </div>
+                  <Select
+                    value={systemId}
+                    onChange={setSystemId}
+                    options={systems.map(x => ({ label: x.name, value: x.systemId }))}
+                    style={{ minWidth: 150, marginLeft: 20 }}
+                  />
                 </div>
               </div>
               <div className='card-body'>
@@ -382,21 +362,17 @@ const DefaultPage = ({ total, stats, systems, alertCount, alertCountBySystem, di
           </div>
           <div className=' col-md-6 col-lg-6'>
             <div className='card '>
-              <div className='card-header block-pie-system'>
-                <div className='form-header-left'>
-                  <div className='display-flex'>
-                    <div className='cui__utils__heading mb-0'>
-                      <strong className='txt-blue'><i className='i_place_15 ico30' /> TRẠNG THÁI BATTERY BÌNH THƯỜNG
-                      </strong
-                      >
-                    </div>
-                    <Select
-                      value={systemId}
-                      onChange={setSystemId}
-                      options={systems.map(x => ({ label: x.name, value: x.systemId }))}
-                      style={{ minWidth: 150, marginLeft: 20 }}
-                    />
+              <div className='custom-card-header card-header block-pie-system'>
+                <div className='d-flex align-item-center justify-content-between'>
+                  <div className='d-flex align-items-center'>
+                    <strong className='txt-blue'><i className='i_place_15 ico30' /> TRẠNG THÁI BATTERY BÌNH THƯỜNG</strong>
                   </div>
+                  <Select
+                    value={systemId}
+                    onChange={setSystemId}
+                    options={systems.map(x => ({ label: x.name, value: x.systemId }))}
+                    style={{ minWidth: 150, marginLeft: 20 }}
+                  />
                 </div>
               </div>
               <div className='card-body'>
@@ -409,28 +385,22 @@ const DefaultPage = ({ total, stats, systems, alertCount, alertCountBySystem, di
           <div className='row'>
             <div className=' col-md-12 col-lg-12'>
               <div className='card '>
-                <div className='card-header block-pie-system'>
-                  <div className='form-header-left'>
-                    <div className='display-flex'>
-                      <div className='cui__utils__heading mb-0'>
-                        <strong className='txt-blue'><i className='i_place_15 ico30' />  THÔNG TIN BLOCK
-                        </strong
-                        >
-                      </div>
-                      <div
-                        style={{ minWidth: 550 }}
+                <div className='custom-card-header card-header block-pie-system'>
+                  <div className='d-flex align-item-center justify-content-between'>
+                    <div className='d-flex align-items-center'>
+                      <strong className='txt-blue'><i className='i_place_15 ico30' />  THÔNG TIN BLOCK</strong>
+                    </div>
+                    <div className="d-flex justify-content-end" style={{ minWidth: 550 }}>
+                      <DateRangePicker
+                        onApply={(event, picker) => {
+                          setRange({
+                            start: picker.startDate.unix(),
+                            end: picker.endDate.unix()
+                          })
+                        }}
                       >
-                        <DateRangePicker
-                          onApply={(event, picker) => {
-                            setRange({
-                              start: picker.startDate.unix(),
-                              end: picker.endDate.unix()
-                            })
-                          }}
-                        >
-                          <input type='text' className='form-control col-4' />
-                        </DateRangePicker>
-                      </div>
+                        <input type='text' className='form-control w-100' />
+                      </DateRangePicker>
                     </div>
                   </div>
                 </div>

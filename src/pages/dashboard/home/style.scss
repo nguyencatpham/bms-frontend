@@ -118,6 +118,10 @@ div.dashboard-event {
 .card-body{
     background-color: #f0f0f047;
 }
-.chart-page{
-  min-height: 445px;
+
+.custom-card-header {
+  background-color: #0D0C1C !important;
+  color: #ffffff;
+  border-radius: calc(0.25rem - 1px) calc(0.25rem - 1px) 0 0;
+  padding: 1rem 2rem;
 }
