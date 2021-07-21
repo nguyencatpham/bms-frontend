@@ -1,8 +1,9 @@
 @import 'mixins.scss';
 
 .air__menuTop {
-  background: $dark-gray-6;
+  background: $dark-gray-6 !important;
   border-bottom: 1px solid $border;
+  margin: 0 2rem;
 
   @media (max-width: $sm-max-width) {
     position: fixed;
@@ -47,15 +48,19 @@
   &__outer {
     position: static;
     display: flex;
+    width: 100%;
+    justify-content: space-between;
     flex-direction: row;
 
     @media (max-width: $sm-max-width) {
       flex-direction: column;
+      justify-content:start;
     }
   }
 
   // menu container
   &__container {
+    // margin-left: auto;
     padding-top: rem(15);
     padding-bottom: rem(15);
 
@@ -197,9 +202,11 @@
     }
     &__name {
       font-weight: 700;
+      // color: $white;
       color: $white;
       font-size: rem(18);
       margin-left: rem(40);
+      margin-bottom: rem(4);
       overflow: hidden;
       text-overflow: ellipsis;
     }
@@ -224,6 +231,15 @@
     .air__menuTop__list {
       .air__menuTop__link {
         padding-left: rem(49);
+        font-size: 2rem;
+
+        &:hover {
+        text-decoration: none !important;
+
+        }
+
+        & span {
+        }
       }
     }
 
@@ -322,7 +338,8 @@
     color: $gray-5;
     display: block;
     padding: rem(9) rem(40) rem(9) rem(20);
-    font-size: rem(15);
+    font-size: rem(17);
+    margin-left: 0.2rem;
 
     @media (min-width: $sm-min-width) {
       padding: rem(6) rem(20) rem(5) rem(15);
@@ -507,6 +524,7 @@
           &__link {
             &:hover {
               background: $black;
+              text-decoration: none;
             }
           }
         }

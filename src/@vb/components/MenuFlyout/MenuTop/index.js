@@ -255,10 +255,10 @@ const MenuTop = ({
           [style.air__menuTop__mobileToggled]: settings.isMobileMenuOpen,
           [style.air__menuTop__shadow]: settings.isMenuShadow,
           [style.air__menuTop__flyout]: true,
-          [style.air__menuTop__white]: settings.menuColor === 'white',
+          [style.air__menuTop__white]: settings.menuColor === 'dark',
           [style.air__menuTop__gray]: settings.menuColor === 'gray',
           [style.air__menuFlyout__black]: settings.flyoutMenuColor === 'dark',
-          [style.air__menuFlyout__white]: settings.flyoutMenuColor === 'white',
+          [style.air__menuFlyout__white]: settings.flyoutMenuColor === 'dark',
           [style.air__menuFlyout__gray]: settings.flyoutMenuColor === 'gray',
         })}
       >
@@ -297,7 +297,7 @@ const MenuTop = ({
                 </g>
               </svg>
             </div>
-            <div className={style.air__menuTop__logo__name}>{settings.logo}</div>
+            <div className={style.air__menuTop__logo__name + ' text-white'}>{settings.logo}</div>
             <div className={style.air__menuTop__logo__descr}>{settings.version}</div>
           </div>
           <div id="menu-left-container" className={style.air__menuTop__container}>
