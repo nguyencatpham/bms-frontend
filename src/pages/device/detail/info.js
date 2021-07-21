@@ -1,95 +1,43 @@
-import React, { useEffect, useState, useRef, useLayoutEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Button, Modal, Table } from 'antd'
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
 import moment from 'moment'
-import * as am4core from '@amcharts/amcharts4/core'
-import * as am4charts from '@amcharts/amcharts4/charts'
-import am4themesAnimated from '@amcharts/amcharts4/themes/animated'
+import Series from './series'
 import DateRangePicker from 'react-bootstrap-daterangepicker'
-import jQuery from 'jquery'
-// you will need the css that comes with bootstrap@3. if you are using
-// a tool like webpack, you can do the following:
-import 'bootstrap/dist/css/bootstrap.css'
-// you will also need the css that comes with bootstrap-daterangepicker
-import 'bootstrap-daterangepicker/daterangepicker.css'
 
-import '../style.scss'
 import { TIME_FORMAT } from 'constant'
-// expose jQuery to window for debugging
-window.jQuery = window.$ = jQuery
-
-am4core.useTheme(am4themesAnimated)
 
 const mapStateToProps = ({ system, dispatch }) => {
   const { tsdata = [] } = system
-  return { tsdata, dispatch }
+  let latestValue = [{
+    type: 'V0',
+    amount: 0
+  }, {
+    type: 'E',
+    amount: 0
+  }, {
+    type: 'R',
+    amount: 0
+  }]
+  if (tsdata.length) {
+    const last = tsdata[tsdata.length - 1]
+    latestValue = [{
+      type: 'V0',
+      amount: last.v0
+    }, {
+      type: 'E',
+      amount: last.e
+    }, {
+      type: 'R',
+      amount: last.r
+    }]
+  }
+  return { tsdata, latestValue, dispatch }
 }
 
-const DefaultPage = ({ modal, setModal, tsdata, dispatch }) => {
+const DefaultPage = ({ modal, setModal, setRange, tsdata, range, latestValue, dispatch }) => {
   const [info, setInfo] = useState([])
-  const [range, setRange] = useState({})
-  const chart = useRef(null)
-
-  useLayoutEffect(() => {
-    const armChart = am4core.create('chartdiv', am4charts.XYChart)
-
-    chart.current = armChart
-    // chart.current.data = data
-    chart.current.data = tsdata.map(({ timestamp, v0, e, soc, r, t }) => ({ timestamp: new Date(timestamp), v0, e, soc, r, t }))
-    chart.current.paddingRight = 20
-    // Create axes
-    const dateAxis = chart.current.xAxes.push(new am4charts.DateAxis())
-    dateAxis.renderer.minGridDistance = 50
-    dateAxis.renderer.grid.template.location = 0
-    dateAxis.minZoomCount = 5
-    // this makes the data to be grouped
-    dateAxis.groupData = true
-
-    const valueAxis = chart.current.yAxes.push(new am4charts.ValueAxis())
-    if (chart.current.yAxes.indexOf(valueAxis) !== 0) {
-      valueAxis.syncWithAxis = chart.current.yAxes.getIndex(0)
-    }
-
-    createAxisAndSeries(valueAxis, 'v0', 'VO', false, 'circle')
-    createAxisAndSeries(valueAxis, 'e', 'E', false, 'triangle')
-    createAxisAndSeries(valueAxis, 'r', 'R', false, 'rectangle')
-    createAxisAndSeries(valueAxis, 't', 'T', false, 'rectangle')
-
-    const valueAxis2 = chart.current.yAxes.push(new am4charts.ValueAxis())
-    createAxisAndSeries(valueAxis2, 'soc', 'SoC', true, 'rectangle')
-    chart.current.cursor = new am4charts.XYCursor()
-    chart.current.cursor.xAxis = dateAxis
-    chart.current.legend = new am4charts.Legend()
-    const scrollbarX = new am4core.Scrollbar()
-    scrollbarX.marginBottom = 20
-    chart.current.scrollbarX = scrollbarX
-
-    return () => {
-      armChart.dispose()
-    }
-  }, [])
-  useLayoutEffect(() => {
-    chart.current.data = tsdata.map(({ timestamp, v0, e, soc, r, t }) => ({ timestamp: new Date(timestamp), v0, e, soc, r, t }))
-  }, [tsdata])
-
-  // Create series
-  const createAxisAndSeries = (valueAxis, field, name, opposite, bullet) => {
-    const series = chart.current.series.push(new am4charts.LineSeries())
-    series.dataFields.dateX = 'timestamp'
-    series.dataFields.valueY = field
-    series.tooltipText = '{name}: [bold]{valueY}[/]'
-    series.tooltip.pointerOrientation = 'vertical'
-    series.tooltip.background.fillOpacity = 0.5
-    series.name = name
-    series.yAxis = valueAxis
-    series.showOnInit = true
-
-    valueAxis.renderer.line.strokeOpacity = 1
-    valueAxis.renderer.line.stroke = series.stroke
-    valueAxis.renderer.labels.template.fill = series.stroke
-    valueAxis.renderer.opposite = opposite
-  }
 
   const columns = [
     {
@@ -112,14 +60,6 @@ const DefaultPage = ({ modal, setModal, tsdata, dispatch }) => {
       }
     }
   ]
-
-  const onFilter = (event, picker) => {
-    console.log(event)
-    setRange({
-      start: picker.startDate.unix(),
-      end: picker.endDate.unix()
-    })
-  }
 
   useEffect(() => {
     dispatch({
@@ -147,61 +87,83 @@ const DefaultPage = ({ modal, setModal, tsdata, dispatch }) => {
         type: key,
         amount: modal[key]
       }))
-    setInfo(blockInfo)
-  }, [modal.id])
-
+    setInfo([...latestValue, ...blockInfo])
+  }, [modal.id, latestValue])
+  // For initial date range picker, 7 days
+  const startDate = moment.unix(range.start).format("MM/DD/YYYY")
+  const endDate = moment.unix(range.end).format("MM/DD/YYYY")
   return (
-    <>
+    // <div className='container block-info'>
       <Modal
+        wrapClassName='custom-ant-dashboard'
         key={modal ? modal.id : 'info'}
-        className='modal-cus modal-monitoring'
+        // className='modal-cus modal-monitoring'
         visible={!!modal}
         onCancel={() => setModal(false)}
+        closable={false}
         width={1200}
-        title={<span>Thông tin Block: <span className='cabinet-heading cabinet-name'><span className='cabinet-status-online' />10</span></span>}
+        title={<span className="text-white">THÔNG TIN BLOCK <span className='cabinet-status-online' />{modal ? modal.id : ''}</span>}
         footer={[
-          <>
             <Button className='btn btn-export' onClick={() => setModal(false)}>Đóng</Button>
-          </>
         ]}
       >
         <div className='row'>
-          <div className='col-md-8 col-xs-12'>
-            <div>
-              <div
-                style={{ marginLeft: 50 }}
-              >
-                <DateRangePicker
-                  onApply={onFilter}
-                >
-                  <input type='text' className='form-control col-4' />
-                </DateRangePicker>
-              </div>
-              <div id='chartdiv' style={{ width: '100%', height: '500px' }} />
-            </div>
-          </div>
-          <div className='col-md-4 col-xs-12'>
-            <div className='card'>
-              <div className='card-header border-0 pb-0'>
-                <div className='cui__utils__heading mb-0'>
-                  <strong className='text-uppercase font-size-16'>Thông tin chi tiết</strong>
-                </div>
-              </div>
-              <div className='card-body'>
-                <div className='mb-3'>
-                  <Table
-                    rowKey={x => x.type + x.amount}
-                    dataSource={info}
-                    columns={columns}
-                    pagination={false}
-                  />
+          <div className='col-md-12 col-lg-12'>
+            <div className='card border-0'>
+              
+              <div className='card-body pb-0'>
+                <div>
+                  <div className='row'>
+                    <div className='col-md-8 col-xs-12'>
+                      <div>
+                        <div className='mb-3'>
+                          <DateRangePicker
+                            initialSettings={{ startDate, endDate }}
+                            onApply={(event, picker) => {
+                              setRange({
+                                start: picker.startDate.unix(),
+                                end: picker.endDate.unix()
+                              })
+                            }}
+                          >
+                            <input type='text' className='form-control w-100' />
+                          </DateRangePicker>
+                        </div>
+                        <Series data={tsdata} />
+                      </div>
+                    </div>
+                    <div className='col-md-4 col-xs-12'>
+                      <div className='card'>
+                        <div className='custom-card-header card-header'>
+                          <div className='d-flex align-item-center justify-content-between'>
+                            <div className='d-flex align-items-center'>
+                          <strong className='text-uppercase font-size-16'>Thông tin chi tiết</strong>
+                          </div>
+                        </div>
+                      </div>
+                      <div className='card-body' style={{
+                          maxHeight: '450px',
+                          overflowY: 'auto'
+                        }}
+                      >
+                        <div className='mb-3'>
+                          <Table
+                            rowKey={x => x.type + x.amount}
+                            dataSource={info}
+                            columns={columns}
+                            pagination={false}
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
-      </Modal>
-    </>
+      </div>
+    </Modal>
   )
 }
 export default withRouter(connect(mapStateToProps)(DefaultPage))
