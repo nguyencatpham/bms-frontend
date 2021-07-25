@@ -123,7 +123,7 @@ const Breadcrumbs2 = (props) => {
     return true
   }
   return (
-    <div className={styles.subbar}>
+    <div className={`${styles.subbar} container pl-3 pl-sm-0`}>
       <ul className={`${styles.breadcrumbs} mr-4`}>
         <Breadcrumb>
           <Breadcrumb.Item>
