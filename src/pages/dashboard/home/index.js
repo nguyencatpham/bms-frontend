@@ -28,7 +28,6 @@ import { Select, Tabs } from 'antd'
 import { Helmet } from 'react-helmet'
 import './style.scss'
 
-import DateRangePicker from 'react-bootstrap-daterangepicker'
 import jQuery from 'jquery'
 // you will need the css that comes with bootstrap@3. if you are using
 // a tool like webpack, you can do the following:
@@ -58,7 +57,9 @@ const DefaultPage = ({ total, stats, systems, alertCount, alertCountBySystem, di
   const { normal = 0, warning = 0, alert = 0 } = alertCount
   const { normal: normalBySystem = 0, warning: warningBySystem = 0, alert: alertBySystem = 0 } = alertCountBySystem
   const [tabKey, setTabKey] = useState('1')
-  const [range, setRange] = useState({})
+  const rangeEnd = Math.floor(Date.now() / 1000);
+  const rangeStart = rangeEnd - 7 * 24 * 60 * 60;
+  const [range, setRange] = useState({start: rangeStart, end: rangeEnd})
   const [systemId, setSystemId] = useState()
   const [blockState, setBlockState] = useState(false)
   const [pagination, setPagination] = useState({
@@ -382,36 +383,7 @@ const DefaultPage = ({ total, stats, systems, alertCount, alertCountBySystem, di
           </div>
         </div>
         {blockState && (
-          <div className='row'>
-            <div className=' col-md-12 col-lg-12'>
-              <div className='card '>
-                <div className='custom-card-header card-header block-pie-system'>
-                  <div className='d-flex align-item-center justify-content-between'>
-                    <div className='d-flex align-items-center'>
-                      <strong className='txt-blue'><i className='i_place_15 ico30' />  THÔNG TIN BLOCK</strong>
-                    </div>
-                    <div className="d-flex justify-content-end" style={{ minWidth: 550 }}>
-                      <DateRangePicker
-                        onApply={(event, picker) => {
-                          setRange({
-                            start: picker.startDate.unix(),
-                            end: picker.endDate.unix()
-                          })
-                        }}
-                      >
-                        <input type='text' className='form-control w-100' />
-                      </DateRangePicker>
-                    </div>
-                  </div>
-                </div>
-                <div className='card-body'>
-                  <div>
-                    <ChartViewer modal={blockState} range={range} />
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
+          <ChartViewer modal={blockState} setModal={setBlockState} range={range} setRange={setRange} />
         )}
       </div>
     </>

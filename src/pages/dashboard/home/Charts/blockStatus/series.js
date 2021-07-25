@@ -5,7 +5,6 @@ import moment from 'moment'
 import { SHORT_DATE_FORMAT } from 'constant'
 
 const Donut = ({ data = [] }) => {
-  console.log(data)
   const config = {
     chart: {
       height: 350,
@@ -47,76 +46,19 @@ const Donut = ({ data = [] }) => {
       categories: data.map(x => moment(x.timestamp).format(SHORT_DATE_FORMAT))
     },
     yaxis: [
-      {
-        // axisTicks: {
-        //   show: true
-        // }
-        // axisBorder: {
-        //   show: true,
-        //   color: '#FF1654'
-        // }
-        // labels: {
-        //   style: {
-        //     colors: '#FF1654'
-        //   }
-        // }
-        // title: {
-        //   text: 'Vo',
-        //   style: {
-        //     color: '#FF1654'
-        //   }
-        // }
-      },
-      // {
-      //   // opposite: true,
-      //   axisTicks: {
-      //     show: true
-      //   },
-      //   axisBorder: {
-      //     show: true,
-      //     color: '#247BA0'
-      //   },
-      //   labels: {
-      //     style: {
-      //       colors: '#247BA0'
-      //     }
-      //   },
-      //   title: {
-      //     text: 'E',
-      //     style: {
-      //       color: '#247BA0'
-      //     }
-      //   }
-      // },
+      {},
       {
         opposite: true
-        // axisTicks: {
-        //   show: true
-        // },
-        // axisBorder: {
-        //   show: true,
-        //   color: '#247BA0'
-        // }
-        // labels: {
-        //   style: {
-        //     colors: '#247BA0'
-        //   }
-        // },
-        // title: {
-        //   text: 'R',
-        //   style: {
-        //     color: '#247BA0'
-        //   }
-        // }
+        
       }
     ],
-    tooltip: {
-      shared: false,
-      intersect: true,
-      x: {
-        show: false
-      }
-    },
+    // tooltip: {
+    //   shared: false,
+    //   intersect: true,
+    //   x: {
+    //     show: false
+    //   }
+    // },
     legend: {
       horizontalAlign: 'left',
       offsetX: 40
