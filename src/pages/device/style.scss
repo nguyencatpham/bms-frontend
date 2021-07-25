@@ -70,3 +70,21 @@
         white-space: nowrap;
     }
 }
+
+.custom-card-header {
+    background-color: #0D0C1C !important;
+    color: #ffffff;
+    border-radius: calc(0.25rem - 1px) calc(0.25rem - 1px) 0 0;
+    padding: 1rem 2rem;
+}
+  
+.custom-ant-dashboard {
+    .ant-modal-body {
+      padding: 0 !important;
+    }
+    
+    .ant-modal-header {
+      background-color: #0D0C1C !important;
+      border-radius: calc(0.25rem - 1px) calc(0.25rem - 1px) 0 0;
+    }
+}

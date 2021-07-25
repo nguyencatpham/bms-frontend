@@ -14,6 +14,9 @@ const mapStateToProps = ({ system, dispatch }) => {
 }
 const DefaultPage = ({ blocks, dispatch, list }) => {
   let total = blocks.length
+  const rangeEnd = Math.floor(Date.now() / 1000);
+  const rangeStart = rangeEnd - 7 * 24 * 60 * 60;
+  const [range, setRange] = useState({start: rangeStart, end: rangeEnd})
   const [modal, setModal] = useState()
   const { id } = useParams()
   const [pagination, setPagination] = useState({
@@ -80,7 +83,7 @@ const DefaultPage = ({ blocks, dispatch, list }) => {
           }}
         />
       </div>
-      {modal && <InfoModal modal={modal} setModal={setModal} />}
+      {modal && <InfoModal modal={modal} setModal={setModal} range={range} setRange={setRange} />}
     </>
   )
 }
