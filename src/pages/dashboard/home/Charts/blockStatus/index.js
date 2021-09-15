@@ -10,6 +10,10 @@ const mapStateToProps = ({ block, dispatch }) => {
     total = total.count
   }
 
+  list = list.map((item, index) => ({
+    ...item,
+    index: index + 1
+  }))
   return { list, loading, total, dispatch }
 }
 
@@ -91,12 +95,12 @@ const DefaultPage = ({ total = 0, list, loading, setBlockState, systemId, dispat
         <div className='card-body battery-cell-panel'>
           {list.map(x => (
             <div
-              key={x.id + x.macAddress}
+              key={`${x.index}${x.id}`}
               className='card cell-item'
               onClick={() => setBlockState(x)}
               style={{ cursor: 'pointer' }}
             >
-              <div style={{ backgroundColor: config.COLOR.normal, color: 'white' }} className='card-body'>{x.id}</div>
+              <div style={{ backgroundColor: config.COLOR.normal, color: 'white' }} className='card-body'>{x.index}</div>
             </div>
           ))}
         </div>

@@ -19,6 +19,10 @@ const mapStateToProps = ({ block, user, dispatch }) => {
   //     }
   //   }
   // }
+  list = list.map((item, index) => ({
+    ...item,
+    index: index + 1
+  }))
 
   return { list, loading, total, include, dispatch }
 }
@@ -113,12 +117,12 @@ const DefaultPage = ({ total = 0, list, loading, setBlockState, systemId, includ
           {list.map(x => (
             <>
               <div
-                key={x.id + x.macAddress}
+                key={`${x.index}${x.id}`}
                 className='card cell-item'
                 onClick={() => setBlockState(x)}
                 style={{ cursor: 'pointer' }}
               >
-                <div style={{ backgroundColor: getColor(x.alertType), color: 'white' }} className='card-body'>{x.id}</div>
+                <div style={{ backgroundColor: getColor(x.alertType), color: 'white' }} className='card-body'>{x.index}</div>
               </div>
             </>
           ))}

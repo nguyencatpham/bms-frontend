@@ -161,7 +161,7 @@ const DefaultPage = ({ loading, detail, system, blocks, dispatch }) => {
           <div className='col-xl-8 col-lg-12'>
             <div className='card profile-general'>
               <div className='card-header'>
-                <div className='vb__utils__heading'><strong>@{model} ({name || macAddress})</strong>
+                <div className='vb__utils__heading'><strong>{name || macAddress}</strong>
                   <div className='text-muted font-size-15'>{devices.length} thiết bị</div>
                 </div>
                 <Tabs activeKey={tabKey} className='mr-auto kit-tabs-bold' onChange={changeTab}>
