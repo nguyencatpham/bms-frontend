@@ -1,14 +1,12 @@
 import React, { useState, useEffect } from 'react'
 import { Helmet } from 'react-helmet'
-import { Button, Modal, Table, Tabs } from 'antd'
+import { Button, Modal, Tabs } from 'antd'
 import { connect } from 'react-redux'
 import { withRouter, useParams } from 'react-router-dom'
 import { get } from 'lodash'
-import { TIME_FORMAT } from 'constant'
 
 import General from 'components/kit/widgets/General/10v1'
 import TotalBlock from 'components/kit/widgets/General/totalBlock'
-import moment from 'moment'
 import SystemPage from './system'
 import SettingPage from './setting'
 import HistoryPage from './history'
@@ -28,7 +26,7 @@ const mapStateToProps = ({ authDevice, system: sys, dispatch }) => {
 
 const DefaultPage = ({ loading, detail, system, blocks, dispatch }) => {
   const { id } = useParams()
-  const { macAddress, uuid, model, updated, devices = [] } = detail
+  const { macAddress, uuid, updated, devices = [] } = detail
   const { name } = system
   const [showmodal, setShowmodal] = useState()
   const [tabKey, setTabKey] = useState('1')
@@ -90,37 +88,10 @@ const DefaultPage = ({ loading, detail, system, blocks, dispatch }) => {
   delete _system.ssid
   delete _system.mobileSignal
 
-  const supportCasesTableData = Object.keys(_system).map((value, index) => ({
-    key: `${index}`,
-    type: value,
-    amount: system[value] || '-'
-  }))
-  const supportCasesTableColumns = [
-    {
-      title: 'Loại',
-      dataIndex: 'type',
-      key: 'type'
-    },
-    {
-      title: 'Thông số',
-      key: 'amount',
-      dataIndex: 'amount',
-      render: (amount, item) => {
-        if (amount === 'Negative') {
-          return <span className='text-capital text-danger font-weight-bold'>{amount}</span>
-        }
-        if (item.type === 'created' || item.type === 'updated') {
-          return <span className='text-capital text-primary font-weight-bold'>{amount ? moment(amount).format(TIME_FORMAT) : '---'}</span>
-        }
-        return <span className='text-capital text-primary font-weight-bold'>{amount}</span>
-      }
-    }
-  ]
   return (
     <>
       <div className='detail-page device'>
         <Helmet title='Thông tin thiết bị' />
-        {/* <h3 className='form-title'><i className='i_user_8 ico30' />QUẢN LÝ TÀI KHOẢN</h3> */}
         <div className='row'>
           <div className='col-xl-4 col-lg-12'>
             <div className='card profile-general'>

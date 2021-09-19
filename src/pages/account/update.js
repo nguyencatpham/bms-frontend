@@ -75,7 +75,7 @@ const DefaultPage = ({ loading, detail, preConfirm, dispatch }) => {
     <>
       <div className='detail-page account-create-page'>
         <Helmet title='Tài khoản | Cập nhật' />
-        <h3 className='form-title'><i className='i_user_8 ico30' />QUẢN LÝ TÀI KHOẢN</h3>
+        <h3 className='form-title'><i className='i_user_8 ico30' />QUẢN TRỊ VIÊN</h3>
         <div className='card-content'>
           <div className='card-bg'>
             <Card title={<p><span>Cập nhật tài khoản:</span><span className='txt-orange'>{name}</span></p>}>

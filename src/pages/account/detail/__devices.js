@@ -143,7 +143,7 @@ const DefaultPage = ({ list, loading, total, preConfirm, usernameOrEmail, dispat
   return (
     <>
       <div className='device' onKeyUp={onSearch}>
-        <Helmet title='Quản lý tài khoản' />
+        <Helmet title='Quản trị viên' />
         <div className='row'>
           <div className='col-lg-12 col-md-12'>
             <div className='card'>

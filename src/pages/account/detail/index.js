@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { Helmet } from 'react-helmet'
-import { Button, Modal, Form, Tabs } from 'antd'
+import { Button, Modal, Tabs } from 'antd'
 import { connect } from 'react-redux'
 import { withRouter, useParams } from 'react-router-dom'
 import { history } from 'index'
@@ -26,8 +26,7 @@ const mapStateToProps = ({ account, authDevice, dispatch }) => {
 
 const DefaultPage = ({ loading, detail, deviceCount, dispatch }) => {
   const { id } = useParams()
-  const [] = Form.useForm()
-  const { name, role, suspend, description, phoneNumber, address, email, username, devices = [] } = detail
+  const { name, role, suspend, description, phoneNumber, address, email, username } = detail
   const [showmodal, setShowmodal] = useState()
   const [tabKey, setTabKey] = useState('1')
   const onDelete = (suspend) => {
@@ -50,11 +49,11 @@ const DefaultPage = ({ loading, detail, deviceCount, dispatch }) => {
     })
   }, [id, dispatch])
   const actions = [
-  {
-    id: '__attach_device',
-    name: 'Thêm thiết bị',
-    action: () => { history.push(`${window.location.pathname}/attach`) }
-  }]
+    {
+      id: '__attach_device',
+      name: 'Thêm thiết bị',
+      action: () => { history.push(`${window.location.pathname}/attach`) }
+    }]
   const suspendAction = {
     id: '__suspend',
     name: suspend ? 'Hủy chặn tài khoản' : 'Chặn tài khoản',
@@ -65,7 +64,6 @@ const DefaultPage = ({ loading, detail, deviceCount, dispatch }) => {
     <>
       <div className='detail-page account'>
         <Helmet title='Thông tin tài khoản' />
-        {/* <h3 className='form-title'><i className='i_user_8 ico30' />QUẢN LÝ TÀI KHOẢN</h3> */}
         <div className='row'>
           <div className='col-xl-4 col-lg-12'>
             <div className='card profile-general'>
@@ -110,7 +108,7 @@ const DefaultPage = ({ loading, detail, deviceCount, dispatch }) => {
                 </Tabs>
               </div>
               <div className='card-body'>
-              {tabKey === '1' && (
+                {tabKey === '1' && (
                   <div>
                     <DevicePage />
                   </div>

@@ -30,7 +30,7 @@ const DefaultPage = ({ loading, detail, role, dispatch }) => {
     <>
       <div className='detail-page account-create-page'>
         <Helmet title='Tài khoản | Tạo mới' />
-        <h3 className='form-title'><i className='i_user_8 ico30' />QUẢN LÝ TÀI KHOẢN</h3>
+        <h3 className='form-title'><i className='i_user_8 ico30' />QUẢN TRỊ VIÊN</h3>
         <div className='card-content'>
           <div className='card-bg'>
             <Card title='Thêm tài khoản'>

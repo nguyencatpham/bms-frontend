@@ -47,19 +47,19 @@ const DefaultPage = ({ list, loading, total, preConfirm, usernameOrEmail, role, 
   })
 
   const columns = [
-    {
-      title: '',
-      dataIndex: 'index',
-      key: 'index',
-      render: (text, item) => (
-        <Avatar
-          shape='square'
-          size='large'
-          icon={<UserOutlined />}
-          src={`/resources/images/avatars/${Math.floor(Math.random() * 5) + 1}.jpg`}
-        />
-      )
-    },
+    // {
+    //   title: '',
+    //   dataIndex: 'index',
+    //   key: 'index',
+    //   render: (text, item) => (
+    //     <Avatar
+    //       shape='square'
+    //       size='large'
+    //       icon={<UserOutlined />}
+    //       src={`/resources/images/avatars/${Math.floor(Math.random() * 5) + 1}.jpg`}
+    //     />
+    //   )
+    // },
     {
       title: 'Tài khoản',
       dataIndex: 'name',
@@ -108,8 +108,8 @@ const DefaultPage = ({ list, loading, total, preConfirm, usernameOrEmail, role, 
       key: 'action',
       render: (text, item) => {
         return (
-          <div width="1%" className='action-group break-word'>
-            <div style={{fontSize: '1.3rem'}} className="d-flex justify-content-between align-items-center mx-1">
+          <div width='1%' className='action-group break-word'>
+            <div style={{ fontSize: '1.3rem' }} className='d-flex justify-content-between align-items-center mx-1'>
               <Link to={`/accounts/${item.id}/update`}>
                 <EditOutlined className='ico18 ico-blue' />
               </Link>
@@ -186,13 +186,13 @@ const DefaultPage = ({ list, loading, total, preConfirm, usernameOrEmail, role, 
   return (
     <>
       <div className='account' onKeyUp={onSearch}>
-        <Helmet title='Quản lý tài khoản' />
+        <Helmet title='Quản trị viên' />
         <div className='row'>
           <div className='col-lg-12 col-md-12'>
-            <h5 className='text-dark mb-4 text-uppercase'>Quản lý tài khoản</h5>
+            <h5 className='text-dark mb-4 text-uppercase'>Quản trị viên</h5>
             <div className='card'>
               <div className='card-body d-flex justify-content-between flex-column flex-md-row'>
-                <div className="d-flex justify-content-between w-100 flex-column flex-md-row">
+                <div className='d-flex justify-content-between w-100 flex-column flex-md-row'>
                   <div className='w-100'>
                     <Input
                       style={{ width: '100%' }}
@@ -217,7 +217,7 @@ const DefaultPage = ({ list, loading, total, preConfirm, usernameOrEmail, role, 
                     </Select>
                   </div>
                 </div>
-                
+
                 <div className='ml-md-3 ml-0 mt-3 mt-md-0'>
                   <Button className='btn btn-primary btn-filter' autoFocus onClick={onSearch}><i className='i_search small' />Tìm</Button>
                 </div>

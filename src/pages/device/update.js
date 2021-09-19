@@ -74,8 +74,8 @@ const DefaultPage = ({ loading, detail, preConfirm, dispatch }) => {
   return (
     <>
       <div className='detail-page device-create-page'>
-        <Helmet title='Tài khoản | Cập nhật' />
-        <h3 className='form-title'><i className='i_user_8 ico30' />QUẢN LÝ TÀI KHOẢN</h3>
+        <Helmet title='Thiết bị | Cập nhật' />
+        <h3 className='form-title'><i className='i_user_8 ico30' />QUẢN LÝ THIẾT BỊ</h3>
         <div className='card-content'>
           <div className='card-bg'>
             <Card title={<p><span>Cập nhật tài khoản:</span><span className='txt-orange'>{name}</span></p>}>
