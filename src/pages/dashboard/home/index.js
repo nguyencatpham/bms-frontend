@@ -1,32 +1,23 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import RecentAlert from './Charts/recentAlert'
 import BlockStatus from './Charts/blockStatus'
 import BlockAlertStatus from './Charts/blockAlertStatus'
 import ChartViewer from './Charts/blockStatus/info'
-// import ChartViewer from './timeseries'
-// import PieAlert from './Charts/alertCount'
-// import PieOnline from './Charts/pieOnline'
-// import BarLine from './Charts/barline'
+import TitleIcon from './titleIcon'
 
-// import ManyPoint from './Charts/armchart/many-point'
-// import AxisBreak from './Charts/armchart/axis-break'
-// import Dumbell from './Charts/armchart/dumbell'
-// import Intra from './Charts/armchart/intra'
-// import Pareto from './Charts/armchart/pareto'
-// import PieInPie from './Charts/armchart/pie-pie'
-// import RangeArea from './Charts/armchart/range-area'
-// import TimeLine from './Charts/armchart/timeline'
-// import Zoomable from './Charts/armchart/zoomable'
-
-import Donut from './dounut'
-import RadiaBar from './radialbar'
-import Area from './area'
+// import Donut from './dounut'
+import VerticalBar from './verticalbar'
+// import RadiaBar from './radialbar'
+import Donut from './donut'
+import LineChart from './lineChart'
 
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
-import { Select, Tabs } from 'antd'
+import { Select, Tabs, Form, Input, Button, DatePicker, Pagination } from 'antd'
+import PlusCircleOutlinedIcon from '@ant-design/icons/PlusCircleOutlined'
 import { Helmet } from 'react-helmet'
 import './style.scss'
+import BlockModal from './blockModal'
 
 import jQuery from 'jquery'
 // you will need the css that comes with bootstrap@3. if you are using
@@ -49,47 +40,71 @@ const mapStateToProps = ({ authDevice, user, system, dispatch }) => {
     total = total.count
   }
 
-  return { list, loading, total, users, preConfirm, usernameOrEmail, role, stats, alertCount, alertCountBySystem, systems, dispatch }
+  return {
+    list,
+    loading,
+    total,
+    users,
+    preConfirm,
+    usernameOrEmail,
+    role,
+    stats,
+    alertCount,
+    alertCountBySystem,
+    systems,
+    dispatch,
+  }
 }
 
 const DefaultPage = ({ total, stats, systems, alertCount, alertCountBySystem, dispatch }) => {
+  const blockModalRef = useRef()
   const { healthy = 0, unhealthy = 0, deployed = 0 } = stats
   const { normal = 0, warning = 0, alert = 0 } = alertCount
-  const { normal: normalBySystem = 0, warning: warningBySystem = 0, alert: alertBySystem = 0 } = alertCountBySystem
+  const {
+    normal: normalBySystem = 0,
+    warning: warningBySystem = 0,
+    alert: alertBySystem = 0,
+  } = alertCountBySystem
   const [tabKey, setTabKey] = useState('1')
-  const rangeEnd = Math.floor(Date.now() / 1000);
-  const rangeStart = rangeEnd - 7 * 24 * 60 * 60;
-  const [range, setRange] = useState({start: rangeStart, end: rangeEnd})
+  const rangeEnd = Math.floor(Date.now() / 1000)
+  const rangeStart = rangeEnd - 7 * 24 * 60 * 60
+  const [range, setRange] = useState({ start: rangeStart, end: rangeEnd })
   const [systemId, setSystemId] = useState()
   const [blockState, setBlockState] = useState(false)
   const [pagination, setPagination] = useState({
     current: 1,
     pageSize: 10,
     total: 0,
-    showTotal: (total, range) => `${range[0]}-${range[1]} trên ${total} thiết bị`
+    showTotal: (total, range) => `${range[0]}-${range[1]} trên ${total} thiết bị`,
   })
-  const changeTab = key => {
+  const changeTab = (key) => {
     setTabKey(key)
   }
   const [payload] = useState({
     filter: JSON.stringify({
-      include: [{
-        relation: 'devices',
-        scope: {
-          include: [{
-            relation: 'systems',
-            scope: {
-              include: [{
-                relation: 'blocks'
-              }]
-            }
-          }]
-        }
-      }],
+      include: [
+        {
+          relation: 'devices',
+          scope: {
+            include: [
+              {
+                relation: 'systems',
+                scope: {
+                  include: [
+                    {
+                      relation: 'blocks',
+                    },
+                  ],
+                },
+              },
+            ],
+          },
+        },
+      ],
       skip: (pagination.current - 1) * pagination.pageSize,
       limit: pagination.pageSize,
-      order: ['created DESC']
-    })
+      order: ['created DESC'],
+    }),
   })
 
   useEffect(() => {
@@ -100,31 +115,31 @@ const DefaultPage = ({ total, stats, systems, alertCount, alertCountBySystem, di
   useEffect(() => {
     dispatch({
       type: 'authDevice/COUNT',
-      payload: { where: (JSON.parse(payload.filter) || {}).where }
+      payload: { where: (JSON.parse(payload.filter) || {}).where },
     })
     dispatch({
       type: 'authDevice/LIST',
-      payload
+      payload,
     })
     dispatch({
       type: 'system/ALERT_COUNT',
-      payload
+      payload,
     })
     dispatch({
       type: 'system/ALERT_COUNT_BY_SYSTEM',
       payload: {
-        systemId
-      }
+        systemId,
+      },
     })
     dispatch({
       type: 'system/LIST',
       payload: {
-        filter: { fields: { systemId: true, name: true } }
-      }
+        filter: { fields: { systemId: true, name: true } },
+      },
     })
     dispatch({
       type: 'system/SYSTEM_STATS',
-      payload
+      payload,
     })
   }, [dispatch, payload])
   useEffect(() => {
@@ -136,255 +151,223 @@ const DefaultPage = ({ total, stats, systems, alertCount, alertCountBySystem, di
     dispatch({
       type: 'system/ALERT_COUNT_BY_SYSTEM',
       payload: {
-        systemId
-      }
+        systemId,
+      },
     })
   }, [systemId])
+
+  const verticalBarSeries = [
+    {
+      name: 'RUpper',
+      data: [5],
+      color: '#865439',
+    },
+    {
+      name: 'VUpper',
+      data: [4],
+      color: '#F17532',
+    },
+    {
+      name: 'EUpper',
+      data: [10],
+      color: '#FDEE39',
+    },
+    {
+      name: 'TUpper',
+      data: [20],
+      color: '#ED4845',
+    },
+  ]
+
+  const lineChartSeries = [
+    {
+      name: 'RUpper',
+      data: [40, 52, 38, 24, 33, 26, 21, 20, 6, 8, 15],
+      color: '#865439',
+    },
+    {
+      name: 'VUpper',
+      data: [35, 41, 52, 42, 13, 18, 29, 37, 36, 51, 32],
+      color: '#F17532',
+    },
+    {
+      name: 'EUpper',
+      data: [45, 57, 74, 70, 75, 38, 62, 47, 40, 56, 45],
+      color: '#FDEE39',
+    },
+    {
+      name: 'TUpper',
+      data: [36, 45, 68, 61, 69, 49, 67, 48, 44, 52, 41],
+      color: '#ED4845',
+    },
+  ]
+
+  const normalBlock = {
+    name: 'Bình thường',
+    data: [20],
+    color: '#017EFA',
+  }
+
+  const handleClickBlock = (block) => {
+    if (blockModalRef.current) blockModalRef.current.handleClick(block)
+  }
+
   return (
     <>
-      <div>
-        <Helmet title='Hệ thống quản lý ắc quy' />
-        <div className='row'>
-          <div className='col-lg-12 col-md-12'>
-            <h5 className='text-dark mb-4 text-uppercase'>Hệ thống quản lý và giám sát bình ắc quy</h5>
-          </div>
-        </div>
+      <div className="dashboard-page">
+        <Helmet title="Hệ thống quản lý ắc quy" />
 
-        {/* stats box */}
-        <div className='stats-box'>
-          <div className='row'>
-            <div className='col-md-4 col-lg-4'>
-              <div className='card'>
-                <div className='card-body stats-block blue'>
-                  <div className='stats-icon'>
-                    <img src='/resources/images/deployed.svg' />
-                  </div>
-                  <div className='stats-body'>
-                    <h1>{deployed}</h1>
-                    <p>Đã triển khai</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div className='col-md-4 col-lg-4 green'>
-              <div className='card'>
-                <div className='card-body stats-block'>
-                  <div className='stats-icon'>
-                    <img src='/resources/images/connected.svg' />
-                  </div>
-                  <div className='stats-body'>
-                    <h1>{healthy}</h1>
-                    <p>Đang hoạt động</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div className='col-md-4 col-lg-4 red'>
-              <div className='card'>
-                <div className='card-body stats-block'>
-                  <div className='stats-icon'>
-                    <img src='/resources/images/disconnected.svg' />
-                  </div>
-                  <div className='stats-body'>
-                    <h1>{unhealthy}</h1>
-                    <p>Mất kết nối</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div className='row'>
-            <div className='col-md-4 col-lg-4'>
-              <div className='card'>
-                <div className='card-body stats-block gold'>
-                  <div className='stats-icon'>
-                    <img src='/resources/images/warning.svg' />
-                  </div>
-                  <div className='stats-body'>
-                    <h1>{warning}</h1>
-                    <p>Báo động</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div className='col-md-4 col-lg-4 red'>
-              <div className='card'>
-                <div className='card-body stats-block'>
-                  <div className='stats-icon'>
-                    <img src='/resources/images/alert.svg' />
-                  </div>
-                  <div className='stats-body'>
-                    <h1>{alert}</h1>
-                    <p>Cảnh báo</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div className='col-md-4 col-lg-4 green'>
-              <div className='card'>
-                <div className='card-body stats-block'>
-                  <div className='stats-icon'>
-                    <img src='/resources/images/normal.svg' />
-                  </div>
-                  <div className='stats-body'>
-                    <h1>{normal}</h1>
-                    <p>Bình thường</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
         {/* stats % chart */}
-        <div className='deploy-pie-chart row'>
-          <div className='col-md-6 col-lg-6'>
-            <div className='card'>
-              <div className='custom-card-header card-header block-pie-system'>
-                        <div className='d-flex align-items-center'>
-                  <strong className='txt-blue'><i className='i_place_15 ico30' /> THỐNG KÊ TÌNH TRẠNG HỆ THỐNG
-                  </strong
-                  >
-                </div>
-              </div>
-              <div className='card-body'>
-                <RadiaBar
-                  series={[100, Math.round((healthy / deployed) * 100) || 0, Math.round((unhealthy / deployed) * 100) || 0]}
-                  labels={['Đã triển khai', 'Đang hoạt động', 'Mất kết nối']}
-                />
-              </div>
-            </div>
-          </div>
-          <div className='col-md-6 col-lg-6'>
-            <div className='card'>
-              <div className='custom-card-header card-header'>
-                <div className='d-flex align-item-center justify-content-between'>
-                  <div className='d-flex align-items-center'>
-                    <strong className='txt-blue'><i className='i_place_15 ico30' /> THỐNG KÊ TÌNH TRẠNG BLOCK
-                    </strong
+        <div className="main">
+          <div className="left-side">
+            <div>
+              <div>
+                <Form
+                  className="select-bar"
+                  // onFinish={onFinish}
+                >
+                  <div className="form-item" name="gender" rules={[{ required: true }]}>
+                    <select
+                      style={{ position: 'relative' }}
+                      className="select"
+                      placeholder="Select a option and change input text above"
+                      // onChange={onGenderChange}
+                      // allowClear
                     >
+                      <option value="1">System 1</option>
+                      <option value="2">System 2</option>
+                      <option value="3">System 3</option>
+                    </select>
+                    <PlusCircleOutlinedIcon />
                   </div>
-                  <Select
-                    value={systemId}
-                    onChange={setSystemId}
-                    options={systems.map(x => ({ label: x.name, value: x.systemId }))}
-                    style={{ minWidth: 150, marginLeft: 20 }}
-                  />
+                  <div className="form-item" name="gender" rules={[{ required: true }]}>
+                    <select
+                      className="select"
+                      placeholder="Select a option and change input text above"
+                      // onChange={onGenderChange}
+                      // allowClear
+                    >
+                      <option value="1">Unit 1</option>
+                      <option value="2">Unit 2</option>
+                      <option value="3">Unit 3</option>
+                    </select>
+                    <PlusCircleOutlinedIcon />
+                  </div>
+                  <div className="form-item" name="gender" rules={[{ required: true }]}>
+                    <select
+                      className="select"
+                      placeholder="Select a option and change input text above"
+                      // onChange={onGenderChange}
+                      // allowClear
+                    >
+                      <option value="1">Block 1</option>
+                      <option value="2">Block 2</option>
+                      <option value="3">Block 3</option>
+                    </select>
+                    <PlusCircleOutlinedIcon />
+                  </div>
+                </Form>
+              </div>
+              <div className="first-two-charts">
+                <div className="custom-card custom-card--warning">
+                  <div className="custom-card__header">
+                    <TitleIcon />
+                    <h2 className="custom-card__title">Cảnh báo</h2>
+                  </div>
+                  <div className="custom-card__body">
+                    <VerticalBar
+                      series={verticalBarSeries}
+                      // labels={['Bình thường', 'Cảnh báo', 'Báo động']}
+                    />
+                  </div>
+                </div>
+                <div className="custom-card custom-card--status">
+                  <div className="custom-card__header">
+                    <TitleIcon />
+                    <h2 className="custom-card__title">Tình trạng</h2>
+                  </div>
+                  <div className="custom-card__body">
+                    <Donut
+
+                    // series={[healthy, unhealthy]}
+                    // labels={['Đang hoạt động', 'Mất kết nối']}
+                    />
+                  </div>
                 </div>
               </div>
-              <div className='card-body'>
-                <Donut
-                  series={[normalBySystem, warningBySystem, alertBySystem]}
-                  labels={['Bình thường', 'Cảnh báo', 'Báo động']}
-                />
+            </div>
+
+            <div>
+              <div className="custom-card custom-card--operate">
+                <div className="custom-card__header justify-content-between">
+                  <div className="d-flex align-items-center">
+                    <TitleIcon />
+                    <h2 className="custom-card__title">Vận hành</h2>
+                  </div>
+                  <DatePicker
+                    placeholder="Chọn thời gian"
+                    format="DD/MM/YYYY"
+                    // onChange={onChange}
+                  />
+                </div>
+                <div className="custom-card__body">
+                  <LineChart series={lineChartSeries} />
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className="right-side">
+            {/* <div> */}
+            <div className="custom-card collected-data">
+              <div className="custom-card__header">
+                <TitleIcon />
+                <h2 className="custom-card__title">Số liệu thu thập</h2>
+              </div>
+              <BlockModal ref={blockModalRef} />
+              <div className="custom-card__body">
+                {[...verticalBarSeries, normalBlock].map((box) => {
+                  const randomNumBlocks = Math.ceil(Math.random() * 15)
+                  return (
+                    <div className="block-box">
+                      <div className="block-box__head">
+                        <div
+                          className="block-box__circle"
+                          style={{ backgroundColor: box.color }}
+                        ></div>
+                        <div className="block-box__title">{box.name}</div>
+                      </div>
+                      <div className="block-box__body">
+                        {[...new Array(randomNumBlocks)].map((block, index) => (
+                          <div
+                            key={index}
+                            onClick={() => handleClickBlock(index + 1)}
+                            className="block"
+                            style={{ backgroundColor: box.color }}
+                          >
+                            {index + 1}
+                          </div>
+                        ))}
+                      </div>
+                      <div className="block-box__foot">
+                        <div>
+                          <Pagination
+                            size="small"
+                            current={3}
+                            defaultCurrent={1}
+                            total={300}
+                            showSizeChanger={false}
+                            showQuickJumper={false}
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  )
+                })}
               </div>
             </div>
           </div>
         </div>
-        {/* Area chart */}
-        <div className='block-area-chart row'>
-          <div className='col-md-8 col-lg-8'>
-            <div className='card'>
-              <div className='custom-card-header card-header block-pie-system'>
-                <div className='d-flex align-item-center justify-content-between'>
-                  <div className='d-flex align-items-center'>
-                    <strong className='txt-blue'><i className='i_place_15 ico30' /> THỐNG KÊ TÌNH TRẠNG BLOCK</strong>
-                  </div>
-                  <Select
-                    value={systemId}
-                    onChange={setSystemId}
-                    options={systems.map(x => ({ label: x.name, value: x.systemId }))}
-                    style={{ minWidth: 150, marginLeft: 20 }}
-                  />
-                </div>
-              </div>
-              <div className='card-body'>
-                <Area />
-              </div>
-            </div>
-          </div>
-          <div className='col-md-4 col-lg-4'>
-            <div className='card'>
-              <div className='custom-card-header card-header'>
-                <div className='d-flex align-item-center justify-content-between'>
-                  <div className='d-flex align-items-center'>
-                    <strong className='txt-blue'><i className='i_place_15 ico30' /> CẢNH BÁO GẦN ĐÂY
-                    </strong>
-                  </div>
-                  <Select
-                    value={systemId}
-                    onChange={setSystemId}
-                    options={systems.map(x => ({ label: x.name, value: x.systemId }))}
-                    style={{ minWidth: 135, marginLeft: 20 }}
-                  />
-                </div>
-                <Tabs activeKey={tabKey} className='mr-auto kit-tabs-bold' onChange={changeTab}>
-                  <TabPane tab='Báo động' key='1' />
-                  <TabPane tab='Cảnh báo' key='2' />
-                </Tabs>
-              </div>
-              <div
-                className='card-body dashboard-event' style={{
-                  padding: 10,
-                  maxHeight: '415px',
-                  overflowY: 'auto'
-                }}
-              >
-                {tabKey === '1' && (
-                  <RecentAlert type='alert' priority={1} systemId={systemId} />
-                )}
-                {tabKey === '2' && (
-                  <RecentAlert type='warning' priority={2} systemId={systemId} />
-                )}
-              </div>
-            </div>
-          </div>
-        </div>
-        {/* block status */}
-        <div className='block-status row'>
-          <div className='col-md-6 col-lg-6'>
-            <div className='card '>
-              <div className='custom-card-header card-header block-pie-system'>
-                <div className='d-flex align-item-center justify-content-between'>
-                  <div className='d-flex align-items-center'>
-                    <strong className='txt-blue'><i className='i_place_15 ico30' /> TRẠNG THÁI BATTERY VƯỢT NGƯỠNG</strong>
-                  </div>
-                  <Select
-                    value={systemId}
-                    onChange={setSystemId}
-                    options={systems.map(x => ({ label: x.name, value: x.systemId }))}
-                    style={{ minWidth: 150, marginLeft: 20 }}
-                  />
-                </div>
-              </div>
-              <div className='card-body'>
-                <BlockAlertStatus setBlockState={setBlockState} systemId={systemId} />
-              </div>
-            </div>
-          </div>
-          <div className=' col-md-6 col-lg-6'>
-            <div className='card '>
-              <div className='custom-card-header card-header block-pie-system'>
-                <div className='d-flex align-item-center justify-content-between'>
-                  <div className='d-flex align-items-center'>
-                    <strong className='txt-blue'><i className='i_place_15 ico30' /> TRẠNG THÁI BATTERY BÌNH THƯỜNG</strong>
-                  </div>
-                  <Select
-                    value={systemId}
-                    onChange={setSystemId}
-                    options={systems.map(x => ({ label: x.name, value: x.systemId }))}
-                    style={{ minWidth: 150, marginLeft: 20 }}
-                  />
-                </div>
-              </div>
-              <div className='card-body'>
-                <BlockStatus setBlockState={setBlockState} systemId={systemId} />
-              </div>
-            </div>
-          </div>
-        </div>
-        {blockState && (
-          <ChartViewer modal={blockState} setModal={setBlockState} range={range} setRange={setRange} />
-        )}
+        {/* </div> */}
       </div>
     </>
   )

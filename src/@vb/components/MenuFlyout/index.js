@@ -6,12 +6,12 @@ import MenuTop from './MenuTop'
 const mapStateToProps = ({ settings: { menuLayoutType } }) => ({ menuLayoutType })
 
 const Menu = ({ menuLayoutType }) => {
-  switch (menuLayoutType) {
-    case 'left':
+  // switch (menuLayoutType) {
+  //   case 'left':
       return <MenuLeft />
-    default:
-      return <MenuTop />
-  }
+    // default:
+    //   return <MenuTop />
+  // }
 }
 
 export default connect(mapStateToProps)(Menu)

@@ -3,6 +3,7 @@ import { Layout } from 'antd'
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
 import classNames from 'classnames'
+import './style.scss';
 
 import TopBar from '@vb/components/TopBar'
 import Breadcrumbs from '@vb/components/Breadcrumbs'
@@ -33,7 +34,7 @@ const mapStateToProps = ({ settings }) => ({
   layoutTopbar: settings.layoutTopbar,
   layoutBreadcrumbs: settings.layoutBreadcrumbs,
   layoutFooter: settings.layoutFooter,
-  layoutMenu: settings.layoutMenu
+  layoutMenu: settings.layoutMenu,
 })
 
 let touchStartPrev = 0
@@ -55,7 +56,7 @@ const MainLayout = ({
   layoutTopbar,
   layoutBreadcrumbs,
   layoutFooter,
-  layoutMenu
+  layoutMenu,
 }) => {
   // touch slide mobile menu opener
   useEffect(() => {
@@ -69,7 +70,7 @@ const MainLayout = ({
         touchStartPrev = x
         touchStartLocked = x > 70
       },
-      { passive: false }
+      { passive: false },
     )
     document.addEventListener(
       'touchmove',
@@ -81,7 +82,7 @@ const MainLayout = ({
           touchStartLocked = true
         }
       },
-      { passive: false }
+      { passive: false },
     )
   })
 
@@ -90,27 +91,27 @@ const MainLayout = ({
       type: 'settings/CHANGE_SETTING',
       payload: {
         setting: 'isMobileMenuOpen',
-        value: !isMobileMenuOpen
-      }
+        value: !isMobileMenuOpen,
+      },
     })
   }
 
-  const TopbarWrapper = ({ children: c }) => (
-    <Layout.Header
-      className={classNames('vb__layout__header', {
-        vb__layout__fixedHeader: isTopbarFixed,
-        vb__layout__headerGray: isGrayTopbar,
-        vb__layout__separatedHeader: isTopbarSeparated
-      })}
-    >
-      {c}
-    </Layout.Header>
-  )
+  // const TopbarWrapper = ({ children: c }) => (
+  //   <Layout.Header
+  //     className={classNames('vb__layout__header', {
+  //       vb__layout__fixedHeader: isTopbarFixed,
+  //       vb__layout__headerGray: isGrayTopbar,
+  //       vb__layout__separatedHeader: isTopbarSeparated,
+  //     })}
+  //   >
+  //     {c}
+  //   </Layout.Header>
+  // )
 
   return (
     <div
       className={classNames({
-        vb__layout__grayBackground: isGrayBackground
+        vb__layout__grayBackground: isGrayBackground,
       })}
     >
       <Layout
@@ -119,25 +120,25 @@ const MainLayout = ({
           vb__layout__appMaxWidth: isAppMaxWidth,
           vb__layout__squaredBorders: isSquaredBorders,
           vb__layout__cardsShadow: isCardShadow,
-          vb__layout__borderless: isBorderless
+          vb__layout__borderless: isBorderless,
         })}
       >
         {/* <Tutorial /> */}
         <Variants />
-        {/* <Sidebar /> */}
-        {/* <SupportChat /> */}
-        {layoutMenu === 'classic' && <MenuClassic />}
-        {layoutMenu === 'flyout' && <MenuFlyout />}
-        {layoutMenu === 'simply' && <MenuSimply />}
+        {<MenuFlyout />}
+        {/* {layoutMenu === 'classic' && <MenuFlyout />} */}
+        {/* {layoutMenu === 'flyout' && <MenuFlyout />} */}
+        {/* {layoutMenu === 'simply' && <MenuFlyout />} */}
         <Layout>
           {/* {layoutTopbar === 'v1' && (
             <TopbarWrapper>
               <TopBar />
             </TopbarWrapper>
           )} */}
-          {layoutBreadcrumbs === 'v1' && <Breadcrumbs />}
-          {layoutBreadcrumbs === 'v2' && <Breadcrumbs2 />}
-          <Layout.Content className='vb__layout__content'>{children}</Layout.Content>
+          {/* {layoutBreadcrumbs === 'v1' && <Breadcrumbs />} */}
+          {/* {layoutBreadcrumbs === 'v2' && <Breadcrumbs2 />} */}
+          {<Breadcrumbs2 />}
+          <Layout.Content className="vb__layout__content">{children}</Layout.Content>
           {layoutFooter === 'v1' && (
             <Layout.Footer>
               <Footer />
@@ -148,11 +149,7 @@ const MainLayout = ({
               <Footer2 />
             </Layout.Footer>
           )}
-          {layoutFooter === 'v3' && (
-            <Layout.Footer>
-              {/* <Footer3 /> */}
-            </Layout.Footer>
-          )}
+          {layoutFooter === 'v3' && <Layout.Footer>{/* <Footer3 /> */}</Layout.Footer>}
           {layoutFooter === 'v4' && (
             <Layout.Footer>
               <Footer4 />
