@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useRef } from 'react'
-import RecentAlert from './Charts/recentAlert'
-import BlockStatus from './Charts/blockStatus'
-import BlockAlertStatus from './Charts/blockAlertStatus'
-import ChartViewer from './Charts/blockStatus/info'
+// import RecentAlert from './Charts/recentAlert'
+// import BlockStatus from './Charts/blockStatus'
+// import BlockAlertStatus from './Charts/blockAlertStatus'
+// import ChartViewer from './Charts/blockStatus/info'
 import TitleIcon from './titleIcon'
 
 // import Donut from './dounut'

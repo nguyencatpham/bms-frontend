@@ -96,11 +96,11 @@ const routes = [
     Component: lazy(() => import('pages/event')),
     exact: true
   },
-  {
-    path: '/block-info',
-    Component: lazy(() => import('pages/dashboard/home/Charts/blockStatus/info')),
-    exact: true
-  },
+  // {
+  //   path: '/block-info',
+  //   Component: lazy(() => import('pages/dashboard/home/Charts/blockStatus/info')),
+  //   exact: true
+  // },
   {
     path: '/logout',
     Component: lazy(() => import('pages/logout')),
