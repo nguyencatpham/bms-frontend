@@ -16,12 +16,12 @@ export default async function getMenuData () {
       url: '/devices',
       icon: 'fe fe-airplay'
     },
-    {
-      title: 'Thông báo',
-      key: '__event',
-      url: '/events',
-      icon: 'fe fe-alert-circle'
-    },
+    // {
+    //   title: 'Thông báo',
+    //   key: '__event',
+    //   url: '/events',
+    //   icon: 'fe fe-alert-circle'
+    // },
     {
       title: 'Quản trị viên',
         key: '__user',

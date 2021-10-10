@@ -56,7 +56,7 @@ const BlockModal = (props, ref) => {
     <>
       <Modal
         className="BlockModal"
-        width={1000}
+        width={1200}
         title={null}
         visible={isModalVisible}
         closable={false}

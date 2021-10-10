@@ -132,10 +132,11 @@ const ChartPage = ({ series, labels }) => {
   return (
     <div className="chart-page">
       <Chart
+        width="100%"
         options={config.options}
         series={config.series}
         type="bar"
-        height="390"
+        height="360"
         // style={{ minHeight: '400px' }}
       />
     </div>

@@ -303,9 +303,12 @@ const MenuLeft = ({
           [style.air__menuFlyout__gray]:
             settings.flyoutMenuColor === 'gray' && settings.flyoutMenuType !== 'default',
         })}
-        style={menuWidthStyle}
+        // style={menuWidthStyle}
       >
-        <div className={style.air__menuLeft__outer} style={menuWidthStyle}>
+        <div
+        className={style.air__menuLeft__outer}
+        // style={menuWidthStyle}
+        >
           <a
             href="#"
             className={style.air__menuLeft__mobileToggleButton}
@@ -339,83 +342,10 @@ const MenuLeft = ({
               <div className={style.air__menuLeft__logo__descr}>Hệ thống giám sát ắc quy</div>
             </div>
           </div>
-          {/* <div
-            style={{
-              display: 'flex',
-              alignItems: 'center',
-              gap: '0.6rem',
-              margin: '1rem',
-              marginBottom: '2rem',
-              paddingTop: '0.5rem',
-              paddingBottom: '1.9rem',
-              borderBottom: '1px solid grey',
-            }}
-          >
-            <div style={{opacity: !settings.isMenuCollapsed ? '1' : '0'}}>
-              <svg
-                width="40"
-                height="40"
-                viewBox="0 0 40 40"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <rect width="40" height="40" rx="8" fill="#017EFA" />
-                <path
-                  d="M20 10C14.486 10 10 14.486 10 20C10 25.514 14.486 30 20 30C25.514 30 30 25.514 30 20C30 14.486 25.514 10 20 10ZM20 28C15.589 28 12 24.411 12 20C12 15.589 15.589 12 20 12C24.411 12 28 15.589 28 20C28 24.411 24.411 28 20 28Z"
-                  fill="white"
-                />
-                <path d="M21 14L15 21H19V26L25 19H21V14Z" fill="white" />
-              </svg>
-            </div> */}
-          {/* {!settings.isMenuCollapsed ? (
-              <div
-                style={{
-                  display: 'flex',
-                  flexDirection: 'column',
-                  justifyContent: 'space-between',
-                }}
-              >
-                <div style={{ fontSize: '1.4rem' }} className="text-light">
-                  Bình Sơn
-                </div>
-                <div
-                  style={{
-                    fontSize: '0.9rem',
-                    fontWeight: 'lighter',
-                    opacity: '0.8',
-                    color: '#fff',
-                  }}
-                >
-                  Hệ thống giám sát ắc quy
-                </div>
-              </div>
-            ) : null} */}
-          {/* </div> */}
-          {/* <a href="#" onClick={(e) => e.preventDefault()} className={style.air__menuLeft__user}>
-            <Avatar
-              className={style.air__menuLeft__user__avatar}
-              shape="square"
-              size="large"
-              icon={<UserOutlined />}
-              src="/resources/images/avatars/1.jpg"
-            />
-            <div className={style.air__menuLeft__user__name}>{user.name || user.username}</div>
-            <div className={style.air__menuLeft__user__role}>{ROLE[user.role]}</div>
-          </a> */}
+          
           <PerfectScrollbar>
             <div id="menu-left-container" className={style.air__menuLeft__container}>
               <ul style={{ padding: 0, display: 'flex', flexDirection: 'column' }}>{items}</ul>
-              {/* <div className={style.air__menuLeft__banner}> */}
-              {/* <p>Full access, lifetime updates, github issues, and extended licenses!</p> */}
-              {/* <a
-                  href='https://themeforest.net/item/air-ui-multi-concept-admin-template/24434456'
-                  target='_blank'
-                  rel='noopener noreferrer'
-                  className='btn btn-white text-center d-block'
-                >
-                  Get a license
-                </a> */}
-              {/* </div> */}
             </div>
           </PerfectScrollbar>
         </div>

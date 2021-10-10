@@ -113,7 +113,8 @@ const ChartPage = ({ series, labels }) => {
         options={config.options}
         series={config.series}
         type="donut"
-        height="300"
+        // width="100%"
+        height="310"
         // style={{ minHeight: '400px' }}
       />
     </div>

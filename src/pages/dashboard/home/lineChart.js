@@ -111,7 +111,7 @@ const ChartPage = ({ series, labels }) => {
         options={config.options}
         series={config.series}
         type="line"
-        height="425"
+        height="455"
         // style={{ minHeight: '400px' }}
       />
     </div>

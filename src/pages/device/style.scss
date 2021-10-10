@@ -1,94 +1,28 @@
-// .color-grey {
-//     background-color: #bfbfbf;
-//     td {
-//         background-color: #bfbfbf !important;
-//     }
-// }
-// .text-capital{
-//     text-transform: capitalize;
-// }
-// .break-word {
-//     max-width: 100px;
-//     word-break: break-all;
-// }
-// .display-grid {
-//     display: grid!important;
-//     grid-template-columns: 30% 1fr;
-// }
-// .profile-general::before{
-//     content: "";
-//     position: absolute;
-//     top: 0;
-//     left: 0;
-//     right: 0;
-//     height: 4px;
-//     background-color: #e4e9f0;
-//     overflow: hidden;
-//     border-top-left-radius: 6px;
-//     border-top-right-radius: 6px;
-//     // .card-top-primary:before, .card-top-secondary:before {
-//       background-color: var(--vb-color-primary)!important;
-//     // }
-//   }
-// .device-page{
-//     .square {
-//         position: relative;
-//         padding-left: 2rem;
-//         font-size: 1.13rem;
-//     }
-//     .square::before {
-//         position: absolute;
-//         top: 0;
-//         left: 10px;
-//         content: '';
-//         display: block;
-//         float: left;
-//         height: 1rem;
-//         width: 1rem;
-//         background: #389e0d;
-//         border-radius: 4px;
-//     }
-//     .square-online::before{
-//         background: #389e0d;
-//     }
-//     .square-offline::before{
-//         background: #8c8c8c;
-//     }
-// }
-
-// .device-page .custom-table {
-//     thead th {
-//         white-space: nowrap;
-
-//         &:last-child {
-//             width: 1%;
-//         }
-//     }
-
-//     tbody td {
-//         white-space: nowrap;
-//     }
-// }
-
-// .custom-card-header {
-//     background-color: #0D0C1C !important;
-//     color: #ffffff;
-//     border-radius: calc(0.25rem - 1px) calc(0.25rem - 1px) 0 0;
-//     padding: 1rem 2rem;
-// }
-
-// .custom-ant-dashboard {
-//     .ant-modal-body {
-//       padding: 0 !important;
-//     }
-
-//     .ant-modal-header {
-//       background-color: #0D0C1C !important;
-//       border-radius: calc(0.25rem - 1px) calc(0.25rem - 1px) 0 0;
-//     }
-// }
-
 .DevicePage {
+  box-shadow: 0px 5px 10px 0px #00000017;
+  background-color: #fff;
+
+  thead th {
+    background-color: #0B1C4E !important;
+    color: #f1f2f3 !important;
+    white-space: nowrap;
+    // width: 1%;
+  }
+
+  thead th:last-child {
+    width: 1%;
+  }
+
+  // tbody td {
+  //   white-space: nowrap;
+  // }
+
+
+
+  .ant-checkbox {
+    margin-left: 1rem;
+  }
+
   .ant-checkbox-inner {
     border-radius: 2.5px;
 

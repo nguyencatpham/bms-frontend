@@ -214,161 +214,159 @@ const DefaultPage = ({ total, stats, systems, alertCount, alertCountBySystem, di
 
   return (
     <>
-      <div className="dashboard-page">
-        <Helmet title="Hệ thống quản lý ắc quy" />
+      <Helmet title="Hệ thống quản lý ắc quy" />
 
-        {/* stats % chart */}
-        <div className="main">
-          <div className="left-side">
+      {/* stats % chart */}
+      <div className="dashboard-page page">
+        <div className="left-side">
+          <div>
             <div>
-              <div>
-                <Form
-                  className="select-bar"
-                  // onFinish={onFinish}
-                >
-                  <div className="form-item" name="gender" rules={[{ required: true }]}>
-                    <select
-                      style={{ position: 'relative' }}
-                      className="select"
-                      placeholder="Select a option and change input text above"
-                      // onChange={onGenderChange}
-                      // allowClear
-                    >
-                      <option value="1">System 1</option>
-                      <option value="2">System 2</option>
-                      <option value="3">System 3</option>
-                    </select>
-                    <PlusCircleOutlinedIcon />
-                  </div>
-                  <div className="form-item" name="gender" rules={[{ required: true }]}>
-                    <select
-                      className="select"
-                      placeholder="Select a option and change input text above"
-                      // onChange={onGenderChange}
-                      // allowClear
-                    >
-                      <option value="1">Unit 1</option>
-                      <option value="2">Unit 2</option>
-                      <option value="3">Unit 3</option>
-                    </select>
-                    <PlusCircleOutlinedIcon />
-                  </div>
-                  <div className="form-item" name="gender" rules={[{ required: true }]}>
-                    <select
-                      className="select"
-                      placeholder="Select a option and change input text above"
-                      // onChange={onGenderChange}
-                      // allowClear
-                    >
-                      <option value="1">Block 1</option>
-                      <option value="2">Block 2</option>
-                      <option value="3">Block 3</option>
-                    </select>
-                    <PlusCircleOutlinedIcon />
-                  </div>
-                </Form>
-              </div>
-              <div className="first-two-charts">
-                <div className="custom-card custom-card--warning">
-                  <div className="custom-card__header">
-                    <TitleIcon />
-                    <h2 className="custom-card__title">Cảnh báo</h2>
-                  </div>
-                  <div className="custom-card__body">
-                    <VerticalBar
-                      series={verticalBarSeries}
-                      // labels={['Bình thường', 'Cảnh báo', 'Báo động']}
-                    />
-                  </div>
+              <Form
+                className="select-bar"
+                // onFinish={onFinish}
+              >
+                <div className="form-item" name="gender" rules={[{ required: true }]}>
+                  <select
+                    style={{ position: 'relative' }}
+                    className="select"
+                    placeholder="Select a option and change input text above"
+                    // onChange={onGenderChange}
+                    // allowClear
+                  >
+                    <option value="1">System 1</option>
+                    <option value="2">System 2</option>
+                    <option value="3">System 3</option>
+                  </select>
+                  <PlusCircleOutlinedIcon />
                 </div>
-                <div className="custom-card custom-card--status">
-                  <div className="custom-card__header">
-                    <TitleIcon />
-                    <h2 className="custom-card__title">Tình trạng</h2>
-                  </div>
-                  <div className="custom-card__body">
-                    <Donut
-
-                    // series={[healthy, unhealthy]}
-                    // labels={['Đang hoạt động', 'Mất kết nối']}
-                    />
-                  </div>
+                <div className="form-item" name="gender" rules={[{ required: true }]}>
+                  <select
+                    className="select"
+                    placeholder="Select a option and change input text above"
+                    // onChange={onGenderChange}
+                    // allowClear
+                  >
+                    <option value="1">Unit 1</option>
+                    <option value="2">Unit 2</option>
+                    <option value="3">Unit 3</option>
+                  </select>
+                  <PlusCircleOutlinedIcon />
                 </div>
-              </div>
+                <div className="form-item" name="gender" rules={[{ required: true }]}>
+                  <select
+                    className="select"
+                    placeholder="Select a option and change input text above"
+                    // onChange={onGenderChange}
+                    // allowClear
+                  >
+                    <option value="1">Block 1</option>
+                    <option value="2">Block 2</option>
+                    <option value="3">Block 3</option>
+                  </select>
+                  <PlusCircleOutlinedIcon />
+                </div>
+              </Form>
             </div>
-
-            <div>
-              <div className="custom-card custom-card--operate">
-                <div className="custom-card__header justify-content-between">
-                  <div className="d-flex align-items-center">
-                    <TitleIcon />
-                    <h2 className="custom-card__title">Vận hành</h2>
-                  </div>
-                  <DatePicker
-                    placeholder="Chọn thời gian"
-                    format="DD/MM/YYYY"
-                    // onChange={onChange}
-                  />
+            <div className="first-two-charts">
+              <div className="custom-card custom-card--warning">
+                <div className="custom-card__header">
+                  <TitleIcon />
+                  <h2 className="custom-card__title">Cảnh báo</h2>
                 </div>
                 <div className="custom-card__body">
-                  <LineChart series={lineChartSeries} />
+                  <VerticalBar
+                    series={verticalBarSeries}
+                    // labels={['Bình thường', 'Cảnh báo', 'Báo động']}
+                  />
+                </div>
+              </div>
+              <div className="custom-card custom-card--status">
+                <div className="custom-card__header">
+                  <TitleIcon />
+                  <h2 className="custom-card__title">Tình trạng</h2>
+                </div>
+                <div className="custom-card__body">
+                  <Donut
+
+                  // series={[healthy, unhealthy]}
+                  // labels={['Đang hoạt động', 'Mất kết nối']}
+                  />
                 </div>
               </div>
             </div>
           </div>
-          <div className="right-side">
-            {/* <div> */}
-            <div className="custom-card collected-data">
-              <div className="custom-card__header">
-                <TitleIcon />
-                <h2 className="custom-card__title">Số liệu thu thập</h2>
+
+          <div>
+            <div className="custom-card custom-card--operate">
+              <div className="custom-card__header justify-content-between">
+                <div className="d-flex align-items-center">
+                  <TitleIcon />
+                  <h2 className="custom-card__title">Vận hành</h2>
+                </div>
+                <DatePicker
+                  placeholder="Chọn thời gian"
+                  format="DD/MM/YYYY"
+                  // onChange={onChange}
+                />
               </div>
-              <BlockModal ref={blockModalRef} />
               <div className="custom-card__body">
-                {[...verticalBarSeries, normalBlock].map((box) => {
-                  const randomNumBlocks = Math.ceil(Math.random() * 15)
-                  return (
-                    <div className="block-box">
-                      <div className="block-box__head">
-                        <div
-                          className="block-box__circle"
-                          style={{ backgroundColor: box.color }}
-                        ></div>
-                        <div className="block-box__title">{box.name}</div>
-                      </div>
-                      <div className="block-box__body">
-                        {[...new Array(randomNumBlocks)].map((block, index) => (
-                          <div
-                            key={index}
-                            onClick={() => handleClickBlock(index + 1)}
-                            className="block"
-                            style={{ backgroundColor: box.color }}
-                          >
-                            {index + 1}
-                          </div>
-                        ))}
-                      </div>
-                      <div className="block-box__foot">
-                        <div>
-                          <Pagination
-                            size="small"
-                            current={3}
-                            defaultCurrent={1}
-                            total={300}
-                            showSizeChanger={false}
-                            showQuickJumper={false}
-                          />
-                        </div>
-                      </div>
-                    </div>
-                  )
-                })}
+                <LineChart series={lineChartSeries} />
               </div>
             </div>
           </div>
         </div>
-        {/* </div> */}
+        <div className="right-side">
+          {/* <div> */}
+          <div className="custom-card collected-data">
+            <div className="custom-card__header">
+              <TitleIcon />
+              <h2 className="custom-card__title">Số liệu thu thập</h2>
+            </div>
+            <BlockModal ref={blockModalRef} />
+            <div className="custom-card__body">
+              {[...verticalBarSeries, normalBlock].map((box) => {
+                const randomNumBlocks = Math.ceil(Math.random() * 15)
+                return (
+                  <div className="block-box">
+                    <div className="block-box__head">
+                      <div
+                        className="block-box__circle"
+                        style={{ backgroundColor: box.color }}
+                      ></div>
+                      <div className="block-box__title">{box.name}</div>
+                    </div>
+                    <div className="block-box__body">
+                      {[...new Array(randomNumBlocks)].map((block, index) => (
+                        <div
+                          key={index}
+                          onClick={() => handleClickBlock(index + 1)}
+                          className="block"
+                          style={{ backgroundColor: box.color }}
+                        >
+                          {index + 1}
+                        </div>
+                      ))}
+                    </div>
+                    <div className="block-box__foot">
+                      <div>
+                        <Pagination
+                          size="small"
+                          current={3}
+                          defaultCurrent={1}
+                          total={300}
+                          showSizeChanger={false}
+                          showQuickJumper={false}
+                        />
+                      </div>
+                    </div>
+                  </div>
+                )
+              })}
+            </div>
+          </div>
+        </div>
       </div>
+      {/* </div> */}
     </>
   )
 }

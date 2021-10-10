@@ -12,6 +12,8 @@ const ChartPage = ({ series, labels }) => {
         toolbar: {
           show: false,
         },
+        offsetX: 0,
+        offsetY: 0,
       },
       dataLabels: {
         enabled: false,
@@ -24,10 +26,17 @@ const ChartPage = ({ series, labels }) => {
       },
       colors: series.map((s) => s.color),
       legend: {
-        show: false,
-        // tooltipHoverFormatter: function (val, opts) {
-        //   return val + ' - ' + opts.w.globals.series[opts.seriesIndex][opts.dataPointIndex] + ''
-        // },
+        show: true,
+        position: 'bottom',
+        offsetX: -650,
+        offsetY: 5,
+        itemMargin: {
+          horizontal: 17,
+          vertical: 0,
+        },
+        formatter: function (val, opts) {
+          return val[0]
+        },
       },
       markers: {
         size: 5,
@@ -51,6 +60,73 @@ const ChartPage = ({ series, labels }) => {
           '16:00',
         ],
       },
+      yaxis: [
+        {
+          axisTicks: {
+            show: true,
+          },
+          axisBorder: {
+            show: true,
+            color: '#FF1654',
+          },
+          labels: {
+            show: true,
+            offsetX: -20,
+            offsetY: 0,
+            rotate: 0,
+          },
+          title: {
+            text: 'V',
+            rotate: 0,
+            offsetX: 39,
+            offsetY: -175,
+          },
+        },
+        {
+          opposite: true,
+          axisTicks: {
+            show: true,
+          },
+          axisBorder: {
+            show: true,
+            color: '#247BA0',
+          },
+          labels: {
+            show: true,
+            offsetX: -20,
+            offsetY: 0,
+            rotate: 0,
+          },
+          title: {
+            text: 'mΩ',
+            rotate: 0,
+            offsetX: -39,
+            offsetY: -175,
+          },
+        },
+        {
+          opposite: true,
+          axisTicks: {
+            show: true,
+          },
+          axisBorder: {
+            show: true,
+            color: '#247BA0',
+          },
+          labels: {
+            show: true,
+            offsetX: -10,
+            offsetY: 0,
+            rotate: 0,
+          },
+          title: {
+            text: '°C',
+            rotate: 0,
+            offsetX: -39,
+            offsetY: -175,
+          },
+        },
+      ],
       tooltip: {
         theme: 'dark',
         y: [
@@ -87,7 +163,14 @@ const ChartPage = ({ series, labels }) => {
           },
         ],
       },
+
       grid: {
+        padding: {
+          top: 15,
+          right: 0,
+          bottom: 10,
+          left: 20,
+        },
         borderColor: '#eee',
         // borderColor: '#f1f1f1',
         strokeDashArray: 5,
