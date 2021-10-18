@@ -3,7 +3,9 @@ import Chart from 'react-apexcharts'
 
 const ChartPage = ({ series, labels }) => {
   const config = {
-    series,
+    series: [{
+      data: [21, 22, 10, 28]
+    }],
     options: {
       dataLabels: {
         enabled: true,
@@ -30,8 +32,10 @@ const ChartPage = ({ series, labels }) => {
       plotOptions: {
         bar: {
           borderRadius: 5,
-          columnWidth: '100%',
+          columnWidth: '50%',
           horizontal: false,
+          distributed: true,
+
           // barWidth: '10%',
 
           // vertical: true,
@@ -55,7 +59,7 @@ const ChartPage = ({ series, labels }) => {
       },
       stroke: {
         colors: ['transparent'],
-        width: 37,
+        width: 0,
       },
 
       xaxis: {
@@ -70,7 +74,7 @@ const ChartPage = ({ series, labels }) => {
         },
         labels: {
           show: true,
-          offsetX: -6,
+          // offsetX: -6,
         },
       },
       yaxis: {
@@ -91,6 +95,9 @@ const ChartPage = ({ series, labels }) => {
           formatter: function (val) {
             return val
           },
+          title: {
+            formatter: () => 'Value: ',
+        },
         },
       },
       fill: {
@@ -111,11 +118,15 @@ const ChartPage = ({ series, labels }) => {
         },
         formatter: function (seriesName, opts) {
           // return seriesName + '2121'
-          // console.log(opts.w.globals);
+          // console.log(opts.seriesIndex);
+          const arr = opts.w.globals.series[0];
+          const sum = arr.reduce((a, b) => a + b, 0)
+          const one = arr[opts.seriesIndex];
+          const percent = ((one / sum) * 100).toFixed(1);
           return (
             seriesName +
             ':  ' +
-            `${(opts.w.globals.seriesPercent[opts.seriesIndex] * 1).toFixed(1)}` +
+            percent +
             '%'
           )
         },

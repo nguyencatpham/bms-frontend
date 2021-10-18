@@ -4,9 +4,10 @@ import { connect } from 'react-redux'
 import { reduce } from 'lodash'
 import { history } from 'index'
 import styles from './style.module.scss'
-import { Breadcrumb, Avatar, Menu, Dropdown } from 'antd'
+import { Breadcrumb, Avatar, Menu, Dropdown, Button } from 'antd'
 import { DownOutlined } from '@ant-design/icons'
 import './style.scss'
+import MenuIcon from '@ant-design/icons/MenuOutlined'
 
 const menu = (
   <Menu>
@@ -66,21 +67,27 @@ const Breadcrumbs2 = (props) => {
     const paths = urlPath.split('/')
     const [_, first, second, third] = paths
     const firstMenu = menuData.find((i) => i.url.includes(first))
-    if (!firstMenu) return undefined;
+    if (!firstMenu) return []
     const firstPart = firstMenu.title
+    let secondPart, thirdPart;
     if (second) {
-      console.log('there is another')
+      if (second === 'create') {
+        secondPart = 'Thêm'
+      }
     }
 
-    return firstPart;
+    return [firstPart, secondPart, thirdPart];
   }
 
-  const breadcrumb = getBreadcrumb(pathname)
+  const [firstPart, secondPart, thirdPart] = getBreadcrumb(pathname)
 
   return (
     <div className="Breadcrumb">
       <div className="group-titles">
-        <div className="title">{breadcrumb}</div>
+        <Button className="toggle-btn" onClick={() => props.setMobileSidebarVisible(!props.visible)}>
+          <MenuIcon />
+        </Button>
+        <div className="title">{firstPart}{secondPart ? ` / ${secondPart}` : ''}{thirdPart ? ` / ${thirdPart}` : ''}</div>
       </div>
       <div className="menu-profile">
         <Avatar

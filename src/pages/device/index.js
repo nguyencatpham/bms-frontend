@@ -1,99 +1,242 @@
-import React from 'react'
-import { Table, Button, Checkbox } from 'antd'
+import React, { useState, useEffect } from 'react'
+import { Avatar, Input, Table, Button, Form } from 'antd'
+import { connect } from 'react-redux'
+import { UserOutlined, CloseOutlined } from '@ant-design/icons'
+import { withRouter, Link } from 'react-router-dom'
+import { Helmet } from 'react-helmet'
+import { TIME_FORMAT } from 'constant'
+import moment from 'moment'
+import PreConfirm from 'components/pre-confirm'
+import { get } from 'lodash'
 import './style.scss'
 
-import { Input, Space } from 'antd'
-import { AudioOutlined, EllipsisOutlined } from '@ant-design/icons'
-
+const { Item } = Form
 const { Search } = Input
 
-const suffix = (
-  <AudioOutlined
-    style={{
-      fontSize: 16,
-      color: '#1890ff',
-    }}
-  />
-)
+const mapStateToProps = ({ authDevice, user, dispatch }) => {
+  let { list, loading, total, preConfirm } = authDevice
+  const { list: users, username, email } = user
+  const usernameOrEmail = username || email
+  if (typeof total === 'object') {
+    total = total.count
+  }
 
-const onSearch = (value) => console.log(value)
+  return { list, loading, total, users, preConfirm, usernameOrEmail, dispatch }
+}
 
-const columns = [
-  {
-    title: 'Hệ thống',
-    dataIndex: 'system',
-  },
-  {
-    title: 'MAC Address',
-    dataIndex: 'mac',
-  },
-  {
-    title: 'Cập nhật lần cuối',
-    dataIndex: 'updated',
-  },
-  {
-    title: (
-      <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
-        <Search placeholder="Tìm" onSearch={onSearch} style={{ width: '240px' }} />
-        <Button style={{ marginLeft: '1rem' }} type="primary">
-          Thêm
-        </Button>
-      </div>
-    ),
-    dataIndex: 'options',
-    responsive: ['md'],
-  },
-]
-
-const data = []
-for (let i = 0; i < 146; i++) {
-  data.push({
-    key: i,
-    system: `Aeron Buxton ${i}`,
-    mac: 'B8-27-EB-2B-FB-21',
-    updated: `23/09/2021 19:16`,
-    options: <div style={{display: 'flex', justifyContent: 'flex-end'}}>
-      <EllipsisOutlined />
-    </div>
+const DefaultPage = ({ list, loading, total, preConfirm, usernameOrEmail, dispatch }) => {
+  const [form] = Form.useForm()
+  const [modal, setModal] = useState()
+  const [name, setName] = useState()
+  const [roles] = useState([])
+  const [pagination, setPagination] = useState({
+    current: 1,
+    pageSize: 10,
+    total: 0,
+    showTotal: (total, range) => `${range[0]}-${range[1]} trên ${total} thiết bị`,
   })
-}
+  const [payload, setPayload] = useState({
+    filter: JSON.stringify({
+      include: [
+        {
+          relation: 'devices',
+          scope: {
+            include: [
+              {
+                relation: 'systems',
+                scope: {
+                  include: [
+                    {
+                      relation: 'blocks',
+                    },
+                  ],
+                },
+              },
+            ],
+          },
+        },
+      ],
+      skip: (pagination.current - 1) * pagination.pageSize,
+      limit: pagination.pageSize,
+      order: ['created DESC'],
+    }),
+  })
 
-class DevicePage extends React.Component {
-  state = {
-    selectedRowKeys: [], // Check here to configure the default column
-    loading: false,
+  const onSearch = (value) => console.log(value)
+  const columns = [
+    {
+      title: 'Hệ thống',
+      dataIndex: 'name',
+      key: 'name',
+      render: (text, item) => {
+        const device = get(item.devices, ['0'], {})
+        const name = get(device.systems, ['0', 'name'], 'Chưa kích hoạt')
+
+        if (device.systems) {
+          return (
+            <Link className="break-word" to={`/devices/${item.uuid}`}>
+              {name}
+            </Link>
+          )
+        } else {
+          return <span>{name}</span>
+        }
+      },
+    },
+    {
+      title: 'Mã thiết bị',
+      dataIndex: 'macAddress',
+      key: 'macAddress',
+    },
+    // {
+    //   title: 'Trạng thái',
+    //   dataIndex: 'online',
+    //   key: 'online',
+    //   render: (text, item) => {
+    //     const online = get(item.devices, ['0', 'online'])
+    //     return <div className={`square ${online ? 'square-online' : 'square-offline'}`} />
+    //   },
+    // },
+    {
+      title: 'Cập nhật lân cuối',
+      dataIndex: 'lastUpdateStatus',
+      key: 'lastUpdateStatus',
+      render: (text, item) => {
+        const lastUpdateStatus = get(item.devices, ['0', 'lastUpdateStatus'])
+        return (
+          <span className="break-word ">
+            {lastUpdateStatus ? moment(text).format(TIME_FORMAT) : '---'}
+          </span>
+        )
+      },
+    },
+    {
+      title: (
+        <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
+          <Search placeholder="Tìm" onSearch={onSearch} style={{ width: '240px' }} />
+          <Button style={{ marginLeft: '1rem' }} type="primary">
+            <Link className="break-word" to={`/devices/create`}>
+              Thêm
+            </Link>
+          </Button>
+        </div>
+      ),
+      dataIndex: 'options',
+      responsive: ['md'],
+    },
+  ]
+
+  const onTableChange = (pagination) => {
+    setPagination(pagination)
+    const { filter } = payload
+    const _filter = JSON.parse(filter)
+    _filter.skip = (pagination.current - 1) * pagination.pageSize
+    _filter.limit = pagination.pageSize
+    setPayload({ ...payload, filter: JSON.stringify(_filter) })
   }
 
-  start = () => {
-    this.setState({ loading: true })
-    // ajax request after empty completing
-    setTimeout(() => {
-      this.setState({
-        selectedRowKeys: [],
-        loading: false,
-      })
-    }, 1000)
+  const onDelete = ({ password }) => {
+    dispatch({
+      type: 'authDevice/DELETE',
+      payload: {
+        id: modal,
+        body: {
+          username: usernameOrEmail,
+          password,
+        },
+      },
+    })
+    setModal(false)
   }
-
-  onSelectChange = (selectedRowKeys) => {
-    console.log('selectedRowKeys changed: ', selectedRowKeys)
-    this.setState({ selectedRowKeys })
-  }
-
-  render() {
-    const { loading, selectedRowKeys } = this.state
-    const rowSelection = {
-      type: 'checkbox',
-      // selectedRowKeys,
-      // onChange: this.onSelectChange,
+  useEffect(() => {
+    if (total !== pagination.total) {
+      setPagination({ ...pagination, total })
     }
-    const hasSelected = selectedRowKeys.length > 0
-    return (
-      <div className="DevicePage page">
-        <Table rowSelection={rowSelection} columns={columns} dataSource={data} />
-      </div>
-    )
-  }
-}
+  }, [total, pagination, setPagination])
+  useEffect(() => {
+    dispatch({
+      type: 'authDevice/COUNT',
+      payload: { where: (JSON.parse(payload.filter) || {}).where },
+    })
+    dispatch({
+      type: 'authDevice/LIST',
+      payload,
+    })
+  }, [dispatch, payload])
 
-export default DevicePage
+  // const onSearch = (e) => {
+  //   if (e.key && e.key !== 'Enter') {
+  //     return
+  //   }
+  //   const and = []
+  //   if (name) {
+  //     and.push({
+  //       or: [
+  //         { name: { like: `%${name}%` } },
+  //         { macAddress: { like: `%${name}%` } },
+  //         { model: { like: `%${name}%` } },
+  //       ],
+  //     })
+  //   }
+  //   if (roles.length) {
+  //     and.push({ role: { inq: roles } })
+  //   }
+  //   setPayload({
+  //     ...payload,
+  //     filter: JSON.stringify({
+  //       include: [
+  //         {
+  //           relation: 'devices',
+  //           scope: {
+  //             include: [
+  //               {
+  //                 relation: 'systems',
+  //                 scope: {
+  //                   include: [
+  //                     {
+  //                       relation: 'blocks',
+  //                     },
+  //                   ],
+  //                 },
+  //               },
+  //             ],
+  //           },
+  //         },
+  //       ],
+  //       where: { and },
+  //       skip: 0,
+  //       limit: pagination.pageSize,
+  //       order: ['created DESC'],
+  //     }),
+  //   })
+  // }
+
+  const rowSelection = {
+    type: 'checkbox',
+    // selectedRowKeys,
+    // onChange: this.onSelectChange,
+  }
+
+  console.log(list)
+
+  return (
+    <>
+      <div className="DevicePage page">
+        <Helmet title="Quản lý thiết bị" />
+        <Table
+          rowSelection={rowSelection}
+          className="custom-table table-responsive"
+          rowKey={(x) => x.id}
+          dataSource={list}
+          pagination={{ ...pagination, showSizeChanger: true }}
+          loading={loading}
+          columns={columns}
+          onChange={onTableChange}
+          rowClassName={(record) => (record.suspend ? 'color-grey' : '')}
+          ellipsis
+        />
+      </div>
+    </>
+  )
+}
+export default withRouter(connect(mapStateToProps)(DefaultPage))

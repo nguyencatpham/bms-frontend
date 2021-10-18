@@ -62,34 +62,14 @@ const ChartPage = ({ series, labels }) => {
       },
       yaxis: [
         {
-          axisTicks: {
-            show: true,
-          },
-          axisBorder: {
-            show: true,
-            color: '#FF1654',
-          },
-          labels: {
-            show: true,
-            offsetX: -20,
-            offsetY: 0,
-            rotate: 0,
-          },
-          title: {
-            text: 'V',
-            rotate: 0,
-            offsetX: 39,
-            offsetY: -175,
-          },
-        },
-        {
+          seriesName: 'RUpper',
           opposite: true,
           axisTicks: {
             show: true,
           },
           axisBorder: {
             show: true,
-            color: '#247BA0',
+            color: '#000',
           },
           labels: {
             show: true,
@@ -105,13 +85,60 @@ const ChartPage = ({ series, labels }) => {
           },
         },
         {
+          seriesName: 'VUpper',
+          axisTicks: {
+            show: true,
+          },
+          axisBorder: {
+            show: true,
+            color: '#000',
+          },
+          labels: {
+            show: true,
+            offsetX: 0,
+            offsetY: 0,
+            rotate: 0,
+          },
+          title: {
+            text: 'V',
+            rotate: 0,
+            offsetX: 39,
+            offsetY: -175,
+          },
+        },
+        {
+          show: false,
+          seriesName: 'VUpper',
+          // axisTicks: {
+          //   show: true,
+          // },
+          // axisBorder: {
+          //   show: true,
+          //   color: '#000',
+          // },
+          // labels: {
+          //   show: true,
+          //   offsetX: 0,
+          //   offsetY: 0,
+          //   rotate: 0,
+          // },
+          // title: {
+          //   text: 'V2',
+          //   rotate: 0,
+          //   offsetX: 39,
+          //   offsetY: -175,
+          // },
+        },
+        
+        {
+          seriesName: 'TUpper',
           opposite: true,
           axisTicks: {
             show: true,
           },
           axisBorder: {
             show: true,
-            color: '#247BA0',
+            color: '#000',
           },
           labels: {
             show: true,
@@ -185,6 +212,24 @@ const ChartPage = ({ series, labels }) => {
           },
         },
       },
+      // legend: {
+      //   formatter: function (seriesName, opts) {
+      //     // return seriesName + '2121'
+      //     console.log(seriesName);
+      //     return seriesName
+      //     // const arr = opts.w.globals.series[0];
+      //     // const sum = arr.reduce((a, b) => a + b, 0)
+      //     // const one = arr[opts.seriesIndex];
+      //     // const percent = ((one / sum) * 100).toFixed(1);
+      //     // console.log(percent);
+      //     // return (
+      //     //   seriesName +
+      //     //   ':  ' +
+      //     //   percent +
+      //     //   '%'
+      //     // )
+      //   },
+      // }
     },
   }
 

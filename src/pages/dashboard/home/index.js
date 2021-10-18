@@ -17,7 +17,7 @@ import { Select, Tabs, Form, Input, Button, DatePicker, Pagination } from 'antd'
 import PlusCircleOutlinedIcon from '@ant-design/icons/PlusCircleOutlined'
 import { Helmet } from 'react-helmet'
 import './style.scss'
-import BlockModal from './blockModal'
+import CollectData from './collectData'
 
 import jQuery from 'jquery'
 // you will need the css that comes with bootstrap@3. if you are using
@@ -57,7 +57,6 @@ const mapStateToProps = ({ authDevice, user, system, dispatch }) => {
 }
 
 const DefaultPage = ({ total, stats, systems, alertCount, alertCountBySystem, dispatch }) => {
-  const blockModalRef = useRef()
   const { healthy = 0, unhealthy = 0, deployed = 0 } = stats
   const { normal = 0, warning = 0, alert = 0 } = alertCount
   const {
@@ -159,23 +158,23 @@ const DefaultPage = ({ total, stats, systems, alertCount, alertCountBySystem, di
   const verticalBarSeries = [
     {
       name: 'RUpper',
-      data: [5],
+      data: 5,
       color: '#865439',
     },
     {
       name: 'VUpper',
-      data: [4],
-      color: '#F17532',
+      data: 4,
+      color: '#FF7600',
     },
     {
-      name: 'EUpper',
-      data: [10],
-      color: '#FDEE39',
+      name: 'ELower',
+      data: 10,
+      color: '#FFF338',
     },
     {
       name: 'TUpper',
-      data: [20],
-      color: '#ED4845',
+      data: 20,
+      color: '#FF4848',
     },
   ]
 
@@ -188,28 +187,24 @@ const DefaultPage = ({ total, stats, systems, alertCount, alertCountBySystem, di
     {
       name: 'VUpper',
       data: [35, 41, 52, 42, 13, 18, 29, 37, 36, 51, 32],
-      color: '#F17532',
+      color: '#FF7600',
     },
     {
-      name: 'EUpper',
+      name: 'ELower',
       data: [45, 57, 74, 70, 75, 38, 62, 47, 40, 56, 45],
-      color: '#FDEE39',
+      color: '#FFF338',
     },
     {
       name: 'TUpper',
       data: [36, 45, 68, 61, 69, 49, 67, 48, 44, 52, 41],
-      color: '#ED4845',
+      color: '#FF4848',
     },
   ]
 
   const normalBlock = {
     name: 'Bình thường',
-    data: [20],
+    data: 20,
     color: '#017EFA',
-  }
-
-  const handleClickBlock = (block) => {
-    if (blockModalRef.current) blockModalRef.current.handleClick(block)
   }
 
   return (
@@ -316,57 +311,9 @@ const DefaultPage = ({ total, stats, systems, alertCount, alertCountBySystem, di
           </div>
         </div>
         <div className="right-side">
-          {/* <div> */}
-          <div className="custom-card collected-data">
-            <div className="custom-card__header">
-              <TitleIcon />
-              <h2 className="custom-card__title">Số liệu thu thập</h2>
-            </div>
-            <BlockModal ref={blockModalRef} />
-            <div className="custom-card__body">
-              {[...verticalBarSeries, normalBlock].map((box) => {
-                const randomNumBlocks = Math.ceil(Math.random() * 15)
-                return (
-                  <div className="block-box">
-                    <div className="block-box__head">
-                      <div
-                        className="block-box__circle"
-                        style={{ backgroundColor: box.color }}
-                      ></div>
-                      <div className="block-box__title">{box.name}</div>
-                    </div>
-                    <div className="block-box__body">
-                      {[...new Array(randomNumBlocks)].map((block, index) => (
-                        <div
-                          key={index}
-                          onClick={() => handleClickBlock(index + 1)}
-                          className="block"
-                          style={{ backgroundColor: box.color }}
-                        >
-                          {index + 1}
-                        </div>
-                      ))}
-                    </div>
-                    <div className="block-box__foot">
-                      <div>
-                        <Pagination
-                          size="small"
-                          current={3}
-                          defaultCurrent={1}
-                          total={300}
-                          showSizeChanger={false}
-                          showQuickJumper={false}
-                        />
-                      </div>
-                    </div>
-                  </div>
-                )
-              })}
-            </div>
-          </div>
+          <CollectData dataArr={[...verticalBarSeries, normalBlock]}/>
         </div>
       </div>
-      {/* </div> */}
     </>
   )
 }

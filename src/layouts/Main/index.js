@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Layout } from 'antd'
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
@@ -49,6 +49,7 @@ const MainLayout = ({
   layoutFooter,
   layoutMenu,
 }) => {
+  const [mobileSidebarVisible, setMobileSidebarVisible] = useState(false);
   // touch slide mobile menu opener
   useEffect(() => {
     const unify = (e) => {
@@ -107,7 +108,7 @@ const MainLayout = ({
         <div className="sidebar">
           {/* <MenuFlyout /> */}
           <LgSider />
-          <SmSider />
+          <SmSider visible={mobileSidebarVisible} setMobileSidebarVisible={setMobileSidebarVisible}  />
         </div>
 
         {/* {layoutMenu === 'classic' && <MenuFlyout />} */}
@@ -122,7 +123,7 @@ const MainLayout = ({
         {/* {layoutBreadcrumbs === 'v1' && <Breadcrumbs />} */}
         {/* {layoutBreadcrumbs === 'v2' && <Breadcrumbs2 />} */}
         <div>
-          <Breadcrumbs2 />
+          <Breadcrumbs2 visible={mobileSidebarVisible} setMobileSidebarVisible={setMobileSidebarVisible} />
           <Layout.Content>{children}</Layout.Content>
         </div>
 

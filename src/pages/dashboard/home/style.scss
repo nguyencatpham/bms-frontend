@@ -144,64 +144,7 @@
     // TODO Temporary
     min-width: 320px;
 
-    .collected-data {
-      // TODO Temporary
-      height: 100%;
-      width: 100%;
-      // max-width: 330px;
-
-      .block-box {
-        height: 192px;
-        margin: 1rem 0;
-        border-bottom: 1px solid #eee;
-        position: relative;
-
-        &__head {
-          display: inline-flex;
-          align-items: center;
-          border: 1px solid #eee;
-          padding: 0.05rem 0.3rem;
-          margin-bottom: 1rem;
-          border-radius: 5px;
-        }
-
-        &__circle {
-          height: 12px;
-          width: 12px;
-          border-radius: 50%;
-        }
-
-        &__title {
-          margin-left: 0.4rem;
-        }
-
-        &__body {
-          display: grid;
-          grid-template-columns: repeat(8, 1fr);
-          row-gap: 1rem;
-          column-gap: 1rem;
-        }
-
-        &__foot {
-          position: absolute;
-          right: 15px;
-          bottom: 10px;
-          // margin-top: 0.6rem;
-        }
-      }
-
-      .block {
-        border-radius: 2px;
-        height: 44px;
-        width: 100%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        color: #000;
-        font-size: 0.9rem;
-        cursor: pointer;
-      }
-    }
+    
   }
 
   .apexcharts-legend-series {

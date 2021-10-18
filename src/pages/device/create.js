@@ -27,10 +27,10 @@ const DefaultPage = ({ userId, dispatch }) => {
     <>
       <div className='detail-page device-create-page'>
         <Helmet title='Tài khoản | Tạo mới' />
-        <h3 className='form-title'><i className='i_user_8 ico30' />QUẢN LÝ THIẾT BỊ</h3>
+        {/* <h3 className='form-title'><i className='i_user_8 ico30' />QUẢN LÝ THIẾT BỊ</h3> */}
         <div className='card-content'>
           <div className='card-bg'>
-            <Card title='Thêm thiết bị'>
+            {/* <Card title='Thêm thiết bị'> */}
               <Form
                 className='detail-form'
                 onFinish={onFinish}
@@ -121,7 +121,7 @@ const DefaultPage = ({ userId, dispatch }) => {
                   </div>
                 </div>
               </Form>
-            </Card>
+            {/* </Card> */}
           </div>
         </div>
       </div>

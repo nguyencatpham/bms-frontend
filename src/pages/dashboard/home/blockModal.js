@@ -23,7 +23,7 @@ const BlockModal = (props, ref) => {
   //   For parent get access to (this) child component
   useImperativeHandle(ref, () => ({
     handleClick(block) {
-      console.log(block)
+      // console.log(block)
       setBlock(block)
       showModal()
     },
@@ -38,17 +38,17 @@ const BlockModal = (props, ref) => {
     {
       name: 'VUpper',
       data: [35, 41, 52, 42, 13, 18, 29, 37, 36, 51, 32],
-      color: '#F17532',
+      color: '#FF7600',
     },
     {
-      name: 'EUpper',
+      name: 'ELower',
       data: [45, 57, 74, 70, 75, 38, 62, 47, 40, 56, 45],
-      color: '#FDEE39',
+      color: '#FFF338',
     },
     {
       name: 'TUpper',
       data: [36, 45, 68, 61, 69, 49, 67, 48, 44, 52, 41],
-      color: '#ED4845',
+      color: '#FF4848',
     },
   ]
 

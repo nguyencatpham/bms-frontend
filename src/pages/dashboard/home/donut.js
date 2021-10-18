@@ -56,9 +56,9 @@ const ChartPage = ({ series, labels }) => {
       grid: {
         show: false,
         padding: {
-          top: 20,
+          top: 40,
           right: 0,
-          bottom: -80,
+          bottom: -50,
           left: 0,
         },
       },
