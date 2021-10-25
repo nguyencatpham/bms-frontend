@@ -110,7 +110,8 @@ export const COMMON = ({ type, field, actionType }) => {
           description: `Tài khoản ${response.name} đã được cập nhật mật khẩu thành công!`
         })
         const role = store.get('user.role')
-        if (role === 'admin') { history.push(`/accounts/${response.id}`) }
+        // if (role === 'admin') { history.push(`/accounts/${response.id}`) }
+        if (role === 'admin') { history.push(`/accounts`) }
         return false
       }
       if (type.toLowerCase().indexOf('post') > -1) {
@@ -119,7 +120,8 @@ export const COMMON = ({ type, field, actionType }) => {
           description: `Tài khoản ${response.name} đã được tạo thành công!`
         })
         const role = store.get('user.role')
-        if (role === 'admin') { history.push(`/accounts/${response.id}`) }
+        // if (role === 'admin') { history.push(`/accounts/${response.id}`) }
+        if (role === 'admin') { history.push(`/accounts`) }
       }
       if (type.toLowerCase().indexOf('change') > -1 ||
         type.toLowerCase().indexOf('patch') > -1 ||
@@ -129,7 +131,8 @@ export const COMMON = ({ type, field, actionType }) => {
           description: `Tài khoản ${response.name} đã được cập nhật thành công!`
         })
         const role = store.get('user.role')
-        if (role === 'admin') { history.push(`/accounts/${response.id}`) }
+        if (role === 'admin') { history.push(`/accounts`) }
+        // if (role === 'admin') { history.push(`/accounts/${response.id}`) }
       }
       if (type.toLowerCase().indexOf('delete') > -1) {
         notification.success({

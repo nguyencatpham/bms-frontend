@@ -6,7 +6,7 @@ import { Form, Input, Button, Card, Select } from 'antd'
 import PreConfirm from 'components/pre-confirm'
 import { history } from 'index'
 import { ROLE } from 'constant'
-import './style.scss'
+import './detailForm.scss'
 
 const { Item } = Form
 const { TextArea } = Input
@@ -77,100 +77,117 @@ const DefaultPage = ({ loading, detail, preConfirm, dispatch }) => {
         <Helmet title='Tài khoản | Cập nhật' />
         <h3 className='form-title'><i className='i_user_8 ico30' />QUẢN TRỊ VIÊN</h3>
         <div className='card-content'>
-          <div className='card-bg'>
-            <Card title={<p><span>Cập nhật tài khoản:</span><span className='txt-orange'>{name}</span></p>}>
-              <Form
-                className='detail-form'
-                onFinish={onFinish}
-                form={form}
-                autoComplete='off'
+          <div className='card-bg detail-form-wrap'>
+            {/* <Card title={<p><span>Cập nhật tài khoản:</span><span className='txt-orange'>{name}</span></p>}> */}
+            <Form
+              className='detail-form'
+              onFinish={onFinish}
+              form={form}
+              autoComplete='off'
+            >
+              {/* <div className='row'>
+                  <div className='col-lg-8 col-md-8 offset-md-2'> */}
+              <Item
+                className='display-grid'
+                name='name'
+                label='Họ tên'
+                rules={[
+                  {
+                    required: true,
+                    message: 'Vui lòng nhập Họ tên!'
+                  }, {
+                    max: 256,
+                    message: 'Họ tên quá dài!'
+                  }
+                ]}
               >
-                <div className='row'>
-                  <div className='col-lg-8 col-md-8 offset-md-2'>
-                    <Item
-                      className='display-grid'
-                      name='name'
-                      label='Họ tên'
-                      rules={[
-                        {
-                          required: true,
-                          message: 'Vui lòng nhập Họ tên!'
-                        }, {
-                          max: 256,
-                          message: 'Họ tên quá dài!'
-                        }
-                      ]}
-                    >
-                      <Input
-                        placeholder='Nhập họ tên...'
-                      />
-                    </Item>
-                    <Item
-                      className='display-grid'
-                      name='address'
-                      label='Địa chỉ'
-                      rules={[
-                        {
-                          required: true,
-                          message: 'Vui lòng nhập địa chỉ!'
-                        }
-                      ]}
-                    >
-                      <Input
-                        placeholder='Nhập địa chỉ...'
-                      />
-                    </Item>
-                    <Item
-                      className='display-grid grid-row'
-                      name='role'
-                      label='Vai trò'
-                      initialValue={
-                        ROLE[role] === ROLE.admin ? ROLE.client : ROLE.user
-                      }
-                    >
-                      <Select
-                        disabled options={Object.keys(ROLE).map(x => (
-                          <Option key={x} value={x}>{ROLE[x]}</Option>
-                        ))}
-                      />
-                    </Item>
-                    <Item
-                      className='display-grid grid-row'
-                      name='description'
-                      label='Ghi chú'
-                      rules={[
-                        {
-                          required: true,
-                          message: 'Vui lòng nhập ghi chú!'
-                        },
-                        {
-                          message: 'ghi chú quá dài!',
-                          max: 512
-                        }
-                      ]}
-                    >
-                      <TextArea
-                        placeholder='Nhập ghi chú...'
-                        autoSize={{ minRows: 3, maxRows: 5 }}
-                      />
-                    </Item>
-                    <Item
-                      className='display-grid grid-row'
-                      name='username'
-                      label='Tên đăng nhập'
-                      rules={[
-                        {
-                          required: true,
-                          message: 'Vui lòng nhập tên đăng nhập!'
-                        }, {
-                          max: 255,
-                          message: 'Tên đăng nhập quá dài!'
-                        }
-                      ]}
-                    >
-                      <Input />
-                    </Item>
-                    <div className='fl-right btn-group-footer'>
+                <Input
+                  placeholder='Nhập họ tên...'
+                />
+              </Item>
+              <Item
+                className='display-grid'
+                name='address'
+                label='Địa chỉ'
+                rules={[
+                  {
+                    required: true,
+                    message: 'Vui lòng nhập địa chỉ!'
+                  }
+                ]}
+              >
+                <Input
+                  placeholder='Nhập địa chỉ...'
+                />
+              </Item>
+              <Item
+                className='display-grid grid-row'
+                name='role'
+                label='Vai trò'
+                initialValue={
+                  ROLE[role] === ROLE.admin ? ROLE.client : ROLE.user
+                }
+              >
+                <Select
+                  disabled options={Object.keys(ROLE).map(x => (
+                    <Option key={x} value={x}>{ROLE[x]}</Option>
+                  ))}
+                />
+              </Item>
+              <Item
+                className='display-grid grid-row'
+                name='description'
+                label='Ghi chú'
+                rules={[
+                  {
+                    required: true,
+                    message: 'Vui lòng nhập ghi chú!'
+                  },
+                  {
+                    message: 'ghi chú quá dài!',
+                    max: 512
+                  }
+                ]}
+              >
+                <TextArea
+                  placeholder='Nhập ghi chú...'
+                  autoSize={{ minRows: 3, maxRows: 5 }}
+                />
+              </Item>
+              <Item
+                className='display-grid grid-row'
+                name='username'
+                label='Tên đăng nhập'
+                rules={[
+                  {
+                    required: true,
+                    message: 'Vui lòng nhập tên đăng nhập!'
+                  }, {
+                    max: 255,
+                    message: 'Tên đăng nhập quá dài!'
+                  }
+                ]}
+              >
+                <Input />
+              </Item>
+              <div className='text-right fl-right btn-footer btn-group-footer'>
+                <Button
+                  type='dashed'
+                  onClick={() => history.push('/accounts')}
+                >
+                  <i className='i_cancel ico25' />
+                  <strong>Hủy</strong>
+                </Button>
+                <Button
+                  type='primary'
+                  style={{ marginLeft: 10 }}
+                  htmlType='submit'
+                >
+                  <i className='i_save_36 ico25' />
+                  <strong>Lưu</strong>
+                </Button>
+              </div>
+              {/* <div className='fl-right btn-group-footer'>
                       <div className='fl-right'>
                         <Button
                           className='btn btn-create btn-cancel'
@@ -190,19 +207,19 @@ const DefaultPage = ({ loading, detail, preConfirm, dispatch }) => {
                           <i className='i_save_36 ico25' />
                           <strong>Lưu</strong>
                         </Button>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <PreConfirm
-                  loading={loading}
-                  visible={modal}
-                  onOk={() => form.submit()}
-                  onCancel={() => setModal(false)}
-                  preConfirm={preConfirm}
-                />
-              </Form>
-            </Card>
+                      </div> */}
+              {/* </div>
+                  </div> */}
+              {/* </div> */}
+              <PreConfirm
+                loading={loading}
+                visible={modal}
+                onOk={() => form.submit()}
+                onCancel={() => setModal(false)}
+                preConfirm={preConfirm}
+              />
+            </Form>
+            {/* </Card> */}
           </div>
         </div>
       </div>

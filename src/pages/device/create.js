@@ -1,10 +1,9 @@
 import React from 'react'
 import { Helmet } from 'react-helmet'
 import { connect } from 'react-redux'
-import { withRouter } from 'react-router-dom'
+import { withRouter, useHistory } from 'react-router-dom'
 import { Form, Input, Button, Card } from 'antd'
-import { history } from 'index'
-import './style.scss'
+import './detailForm.scss'
 
 const { Item } = Form
 
@@ -14,6 +13,7 @@ const mapStateToProps = ({ device, user, dispatch }) => {
   return { loading, detail, role, userId, dispatch }
 }
 const DefaultPage = ({ userId, dispatch }) => {
+  const history = useHistory();
   const [form] = Form.useForm()
   const onFinish = values => {
     delete values.role
@@ -23,21 +23,22 @@ const DefaultPage = ({ userId, dispatch }) => {
       payload: { body: [{ ...values }] }
     })
   }
+
   return (
     <>
       <div className='detail-page device-create-page'>
-        <Helmet title='Tài khoản | Tạo mới' />
+        <Helmet title='Thiết bị | Tạo mới' />
         {/* <h3 className='form-title'><i className='i_user_8 ico30' />QUẢN LÝ THIẾT BỊ</h3> */}
         <div className='card-content'>
-          <div className='card-bg'>
+          <div className='card-bg detail-form-wrap'>
             {/* <Card title='Thêm thiết bị'> */}
               <Form
                 className='detail-form'
                 onFinish={onFinish}
                 form={form}
               >
-                <div className='row'>
-                  <div className='col-lg-8 col-md-8 offset-md-2'>
+                {/* <div className='row'>
+                  <div className='col-lg-8 col-md-8 offset-md-2'> */}
                     <Item
                       className='display-grid grid-row'
                       name='uuid'
@@ -89,7 +90,7 @@ const DefaultPage = ({ userId, dispatch }) => {
                     <Item
                       className='display-grid grid-row'
                       name='model'
-                      label='model'
+                      label='Model'
                       rules={[
                         {
                           required: true,
@@ -118,8 +119,8 @@ const DefaultPage = ({ userId, dispatch }) => {
                         <strong>Lưu</strong>
                       </Button>
                     </div>
-                  </div>
-                </div>
+                  {/* </div>
+                </div> */}
               </Form>
             {/* </Card> */}
           </div>

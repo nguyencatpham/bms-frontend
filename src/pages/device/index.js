@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react'
-import { Avatar, Input, Table, Button, Form } from 'antd'
+import { Avatar, Input, Table, Button, Form, Dropdown, Menu } from 'antd'
 import { connect } from 'react-redux'
-import { UserOutlined, CloseOutlined } from '@ant-design/icons'
-import { withRouter, Link } from 'react-router-dom'
+import { UserOutlined, CloseOutlined, EllipsisOutlined } from '@ant-design/icons'
+import { withRouter, Link, useHistory } from 'react-router-dom'
 import { Helmet } from 'react-helmet'
 import { TIME_FORMAT } from 'constant'
 import moment from 'moment'
@@ -25,6 +25,7 @@ const mapStateToProps = ({ authDevice, user, dispatch }) => {
 }
 
 const DefaultPage = ({ list, loading, total, preConfirm, usernameOrEmail, dispatch }) => {
+  const history = useHistory();
   const [form] = Form.useForm()
   const [modal, setModal] = useState()
   const [name, setName] = useState()
@@ -114,15 +115,54 @@ const DefaultPage = ({ list, loading, total, preConfirm, usernameOrEmail, dispat
       title: (
         <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
           <Search placeholder="Tìm" onSearch={onSearch} style={{ width: '240px' }} />
-          <Button style={{ marginLeft: '1rem' }} type="primary">
-            <Link className="break-word" to={`/devices/create`}>
+          <Button style={{ marginLeft: '1rem' }} type="primary" onClick={() => history.push('devices/create')}>
+            <span className="break-word">
               Thêm
-            </Link>
+            </span>
           </Button>
         </div>
       ),
       dataIndex: 'options',
       responsive: ['md'],
+      render: (text, item) => {
+        return (
+          <div className="device-options">
+            <Dropdown
+              overlay={
+                <Menu style={{ minWidth: '100px' }}>
+                  <Menu.Item key="0" onClick={() => history.push(`/devices/${item.uuid}/update`)}>
+                    <span className="break-word">
+                      Sửa
+                    </span>
+                  </Menu.Item>
+                  <Menu.Item key="1" onClick={() => history.push(`/devices/${item.uuid}/stats`)}>
+                    <span className="break-word">
+                      Cấu hình
+                    </span>
+                  </Menu.Item>
+                  <Menu.Item key="2"  onClick={() => history.push(`/devices/${item.uuid}/history`)}>
+                    <span className="break-word">
+                      Lịch sử hoạt động
+                    </span>
+                  </Menu.Item>
+                  <Menu.Item key="3" onClick={() => history.push(`/devices/${item.uuid}/config`)}>
+                    <span className="break-word">
+                      Load config
+                    </span>
+                  </Menu.Item>
+                  <Menu.Divider />
+                  <Menu.Item onClick={() => setModal(item)} key="4">
+                    Xóa
+                  </Menu.Item>
+                </Menu>
+              }
+              trigger={['click']}
+            >
+              <EllipsisOutlined className="icon" onClick={(e) => e.preventDefault()} />
+            </Dropdown>
+          </div>
+        )
+      },
     },
   ]
 
@@ -226,7 +266,7 @@ const DefaultPage = ({ list, loading, total, preConfirm, usernameOrEmail, dispat
         <Table
           rowSelection={rowSelection}
           className="custom-table table-responsive"
-          rowKey={(x) => x.id}
+          rowKey={(x) => x.uuid}
           dataSource={list}
           pagination={{ ...pagination, showSizeChanger: true }}
           loading={loading}
@@ -236,6 +276,20 @@ const DefaultPage = ({ list, loading, total, preConfirm, usernameOrEmail, dispat
           ellipsis
         />
       </div>
+      {modal && (
+        <Form form={form} onFinish={onDelete}>
+          <PreConfirm
+            loading={loading}
+            visible={!!modal}
+            onOk={() => form.submit()}
+            onCancel={() => setModal(false)}
+            preConfirm={preConfirm}
+          />
+          <Item name="id" label="" initialValue={modal}>
+            <Input style={{ display: 'none' }} />
+          </Item>
+        </Form>
+      )}
     </>
   )
 }

@@ -38,4 +38,20 @@
       border-radius: 2.5px;
     }
   }
+
+  .device-options {
+    display: flex;
+    justify-content: flex-end;
+   
+    .icon {
+      font-size: 1.5rem;
+      margin-right: 0.5rem;
+  
+      &:hover {
+        cursor: pointer;
+      }
+    }
+    
+  }
 }
+

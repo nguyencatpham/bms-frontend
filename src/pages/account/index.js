@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react'
-import { Avatar, Input, Select, Table, Button, Form } from 'antd'
+import { Avatar, Input, Select, Table, Button, Form, Menu, Dropdown } from 'antd'
 import { connect } from 'react-redux'
-import { UserOutlined, CloseOutlined, EditOutlined } from '@ant-design/icons'
-import { withRouter, Link } from 'react-router-dom'
+import { UserOutlined, CloseOutlined, EditOutlined, EllipsisOutlined } from '@ant-design/icons'
+import { withRouter, Link, useHistory } from 'react-router-dom'
 import { Helmet } from 'react-helmet'
 import { TIME_FORMAT, ROLE } from 'constant'
 import moment from 'moment'
@@ -25,6 +25,7 @@ const mapStateToProps = ({ account, user, dispatch }) => {
 }
 
 const DefaultPage = ({ list, loading, total, preConfirm, usernameOrEmail, role, dispatch }) => {
+  const history = useHistory();
   const [form] = Form.useForm()
   const [modal, setModal] = useState()
   const [name, setName] = useState()
@@ -55,9 +56,9 @@ const DefaultPage = ({ list, loading, total, preConfirm, usernameOrEmail, role, 
       render: (text, item) => {
         if (role === 'admin') {
           return (
-            <Link className="break-word" to={`/accounts/${item.id}`}>
-              {text || item.username || item.email}
-            </Link>
+            // <Link className="break-word" to={`/accounts/${item.id}`}>
+            <span className="break-word">{text || item.username || item.email}</span>
+            // </Link>
           )
         }
         return text
@@ -91,15 +92,40 @@ const DefaultPage = ({ list, loading, total, preConfirm, usernameOrEmail, role, 
         <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
           <Search placeholder="Tìm" onSearch={onSearch} style={{ width: '240px' }} />
 
-          <Button style={{ marginLeft: '1rem' }} type="primary">
-            <Link className="break-word" to={`/accounts/create`}>
+          <Button style={{ marginLeft: '1rem' }} type="primary" onClick={() => history.push('/accounts/create')}>
+            <span className="break-word">
               Thêm
-            </Link>
+            </span>
           </Button>
         </div>
       ),
       dataIndex: 'options',
       responsive: ['md'],
+      render: (text, item) => {
+        return (
+          <div className="account-options">
+            <Dropdown
+              overlay={
+                <Menu style={{ minWidth: '100px' }}>
+                  <Menu.Item key="0" onClick={() => history.push(`/accounts/${item.id}/update`) }>
+                    <span className="break-word" >
+                      Sửa
+                    </span>
+                  </Menu.Item>
+                  
+                  <Menu.Divider />
+                  <Menu.Item onClick={() => setModal(item)} key="1">
+                    Xóa
+                  </Menu.Item>
+                </Menu>
+              }
+              trigger={['click']}
+            >
+              <EllipsisOutlined className="icon" onClick={(e) => e.preventDefault()} />
+            </Dropdown>
+          </div>
+        )
+      },
     },
     // {
     //   title: 'Ghi chú',
@@ -124,9 +150,9 @@ const DefaultPage = ({ list, loading, total, preConfirm, usernameOrEmail, role, 
     //           style={{ fontSize: '1.3rem' }}
     //           className="d-flex justify-content-between align-items-center mx-1"
     //         >
-    //           <Link to={`/accounts/${item.id}/update`}>
+    //           {/* <Link to={`/accounts/${item.id}/update`}>
     //             <EditOutlined className="ico18 ico-blue" />
-    //           </Link>
+    //           </Link> */}
     //           <div>
     //             <CloseOutlined
     //               className="ico18 ico-red text-danger"
@@ -228,6 +254,20 @@ const DefaultPage = ({ list, loading, total, preConfirm, usernameOrEmail, role, 
           ellipsis
         />
       </div>
+      {modal && (
+        <Form form={form} onFinish={onDelete}>
+          <PreConfirm
+            loading={loading}
+            visible={!!modal}
+            onOk={() => form.submit()}
+            onCancel={() => setModal(false)}
+            preConfirm={preConfirm}
+          />
+          <Item name="id" label="" initialValue={modal.id}>
+            <Input style={{ display: 'none' }} />
+          </Item>
+        </Form>
+      )}
     </>
   )
 }

@@ -75,6 +75,17 @@ const Breadcrumbs2 = (props) => {
         secondPart = 'Thêm'
       }
     }
+    if (third) {
+      if (third === 'update') {
+        thirdPart = 'Chỉnh sửa'
+      } else if (third === 'stats') {
+        thirdPart = 'Cấu hình'
+      } else if (third === 'history') {
+        thirdPart = 'Lịch sử hoạt động'
+      } else if (third === 'config') {
+        thirdPart = 'Load config'
+      }
+    }
 
     return [firstPart, secondPart, thirdPart];
   }

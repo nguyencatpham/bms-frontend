@@ -5,7 +5,7 @@ import { withRouter } from 'react-router-dom'
 import { Form, Input, Button, Card, Select } from 'antd'
 import { history } from 'index'
 import { ROLE } from 'constant'
-import './style.scss'
+import './detailForm.scss'
 
 const { Item } = Form
 const { TextArea } = Input
@@ -32,7 +32,7 @@ const DefaultPage = ({ loading, detail, role, dispatch }) => {
         <Helmet title='Tài khoản | Tạo mới' />
         <h3 className='form-title'><i className='i_user_8 ico30' />QUẢN TRỊ VIÊN</h3>
         <div className='card-content'>
-          <div className='card-bg'>
+          <div className='card-bg detail-form-wrap'>
             {/* <Card title='Thêm tài khoản'> */}
             <Form
               className='detail-form'
