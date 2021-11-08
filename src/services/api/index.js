@@ -1,6 +1,6 @@
 /* eslint camelcase: 0 */
 /*
-    Total: 104 APIs
+    Total: 115 APIs
     version: "0.1.1",
     title: "bms-backend",
     description: "bms Backend API"
@@ -23,7 +23,6 @@ export const types = {
   USERS_GET: 'USERS_GET',
   USERS_POST: 'USERS_POST',
   USERS_GET_COUNT: 'USERS_GET_COUNT',
-  USERS_POST_ID_FCMS: 'USERS_POST_ID_FCMS',
   USERS_POST_RESET: 'USERS_POST_RESET',
   USERS_POST_LOGIN: 'USERS_POST_LOGIN',
   USERS_POST_LOGOUT: 'USERS_POST_LOGOUT',
@@ -35,38 +34,32 @@ export const types = {
   USERS_POST_ID_SUSPEND: 'USERS_POST_ID_SUSPEND',
   USERS_POST_ID_SET_PASSWORD: 'USERS_POST_ID_SET_PASSWORD',
   DEVICES_GET_ID_BROKER: 'DEVICES_GET_ID_BROKER',
-  DEVICES_GET_ID_SYSTEMS_FK: 'DEVICES_GET_ID_SYSTEMS_FK',
-  DEVICES_DELETE_ID_SYSTEMS_FK: 'DEVICES_DELETE_ID_SYSTEMS_FK',
-  DEVICES_PUT_ID_SYSTEMS_FK: 'DEVICES_PUT_ID_SYSTEMS_FK',
+  DEVICES_GET_ID_UNITS_FK: 'DEVICES_GET_ID_UNITS_FK',
+  DEVICES_DELETE_ID_UNITS_FK: 'DEVICES_DELETE_ID_UNITS_FK',
+  DEVICES_PUT_ID_UNITS_FK: 'DEVICES_PUT_ID_UNITS_FK',
+  DEVICES_GET_ID_BLOCKS_FK: 'DEVICES_GET_ID_BLOCKS_FK',
+  DEVICES_DELETE_ID_BLOCKS_FK: 'DEVICES_DELETE_ID_BLOCKS_FK',
+  DEVICES_PUT_ID_BLOCKS_FK: 'DEVICES_PUT_ID_BLOCKS_FK',
   DEVICES_GET_ID_AUTHORIZEDDEVICE: 'DEVICES_GET_ID_AUTHORIZEDDEVICE',
-  DEVICES_GET_ID_SYSTEMS: 'DEVICES_GET_ID_SYSTEMS',
-  DEVICES_POST_ID_SYSTEMS: 'DEVICES_POST_ID_SYSTEMS',
-  DEVICES_DELETE_ID_SYSTEMS: 'DEVICES_DELETE_ID_SYSTEMS',
-  DEVICES_GET_ID_SYSTEMS_COUNT: 'DEVICES_GET_ID_SYSTEMS_COUNT',
+  DEVICES_GET_ID_UNITS: 'DEVICES_GET_ID_UNITS',
+  DEVICES_POST_ID_UNITS: 'DEVICES_POST_ID_UNITS',
+  DEVICES_DELETE_ID_UNITS: 'DEVICES_DELETE_ID_UNITS',
+  DEVICES_GET_ID_UNITS_COUNT: 'DEVICES_GET_ID_UNITS_COUNT',
+  DEVICES_GET_ID_BLOCKS: 'DEVICES_GET_ID_BLOCKS',
+  DEVICES_POST_ID_BLOCKS: 'DEVICES_POST_ID_BLOCKS',
+  DEVICES_GET_ID_BLOCKS_COUNT: 'DEVICES_GET_ID_BLOCKS_COUNT',
   DEVICES_GET_ID: 'DEVICES_GET_ID',
   DEVICES_DELETE_ID: 'DEVICES_DELETE_ID',
   DEVICES_GET: 'DEVICES_GET',
   DEVICES_GET_COUNT: 'DEVICES_GET_COUNT',
+  DEVICES_GET_ID_TSDATA: 'DEVICES_GET_ID_TSDATA',
+  DEVICES_GET_ID_EVENTS: 'DEVICES_GET_ID_EVENTS',
+  DEVICES_GET_ALERTCHART: 'DEVICES_GET_ALERTCHART',
+  DEVICES_GET_ALERTSTATS: 'DEVICES_GET_ALERTSTATS',
+  DEVICES_GET_STATS: 'DEVICES_GET_STATS',
+  DEVICES_GET_ID_BLOCK_STATS: 'DEVICES_GET_ID_BLOCK_STATS',
   DEVICES_PUT_CREDENTIALS: 'DEVICES_PUT_CREDENTIALS',
-  SYSTEMS_GET_ID_USER: 'SYSTEMS_GET_ID_USER',
-  SYSTEMS_GET_ID_DEVICE: 'SYSTEMS_GET_ID_DEVICE',
-  SYSTEMS_GET_ID_BLOCKS_FK: 'SYSTEMS_GET_ID_BLOCKS_FK',
-  SYSTEMS_DELETE_ID_BLOCKS_FK: 'SYSTEMS_DELETE_ID_BLOCKS_FK',
-  SYSTEMS_PUT_ID_BLOCKS_FK: 'SYSTEMS_PUT_ID_BLOCKS_FK',
-  SYSTEMS_GET_ID_BLOCKS: 'SYSTEMS_GET_ID_BLOCKS',
-  SYSTEMS_POST_ID_BLOCKS: 'SYSTEMS_POST_ID_BLOCKS',
-  SYSTEMS_GET_ID_BLOCKS_COUNT: 'SYSTEMS_GET_ID_BLOCKS_COUNT',
-  SYSTEMS_POST: 'SYSTEMS_POST',
-  SYSTEMS_GET: 'SYSTEMS_GET',
-  SYSTEMS_GET_ID: 'SYSTEMS_GET_ID',
-  SYSTEMS_DELETE_ID: 'SYSTEMS_DELETE_ID',
-  SYSTEMS_GET_COUNT: 'SYSTEMS_GET_COUNT',
-  SYSTEMS_GET_ID_TSDATA: 'SYSTEMS_GET_ID_TSDATA',
-  SYSTEMS_GET_ID_EVENTS: 'SYSTEMS_GET_ID_EVENTS',
-  SYSTEMS_GET_ALERTCHART: 'SYSTEMS_GET_ALERTCHART',
-  SYSTEMS_GET_ALERTSTATS: 'SYSTEMS_GET_ALERTSTATS',
-  SYSTEMS_GET_STATS: 'SYSTEMS_GET_STATS',
-  BLOCKS_GET_ID_SYSTEM: 'BLOCKS_GET_ID_SYSTEM',
+  BLOCKS_GET_ID_DEVICE: 'BLOCKS_GET_ID_DEVICE',
   BLOCKS_POST: 'BLOCKS_POST',
   BLOCKS_PATCH: 'BLOCKS_PATCH',
   BLOCKS_PUT: 'BLOCKS_PUT',
@@ -114,6 +107,24 @@ export const types = {
   EVENTS_GET: 'EVENTS_GET',
   EVENTS_GET_COUNT: 'EVENTS_GET_COUNT',
   EVENTS_POST_READS: 'EVENTS_POST_READS',
+  EVENT_VIEWS_POST: 'EVENT_VIEWS_POST',
+  EVENT_VIEWS_PATCH: 'EVENT_VIEWS_PATCH',
+  EVENT_VIEWS_PUT: 'EVENT_VIEWS_PUT',
+  EVENT_VIEWS_GET: 'EVENT_VIEWS_GET',
+  EVENT_VIEWS_POST_REPLACEORCREATE: 'EVENT_VIEWS_POST_REPLACEORCREATE',
+  EVENT_VIEWS_POST_UPSERTWITHWHERE: 'EVENT_VIEWS_POST_UPSERTWITHWHERE',
+  EVENT_VIEWS_GET_ID_EXISTS: 'EVENT_VIEWS_GET_ID_EXISTS',
+  EVENT_VIEWS_HEAD_ID: 'EVENT_VIEWS_HEAD_ID',
+  EVENT_VIEWS_GET_ID: 'EVENT_VIEWS_GET_ID',
+  EVENT_VIEWS_PUT_ID: 'EVENT_VIEWS_PUT_ID',
+  EVENT_VIEWS_DELETE_ID: 'EVENT_VIEWS_DELETE_ID',
+  EVENT_VIEWS_PATCH_ID: 'EVENT_VIEWS_PATCH_ID',
+  EVENT_VIEWS_POST_ID_REPLACE: 'EVENT_VIEWS_POST_ID_REPLACE',
+  EVENT_VIEWS_GET_FINDONE: 'EVENT_VIEWS_GET_FINDONE',
+  EVENT_VIEWS_POST_UPDATE: 'EVENT_VIEWS_POST_UPDATE',
+  EVENT_VIEWS_GET_COUNT: 'EVENT_VIEWS_GET_COUNT',
+  EVENT_VIEWS_POST_CHANGE_STREAM: 'EVENT_VIEWS_POST_CHANGE_STREAM',
+  EVENT_VIEWS_GET_CHANGE_STREAM: 'EVENT_VIEWS_GET_CHANGE_STREAM',
 }
 export const apis = {
 
@@ -186,12 +197,6 @@ export const apis = {
     method: 'GET',
     url: `${apiEndpoint}/api/users/count?${where ? `where=${encodeURIComponent(typeof where === 'object' ? JSON.stringify(where) : where)}` : ''}`
   }),
-  // create FCM notification
-  USERS_POST_ID_FCMS: ({ id, token, appId }) => ({
-    method: 'POST',
-    url: `${apiEndpoint}/api/users/${id}/fcms`,
-    body: { token, appId }
-  }),
   // Reset password for a user with email.
   USERS_POST_RESET: ({ email }) => ({
     method: 'POST',
@@ -255,20 +260,36 @@ export const apis = {
     method: 'GET',
     url: `${apiEndpoint}/api/devices/${id}/broker?${refresh ? `refresh=${encodeURIComponent(typeof refresh === 'object' ? JSON.stringify(refresh) : refresh)}` : ''}`
   }),
-  // Find a related item by id for systems.
-  DEVICES_GET_ID_SYSTEMS_FK: ({ id, fk }) => ({
+  // Find a related item by id for units.
+  DEVICES_GET_ID_UNITS_FK: ({ id, fk }) => ({
     method: 'GET',
-    url: `${apiEndpoint}/api/devices/${id}/systems/${fk}`
+    url: `${apiEndpoint}/api/devices/${id}/units/${fk}`
   }),
-  // Delete a related item by id for systems.
-  DEVICES_DELETE_ID_SYSTEMS_FK: ({ id, fk }) => ({
+  // Delete a related item by id for units.
+  DEVICES_DELETE_ID_UNITS_FK: ({ id, fk }) => ({
     method: 'DELETE',
-    url: `${apiEndpoint}/api/devices/${id}/systems/${fk}`
+    url: `${apiEndpoint}/api/devices/${id}/units/${fk}`
   }),
-  // Update a related item by id for systems.
-  DEVICES_PUT_ID_SYSTEMS_FK: ({ id, fk, data }) => ({
+  // Update a related item by id for units.
+  DEVICES_PUT_ID_UNITS_FK: ({ id, fk, data }) => ({
     method: 'PUT',
-    url: `${apiEndpoint}/api/devices/${id}/systems/${fk}`,
+    url: `${apiEndpoint}/api/devices/${id}/units/${fk}`,
+    body: data
+  }),
+  // Find a related item by id for blocks.
+  DEVICES_GET_ID_BLOCKS_FK: ({ id, fk }) => ({
+    method: 'GET',
+    url: `${apiEndpoint}/api/devices/${id}/blocks/${fk}`
+  }),
+  // Delete a related item by id for blocks.
+  DEVICES_DELETE_ID_BLOCKS_FK: ({ id, fk }) => ({
+    method: 'DELETE',
+    url: `${apiEndpoint}/api/devices/${id}/blocks/${fk}`
+  }),
+  // Update a related item by id for blocks.
+  DEVICES_PUT_ID_BLOCKS_FK: ({ id, fk, data }) => ({
+    method: 'PUT',
+    url: `${apiEndpoint}/api/devices/${id}/blocks/${fk}`,
     body: data
   }),
   // Fetches belongsTo relation authorizedDevice.
@@ -276,26 +297,42 @@ export const apis = {
     method: 'GET',
     url: `${apiEndpoint}/api/devices/${id}/authorizedDevice?${refresh ? `refresh=${encodeURIComponent(typeof refresh === 'object' ? JSON.stringify(refresh) : refresh)}` : ''}`
   }),
-  // Queries systems of Device.
-  DEVICES_GET_ID_SYSTEMS: ({ id, filter }) => ({
+  // Queries units of Device.
+  DEVICES_GET_ID_UNITS: ({ id, filter }) => ({
     method: 'GET',
-    url: `${apiEndpoint}/api/devices/${id}/systems?${filter ? `filter=${encodeURIComponent(typeof filter === 'object' ? JSON.stringify(filter) : filter)}` : ''}`
+    url: `${apiEndpoint}/api/devices/${id}/units?${filter ? `filter=${encodeURIComponent(typeof filter === 'object' ? JSON.stringify(filter) : filter)}` : ''}`
   }),
-  // Creates a new instance in systems of this model.
-  DEVICES_POST_ID_SYSTEMS: ({ id, data }) => ({
+  // Creates a new instance in units of this model.
+  DEVICES_POST_ID_UNITS: ({ id, data }) => ({
     method: 'POST',
-    url: `${apiEndpoint}/api/devices/${id}/systems`,
+    url: `${apiEndpoint}/api/devices/${id}/units`,
     body: data
   }),
-  // Deletes all systems of this model.
-  DEVICES_DELETE_ID_SYSTEMS: ({ id }) => ({
+  // Deletes all units of this model.
+  DEVICES_DELETE_ID_UNITS: ({ id }) => ({
     method: 'DELETE',
-    url: `${apiEndpoint}/api/devices/${id}/systems`
+    url: `${apiEndpoint}/api/devices/${id}/units`
   }),
-  // Counts systems of Device.
-  DEVICES_GET_ID_SYSTEMS_COUNT: ({ id, where }) => ({
+  // Counts units of Device.
+  DEVICES_GET_ID_UNITS_COUNT: ({ id, where }) => ({
     method: 'GET',
-    url: `${apiEndpoint}/api/devices/${id}/systems/count?${where ? `where=${encodeURIComponent(typeof where === 'object' ? JSON.stringify(where) : where)}` : ''}`
+    url: `${apiEndpoint}/api/devices/${id}/units/count?${where ? `where=${encodeURIComponent(typeof where === 'object' ? JSON.stringify(where) : where)}` : ''}`
+  }),
+  // [PUBLIC] get a list of blocks.
+  DEVICES_GET_ID_BLOCKS: ({ id, unitId, filter }) => ({
+    method: 'GET',
+    url: `${apiEndpoint}/api/devices/${id}/blocks?${unitId ? `unitId=${encodeURIComponent(typeof unitId === 'object' ? JSON.stringify(unitId) : unitId)}&` : ''}${filter ? `filter=${encodeURIComponent(typeof filter === 'object' ? JSON.stringify(filter) : filter)}` : ''}`
+  }),
+  // Creates a new instance in blocks of this model.
+  DEVICES_POST_ID_BLOCKS: ({ id, data }) => ({
+    method: 'POST',
+    url: `${apiEndpoint}/api/devices/${id}/blocks`,
+    body: data
+  }),
+  // Counts blocks of Device.
+  DEVICES_GET_ID_BLOCKS_COUNT: ({ id, where }) => ({
+    method: 'GET',
+    url: `${apiEndpoint}/api/devices/${id}/blocks/count?${where ? `where=${encodeURIComponent(typeof where === 'object' ? JSON.stringify(where) : where)}` : ''}`
   }),
   // Find a model instance by {{id}} from the data source.
   DEVICES_GET_ID: ({ id, filter }) => ({
@@ -317,109 +354,46 @@ export const apis = {
     method: 'GET',
     url: `${apiEndpoint}/api/devices/count?${where ? `where=${encodeURIComponent(typeof where === 'object' ? JSON.stringify(where) : where)}` : ''}`
   }),
+  // get timeserial data
+  DEVICES_GET_ID_TSDATA: ({ id, start, end, macAddress, unitId, stringId, type, limit }) => ({
+    method: 'GET',
+    url: `${apiEndpoint}/api/devices/${id}/tsdata?${start ? `start=${encodeURIComponent(typeof start === 'object' ? JSON.stringify(start) : start)}&` : ''}${end ? `end=${encodeURIComponent(typeof end === 'object' ? JSON.stringify(end) : end)}&` : ''}${macAddress ? `macAddress=${encodeURIComponent(typeof macAddress === 'object' ? JSON.stringify(macAddress) : macAddress)}&` : ''}${unitId ? `unitId=${encodeURIComponent(typeof unitId === 'object' ? JSON.stringify(unitId) : unitId)}&` : ''}${stringId ? `stringId=${encodeURIComponent(typeof stringId === 'object' ? JSON.stringify(stringId) : stringId)}&` : ''}${type ? `type=${encodeURIComponent(typeof type === 'object' ? JSON.stringify(type) : type)}&` : ''}${limit ? `limit=${encodeURIComponent(typeof limit === 'object' ? JSON.stringify(limit) : limit)}` : ''}`
+  }),
+  // get events data
+  DEVICES_GET_ID_EVENTS: ({ id, start, end, macAddress, unitId, stringId, priority, limit, isAsc }) => ({
+    method: 'GET',
+    url: `${apiEndpoint}/api/devices/${id}/events?${start ? `start=${encodeURIComponent(typeof start === 'object' ? JSON.stringify(start) : start)}&` : ''}${end ? `end=${encodeURIComponent(typeof end === 'object' ? JSON.stringify(end) : end)}&` : ''}${macAddress ? `macAddress=${encodeURIComponent(typeof macAddress === 'object' ? JSON.stringify(macAddress) : macAddress)}&` : ''}${unitId ? `unitId=${encodeURIComponent(typeof unitId === 'object' ? JSON.stringify(unitId) : unitId)}&` : ''}${stringId ? `stringId=${encodeURIComponent(typeof stringId === 'object' ? JSON.stringify(stringId) : stringId)}&` : ''}${priority ? `priority=${encodeURIComponent(typeof priority === 'object' ? JSON.stringify(priority) : priority)}&` : ''}${limit ? `limit=${encodeURIComponent(typeof limit === 'object' ? JSON.stringify(limit) : limit)}&` : ''}${isAsc ? `isAsc=${encodeURIComponent(typeof isAsc === 'object' ? JSON.stringify(isAsc) : isAsc)}` : ''}`
+  }),
+  // get system alertChart
+  DEVICES_GET_ALERTCHART: () => ({
+    method: 'GET',
+    url: `${apiEndpoint}/api/devices/alertChart`
+  }),
+  // get system alertStats
+  DEVICES_GET_ALERTSTATS: ({ systemId }) => ({
+    method: 'GET',
+    url: `${apiEndpoint}/api/devices/alertStats?${systemId ? `systemId=${encodeURIComponent(typeof systemId === 'object' ? JSON.stringify(systemId) : systemId)}` : ''}`
+  }),
+  // get system stats
+  DEVICES_GET_STATS: () => ({
+    method: 'GET',
+    url: `${apiEndpoint}/api/devices/stats`
+  }),
+  // get system stats
+  DEVICES_GET_ID_BLOCK_STATS: ({ id, unitId, blockId, filter }) => ({
+    method: 'GET',
+    url: `${apiEndpoint}/api/devices/${id}/block-stats?${unitId ? `unitId=${encodeURIComponent(typeof unitId === 'object' ? JSON.stringify(unitId) : unitId)}&` : ''}${blockId ? `blockId=${encodeURIComponent(typeof blockId === 'object' ? JSON.stringify(blockId) : blockId)}&` : ''}${filter ? `filter=${encodeURIComponent(typeof filter === 'object' ? JSON.stringify(filter) : filter)}` : ''}`
+  }),
   // Create device credential
   DEVICES_PUT_CREDENTIALS: ({ body }) => ({
     method: 'PUT',
     url: `${apiEndpoint}/api/devices/credentials`,
     body
   }),
-  // Fetches belongsTo relation user.
-  SYSTEMS_GET_ID_USER: ({ id, refresh }) => ({
-    method: 'GET',
-    url: `${apiEndpoint}/api/systems/${id}/user?${refresh ? `refresh=${encodeURIComponent(typeof refresh === 'object' ? JSON.stringify(refresh) : refresh)}` : ''}`
-  }),
   // Fetches belongsTo relation device.
-  SYSTEMS_GET_ID_DEVICE: ({ id, refresh }) => ({
+  BLOCKS_GET_ID_DEVICE: ({ id, refresh }) => ({
     method: 'GET',
-    url: `${apiEndpoint}/api/systems/${id}/device?${refresh ? `refresh=${encodeURIComponent(typeof refresh === 'object' ? JSON.stringify(refresh) : refresh)}` : ''}`
-  }),
-  // Find a related item by id for blocks.
-  SYSTEMS_GET_ID_BLOCKS_FK: ({ id, fk }) => ({
-    method: 'GET',
-    url: `${apiEndpoint}/api/systems/${id}/blocks/${fk}`
-  }),
-  // Delete a related item by id for blocks.
-  SYSTEMS_DELETE_ID_BLOCKS_FK: ({ id, fk }) => ({
-    method: 'DELETE',
-    url: `${apiEndpoint}/api/systems/${id}/blocks/${fk}`
-  }),
-  // Update a related item by id for blocks.
-  SYSTEMS_PUT_ID_BLOCKS_FK: ({ id, fk, data }) => ({
-    method: 'PUT',
-    url: `${apiEndpoint}/api/systems/${id}/blocks/${fk}`,
-    body: data
-  }),
-  // get blocks data
-  SYSTEMS_GET_ID_BLOCKS: ({ id }) => ({
-    method: 'GET',
-    url: `${apiEndpoint}/api/systems/${id}/blocks`
-  }),
-  // Creates a new instance in blocks of this model.
-  SYSTEMS_POST_ID_BLOCKS: ({ id, data }) => ({
-    method: 'POST',
-    url: `${apiEndpoint}/api/systems/${id}/blocks`,
-    body: data
-  }),
-  // Counts blocks of System.
-  SYSTEMS_GET_ID_BLOCKS_COUNT: ({ id, where }) => ({
-    method: 'GET',
-    url: `${apiEndpoint}/api/systems/${id}/blocks/count?${where ? `where=${encodeURIComponent(typeof where === 'object' ? JSON.stringify(where) : where)}` : ''}`
-  }),
-  // Create a new instance of the model and persist it into the data source.
-  SYSTEMS_POST: ({ data }) => ({
-    method: 'POST',
-    url: `${apiEndpoint}/api/systems`,
-    body: data
-  }),
-  // Find all instances of the model matched by filter from the data source.
-  SYSTEMS_GET: ({ filter }) => ({
-    method: 'GET',
-    url: `${apiEndpoint}/api/systems?${filter ? `filter=${encodeURIComponent(typeof filter === 'object' ? JSON.stringify(filter) : filter)}` : ''}`
-  }),
-  // Find a model instance by {{id}} from the data source.
-  SYSTEMS_GET_ID: ({ id, filter }) => ({
-    method: 'GET',
-    url: `${apiEndpoint}/api/systems/${id}?${filter ? `filter=${encodeURIComponent(typeof filter === 'object' ? JSON.stringify(filter) : filter)}` : ''}`
-  }),
-  // Delete a model instance by {{id}} from the data source.
-  SYSTEMS_DELETE_ID: ({ id }) => ({
-    method: 'DELETE',
-    url: `${apiEndpoint}/api/systems/${id}`
-  }),
-  // Count instances of the model matched by where from the data source.
-  SYSTEMS_GET_COUNT: ({ where }) => ({
-    method: 'GET',
-    url: `${apiEndpoint}/api/systems/count?${where ? `where=${encodeURIComponent(typeof where === 'object' ? JSON.stringify(where) : where)}` : ''}`
-  }),
-  // get timeserial data
-  SYSTEMS_GET_ID_TSDATA: ({ id, start, end, macAddress, unitId, stringId, type, limit }) => ({
-    method: 'GET',
-    url: `${apiEndpoint}/api/systems/${id}/tsdata?${start ? `start=${encodeURIComponent(typeof start === 'object' ? JSON.stringify(start) : start)}&` : ''}${end ? `end=${encodeURIComponent(typeof end === 'object' ? JSON.stringify(end) : end)}&` : ''}${macAddress ? `macAddress=${encodeURIComponent(typeof macAddress === 'object' ? JSON.stringify(macAddress) : macAddress)}&` : ''}${unitId ? `unitId=${encodeURIComponent(typeof unitId === 'object' ? JSON.stringify(unitId) : unitId)}&` : ''}${stringId ? `stringId=${encodeURIComponent(typeof stringId === 'object' ? JSON.stringify(stringId) : stringId)}&` : ''}${type ? `type=${encodeURIComponent(typeof type === 'object' ? JSON.stringify(type) : type)}&` : ''}${limit ? `limit=${encodeURIComponent(typeof limit === 'object' ? JSON.stringify(limit) : limit)}` : ''}`
-  }),
-  // get events data
-  SYSTEMS_GET_ID_EVENTS: ({ id, start, end, macAddress, unitId, stringId, priority, limit, isAsc }) => ({
-    method: 'GET',
-    url: `${apiEndpoint}/api/systems/${id}/events?${start ? `start=${encodeURIComponent(typeof start === 'object' ? JSON.stringify(start) : start)}&` : ''}${end ? `end=${encodeURIComponent(typeof end === 'object' ? JSON.stringify(end) : end)}&` : ''}${macAddress ? `macAddress=${encodeURIComponent(typeof macAddress === 'object' ? JSON.stringify(macAddress) : macAddress)}&` : ''}${unitId ? `unitId=${encodeURIComponent(typeof unitId === 'object' ? JSON.stringify(unitId) : unitId)}&` : ''}${stringId ? `stringId=${encodeURIComponent(typeof stringId === 'object' ? JSON.stringify(stringId) : stringId)}&` : ''}${priority ? `priority=${encodeURIComponent(typeof priority === 'object' ? JSON.stringify(priority) : priority)}&` : ''}${limit ? `limit=${encodeURIComponent(typeof limit === 'object' ? JSON.stringify(limit) : limit)}&` : ''}${isAsc ? `isAsc=${encodeURIComponent(typeof isAsc === 'object' ? JSON.stringify(isAsc) : isAsc)}` : ''}`
-  }),
-  // get system alertChart
-  SYSTEMS_GET_ALERTCHART: () => ({
-    method: 'GET',
-    url: `${apiEndpoint}/api/systems/alertChart`
-  }),
-  // get system alertStats
-  SYSTEMS_GET_ALERTSTATS: ({ systemId }) => ({
-    method: 'GET',
-    url: `${apiEndpoint}/api/systems/alertStats?${systemId ? `systemId=${encodeURIComponent(typeof systemId === 'object' ? JSON.stringify(systemId) : systemId)}` : ''}`
-  }),
-  // get system stats
-  SYSTEMS_GET_STATS: () => ({
-    method: 'GET',
-    url: `${apiEndpoint}/api/systems/stats`
-  }),
-  // Fetches belongsTo relation system.
-  BLOCKS_GET_ID_SYSTEM: ({ id, refresh }) => ({
-    method: 'GET',
-    url: `${apiEndpoint}/api/blocks/${id}/system?${refresh ? `refresh=${encodeURIComponent(typeof refresh === 'object' ? JSON.stringify(refresh) : refresh)}` : ''}`
+    url: `${apiEndpoint}/api/blocks/${id}/device?${refresh ? `refresh=${encodeURIComponent(typeof refresh === 'object' ? JSON.stringify(refresh) : refresh)}` : ''}`
   }),
   // Create a new instance of the model and persist it into the data source.
   BLOCKS_POST: ({ data }) => ({
@@ -671,5 +645,105 @@ export const apis = {
     method: 'POST',
     url: `${apiEndpoint}/api/events/reads`,
     body
+  }),
+  // Create a new instance of the model and persist it into the data source.
+  EVENT_VIEWS_POST: ({ data }) => ({
+    method: 'POST',
+    url: `${apiEndpoint}/api/event-views`,
+    body: data
+  }),
+  // Patch an existing model instance or insert a new one into the data source.
+  EVENT_VIEWS_PATCH: ({ data }) => ({
+    method: 'PATCH',
+    url: `${apiEndpoint}/api/event-views`,
+    body: data
+  }),
+  // Replace an existing model instance or insert a new one into the data source.
+  EVENT_VIEWS_PUT: ({ data }) => ({
+    method: 'PUT',
+    url: `${apiEndpoint}/api/event-views`,
+    body: data
+  }),
+  // Find all instances of the model matched by filter from the data source.
+  EVENT_VIEWS_GET: ({ filter }) => ({
+    method: 'GET',
+    url: `${apiEndpoint}/api/event-views?${filter ? `filter=${encodeURIComponent(typeof filter === 'object' ? JSON.stringify(filter) : filter)}` : ''}`
+  }),
+  // Replace an existing model instance or insert a new one into the data source.
+  EVENT_VIEWS_POST_REPLACEORCREATE: ({ data }) => ({
+    method: 'POST',
+    url: `${apiEndpoint}/api/event-views/replaceOrCreate`,
+    body: data
+  }),
+  // Update an existing model instance or insert a new one into the data source based on the where criteria.
+  EVENT_VIEWS_POST_UPSERTWITHWHERE: ({ where, data }) => ({
+    method: 'POST',
+    url: `${apiEndpoint}/api/event-views/upsertWithWhere?${where ? `where=${encodeURIComponent(typeof where === 'object' ? JSON.stringify(where) : where)}` : ''}`,
+    body: data
+  }),
+  // Check whether a model instance exists in the data source.
+  EVENT_VIEWS_GET_ID_EXISTS: ({ id }) => ({
+    method: 'GET',
+    url: `${apiEndpoint}/api/event-views/${id}/exists`
+  }),
+  // Check whether a model instance exists in the data source.
+  EVENT_VIEWS_HEAD_ID: ({ id }) => ({
+    method: 'HEAD',
+    url: `${apiEndpoint}/api/event-views/${id}`
+  }),
+  // Find a model instance by {{id}} from the data source.
+  EVENT_VIEWS_GET_ID: ({ id, filter }) => ({
+    method: 'GET',
+    url: `${apiEndpoint}/api/event-views/${id}?${filter ? `filter=${encodeURIComponent(typeof filter === 'object' ? JSON.stringify(filter) : filter)}` : ''}`
+  }),
+  // Replace attributes for a model instance and persist it into the data source.
+  EVENT_VIEWS_PUT_ID: ({ id, data }) => ({
+    method: 'PUT',
+    url: `${apiEndpoint}/api/event-views/${id}`,
+    body: data
+  }),
+  // Delete a model instance by {{id}} from the data source.
+  EVENT_VIEWS_DELETE_ID: ({ id }) => ({
+    method: 'DELETE',
+    url: `${apiEndpoint}/api/event-views/${id}`
+  }),
+  // Patch attributes for a model instance and persist it into the data source.
+  EVENT_VIEWS_PATCH_ID: ({ id, data }) => ({
+    method: 'PATCH',
+    url: `${apiEndpoint}/api/event-views/${id}`,
+    body: data
+  }),
+  // Replace attributes for a model instance and persist it into the data source.
+  EVENT_VIEWS_POST_ID_REPLACE: ({ id, data }) => ({
+    method: 'POST',
+    url: `${apiEndpoint}/api/event-views/${id}/replace`,
+    body: data
+  }),
+  // Find first instance of the model matched by filter from the data source.
+  EVENT_VIEWS_GET_FINDONE: ({ filter }) => ({
+    method: 'GET',
+    url: `${apiEndpoint}/api/event-views/findOne?${filter ? `filter=${encodeURIComponent(typeof filter === 'object' ? JSON.stringify(filter) : filter)}` : ''}`
+  }),
+  // Update instances of the model matched by {{where}} from the data source.
+  EVENT_VIEWS_POST_UPDATE: ({ where, data }) => ({
+    method: 'POST',
+    url: `${apiEndpoint}/api/event-views/update?${where ? `where=${encodeURIComponent(typeof where === 'object' ? JSON.stringify(where) : where)}` : ''}`,
+    body: data
+  }),
+  // Count instances of the model matched by where from the data source.
+  EVENT_VIEWS_GET_COUNT: ({ where }) => ({
+    method: 'GET',
+    url: `${apiEndpoint}/api/event-views/count?${where ? `where=${encodeURIComponent(typeof where === 'object' ? JSON.stringify(where) : where)}` : ''}`
+  }),
+  // Create a change stream.
+  EVENT_VIEWS_POST_CHANGE_STREAM: ({ options }) => ({
+    method: 'POST',
+    url: `${apiEndpoint}/api/event-views/change-stream`,
+    body: { options }
+  }),
+  // Create a change stream.
+  EVENT_VIEWS_GET_CHANGE_STREAM: ({ options }) => ({
+    method: 'GET',
+    url: `${apiEndpoint}/api/event-views/change-stream?${options ? `options=${encodeURIComponent(typeof options === 'object' ? JSON.stringify(options) : options)}` : ''}`
   }),
 }
