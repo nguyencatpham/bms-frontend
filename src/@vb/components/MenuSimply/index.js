@@ -12,7 +12,6 @@ import style from './style.module.scss'
 const mapStateToProps = ({ settings }) => ({ settings })
 
 const MenuSimply = ({ settings: { logo, version, menuColor } }) => {
-  console.log(menuColor)
   return (
     <div
       className={classNames(style.menuSimply, {

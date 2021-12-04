@@ -1,17 +1,19 @@
-import { useRef } from 'react'
+import { useState, useRef } from 'react'
 import './collectData.scss'
 import BlockModal from './blockModal'
 import TitleIcon from './titleIcon'
-import { Select, Tabs, Form, Input, Button, DatePicker, Pagination } from 'antd'
+import { Pagination } from 'antd'
+import { getBlockColor } from 'constant'
+import { connect } from 'react-redux'
+import { withRouter } from 'react-router-dom'
 
-export default function CollectData({ dataArr }) {
-  const blockModalRef = useRef()
+const mapStateToProps = ({ dispatch }) => {
+  return { dispatch }
+}
+const BlockList = ({ data = [], dispatch }) => {
+  const [modal, setModal] = useState()
+  const [pageIndex, setPageIndex] = useState(1)
   const thisRef = useRef()
-  //   const size = useWindowSize()
-
-  const handleClickBlock = (block) => {
-    if (blockModalRef.current) blockModalRef.current.handleClick(block)
-  }
 
   const windowWidth = window.innerWidth
   let onePageNumBlocks = 0
@@ -19,47 +21,54 @@ export default function CollectData({ dataArr }) {
     onePageNumBlocks = 100
   } else {
     const elemWidth = thisRef.current ? thisRef.current.offsetWidth : 0
-    if (elemWidth >= 320) onePageNumBlocks = 80;
+    if (elemWidth >= 320) onePageNumBlocks = 80
     // if (elemWidth >= 350) onePageNumBlocks = 91;
-    if (elemWidth >= 400) onePageNumBlocks = 100;
-    if (elemWidth >= 600) onePageNumBlocks = 150;
+    if (elemWidth >= 400) onePageNumBlocks = 100
+    if (elemWidth >= 600) onePageNumBlocks = 150
     // else if (elemWidth > )
 
     // onePageNumBlocks = elemWidth ? 100 : 0
   }
 
   return (
-    <div ref={thisRef} className="custom-card collected-data">
-      <div className="custom-card__header">
+    <div ref={thisRef} className='custom-card collected-data'>
+      <div className='custom-card__header'>
         <TitleIcon />
-        <h2 className="custom-card__title">Số liệu thu thập</h2>
+        <h2 className='custom-card__title'>Số liệu thu thập</h2>
       </div>
-      <BlockModal ref={blockModalRef} />
-      <div className="custom-card__body">
-        <div className="block-box">
+      {data.map((block, index) => (
+        <input className='debug-block-item' key={index} type='hidden' value={`localBlockId=${block.localBlockId}, index=${index + 1}`} />
+      ))}
+      <BlockModal modal={modal} setModal={setModal} />
+      <div className='custom-card__body'>
+        <div className='block-box'>
           {[...new Array(onePageNumBlocks)].map((block, index) => {
-            const random = Math.floor(Math.random() * 5)
-            const item = dataArr[random]
-            //   console.log(item);
+            const skip = (pageIndex - 1) * onePageNumBlocks
+            const i = skip + index
+            if (data.length < i || !data[i]) {
+              return
+            }
+            const item = data[i]
             return (
               <div
                 key={index}
-                onClick={() => handleClickBlock(index + 1)}
-                className="block"
-                style={{ backgroundColor: item.color }}
+                onClick={() => setModal(item)}
+                className='block'
+                style={{ backgroundColor: getBlockColor(item) }}
               >
-                {index + 1}
+                {item.localBlockId || index + 1}
               </div>
             )
           })}
         </div>
       </div>
-      <div className="custom-card__foot">
+      <div className='custom-card__foot'>
         <Pagination
-          size="small"
-          current={3}
+          size='small'
           defaultCurrent={1}
-          total={100}
+          onChange={setPageIndex}
+          total={data.length}
+          pageSize={onePageNumBlocks}
           showSizeChanger={false}
           showQuickJumper={false}
         />
@@ -67,29 +76,4 @@ export default function CollectData({ dataArr }) {
     </div>
   )
 }
-
-function useWindowSize() {
-  // Initialize state with undefined width/height so server and client renders match
-  // Learn more here: https://joshwcomeau.com/react/the-perils-of-rehydration/
-  const [windowSize, setWindowSize] = useState({
-    width: undefined,
-    height: undefined,
-  })
-  useEffect(() => {
-    // Handler to call on window resize
-    function handleResize() {
-      // Set window width/height to state
-      setWindowSize({
-        width: window.innerWidth,
-        height: window.innerHeight,
-      })
-    }
-    // Add event listener
-    window.addEventListener('resize', handleResize)
-    // Call handler right away so state gets updated with initial window size
-    handleResize()
-    // Remove event listener on cleanup
-    return () => window.removeEventListener('resize', handleResize)
-  }, []) // Empty array ensures that effect is only run on mount
-  return windowSize
-}
+export default withRouter(connect(mapStateToProps)(BlockList))

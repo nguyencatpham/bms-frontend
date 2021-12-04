@@ -4,7 +4,7 @@ import { TimePicker } from 'antd'
 import moment from 'moment'
 
 function onChange(time, timeString) {
-  console.log(time, timeString)
+  console.info(time, timeString)
 }
 
 class AntdTimePickerExample extends React.Component {

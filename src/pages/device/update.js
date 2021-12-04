@@ -30,8 +30,8 @@ const DefaultPage = ({ loading, detail, preConfirm, dispatch }) => {
       type: 'device/UPDATE',
       payload: {
         id,
-        body,
-      },
+        body
+      }
     })
   }
 
@@ -39,25 +39,25 @@ const DefaultPage = ({ loading, detail, preConfirm, dispatch }) => {
     form.setFieldsValue({ password: '' })
     dispatch({
       type: 'device/FLUSH_PRE_CONFIRM',
-      payload: {},
+      payload: {}
     })
     try {
       await form.validateFields(['name', 'description', 'description'])
       setModal(true)
     } catch (error) {
-      console.log(error)
+      console.error(error)
     }
   }
   useEffect(() => {
     dispatch({
       type: 'device/FLUSH_PRE_CONFIRM',
-      payload: {},
+      payload: {}
     })
   }, [dispatch])
   useEffect(() => {
     dispatch({
       type: 'device/DETAIL',
-      payload: { id, filter: JSON.stringify({ include: [{ relation: 'devices' }] }) },
+      payload: { id, filter: JSON.stringify({ include: [{ relation: 'devices' }] }) }
     })
   }, [dispatch, id])
 
@@ -67,7 +67,7 @@ const DefaultPage = ({ loading, detail, preConfirm, dispatch }) => {
       address,
       role,
       description,
-      username,
+      username
     })
   }, [detail, form, name, address, role, description, username])
 
@@ -85,59 +85,59 @@ const DefaultPage = ({ loading, detail, preConfirm, dispatch }) => {
                 form={form}
                 autoComplete='off'
               >
-                <Input placeholder="Nhập UUID" />
+                <Input placeholder='Nhập UUID' />
               </Item>
               <Item
-                className="display-grid grid-row"
-                name="macAddress"
-                label="Địa chỉ Mac"
+                className='display-grid grid-row'
+                name='macAddress'
+                label='Địa chỉ Mac'
                 rules={[
                   {
                     required: true,
-                    message: 'Vui lòng nhập địa chỉ mac address!',
-                  },
+                    message: 'Vui lòng nhập địa chỉ mac address!'
+                  }
                 ]}
               >
-                <Input placeholder="Nhập địa chỉ MAC..." />
+                <Input placeholder='Nhập địa chỉ MAC...' />
               </Item>
               <Item
-                className="display-grid grid-row"
-                name="serialId"
-                label="Serial"
+                className='display-grid grid-row'
+                name='serialId'
+                label='Serial'
                 rules={[
                   {
                     required: true,
-                    message: 'Vui lòng nhập Serial!',
-                  },
+                    message: 'Vui lòng nhập Serial!'
+                  }
                 ]}
               >
-                <Input placeholder="Nhập Serial..." />
+                <Input placeholder='Nhập Serial...' />
               </Item>
               <Item
-                className="display-grid grid-row"
-                name="model"
-                label="Model"
+                className='display-grid grid-row'
+                name='model'
+                label='Model'
                 rules={[
                   {
                     required: true,
-                    message: 'Vui lòng nhập model!',
-                  },
+                    message: 'Vui lòng nhập model!'
+                  }
                 ]}
               >
-                <Input placeholder="Nhập model..." />
+                <Input placeholder='Nhập model...' />
               </Item>
-              <div className="text-right fl-right btn-footer btn-group-footer">
-                <Button type="dashed" onClick={() => history.push('/devices')}>
-                  <i className="i_cancel ico25" />
+              <div className='text-right fl-right btn-footer btn-group-footer'>
+                <Button type='dashed' onClick={() => history.push('/devices')}>
+                  <i className='i_cancel ico25' />
                   <strong>Hủy</strong>
                 </Button>
                 <Button
-                  type="primary"
+                  type='primary'
                   style={{ marginLeft: 10 }}
                   onClick={() => validateFields()}
                   // htmlType="submit"
                 >
-                  <i className="i_save_36 ico25" />
+                  <i className='i_save_36 ico25' />
                   <strong>Lưu</strong>
                 </Button>
               </div>

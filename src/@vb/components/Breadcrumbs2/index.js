@@ -18,8 +18,8 @@ const menu = (
       <a href="https://www.aliyun.com">2nd menu item</a>
     </Menu.Item>
     <Menu.Divider /> */}
-    <Menu.Item key="3">
-      <Link to="/logout" style={{ textDecoration: 'none' }}>
+    <Menu.Item key='3'>
+      <Link to='/logout' style={{ textDecoration: 'none' }}>
         <span>Log out</span>
       </Link>
     </Menu.Item>
@@ -27,14 +27,14 @@ const menu = (
 )
 
 const mapStateToProps = ({ menu }) => ({
-  menuData: menu.menuData,
+  menuData: menu.menuData
 })
 
 const Breadcrumbs2 = (props) => {
   const [breadcrumbs, setBreadcrumbs] = useState([])
   const {
     location: { pathname },
-    menuData = [],
+    menuData = []
   } = props
 
   // useEffect(() => {
@@ -63,13 +63,12 @@ const Breadcrumbs2 = (props) => {
   // }
 
   const getBreadcrumb = (urlPath) => {
-    console.log(urlPath)
     const paths = urlPath.split('/')
     const [_, first, second, third] = paths
     const firstMenu = menuData.find((i) => i.url.includes(first))
     if (!firstMenu) return []
     const firstPart = firstMenu.title
-    let secondPart, thirdPart;
+    let secondPart, thirdPart
     if (second) {
       if (second === 'create') {
         secondPart = 'Thêm'
@@ -87,28 +86,28 @@ const Breadcrumbs2 = (props) => {
       }
     }
 
-    return [firstPart, secondPart, thirdPart];
+    return [firstPart, secondPart, thirdPart]
   }
 
   const [firstPart, secondPart, thirdPart] = getBreadcrumb(pathname)
 
   return (
-    <div className="Breadcrumb">
-      <div className="group-titles">
-        <Button className="toggle-btn" onClick={() => props.setMobileSidebarVisible(!props.visible)}>
+    <div className='Breadcrumb'>
+      <div className='group-titles'>
+        <Button className='toggle-btn' onClick={() => props.setMobileSidebarVisible(!props.visible)}>
           <MenuIcon />
         </Button>
-        <div className="title">{firstPart}{secondPart ? ` / ${secondPart}` : ''}{thirdPart ? ` / ${thirdPart}` : ''}</div>
+        <div className='title'>{firstPart}{secondPart ? ` / ${secondPart}` : ''}{thirdPart ? ` / ${thirdPart}` : ''}</div>
       </div>
-      <div className="menu-profile">
+      <div className='menu-profile'>
         <Avatar
-          className="avatar"
-          src="https://images.unsplash.com/photo-1604004555489-723a93d6ce74?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=687&q=80"
-          size="large"
+          className='avatar'
+          src='https://images.unsplash.com/photo-1604004555489-723a93d6ce74?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=687&q=80'
+          size='large'
         />
-        <Dropdown overlay={menu} trigger={['click']} placement="bottomRight">
-          <div className="profile-name" onClick={(e) => e.preventDefault()}>
-            Admin <DownOutlined className="arrow" />
+        <Dropdown overlay={menu} trigger={['click']} placement='bottomRight'>
+          <div className='profile-name' onClick={(e) => e.preventDefault()}>
+            Admin <DownOutlined className='arrow' />
           </div>
         </Dropdown>
       </div>

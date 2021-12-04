@@ -5,11 +5,11 @@ import { Mentions } from 'antd'
 const { Option } = Mentions
 
 function onChange(value) {
-  console.log('Change:', value)
+  console.info('Change:', value)
 }
 
 function onSelect(option) {
-  console.log('select', option)
+  console.info('select', option)
 }
 
 class AntdMentionsExample extends React.Component {

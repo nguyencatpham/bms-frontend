@@ -18,7 +18,7 @@ const suffix = (
   />
 )
 
-const onSearch = (value) => console.log(value)
+const onSearch = (value) => console.info(value)
 
 const columns = [
   {
@@ -89,7 +89,7 @@ class DevicePage extends React.Component {
   }
 
   onSelectChange = (selectedRowKeys) => {
-    console.log('selectedRowKeys changed: ', selectedRowKeys)
+    console.info('selectedRowKeys changed: ', selectedRowKeys)
     this.setState({ selectedRowKeys })
   }
 

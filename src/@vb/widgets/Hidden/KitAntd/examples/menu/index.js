@@ -11,7 +11,7 @@ class AntdMenuExample extends React.Component {
   }
 
   handleClick = (e) => {
-    console.log('click ', e)
+    console.info('click ', e)
     this.setState({
       current: e.key,
     })

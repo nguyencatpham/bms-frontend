@@ -23,7 +23,7 @@ const ChangePassword = ({ dispatch, user, logo, version, accountDetail }) => {
   }
 
   const onFinishFailed = (errorInfo) => {
-    console.log('Failed:', errorInfo)
+    console.info('Failed:', errorInfo)
   }
 
   return (

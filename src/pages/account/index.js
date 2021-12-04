@@ -47,7 +47,7 @@ const DefaultPage = ({ list, loading, total, preConfirm, usernameOrEmail, role, 
     }),
   })
 
-  const onSearch = (value) => console.log(value)
+  const onSearch = (value) => console.info(value)
   const columns = [
     {
       title: 'Tài khoản',

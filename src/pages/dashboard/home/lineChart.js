@@ -1,4 +1,5 @@
-import { height } from 'dom-helpers'
+import { TIME_ONLY_FORMAT } from 'constant'
+import moment from 'moment'
 import React from 'react'
 import Chart from 'react-apexcharts'
 
@@ -10,21 +11,21 @@ const ChartPage = ({ series, labels }) => {
         // height: 350,
         type: 'line',
         toolbar: {
-          show: false,
-        },
+          show: false
+        }
       },
       dataLabels: {
-        enabled: false,
+        enabled: false
       },
       stroke: {
         // width: [5, 7, 5],
         width: 3,
-        curve: 'straight',
+        curve: 'straight'
         // dashArray: [0, 8, 5]
       },
       colors: series.map((s) => s.color),
       legend: {
-        show: false,
+        show: true
         // tooltipHoverFormatter: function (val, opts) {
         //   return val + ' - ' + opts.w.globals.series[opts.seriesIndex][opts.dataPointIndex] + ''
         // },
@@ -32,24 +33,15 @@ const ChartPage = ({ series, labels }) => {
       markers: {
         size: 5,
         hover: {
-          size: 7,
-        },
+          size: 7
+        }
       },
       xaxis: {
-        categories: [
-          '14:10',
-          '14:20',
-          '14:30',
-          '14:40',
-          '14:50',
-          '15:00',
-          '15:10',
-          '15:20',
-          '15:30',
-          '15:40',
-          '15:50',
-          '16:00',
-        ],
+        labels: {
+          formatter: function (value) {
+            return moment(value * 1000).format(TIME_ONLY_FORMAT)
+          }
+        }
       },
       tooltip: {
         theme: 'dark',
@@ -58,34 +50,31 @@ const ChartPage = ({ series, labels }) => {
             title: {
               formatter: function (val) {
                 return val + '<span style="margin-right: 2rem;"></span>'
-              },
-            },
+              }
+            }
           },
           {
             title: {
               formatter: function (val) {
                 return val + '<span style="margin-right: 2rem;"></span>'
-                return val
-              },
-            },
+              }
+            }
           },
           {
             title: {
               formatter: function (val) {
                 return val + '<span style="margin-right: 2rem;"></span>'
-                return val
-              },
-            },
+              }
+            }
           },
           {
             title: {
               formatter: function (val) {
                 return val + '<span style="margin-right: 2rem;"></span>'
-                return val
-              },
-            },
-          },
-        ],
+              }
+            }
+          }
+        ]
       },
       grid: {
         borderColor: '#eee',
@@ -93,25 +82,25 @@ const ChartPage = ({ series, labels }) => {
         strokeDashArray: 5,
         xaxis: {
           lines: {
-            show: false,
-          },
+            show: false
+          }
         },
         yaxis: {
           lines: {
-            show: true,
-          },
-        },
-      },
-    },
+            show: true
+          }
+        }
+      }
+    }
   }
 
   return (
-    <div className="chart-page">
+    <div className='chart-page'>
       <Chart
         options={config.options}
         series={config.series}
-        type="line"
-        height="455"
+        type='line'
+        height='455'
         // style={{ minHeight: '400px' }}
       />
     </div>

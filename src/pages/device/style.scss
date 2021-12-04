@@ -3,7 +3,7 @@
   background-color: #fff;
 
   thead th {
-    background-color: #0B1C4E !important;
+    background-color: #0b1c4e !important;
     color: #f1f2f3 !important;
     white-space: nowrap;
     // width: 1%;
@@ -17,7 +17,29 @@
   //   white-space: nowrap;
   // }
 
-
+  .square {
+    position: relative;
+    padding-left: 2rem;
+    font-size: 1.13rem;
+  }
+  .square::before {
+    position: absolute;
+    top: 0;
+    left: 10px;
+    content: '';
+    display: block;
+    float: left;
+    height: 1rem;
+    width: 1rem;
+    background: #389e0d;
+    border-radius: 4px;
+  }
+  .square-online::before {
+    background: #389e0d;
+  }
+  .square-offline::before {
+    background: #8c8c8c;
+  }
 
   .ant-checkbox {
     margin-left: 1rem;
@@ -42,16 +64,14 @@
   .device-options {
     display: flex;
     justify-content: flex-end;
-   
+
     .icon {
       font-size: 1.5rem;
       margin-right: 0.5rem;
-  
+
       &:hover {
         cursor: pointer;
       }
     }
-    
   }
 }
-

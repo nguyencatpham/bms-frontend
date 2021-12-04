@@ -5,7 +5,7 @@ import { DatePicker } from 'antd'
 const { MonthPicker, RangePicker, WeekPicker } = DatePicker
 
 function onChange(date, dateString) {
-  console.log(date, dateString)
+  console.info(date, dateString)
 }
 
 class AntdDatePickerExample extends React.Component {

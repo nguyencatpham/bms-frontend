@@ -4,7 +4,7 @@ import { Calendar } from 'antd'
 
 class AntdCalendarExample extends React.Component {
   onPanelChange = (value, mode) => {
-    console.log(value, mode)
+    console.info(value, mode)
   }
 
   render() {

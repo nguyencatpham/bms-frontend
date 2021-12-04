@@ -5,36 +5,36 @@ import style from '../style.module.scss'
 
 const ForgotPassword = () => {
   const onFinish = (values) => {
-    console.log('Success:', values)
+    console.info('Success:', values)
   }
 
   const onFinishFailed = (errorInfo) => {
-    console.log('Failed:', errorInfo)
+    console.info('Failed:', errorInfo)
   }
 
   return (
-    <div className="mt-5 pt-2">
+    <div className='mt-5 pt-2'>
       <div className={`card ${style.container}`}>
-        <div className="text-dark font-size-32 mb-3">Reset Password</div>
+        <div className='text-dark font-size-32 mb-3'>Reset Password</div>
         <Form
-          layout="vertical"
+          layout='vertical'
           hideRequiredMark
           onFinish={onFinish}
           onFinishFailed={onFinishFailed}
-          className="mb-4"
+          className='mb-4'
         >
           <Form.Item
-            name="email"
+            name='email'
             rules={[{ required: true, message: 'Please input your e-mail address' }]}
           >
-            <Input placeholder="Email Address" />
+            <Input placeholder='Email Address' />
           </Form.Item>
-          <Button type="primary" htmlType="submit" className="text-center w-100">
+          <Button type='primary' htmlType='submit' className='text-center w-100'>
             <strong>Reset my password</strong>
           </Button>
         </Form>
-        <Link to="/auth/login" className="vb__utils__link">
-          <i className="fe fe-arrow-left mr-1 align-middle" />
+        <Link to='/auth/login' className='vb__utils__link'>
+          <i className='fe fe-arrow-left mr-1 align-middle' />
           Go to Sign in
         </Link>
       </div>

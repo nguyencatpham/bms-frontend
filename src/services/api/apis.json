@@ -1281,6 +1281,29 @@
           }
         },
         "deprecated": false
+      },
+      "delete": {
+        "tags": [
+          "Device"
+        ],
+        "summary": "Deletes all blocks of this model.",
+        "operationId": "Device.prototype.__delete__blocks",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Device id",
+            "required": true,
+            "type": "string",
+            "format": "JSON"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Request was successful"
+          }
+        },
+        "deprecated": false
       }
     },
     "/devices/{id}/blocks/count": {
@@ -1381,6 +1404,42 @@
             "description": "Request was successful",
             "schema": {
               "type": "object"
+            }
+          }
+        },
+        "deprecated": false
+      },
+      "patch": {
+        "tags": [
+          "Device"
+        ],
+        "summary": "Patch attributes for a model instance and persist it into the data source.",
+        "operationId": "Device.prototype.patchAttributes",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Device id",
+            "required": true,
+            "type": "string",
+            "format": "JSON"
+          },
+          {
+            "name": "data",
+            "in": "body",
+            "description": "An object of model property name/value pairs",
+            "required": false,
+            "schema": {
+              "description": "An object of model property name/value pairs",
+              "$ref": "#/definitions/Device"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Request was successful",
+            "schema": {
+              "$ref": "#/definitions/Device"
             }
           }
         },
@@ -1605,6 +1664,86 @@
         "deprecated": false
       }
     },
+    "/devices/{id}/events-timeseries": {
+      "get": {
+        "tags": [
+          "Device"
+        ],
+        "summary": "get events data for timeseries chart",
+        "operationId": "Device.prototype.getEventsTimeSeries",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Device id",
+            "required": true,
+            "type": "string",
+            "format": "JSON"
+          },
+          {
+            "name": "start",
+            "in": "query",
+            "required": true,
+            "type": "string",
+            "format": "date-time"
+          },
+          {
+            "name": "end",
+            "in": "query",
+            "required": true,
+            "type": "string",
+            "format": "date-time"
+          },
+          {
+            "name": "macAddress",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "unitId",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "stringId",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "priority",
+            "in": "query",
+            "required": true,
+            "type": "string",
+            "format": "JSON"
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "type": "number",
+            "format": "double"
+          },
+          {
+            "name": "isAsc",
+            "in": "query",
+            "required": false,
+            "type": "boolean"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Request was successful",
+            "schema": {
+              "$ref": "#/definitions/Event"
+            }
+          }
+        },
+        "deprecated": false
+      }
+    },
     "/devices/alertChart": {
       "get": {
         "tags": [
@@ -1675,7 +1814,7 @@
           "Device"
         ],
         "summary": "get system stats",
-        "operationId": "Device.prototype.blockStat",
+        "operationId": "Device.prototype.blockStats",
         "parameters": [
           {
             "name": "id",
@@ -1751,6 +1890,75 @@
             "description": "Request was successful",
             "schema": {
               "type": "object"
+            }
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/devices/{id}/fwUpdate": {
+      "put": {
+        "tags": [
+          "Device"
+        ],
+        "summary": "check fw update",
+        "operationId": "Device.prototype.fwUpdate",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Device id",
+            "required": true,
+            "type": "string",
+            "format": "JSON"
+          }
+        ],
+        "responses": {
+          "202": {
+            "description": "Request was successful",
+            "schema": {
+              "$ref": "#/definitions/Device"
+            }
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/devices/{id}/uploadConfig": {
+      "post": {
+        "tags": [
+          "Device"
+        ],
+        "summary": "check fw update",
+        "operationId": "Device.prototype.uploadConfig",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Device id",
+            "required": true,
+            "type": "string",
+            "format": "JSON"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "config": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "202": {
+            "description": "Request was successful",
+            "schema": {
+              "$ref": "#/definitions/Device"
             }
           }
         },
@@ -4501,6 +4709,10 @@
         },
         "appVersion": {
           "type": "string"
+        },
+        "config": {
+          "default": {},
+          "type": "object"
         },
         "created": {
           "type": "string",

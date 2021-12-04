@@ -5,7 +5,7 @@ import { AutoComplete, Input } from 'antd'
 const { Option } = AutoComplete
 
 function onSelect(value) {
-  console.log('onSelect', value)
+  console.info('onSelect', value)
 }
 
 class AntdAutoCompleteExample extends React.Component {

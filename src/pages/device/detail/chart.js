@@ -263,7 +263,7 @@ const DefaultPage = ({ system, dispatch }) => {
   useEffect(() => {
     return () => {
       if (chart && typeof chart.dispose === 'function') {
-        console.log('cleaned up')
+        console.info('cleaned up')
         chart.dispose()
       }
     }

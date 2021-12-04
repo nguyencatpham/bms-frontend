@@ -15,7 +15,7 @@ export default function (state = initialState, action) {
       return state
     }
     case actions.SET_DELETE: {
-      console.log(state.list, action)
+      console.info(state.list, action)
       return { ...state, list: state.list.filter(x => x.uuid !== action.payload.id) }
     }
     default:

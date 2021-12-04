@@ -1,4 +1,3 @@
-import { height } from 'dom-helpers'
 import React from 'react'
 import Chart from 'react-apexcharts'
 
@@ -10,18 +9,18 @@ const ChartPage = ({ series, labels }) => {
         // height: 350,
         type: 'line',
         toolbar: {
-          show: false,
+          show: false
         },
         offsetX: 0,
-        offsetY: 0,
+        offsetY: 0
       },
       dataLabels: {
-        enabled: false,
+        enabled: false
       },
       stroke: {
         // width: [5, 7, 5],
         width: 3,
-        curve: 'straight',
+        curve: 'straight'
         // dashArray: [0, 8, 5]
       },
       colors: series.map((s) => s.color),
@@ -32,17 +31,17 @@ const ChartPage = ({ series, labels }) => {
         offsetY: 5,
         itemMargin: {
           horizontal: 17,
-          vertical: 0,
+          vertical: 0
         },
         formatter: function (val, opts) {
           return val[0]
-        },
+        }
       },
       markers: {
         size: 5,
         hover: {
-          size: 7,
-        },
+          size: 7
+        }
       },
       xaxis: {
         categories: [
@@ -57,58 +56,58 @@ const ChartPage = ({ series, labels }) => {
           '15:30',
           '15:40',
           '15:50',
-          '16:00',
-        ],
+          '16:00'
+        ]
       },
       yaxis: [
         {
           seriesName: 'RUpper',
           opposite: true,
           axisTicks: {
-            show: true,
+            show: true
           },
           axisBorder: {
             show: true,
-            color: '#000',
+            color: '#000'
           },
           labels: {
             show: true,
             offsetX: -20,
             offsetY: 0,
-            rotate: 0,
+            rotate: 0
           },
           title: {
             text: 'mΩ',
             rotate: 0,
             offsetX: -39,
-            offsetY: -175,
-          },
+            offsetY: -175
+          }
         },
         {
           seriesName: 'VUpper',
           axisTicks: {
-            show: true,
+            show: true
           },
           axisBorder: {
             show: true,
-            color: '#000',
+            color: '#000'
           },
           labels: {
             show: true,
             offsetX: 0,
             offsetY: 0,
-            rotate: 0,
+            rotate: 0
           },
           title: {
             text: 'V',
             rotate: 0,
             offsetX: 39,
-            offsetY: -175,
-          },
+            offsetY: -175
+          }
         },
         {
           show: false,
-          seriesName: 'VUpper',
+          seriesName: 'VUpper'
           // axisTicks: {
           //   show: true,
           // },
@@ -129,30 +128,30 @@ const ChartPage = ({ series, labels }) => {
           //   offsetY: -175,
           // },
         },
-        
+
         {
           seriesName: 'TUpper',
           opposite: true,
           axisTicks: {
-            show: true,
+            show: true
           },
           axisBorder: {
             show: true,
-            color: '#000',
+            color: '#000'
           },
           labels: {
             show: true,
             offsetX: -10,
             offsetY: 0,
-            rotate: 0,
+            rotate: 0
           },
           title: {
             text: '°C',
             rotate: 0,
             offsetX: -39,
-            offsetY: -175,
-          },
-        },
+            offsetY: -175
+          }
+        }
       ],
       tooltip: {
         theme: 'dark',
@@ -161,34 +160,31 @@ const ChartPage = ({ series, labels }) => {
             title: {
               formatter: function (val) {
                 return val + '<span style="margin-right: 2rem;"></span>'
-              },
-            },
+              }
+            }
           },
           {
             title: {
               formatter: function (val) {
                 return val + '<span style="margin-right: 2rem;"></span>'
-                return val
-              },
-            },
+              }
+            }
           },
           {
             title: {
               formatter: function (val) {
                 return val + '<span style="margin-right: 2rem;"></span>'
-                return val
-              },
-            },
+              }
+            }
           },
           {
             title: {
               formatter: function (val) {
                 return val + '<span style="margin-right: 2rem;"></span>'
-                return val
-              },
-            },
-          },
-        ],
+              }
+            }
+          }
+        ]
       },
 
       grid: {
@@ -196,32 +192,30 @@ const ChartPage = ({ series, labels }) => {
           top: 15,
           right: 0,
           bottom: 10,
-          left: 20,
+          left: 20
         },
         borderColor: '#eee',
         // borderColor: '#f1f1f1',
         strokeDashArray: 5,
         xaxis: {
           lines: {
-            show: false,
-          },
+            show: false
+          }
         },
         yaxis: {
           lines: {
-            show: true,
-          },
-        },
-      },
+            show: true
+          }
+        }
+      }
       // legend: {
       //   formatter: function (seriesName, opts) {
       //     // return seriesName + '2121'
-      //     console.log(seriesName);
       //     return seriesName
       //     // const arr = opts.w.globals.series[0];
       //     // const sum = arr.reduce((a, b) => a + b, 0)
       //     // const one = arr[opts.seriesIndex];
       //     // const percent = ((one / sum) * 100).toFixed(1);
-      //     // console.log(percent);
       //     // return (
       //     //   seriesName +
       //     //   ':  ' +
@@ -230,16 +224,16 @@ const ChartPage = ({ series, labels }) => {
       //     // )
       //   },
       // }
-    },
+    }
   }
 
   return (
-    <div className="chart-page">
+    <div className='chart-page'>
       <Chart
         options={config.options}
         series={config.series}
-        type="line"
-        height="425"
+        type='line'
+        height='425'
         // style={{ minHeight: '400px' }}
       />
     </div>

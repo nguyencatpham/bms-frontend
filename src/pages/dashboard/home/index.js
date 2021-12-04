@@ -1,23 +1,15 @@
-import React, { useState, useEffect, useRef } from 'react'
-// import RecentAlert from './Charts/recentAlert'
-// import BlockStatus from './Charts/blockStatus'
-// import BlockAlertStatus from './Charts/blockAlertStatus'
-// import ChartViewer from './Charts/blockStatus/info'
+import React, { useState, useEffect } from 'react'
 import TitleIcon from './titleIcon'
-
-// import Donut from './dounut'
 import VerticalBar from './verticalbar'
-// import RadiaBar from './radialbar'
 import Donut from './donut'
 import LineChart from './lineChart'
-
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
-import { Select, Tabs, Form, Input, Button, DatePicker, Pagination } from 'antd'
+import { Form, DatePicker } from 'antd'
 import PlusCircleOutlinedIcon from '@ant-design/icons/PlusCircleOutlined'
 import { Helmet } from 'react-helmet'
 import './style.scss'
-import CollectData from './collectData'
+import BlockList from './collectData'
 
 import jQuery from 'jquery'
 // you will need the css that comes with bootstrap@3. if you are using
@@ -25,14 +17,14 @@ import jQuery from 'jquery'
 import 'bootstrap/dist/css/bootstrap.css'
 // you will also need the css that comes with bootstrap-daterangepicker
 import 'bootstrap-daterangepicker/daterangepicker.css'
+import { get } from 'lodash'
+import moment from 'moment'
 // expose jQuery to window for debugging
 window.jQuery = window.$ = jQuery
 
-// Themes begin
-const { TabPane } = Tabs
-
-const mapStateToProps = ({ authDevice, user, system, dispatch }) => {
+const mapStateToProps = ({ authDevice, device, user, system, dispatch }) => {
   let { list, loading, total, preConfirm } = authDevice
+  const { list: devices, units = [], blocks = [], blockStats = {}, blockEvents = {} } = device
   const { list: users, username, email, role } = user
   const { stats = {}, alertCount = {}, alertCountBySystem = {}, list: systems = [] } = system
   const usernameOrEmail = username || email
@@ -52,59 +44,77 @@ const mapStateToProps = ({ authDevice, user, system, dispatch }) => {
     alertCount,
     alertCountBySystem,
     systems,
-    dispatch,
+    devices,
+    units,
+    blocks,
+    blockStats,
+    blockEvents,
+    dispatch
   }
 }
 
-const DefaultPage = ({ total, stats, systems, alertCount, alertCountBySystem, dispatch }) => {
-  const { healthy = 0, unhealthy = 0, deployed = 0 } = stats
-  const { normal = 0, warning = 0, alert = 0 } = alertCount
-  const {
-    normal: normalBySystem = 0,
-    warning: warningBySystem = 0,
-    alert: alertBySystem = 0,
-  } = alertCountBySystem
-  const [tabKey, setTabKey] = useState('1')
-  const rangeEnd = Math.floor(Date.now() / 1000)
-  const rangeStart = rangeEnd - 7 * 24 * 60 * 60
-  const [range, setRange] = useState({ start: rangeStart, end: rangeEnd })
+const DefaultPage = ({ total, systems, devices, units, blocks, blockStats, blockEvents, dispatch }) => {
+  const [time, setTime] = useState(moment())
   const [systemId, setSystemId] = useState()
-  const [blockState, setBlockState] = useState(false)
+  const [unitId, setUnitId] = useState()
+  const [blockId, setBlockId] = useState()
   const [pagination, setPagination] = useState({
     current: 1,
     pageSize: 10,
     total: 0,
-    showTotal: (total, range) => `${range[0]}-${range[1]} trên ${total} thiết bị`,
+    showTotal: (total, range) => `${range[0]}-${range[1]} trên ${total} thiết bị`
   })
-  const changeTab = (key) => {
-    setTabKey(key)
-  }
-  const [payload] = useState({
-    filter: JSON.stringify({
-      include: [
-        {
-          relation: 'devices',
-          scope: {
-            include: [
-              {
-                relation: 'systems',
-                scope: {
-                  include: [
-                    {
-                      relation: 'blocks',
-                    },
-                  ],
-                },
-              },
-            ],
-          },
-        },
-      ],
-      skip: (pagination.current - 1) * pagination.pageSize,
-      limit: pagination.pageSize,
-      order: ['created DESC'],
-    }),
-  })
+  const blockStatistic = [
+    {
+      name: 'RUpper',
+      data: get(blockStats, ['alert', 'rUpper'], 0),
+      color: '#865439'
+    },
+    {
+      name: 'VUpper',
+      data: get(blockStats, ['alert', 'vUpper'], 0),
+      color: '#FF7600'
+    },
+    {
+      name: 'ELower',
+      data: get(blockStats, ['alert', 'eLower'], 0),
+      color: '#FFF338'
+    },
+    {
+      name: 'TUpper',
+      data: get(blockStats, ['alert', 'tUpper'], 0),
+      color: '#FF4848'
+    }
+  ]
+  const blockStatus = [get(blockStats, ['status', 'healthy'], 0), get(blockStats, ['status', 'unhealthy'], 0), get(blockStats, ['status', 'alert'], 0)]
+
+  const blockAlertSeries = [
+    {
+      name: 'RUpper',
+      data: blockEvents.rUpper || [],
+      color: '#865439'
+    },
+    {
+      name: 'VUpper',
+      data: blockEvents.vUpper || [],
+      color: '#FF7600'
+    },
+    {
+      name: 'ELower',
+      data: blockEvents.eLower || [],
+      color: '#FFF338'
+    },
+    {
+      name: 'TUpper',
+      data: blockEvents.tUpper || [],
+      color: '#FF4848'
+    // },
+    // {
+    //   name: 'Offline',
+    //   data: blockEvents.offline || [],
+    //   color: '#FF4848'
+    }
+  ]
 
   useEffect(() => {
     if (total !== pagination.total) {
@@ -112,206 +122,236 @@ const DefaultPage = ({ total, stats, systems, alertCount, alertCountBySystem, di
     }
   }, [total, pagination, setPagination])
   useEffect(() => {
-    dispatch({
-      type: 'authDevice/COUNT',
-      payload: { where: (JSON.parse(payload.filter) || {}).where },
-    })
-    dispatch({
-      type: 'authDevice/LIST',
-      payload,
-    })
-    dispatch({
-      type: 'system/ALERT_COUNT',
-      payload,
-    })
-    dispatch({
-      type: 'system/ALERT_COUNT_BY_SYSTEM',
-      payload: {
-        systemId,
-      },
-    })
-    dispatch({
-      type: 'system/LIST',
-      payload: {
-        filter: { fields: { systemId: true, name: true } },
-      },
-    })
-    dispatch({
-      type: 'system/SYSTEM_STATS',
-      payload,
-    })
-  }, [dispatch, payload])
-  useEffect(() => {
-    if (systems.length && !systemId) {
-      setSystemId(systems[0].systemId)
+    if (devices.length && !systemId) {
+      setSystemId(devices[0].id)
     }
-  }, [systemId, systems])
+  }, [systemId, devices])
   useEffect(() => {
     dispatch({
-      type: 'system/ALERT_COUNT_BY_SYSTEM',
+      type: 'device/LIST',
       payload: {
-        systemId,
-      },
+        filter: JSON.stringify({ fields: ['id', 'name'], order: ['created DESC'] })
+      }
     })
+  }, [])
+  useEffect(() => {
+    if (systemId) {
+      dispatch({
+        type: 'device/UNITS',
+        payload: {
+          id: systemId,
+          filter: JSON.stringify({
+            fields: ['id', 'name'],
+            order: ['created DESC']
+          })
+        }
+      })
+    }
   }, [systemId])
-
-  const verticalBarSeries = [
-    {
-      name: 'RUpper',
-      data: 5,
-      color: '#865439',
-    },
-    {
-      name: 'VUpper',
-      data: 4,
-      color: '#FF7600',
-    },
-    {
-      name: 'ELower',
-      data: 10,
-      color: '#FFF338',
-    },
-    {
-      name: 'TUpper',
-      data: 20,
-      color: '#FF4848',
-    },
-  ]
-
-  const lineChartSeries = [
-    {
-      name: 'RUpper',
-      data: [40, 52, 38, 24, 33, 26, 21, 20, 6, 8, 15],
-      color: '#865439',
-    },
-    {
-      name: 'VUpper',
-      data: [35, 41, 52, 42, 13, 18, 29, 37, 36, 51, 32],
-      color: '#FF7600',
-    },
-    {
-      name: 'ELower',
-      data: [45, 57, 74, 70, 75, 38, 62, 47, 40, 56, 45],
-      color: '#FFF338',
-    },
-    {
-      name: 'TUpper',
-      data: [36, 45, 68, 61, 69, 49, 67, 48, 44, 52, 41],
-      color: '#FF4848',
-    },
-  ]
-
-  const normalBlock = {
-    name: 'Bình thường',
-    data: 20,
-    color: '#017EFA',
-  }
-
+  useEffect(() => {
+    if (systemId) {
+      dispatch({
+        type: 'device/BLOCK_EVENTS',
+        payload: {
+          id: systemId,
+          start: time.startOf('day').unix(),
+          end: time.endOf('day').unix(),
+          priority: [0, 1, 2, 3, 4, 5],
+          unitId,
+          macAddress: get(blocks.find(x => x.id === blockId), ['macAddress']),
+          isAsc: true,
+          limit: 1000
+          //  stringId
+        }
+      })
+    }
+  }, [systemId, time])
+  useEffect(() => {
+    if (systemId) {
+      dispatch({
+        type: 'device/BLOCKS',
+        payload: {
+          id: systemId,
+          unitId,
+          filter: JSON.stringify({
+            // fields: ['id', 'localBlockId', 'macAddress'],
+            order: ['localBlockId ASC', 'id ASC']
+          })
+        }
+      })
+    }
+  }, [systemId, unitId])
+  useEffect(() => {
+    if (systemId) {
+      dispatch({
+        type: 'device/BLOCK_STATS',
+        payload: {
+          id: systemId,
+          unitId,
+          blockId
+        }
+      })
+    }
+  }, [systemId, unitId, blockId])
+  // polling
+  useEffect(() => {
+    const interval = setInterval(() => {
+      if (systemId) {
+        dispatch({
+          type: 'device/BLOCK_STATS',
+          payload: {
+            id: systemId,
+            unitId,
+            blockId
+          }
+        })
+      }
+    }, 60 * 1000)
+    return () => clearInterval(interval)
+  }, [systemId, unitId, blockId])
+  useEffect(() => {
+    const interval = setInterval(() => {
+      if (systemId) {
+        dispatch({
+          type: 'device/BLOCKS',
+          payload: {
+            id: systemId,
+            unitId,
+            filter: JSON.stringify({
+              // fields: ['id', 'localBlockId', 'macAddress'],
+              order: ['localBlockId ASC', 'id ASC']
+            })
+          }
+        })
+      }
+    }, 60 * 1000)
+    return () => clearInterval(interval)
+  }, [systemId, unitId])
+  useEffect(() => {
+    const interval = setInterval(() => {
+      if (systemId) {
+        dispatch({
+          type: 'device/BLOCK_EVENTS',
+          payload: {
+            id: systemId,
+            start: time.startOf('day').unix(),
+            end: time.endOf('day').unix(),
+            priority: [0, 1, 2, 3, 4, 5],
+            unitId,
+            macAddress: get(blocks.find(x => x.id === blockId), ['macAddress']),
+            isAsc: true,
+            limit: 1000
+          //  stringId
+          }
+        })
+      }
+    }, 60 * 1000)
+    return () => clearInterval(interval)
+  }, [systemId, time])
   return (
     <>
-      <Helmet title="Hệ thống quản lý ắc quy" />
+      <Helmet title='Hệ thống quản lý ắc quy' />
 
       {/* stats % chart */}
-      <div className="dashboard-page page">
-        <div className="left-side">
+      <div className='dashboard-page page'>
+        <div className='left-side'>
           <div>
             <div>
               <Form
-                className="select-bar"
+                className='select-bar'
                 // onFinish={onFinish}
               >
-                <div className="form-item" name="gender" rules={[{ required: true }]}>
+                <div className='form-item' name='systemId' rules={[{ required: true }]}>
                   <select
                     style={{ position: 'relative' }}
-                    className="select"
-                    placeholder="Select a option and change input text above"
-                    // onChange={onGenderChange}
-                    // allowClear
+                    className='select'
+                    placeholder='Chọn hệ thống'
+                    onChange={(e) => setSystemId(e.target.value)}
+                    value={systemId}
                   >
-                    <option value="1">System 1</option>
-                    <option value="2">System 2</option>
-                    <option value="3">System 3</option>
+                    {devices.map(x => (
+                      <option key={x.id} value={x.id}>{x.name}</option>
+                    ))}
                   </select>
                   <PlusCircleOutlinedIcon />
                 </div>
-                <div className="form-item" name="gender" rules={[{ required: true }]}>
+                <div className='form-item' name='unitId' rules={[{ required: true }]}>
                   <select
-                    className="select"
-                    placeholder="Select a option and change input text above"
-                    // onChange={onGenderChange}
-                    // allowClear
+                    className='select'
+                    placeholder='Chọn Unit'
+                    onChange={(e) => setUnitId(e.target.value)}
+                    value={unitId}
                   >
-                    <option value="1">Unit 1</option>
-                    <option value="2">Unit 2</option>
-                    <option value="3">Unit 3</option>
+                    <option value=''>Tất cả</option>
+                    {units.map(x => (
+                      <option key={x.id} value={x.id}>{x.name}</option>
+                    ))}
                   </select>
                   <PlusCircleOutlinedIcon />
                 </div>
-                <div className="form-item" name="gender" rules={[{ required: true }]}>
+                <div className='form-item' name='blockId' rules={[{ required: true }]}>
                   <select
-                    className="select"
-                    placeholder="Select a option and change input text above"
-                    // onChange={onGenderChange}
-                    // allowClear
+                    className='select'
+                    placeholder='Chọn Block'
+                    onChange={(e) => setBlockId(e.target.value)}
+                    value={blockId}
                   >
-                    <option value="1">Block 1</option>
-                    <option value="2">Block 2</option>
-                    <option value="3">Block 3</option>
+                    <option value=''>Tất cả</option>
+                    {blocks.map(x => (
+                      <option key={x.id} value={x.id}>Block {x.localBlockId || x.id}</option>
+                    ))}
                   </select>
                   <PlusCircleOutlinedIcon />
                 </div>
               </Form>
             </div>
-            <div className="first-two-charts">
-              <div className="custom-card custom-card--warning">
-                <div className="custom-card__header">
+            <div className='first-two-charts'>
+              <div className='custom-card custom-card--warning'>
+                <div className='custom-card__header'>
                   <TitleIcon />
-                  <h2 className="custom-card__title">Cảnh báo</h2>
+                  <h2 className='custom-card__title'>Cảnh báo</h2>
                 </div>
-                <div className="custom-card__body">
+                <div className='custom-card__body'>
                   <VerticalBar
-                    series={verticalBarSeries}
+                    series={blockStatistic}
                     // labels={['Bình thường', 'Cảnh báo', 'Báo động']}
                   />
                 </div>
               </div>
-              <div className="custom-card custom-card--status">
-                <div className="custom-card__header">
+              <div className='custom-card custom-card--status'>
+                <div className='custom-card__header'>
                   <TitleIcon />
-                  <h2 className="custom-card__title">Tình trạng</h2>
+                  <h2 className='custom-card__title'>Tình trạng</h2>
                 </div>
-                <div className="custom-card__body">
-                  <Donut
-
-                  // series={[healthy, unhealthy]}
-                  // labels={['Đang hoạt động', 'Mất kết nối']}
-                  />
+                <div className='custom-card__body'>
+                  <Donut series={blockStatus} />
                 </div>
               </div>
             </div>
           </div>
 
           <div>
-            <div className="custom-card custom-card--operate">
-              <div className="custom-card__header justify-content-between">
-                <div className="d-flex align-items-center">
+            <div className='custom-card custom-card--operate'>
+              <div className='custom-card__header justify-content-between'>
+                <div className='d-flex align-items-center'>
                   <TitleIcon />
-                  <h2 className="custom-card__title">Vận hành</h2>
+                  <h2 className='custom-card__title'>Vận hành</h2>
                 </div>
                 <DatePicker
-                  placeholder="Chọn thời gian"
-                  format="DD/MM/YYYY"
-                  // onChange={onChange}
+                  placeholder='Chọn thời gian'
+                  format='DD/MM/YYYY'
+                  value={time}
+                  onChange={setTime}
                 />
               </div>
-              <div className="custom-card__body">
-                <LineChart series={lineChartSeries} />
+              <div className='custom-card__body'>
+                <LineChart series={blockAlertSeries} />
               </div>
             </div>
           </div>
         </div>
-        <div className="right-side">
-          <CollectData dataArr={[...verticalBarSeries, normalBlock]}/>
+        <div className='right-side'>
+          <BlockList data={blocks} />
         </div>
       </div>
     </>

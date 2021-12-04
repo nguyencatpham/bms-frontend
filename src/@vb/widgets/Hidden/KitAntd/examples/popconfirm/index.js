@@ -3,12 +3,12 @@ import React from 'react'
 import { Popconfirm, message, Button } from 'antd'
 
 function confirm(e) {
-  console.log(e)
+  console.info(e)
   message.success('Click on Yes')
 }
 
 function cancel(e) {
-  console.log(e)
+  console.info(e)
   message.error('Click on No')
 }
 

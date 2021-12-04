@@ -45,7 +45,7 @@ const DefaultPage = ({ loading, detail, preConfirm, dispatch }) => {
       await form.validateFields(['name', 'description', 'description'])
       setModal(true)
     } catch (error) {
-      console.log(error)
+      console.error(error)
     }
   }
   useEffect(() => {

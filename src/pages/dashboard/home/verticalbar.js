@@ -4,7 +4,7 @@ import Chart from 'react-apexcharts'
 const ChartPage = ({ series, labels }) => {
   const config = {
     series: [{
-      data: [21, 22, 10, 28]
+      data: series.map(x => x.data)
     }],
     options: {
       dataLabels: {
@@ -16,15 +16,15 @@ const ChartPage = ({ series, labels }) => {
           // fontSize: '14px',
           // fontFamily: 'Helvetica, Arial, sans-serif',
           // fontWeight: 'bold',
-          colors: ['#000'],
-        },
+          colors: ['#000']
+        }
       },
       chart: {
         offsetX: -10,
         offsetY: 10,
         toolbar: {
-          show: false,
-        },
+          show: false
+        }
         // type: 'bar',
         // height: 350,
         // stacked: true,
@@ -41,12 +41,12 @@ const ChartPage = ({ series, labels }) => {
           // vertical: true,
           // barHeight: '100%',
           dataLabels: {
-            position: 'top',
+            position: 'top'
             // maxItems: 100,
             // hideOverflowingLabels: true,
             // orientation: horizontal
-          },
-        },
+          }
+        }
       },
       grid: {
         show: false,
@@ -54,28 +54,27 @@ const ChartPage = ({ series, labels }) => {
           top: 0,
           right: 0,
           bottom: 0,
-          left: 40,
-        },
+          left: 40
+        }
       },
       stroke: {
         colors: ['transparent'],
-        width: 0,
+        width: 0
       },
 
       xaxis: {
         categories: series.map((s) => s.name),
-        labels: {},
         axisBorder: {
           show: true,
-          offsetX: -27,
+          offsetX: -27
         },
         axisTicks: {
-          show: false,
+          show: false
         },
         labels: {
-          show: true,
+          show: true
           // offsetX: -6,
-        },
+        }
       },
       yaxis: {
         forceNiceScale: true,
@@ -83,12 +82,12 @@ const ChartPage = ({ series, labels }) => {
           return max + 1
         },
         title: {
-          text: undefined,
+          text: undefined
         },
 
         axisBorder: {
-          show: true,
-        },
+          show: true
+        }
       },
       tooltip: {
         y: {
@@ -96,12 +95,12 @@ const ChartPage = ({ series, labels }) => {
             return val
           },
           title: {
-            formatter: () => 'Value: ',
-        },
-        },
+            formatter: () => 'Value: '
+          }
+        }
       },
       fill: {
-        opacity: 1,
+        opacity: 1
       },
       colors: series.map((s) => s.color),
       legend: {
@@ -114,15 +113,13 @@ const ChartPage = ({ series, labels }) => {
         itemMargin: {
           horizontal: 5,
           vertical: 5,
-          backgroundColor: '#eee',
+          backgroundColor: '#eee'
         },
         formatter: function (seriesName, opts) {
-          // return seriesName + '2121'
-          // console.log(opts.seriesIndex);
-          const arr = opts.w.globals.series[0];
+          const arr = opts.w.globals.series[0]
           const sum = arr.reduce((a, b) => a + b, 0)
-          const one = arr[opts.seriesIndex];
-          const percent = ((one / sum) * 100).toFixed(1);
+          const one = arr[opts.seriesIndex]
+          const percent = sum ? ((one / sum) * 100).toFixed(1) : 0
           return (
             seriesName +
             ':  ' +
@@ -133,21 +130,21 @@ const ChartPage = ({ series, labels }) => {
         markers: {
           width: 12,
           height: 12,
-          radius: '50%',
-        },
+          radius: '50%'
+        }
         // horizontalAlign: 'left',
         // offsetX: 40
-      },
-    },
+      }
+    }
   }
   return (
-    <div className="chart-page">
+    <div className='chart-page'>
       <Chart
-        width="100%"
+        width='100%'
         options={config.options}
         series={config.series}
-        type="bar"
-        height="360"
+        type='bar'
+        height='360'
         // style={{ minHeight: '400px' }}
       />
     </div>

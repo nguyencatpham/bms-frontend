@@ -52,7 +52,7 @@ const columns = [
 
 const rowSelection = {
   onChange: (selectedRowKeys, selectedRows) => {
-    console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows)
+    console.info(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows)
   },
 }
 

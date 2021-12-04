@@ -2,9 +2,9 @@ import React from 'react'
 import Chart from 'react-apexcharts'
 
 const ChartPage = ({ series, labels }) => {
-    var config = {
-    series: [3, 4, 5],
-    
+  var config = {
+    series,
+
     options: {
       // chart: {
       //   type: 'radialBar'
@@ -20,7 +20,7 @@ const ChartPage = ({ series, labels }) => {
           // dataLabels: {
           //     offset: 0,
           //     minAngleToShowLabel: 10
-          // }, 
+          // },
           donut: {
             size: '52%',
             background: 'transparent',
@@ -50,7 +50,7 @@ const ChartPage = ({ series, labels }) => {
                 }
               }
             }
-          },   
+          }
         }
       },
       grid: {
@@ -59,19 +59,19 @@ const ChartPage = ({ series, labels }) => {
           top: 40,
           right: 0,
           bottom: -50,
-          left: 0,
-        },
+          left: 0
+        }
       },
-      
+
       tooltip: {
         y: {
           formatter: function (val) {
             return val
-          },
-        },
+          }
+        }
       },
       fill: {
-        opacity: 1,
+        opacity: 1
       },
       // colors: ['#1ab7ea', '#75cb6e', '#f64b4e'],
       colors: ['#017EFA', '#9E7777', '#ED4845'],
@@ -87,7 +87,7 @@ const ChartPage = ({ series, labels }) => {
         itemMargin: {
           horizontal: 5,
           vertical: 5,
-          backgroundColor: '#eee',
+          backgroundColor: '#eee'
         },
         formatter: function (seriesName, opts) {
           return (
@@ -99,22 +99,22 @@ const ChartPage = ({ series, labels }) => {
         markers: {
           width: 12,
           height: 12,
-          radius: '50%',
-        },
+          radius: '50%'
+        }
         // horizontalAlign: 'left',
         // offsetX: 40
-      },
+      }
     }
   }
 
   return (
-    <div className="chart-page">
+    <div className='chart-page'>
       <Chart
         options={config.options}
         series={config.series}
-        type="donut"
+        type='donut'
         // width="100%"
-        height="310"
+        height='310'
         // style={{ minHeight: '400px' }}
       />
     </div>

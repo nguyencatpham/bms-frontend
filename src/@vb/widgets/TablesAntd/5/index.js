@@ -9,7 +9,7 @@ class TablesAntdFilterSorter extends React.Component {
   }
 
   handleChange = (pagination, filters, sorter) => {
-    console.log('Various parameters', pagination, filters, sorter)
+    console.info('Various parameters', pagination, filters, sorter)
     this.setState({
       filteredInfo: filters,
       sortedInfo: sorter,

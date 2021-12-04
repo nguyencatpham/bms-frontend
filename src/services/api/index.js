@@ -1,6 +1,6 @@
 /* eslint camelcase: 0 */
 /*
-    Total: 115 APIs
+    Total: 120 APIs
     version: "0.1.1",
     title: "bms-backend",
     description: "bms Backend API"
@@ -47,18 +47,23 @@ export const types = {
   DEVICES_GET_ID_UNITS_COUNT: 'DEVICES_GET_ID_UNITS_COUNT',
   DEVICES_GET_ID_BLOCKS: 'DEVICES_GET_ID_BLOCKS',
   DEVICES_POST_ID_BLOCKS: 'DEVICES_POST_ID_BLOCKS',
+  DEVICES_DELETE_ID_BLOCKS: 'DEVICES_DELETE_ID_BLOCKS',
   DEVICES_GET_ID_BLOCKS_COUNT: 'DEVICES_GET_ID_BLOCKS_COUNT',
   DEVICES_GET_ID: 'DEVICES_GET_ID',
   DEVICES_DELETE_ID: 'DEVICES_DELETE_ID',
+  DEVICES_PATCH_ID: 'DEVICES_PATCH_ID',
   DEVICES_GET: 'DEVICES_GET',
   DEVICES_GET_COUNT: 'DEVICES_GET_COUNT',
   DEVICES_GET_ID_TSDATA: 'DEVICES_GET_ID_TSDATA',
   DEVICES_GET_ID_EVENTS: 'DEVICES_GET_ID_EVENTS',
+  DEVICES_GET_ID_EVENTS_TIMESERIES: 'DEVICES_GET_ID_EVENTS_TIMESERIES',
   DEVICES_GET_ALERTCHART: 'DEVICES_GET_ALERTCHART',
   DEVICES_GET_ALERTSTATS: 'DEVICES_GET_ALERTSTATS',
   DEVICES_GET_STATS: 'DEVICES_GET_STATS',
   DEVICES_GET_ID_BLOCK_STATS: 'DEVICES_GET_ID_BLOCK_STATS',
   DEVICES_PUT_CREDENTIALS: 'DEVICES_PUT_CREDENTIALS',
+  DEVICES_PUT_ID_FWUPDATE: 'DEVICES_PUT_ID_FWUPDATE',
+  DEVICES_POST_ID_UPLOADCONFIG: 'DEVICES_POST_ID_UPLOADCONFIG',
   BLOCKS_GET_ID_DEVICE: 'BLOCKS_GET_ID_DEVICE',
   BLOCKS_POST: 'BLOCKS_POST',
   BLOCKS_PATCH: 'BLOCKS_PATCH',
@@ -329,6 +334,11 @@ export const apis = {
     url: `${apiEndpoint}/api/devices/${id}/blocks`,
     body: data
   }),
+  // Deletes all blocks of this model.
+  DEVICES_DELETE_ID_BLOCKS: ({ id }) => ({
+    method: 'DELETE',
+    url: `${apiEndpoint}/api/devices/${id}/blocks`
+  }),
   // Counts blocks of Device.
   DEVICES_GET_ID_BLOCKS_COUNT: ({ id, where }) => ({
     method: 'GET',
@@ -343,6 +353,12 @@ export const apis = {
   DEVICES_DELETE_ID: ({ id }) => ({
     method: 'DELETE',
     url: `${apiEndpoint}/api/devices/${id}`
+  }),
+  // Patch attributes for a model instance and persist it into the data source.
+  DEVICES_PATCH_ID: ({ id, data }) => ({
+    method: 'PATCH',
+    url: `${apiEndpoint}/api/devices/${id}`,
+    body: data
   }),
   // Find all instances of the model matched by filter from the data source.
   DEVICES_GET: ({ filter }) => ({
@@ -363,6 +379,11 @@ export const apis = {
   DEVICES_GET_ID_EVENTS: ({ id, start, end, macAddress, unitId, stringId, priority, limit, isAsc }) => ({
     method: 'GET',
     url: `${apiEndpoint}/api/devices/${id}/events?${start ? `start=${encodeURIComponent(typeof start === 'object' ? JSON.stringify(start) : start)}&` : ''}${end ? `end=${encodeURIComponent(typeof end === 'object' ? JSON.stringify(end) : end)}&` : ''}${macAddress ? `macAddress=${encodeURIComponent(typeof macAddress === 'object' ? JSON.stringify(macAddress) : macAddress)}&` : ''}${unitId ? `unitId=${encodeURIComponent(typeof unitId === 'object' ? JSON.stringify(unitId) : unitId)}&` : ''}${stringId ? `stringId=${encodeURIComponent(typeof stringId === 'object' ? JSON.stringify(stringId) : stringId)}&` : ''}${priority ? `priority=${encodeURIComponent(typeof priority === 'object' ? JSON.stringify(priority) : priority)}&` : ''}${limit ? `limit=${encodeURIComponent(typeof limit === 'object' ? JSON.stringify(limit) : limit)}&` : ''}${isAsc ? `isAsc=${encodeURIComponent(typeof isAsc === 'object' ? JSON.stringify(isAsc) : isAsc)}` : ''}`
+  }),
+  // get events data for timeseries chart
+  DEVICES_GET_ID_EVENTS_TIMESERIES: ({ id, start, end, macAddress, unitId, stringId, priority, limit, isAsc }) => ({
+    method: 'GET',
+    url: `${apiEndpoint}/api/devices/${id}/events-timeseries?${start ? `start=${encodeURIComponent(typeof start === 'object' ? JSON.stringify(start) : start)}&` : ''}${end ? `end=${encodeURIComponent(typeof end === 'object' ? JSON.stringify(end) : end)}&` : ''}${macAddress ? `macAddress=${encodeURIComponent(typeof macAddress === 'object' ? JSON.stringify(macAddress) : macAddress)}&` : ''}${unitId ? `unitId=${encodeURIComponent(typeof unitId === 'object' ? JSON.stringify(unitId) : unitId)}&` : ''}${stringId ? `stringId=${encodeURIComponent(typeof stringId === 'object' ? JSON.stringify(stringId) : stringId)}&` : ''}${priority ? `priority=${encodeURIComponent(typeof priority === 'object' ? JSON.stringify(priority) : priority)}&` : ''}${limit ? `limit=${encodeURIComponent(typeof limit === 'object' ? JSON.stringify(limit) : limit)}&` : ''}${isAsc ? `isAsc=${encodeURIComponent(typeof isAsc === 'object' ? JSON.stringify(isAsc) : isAsc)}` : ''}`
   }),
   // get system alertChart
   DEVICES_GET_ALERTCHART: () => ({
@@ -388,6 +409,17 @@ export const apis = {
   DEVICES_PUT_CREDENTIALS: ({ body }) => ({
     method: 'PUT',
     url: `${apiEndpoint}/api/devices/credentials`,
+    body
+  }),
+  // check fw update
+  DEVICES_PUT_ID_FWUPDATE: ({ id }) => ({
+    method: 'PUT',
+    url: `${apiEndpoint}/api/devices/${id}/fwUpdate`
+  }),
+  // check fw update
+  DEVICES_POST_ID_UPLOADCONFIG: ({ id, body }) => ({
+    method: 'POST',
+    url: `${apiEndpoint}/api/devices/${id}/uploadConfig`,
     body
   }),
   // Fetches belongsTo relation device.

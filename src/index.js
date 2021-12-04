@@ -26,7 +26,7 @@ const middlewares = [sagaMiddleware, routeMiddleware]
 // if (process.env.NODE_ENV === 'development') {
 //   middlewares.push(logger)
 // }
-console.log(`
+console.info(`
 ################################################
 # Environment version ${PackageJson.version}
 # BACKEND URL      : ${Config.API_URL}

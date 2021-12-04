@@ -64,10 +64,10 @@ class AntdModalExample extends React.Component {
       title: 'Do you Want to delete these items?',
       content: 'Some descriptions',
       onOk() {
-        console.log('OK')
+        console.info('OK')
       },
       onCancel() {
-        console.log('Cancel')
+        console.info('Cancel')
       },
     })
   }
@@ -80,10 +80,10 @@ class AntdModalExample extends React.Component {
       okType: 'danger',
       cancelText: 'No',
       onOk() {
-        console.log('OK')
+        console.info('OK')
       },
       onCancel() {
-        console.log('Cancel')
+        console.info('Cancel')
       },
     })
   }

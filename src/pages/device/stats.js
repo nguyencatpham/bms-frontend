@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { Avatar, Input, Table, Button, Form, Dropdown, Menu } from 'antd'
 import { connect } from 'react-redux'
 import { UserOutlined, CloseOutlined, EllipsisOutlined } from '@ant-design/icons'
-import { withRouter, Link, useHistory } from 'react-router-dom'
+import { withRouter, Link, useHistory, useParams } from 'react-router-dom'
 import { Helmet } from 'react-helmet'
 import { TIME_FORMAT } from 'constant'
 import moment from 'moment'
@@ -13,15 +13,16 @@ import './style.scss'
 const { Item } = Form
 const { Search } = Input
 
-const mapStateToProps = ({ authDevice, user, dispatch }) => {
+const mapStateToProps = ({ device, authDevice, user, dispatch }) => {
   let { list, loading, total, preConfirm } = authDevice
+  const { detail = {} } = device
   const { list: users, username, email } = user
   const usernameOrEmail = username || email
   if (typeof total === 'object') {
     total = total.count
   }
 
-  return { list, loading, total, users, preConfirm, usernameOrEmail, dispatch }
+  return { list, loading, total, users, preConfirm, usernameOrEmail, detail, dispatch }
 }
 
 // TODO Temp data while waiting for backend
@@ -35,12 +36,13 @@ const tempData = [
   { id: 7, key: 'R2', value: 1 },
   { id: 8, key: 'RUpper', value: 1 },
   { id: 9, key: 'VUpper', value: 1 },
-  { id: 10, key: 'EUpper', value: 1 },
+  { id: 10, key: 'EUpper', value: 1 }
 ]
 
-const DefaultPage = ({ list, loading, total, preConfirm, usernameOrEmail, dispatch }) => {
+const DefaultPage = ({ list, loading, total, preConfirm, usernameOrEmail, detail, dispatch }) => {
   const history = useHistory()
   const [form] = Form.useForm()
+  const { id } = useParams()
   const [modal, setModal] = useState()
   const [name, setName] = useState()
   const [roles] = useState([])
@@ -48,36 +50,23 @@ const DefaultPage = ({ list, loading, total, preConfirm, usernameOrEmail, dispat
     current: 1,
     pageSize: 10,
     total: 0,
-    showTotal: (total, range) => `${range[0]}-${range[1]} trên ${total} thiết bị`,
+    showTotal: (total, range) => `${range[0]}-${range[1]} trên ${total} thiết bị`
   })
   const [payload, setPayload] = useState({
+    id,
     filter: JSON.stringify({
       include: [
         {
-          relation: 'devices',
-          scope: {
-            include: [
-              {
-                relation: 'systems',
-                scope: {
-                  include: [
-                    {
-                      relation: 'blocks',
-                    },
-                  ],
-                },
-              },
-            ],
-          },
-        },
+          relation: 'blocks'
+        }
       ],
       skip: (pagination.current - 1) * pagination.pageSize,
       limit: pagination.pageSize,
-      order: ['created DESC'],
-    }),
+      order: ['created DESC']
+    })
   })
 
-  const onSearch = (value) => console.log(value)
+  const onSearch = (value) => console.info(value)
   const columns = [
     {
       title: 'Thông số',
@@ -86,8 +75,8 @@ const DefaultPage = ({ list, loading, total, preConfirm, usernameOrEmail, dispat
       width: '20%',
 
       render: (text, item) => {
-        return <div style={{whiteSpace: 'nowrap',}}>{text}</div>
-      },
+        return <div style={{ whiteSpace: 'nowrap' }}>{text}</div>
+      }
 
       // render: (text, item) => {
       //   const device = get(item.devices, ['0'], {})
@@ -111,9 +100,9 @@ const DefaultPage = ({ list, loading, total, preConfirm, usernameOrEmail, dispat
       width: '80%',
 
       render: (text, item) => {
-        return <div style={{ whiteSpace: 'nowrap'}}>{text}</div>
-      },
-    },
+        return <div style={{ whiteSpace: 'nowrap' }}>{text}</div>
+      }
+    }
   ]
 
   const onTableChange = (pagination) => {
@@ -132,9 +121,9 @@ const DefaultPage = ({ list, loading, total, preConfirm, usernameOrEmail, dispat
         id: modal,
         body: {
           username: usernameOrEmail,
-          password,
-        },
-      },
+          password
+        }
+      }
     })
     setModal(false)
   }
@@ -145,19 +134,15 @@ const DefaultPage = ({ list, loading, total, preConfirm, usernameOrEmail, dispat
   }, [total, pagination, setPagination])
   useEffect(() => {
     dispatch({
-      type: 'authDevice/COUNT',
-      payload: { where: (JSON.parse(payload.filter) || {}).where },
-    })
-    dispatch({
-      type: 'authDevice/LIST',
-      payload,
+      type: 'device/DETAIL',
+      payload
     })
   }, [dispatch, payload])
 
   return (
     <>
-      <div className="DevicePage page">
-        <Helmet title="Thiết bị | Cấu hình" />
+      <div className='DevicePage page'>
+        <Helmet title='Thiết bị | Cấu hình' />
         <Table
           //   rowSelection={rowSelection}
           // className="custom-table table-responsive"
@@ -180,7 +165,7 @@ const DefaultPage = ({ list, loading, total, preConfirm, usernameOrEmail, dispat
             onCancel={() => setModal(false)}
             preConfirm={preConfirm}
           />
-          <Item name="id" label="" initialValue={modal}>
+          <Item name='id' label='' initialValue={modal}>
             <Input style={{ display: 'none' }} />
           </Item>
         </Form>
