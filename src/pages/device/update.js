@@ -78,12 +78,23 @@ const DefaultPage = ({ loading, detail, preConfirm, dispatch }) => {
         <h3 className='form-title'><i className='i_user_8 ico30' />QUẢN LÝ THIẾT BỊ</h3>
         <div className='card-content'>
           <div className='card-bg'>
-            <Card title={<p><span>Cập nhật tài khoản:</span><span className='txt-orange'>{name}</span></p>}>
-              <Form
-                className='detail-form'
-                onFinish={onFinish}
-                form={form}
-                autoComplete='off'
+            <Card title={<p><span>Cập nhật tài khoản:</span><span className='txt-orange'>{name}</span></p>} />
+            <Form
+              className='detail-form'
+              onFinish={onFinish}
+              form={form}
+              autoComplete='off'
+            >
+              <Item
+                className='display-grid grid-row'
+                name='serialId'
+                label='Serial'
+                rules={[
+                  {
+                    required: true,
+                    message: 'Vui lòng nhập Serial!'
+                  }
+                ]}
               >
                 <Input placeholder='Nhập UUID' />
               </Item>
@@ -135,7 +146,6 @@ const DefaultPage = ({ loading, detail, preConfirm, dispatch }) => {
                   type='primary'
                   style={{ marginLeft: 10 }}
                   onClick={() => validateFields()}
-                  // htmlType="submit"
                 >
                   <i className='i_save_36 ico25' />
                   <strong>Lưu</strong>
