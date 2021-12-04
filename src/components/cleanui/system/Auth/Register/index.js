@@ -15,7 +15,7 @@ const Register = ({ dispatch, user }) => {
   }
 
   const onFinishFailed = errorInfo => {
-    console.log('Failed:', errorInfo)
+    console.info('Failed:', errorInfo)
   }
 
   return (

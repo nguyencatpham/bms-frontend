@@ -1,23 +1,15 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Layout } from 'antd'
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
 import classNames from 'classnames'
+import './style.scss'
 
-import TopBar from '@vb/components/TopBar'
-import Breadcrumbs from '@vb/components/Breadcrumbs'
 import Breadcrumbs2 from '@vb/components/Breadcrumbs2'
-import MenuClassic from '@vb/components/MenuClassic'
 import MenuFlyout from '@vb/components/MenuFlyout'
-import MenuSimply from '@vb/components/MenuSimply'
-import Footer from '@vb/components/Footer'
-import Footer2 from '@vb/components/Footer2'
-import Footer3 from '@vb/components/Footer3'
-import Footer4 from '@vb/components/Footer4'
-// import Sidebar from '@vb/components/Sidebar'
-// import SupportChat from '@vb/components/SupportChat'
 import Variants from '@vb/components/Variants'
-// import Tutorial from '@vb/components/Tutorial'
+import SmSider from './smSider'
+import LgSider from './lgSider'
 
 const mapStateToProps = ({ settings }) => ({
   isMobileMenuOpen: settings.isMobileMenuOpen,
@@ -33,7 +25,7 @@ const mapStateToProps = ({ settings }) => ({
   layoutTopbar: settings.layoutTopbar,
   layoutBreadcrumbs: settings.layoutBreadcrumbs,
   layoutFooter: settings.layoutFooter,
-  layoutMenu: settings.layoutMenu
+  layoutMenu: settings.layoutMenu,
 })
 
 let touchStartPrev = 0
@@ -55,8 +47,9 @@ const MainLayout = ({
   layoutTopbar,
   layoutBreadcrumbs,
   layoutFooter,
-  layoutMenu
+  layoutMenu,
 }) => {
+  const [mobileSidebarVisible, setMobileSidebarVisible] = useState(false);
   // touch slide mobile menu opener
   useEffect(() => {
     const unify = (e) => {
@@ -69,7 +62,7 @@ const MainLayout = ({
         touchStartPrev = x
         touchStartLocked = x > 70
       },
-      { passive: false }
+      { passive: false },
     )
     document.addEventListener(
       'touchmove',
@@ -81,7 +74,7 @@ const MainLayout = ({
           touchStartLocked = true
         }
       },
-      { passive: false }
+      { passive: false },
     )
   })
 
@@ -90,76 +83,68 @@ const MainLayout = ({
       type: 'settings/CHANGE_SETTING',
       payload: {
         setting: 'isMobileMenuOpen',
-        value: !isMobileMenuOpen
-      }
+        value: !isMobileMenuOpen,
+      },
     })
   }
-
-  const TopbarWrapper = ({ children: c }) => (
-    <Layout.Header
-      className={classNames('vb__layout__header', {
-        vb__layout__fixedHeader: isTopbarFixed,
-        vb__layout__headerGray: isGrayTopbar,
-        vb__layout__separatedHeader: isTopbarSeparated
-      })}
-    >
-      {c}
-    </Layout.Header>
-  )
 
   return (
     <div
       className={classNames({
-        vb__layout__grayBackground: isGrayBackground
+        vb__layout__grayBackground: isGrayBackground,
       })}
     >
       <Layout
-        className={classNames('vb__layout', {
-          vb__layout__contentMaxWidth: isContentMaxWidth,
-          vb__layout__appMaxWidth: isAppMaxWidth,
-          vb__layout__squaredBorders: isSquaredBorders,
-          vb__layout__cardsShadow: isCardShadow,
-          vb__layout__borderless: isBorderless
-        })}
+      // className={classNames('vb__layout', {
+      //   vb__layout__contentMaxWidth: isContentMaxWidth,
+      //   vb__layout__appMaxWidth: isAppMaxWidth,
+      //   vb__layout__squaredBorders: isSquaredBorders,
+      //   vb__layout__cardsShadow: isCardShadow,
+      //   vb__layout__borderless: isBorderless,
+      // })}
       >
         {/* <Tutorial /> */}
-        <Variants />
-        {/* <Sidebar /> */}
-        {/* <SupportChat /> */}
-        {layoutMenu === 'classic' && <MenuClassic />}
-        {layoutMenu === 'flyout' && <MenuFlyout />}
-        {layoutMenu === 'simply' && <MenuSimply />}
-        <Layout>
-          {/* {layoutTopbar === 'v1' && (
+        {/* <Variants /> */}
+        <div className="sidebar">
+          {/* <MenuFlyout /> */}
+          <LgSider />
+          <SmSider visible={mobileSidebarVisible} setMobileSidebarVisible={setMobileSidebarVisible}  />
+        </div>
+
+        {/* {layoutMenu === 'classic' && <MenuFlyout />} */}
+        {/* {layoutMenu === 'flyout' && <MenuFlyout />} */}
+        {/* {layoutMenu === 'simply' && <MenuFlyout />} */}
+        {/* <Layout> */}
+        {/* {layoutTopbar === 'v1' && (
             <TopbarWrapper>
               <TopBar />
             </TopbarWrapper>
           )} */}
-          {layoutBreadcrumbs === 'v1' && <Breadcrumbs />}
-          {layoutBreadcrumbs === 'v2' && <Breadcrumbs2 />}
-          <Layout.Content className='vb__layout__content'>{children}</Layout.Content>
-          {layoutFooter === 'v1' && (
+        {/* {layoutBreadcrumbs === 'v1' && <Breadcrumbs />} */}
+        {/* {layoutBreadcrumbs === 'v2' && <Breadcrumbs2 />} */}
+        <div>
+          <Breadcrumbs2 visible={mobileSidebarVisible} setMobileSidebarVisible={setMobileSidebarVisible} />
+          <Layout.Content>{children}</Layout.Content>
+        </div>
+
+        {/* {layoutFooter === 'v1' && (
             <Layout.Footer>
               <Footer />
             </Layout.Footer>
-          )}
-          {layoutFooter === 'v2' && (
+          )} */}
+        {/* {layoutFooter === 'v2' && (
             <Layout.Footer>
               <Footer2 />
             </Layout.Footer>
-          )}
-          {layoutFooter === 'v3' && (
-            <Layout.Footer>
-              {/* <Footer3 /> */}
-            </Layout.Footer>
-          )}
-          {layoutFooter === 'v4' && (
+          )} */}
+        {/* {layoutFooter === 'v3' && <Layout.Footer><Footer3 /></Layout.Footer>} */}
+        {/* {layoutFooter === 'v4' && (
             <Layout.Footer>
               <Footer4 />
             </Layout.Footer>
-          )}
-        </Layout>
+          )} */}
       </Layout>
+      {/* </Layout> */}
     </div>
   )
 }

@@ -1,12 +1,14 @@
 @import 'mixins.scss';
 
 .air__menuLeft {
-  flex: 0 0 256px;
-  max-width: 256px;
-  min-width: 256px;
-  width: 256px;
+  // flex: 0 0 235px;
+  // max-width: 235px;
+  // min-width: 235px;
+  // width: 235px;
   min-height: 100%;
-  background: $dark-gray-6;
+  // TODO
+  // background: $dark-gray-6;
+  // background: red;
   overflow: hidden;
 
   @media (max-width: $sm-max-width) {
@@ -16,7 +18,7 @@
     left: 0;
     bottom: 0;
     overflow: visible;
-    margin-left: -256px;
+    // margin-left: -256px;
     transition: transform 0.2s ease-in-out;
 
     &__mobileToggleButton {
@@ -29,7 +31,7 @@
 
     @at-root {
       .air__menuLeft__mobileToggled {
-        transform: translateX(256px);
+        // transform: translateX(256px);
       }
     }
   }
@@ -40,10 +42,10 @@
     z-index: 950;
     top: 0;
     height: 100%;
-    flex: 0 0 256px;
-    max-width: 256px;
-    min-width: 256px;
-    width: 256px;
+    // flex: 0 0 235px;
+    // max-width: 235px;
+    // min-width: 235px;
+    // width: 235px;
     display: flex;
     flex-direction: column;
   }
@@ -139,8 +141,10 @@
       }
     }
     position: absolute;
-    top: rem(12);
-    right: rem(10);
+    top: rem(28);
+    right: rem(-20);
+    background-color: white;
+    border-radius: 50%;
     z-index: 2;
     width: 40px;
     height: 40px;
@@ -187,69 +191,30 @@
 
   //logo
   &__logo {
-    display: block;
-    padding: rem(15) rem(20);
-    line-height: 1;
-    height: rem(64);
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    padding: 2rem 1rem 2rem;
+    border-bottom: 1px solid navy;
+    margin-bottom: 2rem;
+    // line-height: 1;
+    height: 96px;
     overflow: hidden;
 
     &__letter {
       float: left;
-
-      svg {
-        margin-right: rem(6);
-        height: rem(30);
-        width: rem(30);
-        path:nth-child(1) {
-          stroke: $primary;
-          fill: $primary;
-          stroke-width: 1px;
-          animation: logoAnimate 6s ease-in-out infinite;
-        }
-        path:nth-child(2) {
-          stroke: $primary;
-          fill: $primary;
-          stroke-width: 1px;
-          animation: logoAnimate 6s ease-in-out infinite;
-          animation-delay: 2s;
-        }
-        path:nth-child(3) {
-          stroke: $primary;
-          fill: $primary;
-          stroke-width: 1px;
-          animation: logoAnimate 6s ease-in-out infinite;
-          animation-delay: 4s;
-        }
-
-        @keyframes logoAnimate {
-          0% {
-            stroke: $primary;
-            fill: $primary;
-          }
-          50% {
-            stroke: #1ad697;
-            fill: #1ad697;
-          }
-          100% {
-            stroke: $primary;
-            fill: $primary;
-          }
-        }
-      }
     }
 
     &__name {
       font-weight: 700;
-      color: $white;
-      font-size: rem(18);
-      margin-left: rem(40);
+      color: #fff !important;
+      font-size: 1.2rem;
     }
     &__descr {
-      color: $gray-4;
-      margin-left: rem(40);
-      font-size: 12px;
-      text-transform: uppercase;
-      letter-spacing: 1px;
+      // color: $gray-4;
+      color: #fff;
+      font-size: 0.9rem;
+      // text-transform: uppercase;
     }
   }
 
@@ -678,7 +643,9 @@
 
     // white theme
     .air__menuLeft__white {
-      background: $white;
+      // TODO
+      // background: $white;
+      background: #0a1e51;
 
       .air__menuLeft {
         &__category {

@@ -20,7 +20,7 @@ export async function login (email, password) {
       }
       return false
     })
-    .catch(err => console.log(err))
+    .catch(err => console.error(err))
 }
 export async function preConfirm (password) {
   const id = store.get('user.id')
@@ -38,7 +38,7 @@ export async function preConfirm (password) {
       }
       return false
     })
-    .catch(err => console.log(err))
+    .catch(err => console.error(err))
 }
 
 export async function register ({ username, email, password, name }) {
@@ -59,7 +59,7 @@ export async function register ({ username, email, password, name }) {
       }
       return false
     })
-    .catch(err => console.log(err))
+    .catch(err => console.error(err))
 }
 
 export async function currentAccount (id) {
@@ -76,7 +76,7 @@ export async function currentAccount (id) {
       return false
     })
     .catch(err => {
-      console.log(err)
+      console.error(err)
       return false
     })
 }
@@ -87,5 +87,5 @@ export async function logout () {
     .then(() => {
       return true
     })
-    .catch(err => console.log(err))
+    .catch(err => console.error(err))
 }

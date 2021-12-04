@@ -18,7 +18,7 @@ export const COMMON = ({ type, field, actionType }) => {
         const success = yield call(preConfirm, password)
         if (!success) {
           yield put({
-            type: 'account/SET_STATE',
+            type: `${ENTITY}/SET_STATE`,
             payload: {
               preConfirm: true
             }
@@ -36,11 +36,11 @@ export const COMMON = ({ type, field, actionType }) => {
     let response = yield call(callApi, { type, payload })
     if (response) {
       if (type.toLowerCase().indexOf('delete') > -1) {
-        actionType = 'account/SET_LIST_STATE'
+        actionType = `${ENTITY}/SET_LIST_STATE`
         response = payload.id
       }
       yield put({
-        type: actionType || 'account/SET_STATE',
+        type: actionType || `${ENTITY}/SET_STATE`,
         payload: {
           [field]: response
         }
@@ -50,7 +50,7 @@ export const COMMON = ({ type, field, actionType }) => {
           message: 'Thành công!',
           description: `${ENTITY} ${response.name} đã được tạo thành công!`
         })
-        history.push(`/accounts/${response.id}`)
+        history.push(`/${ENTITY}s/${response.id}`)
       }
       if (type.toLowerCase().indexOf('change') > -1 ||
         type.toLowerCase().indexOf('patch') > -1 ||
@@ -59,15 +59,15 @@ export const COMMON = ({ type, field, actionType }) => {
           message: 'Thành công!',
           description: `${ENTITY} ${response.name} đã được cập nhật thành công!`
         })
-        history.push(`/accounts/${response.id}`)
+        history.push(`/${ENTITY}s/${response.id}`)
       }
       if (type.toLowerCase().indexOf('delete') > -1) {
         notification.success({
           message: 'Thành công!',
           description: `${ENTITY} đã được xóa thành công!`
         })
-        if (window.location.pathname !== '/accounts') {
-          history.push('/accounts')
+        if (window.location.pathname !== `/${ENTITY}s`) {
+          history.push(`/${ENTITY}s`)
         }
       }
     }
@@ -76,7 +76,7 @@ export const COMMON = ({ type, field, actionType }) => {
 }
 function * loading (isLoading = false) {
   yield put({
-    type: 'account/SET_STATE',
+    type: `${ENTITY}/SET_STATE`,
     payload: {
       loading: isLoading
     }
@@ -88,6 +88,11 @@ export default function * rootSaga () {
     takeEvery(actions.LIST, COMMON({ type: TYPES.DEVICES_GET, field: 'list' })),
     takeEvery(actions.DETAIL, COMMON({ type: TYPES.DEVICES_GET_ID, field: 'detail' })),
     takeEvery(actions.ATTACH, COMMON({ type: TYPES.DEVICES_PUT_ID_ATTACH_DEVICE, field: 'detail' })),
-    takeEvery(actions.DELETE, COMMON({ type: TYPES.DEVICES_DELETE_ID, field: 'id' }))
+    takeEvery(actions.DELETE, COMMON({ type: TYPES.DEVICES_DELETE_ID, field: 'id' })),
+    takeEvery(actions.UNITS, COMMON({ type: TYPES.DEVICES_GET_ID_UNITS, field: 'units' })),
+    takeEvery(actions.BLOCKS, COMMON({ type: TYPES.DEVICES_GET_ID_BLOCKS, field: 'blocks' })),
+    takeEvery(actions.BLOCK_STATS, COMMON({ type: TYPES.DEVICES_GET_ID_BLOCK_STATS, field: 'blockStats' })),
+    takeEvery(actions.BLOCK_EVENTS, COMMON({ type: TYPES.DEVICES_GET_ID_EVENTS_TIMESERIES, field: 'blockEvents' })),
+    takeEvery(actions.BLOCK_DETAIL_EVENTS, COMMON({ type: TYPES.DEVICES_GET_ID_EVENTS_TIMESERIES, field: 'blockDetailEvents' }))
   ])
 }

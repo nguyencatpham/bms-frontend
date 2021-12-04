@@ -459,53 +459,6 @@
         "deprecated": false
       }
     },
-    "/users/{id}/fcms": {
-      "post": {
-        "tags": [
-          "User"
-        ],
-        "summary": "create FCM notification",
-        "operationId": "User.prototype.createFcm",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "description": "User id",
-            "required": true,
-            "type": "string",
-            "format": "JSON"
-          },
-          {
-            "name": "token",
-            "in": "formData",
-            "description": "FCM notification token",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "appId",
-            "in": "formData",
-            "description": "appId is one of: android, ios, web, other",
-            "required": true,
-            "type": "string"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Request was successful",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "auth": {
-                  "type": "string"
-                }
-              }
-            }
-          }
-        },
-        "deprecated": false
-      }
-    },
     "/users/reset": {
       "post": {
         "tags": [
@@ -862,13 +815,13 @@
         "deprecated": false
       }
     },
-    "/devices/{id}/systems/{fk}": {
+    "/devices/{id}/units/{fk}": {
       "get": {
         "tags": [
           "Device"
         ],
-        "summary": "Find a related item by id for systems.",
-        "operationId": "Device.prototype.__findById__systems",
+        "summary": "Find a related item by id for units.",
+        "operationId": "Device.prototype.__findById__units",
         "parameters": [
           {
             "name": "id",
@@ -881,7 +834,7 @@
           {
             "name": "fk",
             "in": "path",
-            "description": "Foreign key for systems",
+            "description": "Foreign key for units",
             "required": true,
             "type": "string",
             "format": "JSON"
@@ -891,7 +844,7 @@
           "200": {
             "description": "Request was successful",
             "schema": {
-              "$ref": "#/definitions/System"
+              "$ref": "#/definitions/Unit"
             }
           }
         },
@@ -901,8 +854,8 @@
         "tags": [
           "Device"
         ],
-        "summary": "Delete a related item by id for systems.",
-        "operationId": "Device.prototype.__destroyById__systems",
+        "summary": "Delete a related item by id for units.",
+        "operationId": "Device.prototype.__destroyById__units",
         "parameters": [
           {
             "name": "id",
@@ -915,7 +868,7 @@
           {
             "name": "fk",
             "in": "path",
-            "description": "Foreign key for systems",
+            "description": "Foreign key for units",
             "required": true,
             "type": "string",
             "format": "JSON"
@@ -932,8 +885,8 @@
         "tags": [
           "Device"
         ],
-        "summary": "Update a related item by id for systems.",
-        "operationId": "Device.prototype.__updateById__systems",
+        "summary": "Update a related item by id for units.",
+        "operationId": "Device.prototype.__updateById__units",
         "parameters": [
           {
             "name": "id",
@@ -946,7 +899,7 @@
           {
             "name": "fk",
             "in": "path",
-            "description": "Foreign key for systems",
+            "description": "Foreign key for units",
             "required": true,
             "type": "string",
             "format": "JSON"
@@ -956,7 +909,7 @@
             "in": "body",
             "required": false,
             "schema": {
-              "$ref": "#/definitions/System"
+              "$ref": "#/definitions/Unit"
             }
           }
         ],
@@ -964,7 +917,116 @@
           "200": {
             "description": "Request was successful",
             "schema": {
-              "$ref": "#/definitions/System"
+              "$ref": "#/definitions/Unit"
+            }
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/devices/{id}/blocks/{fk}": {
+      "get": {
+        "tags": [
+          "Device"
+        ],
+        "summary": "Find a related item by id for blocks.",
+        "operationId": "Device.prototype.__findById__blocks",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Device id",
+            "required": true,
+            "type": "string",
+            "format": "JSON"
+          },
+          {
+            "name": "fk",
+            "in": "path",
+            "description": "Foreign key for blocks",
+            "required": true,
+            "type": "string",
+            "format": "JSON"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Request was successful",
+            "schema": {
+              "$ref": "#/definitions/Block"
+            }
+          }
+        },
+        "deprecated": false
+      },
+      "delete": {
+        "tags": [
+          "Device"
+        ],
+        "summary": "Delete a related item by id for blocks.",
+        "operationId": "Device.prototype.__destroyById__blocks",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Device id",
+            "required": true,
+            "type": "string",
+            "format": "JSON"
+          },
+          {
+            "name": "fk",
+            "in": "path",
+            "description": "Foreign key for blocks",
+            "required": true,
+            "type": "string",
+            "format": "JSON"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Request was successful"
+          }
+        },
+        "deprecated": false
+      },
+      "put": {
+        "tags": [
+          "Device"
+        ],
+        "summary": "Update a related item by id for blocks.",
+        "operationId": "Device.prototype.__updateById__blocks",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Device id",
+            "required": true,
+            "type": "string",
+            "format": "JSON"
+          },
+          {
+            "name": "fk",
+            "in": "path",
+            "description": "Foreign key for blocks",
+            "required": true,
+            "type": "string",
+            "format": "JSON"
+          },
+          {
+            "name": "data",
+            "in": "body",
+            "required": false,
+            "schema": {
+              "$ref": "#/definitions/Block"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Request was successful",
+            "schema": {
+              "$ref": "#/definitions/Block"
             }
           }
         },
@@ -1005,13 +1067,13 @@
         "deprecated": false
       }
     },
-    "/devices/{id}/systems": {
+    "/devices/{id}/units": {
       "get": {
         "tags": [
           "Device"
         ],
-        "summary": "Queries systems of Device.",
-        "operationId": "Device.prototype.__get__systems",
+        "summary": "Queries units of Device.",
+        "operationId": "Device.prototype.__get__units",
         "parameters": [
           {
             "name": "id",
@@ -1035,7 +1097,7 @@
             "schema": {
               "type": "array",
               "items": {
-                "$ref": "#/definitions/System"
+                "$ref": "#/definitions/Unit"
               }
             }
           }
@@ -1046,8 +1108,8 @@
         "tags": [
           "Device"
         ],
-        "summary": "Creates a new instance in systems of this model.",
-        "operationId": "Device.prototype.__create__systems",
+        "summary": "Creates a new instance in units of this model.",
+        "operationId": "Device.prototype.__create__units",
         "parameters": [
           {
             "name": "id",
@@ -1062,7 +1124,7 @@
             "in": "body",
             "required": false,
             "schema": {
-              "$ref": "#/definitions/System"
+              "$ref": "#/definitions/Unit"
             }
           }
         ],
@@ -1070,7 +1132,7 @@
           "200": {
             "description": "Request was successful",
             "schema": {
-              "$ref": "#/definitions/System"
+              "$ref": "#/definitions/Unit"
             }
           }
         },
@@ -1080,8 +1142,8 @@
         "tags": [
           "Device"
         ],
-        "summary": "Deletes all systems of this model.",
-        "operationId": "Device.prototype.__delete__systems",
+        "summary": "Deletes all units of this model.",
+        "operationId": "Device.prototype.__delete__units",
         "parameters": [
           {
             "name": "id",
@@ -1100,13 +1162,157 @@
         "deprecated": false
       }
     },
-    "/devices/{id}/systems/count": {
+    "/devices/{id}/units/count": {
       "get": {
         "tags": [
           "Device"
         ],
-        "summary": "Counts systems of Device.",
-        "operationId": "Device.prototype.__count__systems",
+        "summary": "Counts units of Device.",
+        "operationId": "Device.prototype.__count__units",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Device id",
+            "required": true,
+            "type": "string",
+            "format": "JSON"
+          },
+          {
+            "name": "where",
+            "in": "query",
+            "description": "Criteria to match model instances",
+            "required": false,
+            "type": "string",
+            "format": "JSON"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Request was successful",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "count": {
+                  "type": "number",
+                  "format": "double"
+                }
+              }
+            }
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/devices/{id}/blocks": {
+      "get": {
+        "tags": [
+          "Device"
+        ],
+        "summary": "[PUBLIC] get a list of blocks.",
+        "description": "Authorization: `Authorized user`",
+        "operationId": "Device.prototype.getBlocks",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Device id",
+            "required": true,
+            "type": "string",
+            "format": "JSON"
+          },
+          {
+            "name": "unitId",
+            "in": "query",
+            "description": "Unit id",
+            "required": false,
+            "type": "string",
+            "format": "JSON"
+          },
+          {
+            "name": "filter",
+            "in": "query",
+            "description": "Filter defining fields and include - must be a JSON-encoded string ({\"something\":\"value\"})",
+            "required": false,
+            "type": "string",
+            "format": "JSON"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Request was successful",
+            "schema": {
+              "$ref": "#/definitions/Block"
+            }
+          }
+        },
+        "deprecated": false
+      },
+      "post": {
+        "tags": [
+          "Device"
+        ],
+        "summary": "Creates a new instance in blocks of this model.",
+        "operationId": "Device.prototype.__create__blocks",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Device id",
+            "required": true,
+            "type": "string",
+            "format": "JSON"
+          },
+          {
+            "name": "data",
+            "in": "body",
+            "required": false,
+            "schema": {
+              "$ref": "#/definitions/Block"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Request was successful",
+            "schema": {
+              "$ref": "#/definitions/Block"
+            }
+          }
+        },
+        "deprecated": false
+      },
+      "delete": {
+        "tags": [
+          "Device"
+        ],
+        "summary": "Deletes all blocks of this model.",
+        "operationId": "Device.prototype.__delete__blocks",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Device id",
+            "required": true,
+            "type": "string",
+            "format": "JSON"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Request was successful"
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/devices/{id}/blocks/count": {
+      "get": {
+        "tags": [
+          "Device"
+        ],
+        "summary": "Counts blocks of Device.",
+        "operationId": "Device.prototype.__count__blocks",
         "parameters": [
           {
             "name": "id",
@@ -1202,6 +1408,42 @@
           }
         },
         "deprecated": false
+      },
+      "patch": {
+        "tags": [
+          "Device"
+        ],
+        "summary": "Patch attributes for a model instance and persist it into the data source.",
+        "operationId": "Device.prototype.patchAttributes",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Device id",
+            "required": true,
+            "type": "string",
+            "format": "JSON"
+          },
+          {
+            "name": "data",
+            "in": "body",
+            "description": "An object of model property name/value pairs",
+            "required": false,
+            "schema": {
+              "description": "An object of model property name/value pairs",
+              "$ref": "#/definitions/Device"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Request was successful",
+            "schema": {
+              "$ref": "#/definitions/Device"
+            }
+          }
+        },
+        "deprecated": false
       }
     },
     "/devices": {
@@ -1269,490 +1511,18 @@
         "deprecated": false
       }
     },
-    "/devices/credentials": {
-      "put": {
+    "/devices/{id}/tsdata": {
+      "get": {
         "tags": [
           "Device"
         ],
-        "summary": "Create device credential",
-        "operationId": "Device.credentials",
-        "parameters": [
-          {
-            "name": "body",
-            "in": "body",
-            "required": false,
-            "schema": {
-              "type": "object",
-              "properties": {
-                "macAddress": {
-                  "type": "string"
-                },
-                "uuid": {
-                  "type": "string"
-                }
-              }
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Request was successful",
-            "schema": {
-              "type": "object"
-            }
-          }
-        },
-        "deprecated": false
-      }
-    },
-    "/systems/{id}/user": {
-      "get": {
-        "tags": [
-          "System"
-        ],
-        "summary": "Fetches belongsTo relation user.",
-        "operationId": "System.prototype.__get__user",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "description": "System id",
-            "required": true,
-            "type": "string",
-            "format": "JSON"
-          },
-          {
-            "name": "refresh",
-            "in": "query",
-            "required": false,
-            "type": "boolean"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Request was successful",
-            "schema": {
-              "$ref": "#/definitions/User"
-            }
-          }
-        },
-        "deprecated": false
-      }
-    },
-    "/systems/{id}/device": {
-      "get": {
-        "tags": [
-          "System"
-        ],
-        "summary": "Fetches belongsTo relation device.",
-        "operationId": "System.prototype.__get__device",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "description": "System id",
-            "required": true,
-            "type": "string",
-            "format": "JSON"
-          },
-          {
-            "name": "refresh",
-            "in": "query",
-            "required": false,
-            "type": "boolean"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Request was successful",
-            "schema": {
-              "$ref": "#/definitions/Device"
-            }
-          }
-        },
-        "deprecated": false
-      }
-    },
-    "/systems/{id}/blocks/{fk}": {
-      "get": {
-        "tags": [
-          "System"
-        ],
-        "summary": "Find a related item by id for blocks.",
-        "operationId": "System.prototype.__findById__blocks",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "description": "System id",
-            "required": true,
-            "type": "string",
-            "format": "JSON"
-          },
-          {
-            "name": "fk",
-            "in": "path",
-            "description": "Foreign key for blocks",
-            "required": true,
-            "type": "string",
-            "format": "JSON"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Request was successful",
-            "schema": {
-              "$ref": "#/definitions/Block"
-            }
-          }
-        },
-        "deprecated": false
-      },
-      "delete": {
-        "tags": [
-          "System"
-        ],
-        "summary": "Delete a related item by id for blocks.",
-        "operationId": "System.prototype.__destroyById__blocks",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "description": "System id",
-            "required": true,
-            "type": "string",
-            "format": "JSON"
-          },
-          {
-            "name": "fk",
-            "in": "path",
-            "description": "Foreign key for blocks",
-            "required": true,
-            "type": "string",
-            "format": "JSON"
-          }
-        ],
-        "responses": {
-          "204": {
-            "description": "Request was successful"
-          }
-        },
-        "deprecated": false
-      },
-      "put": {
-        "tags": [
-          "System"
-        ],
-        "summary": "Update a related item by id for blocks.",
-        "operationId": "System.prototype.__updateById__blocks",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "description": "System id",
-            "required": true,
-            "type": "string",
-            "format": "JSON"
-          },
-          {
-            "name": "fk",
-            "in": "path",
-            "description": "Foreign key for blocks",
-            "required": true,
-            "type": "string",
-            "format": "JSON"
-          },
-          {
-            "name": "data",
-            "in": "body",
-            "required": false,
-            "schema": {
-              "$ref": "#/definitions/Block"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Request was successful",
-            "schema": {
-              "$ref": "#/definitions/Block"
-            }
-          }
-        },
-        "deprecated": false
-      }
-    },
-    "/systems/{id}/blocks": {
-      "get": {
-        "tags": [
-          "System"
-        ],
-        "summary": "get blocks data",
-        "operationId": "System.prototype.getBlocks",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "description": "System id",
-            "required": true,
-            "type": "string",
-            "format": "JSON"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Request was successful",
-            "schema": {
-              "$ref": "#/definitions/Block"
-            }
-          }
-        },
-        "deprecated": false
-      },
-      "post": {
-        "tags": [
-          "System"
-        ],
-        "summary": "Creates a new instance in blocks of this model.",
-        "operationId": "System.prototype.__create__blocks",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "description": "System id",
-            "required": true,
-            "type": "string",
-            "format": "JSON"
-          },
-          {
-            "name": "data",
-            "in": "body",
-            "required": false,
-            "schema": {
-              "$ref": "#/definitions/Block"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Request was successful",
-            "schema": {
-              "$ref": "#/definitions/Block"
-            }
-          }
-        },
-        "deprecated": false
-      }
-    },
-    "/systems/{id}/blocks/count": {
-      "get": {
-        "tags": [
-          "System"
-        ],
-        "summary": "Counts blocks of System.",
-        "operationId": "System.prototype.__count__blocks",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "description": "System id",
-            "required": true,
-            "type": "string",
-            "format": "JSON"
-          },
-          {
-            "name": "where",
-            "in": "query",
-            "description": "Criteria to match model instances",
-            "required": false,
-            "type": "string",
-            "format": "JSON"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Request was successful",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "count": {
-                  "type": "number",
-                  "format": "double"
-                }
-              }
-            }
-          }
-        },
-        "deprecated": false
-      }
-    },
-    "/systems": {
-      "post": {
-        "tags": [
-          "System"
-        ],
-        "summary": "Create a new instance of the model and persist it into the data source.",
-        "operationId": "System.create",
-        "parameters": [
-          {
-            "name": "data",
-            "in": "body",
-            "description": "Model instance data",
-            "required": false,
-            "schema": {
-              "description": "Model instance data",
-              "$ref": "#/definitions/System"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Request was successful",
-            "schema": {
-              "$ref": "#/definitions/System"
-            }
-          }
-        },
-        "deprecated": false
-      },
-      "get": {
-        "tags": [
-          "System"
-        ],
-        "summary": "Find all instances of the model matched by filter from the data source.",
-        "operationId": "System.find",
-        "parameters": [
-          {
-            "name": "filter",
-            "in": "query",
-            "description": "Filter defining fields, where, include, order, offset, and limit - must be a JSON-encoded string (`{\"where\":{\"something\":\"value\"}}`).  See https://loopback.io/doc/en/lb3/Querying-data.html#using-stringified-json-in-rest-queries for more details.",
-            "required": false,
-            "type": "string",
-            "format": "JSON"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Request was successful",
-            "schema": {
-              "type": "array",
-              "items": {
-                "$ref": "#/definitions/System"
-              }
-            }
-          }
-        },
-        "deprecated": false
-      }
-    },
-    "/systems/{id}": {
-      "get": {
-        "tags": [
-          "System"
-        ],
-        "summary": "Find a model instance by {{id}} from the data source.",
-        "operationId": "System.findById",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "description": "Model id",
-            "required": true,
-            "type": "string",
-            "format": "JSON"
-          },
-          {
-            "name": "filter",
-            "in": "query",
-            "description": "Filter defining fields and include - must be a JSON-encoded string ({\"something\":\"value\"})",
-            "required": false,
-            "type": "string",
-            "format": "JSON"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Request was successful",
-            "schema": {
-              "$ref": "#/definitions/System"
-            }
-          }
-        },
-        "deprecated": false
-      },
-      "delete": {
-        "tags": [
-          "System"
-        ],
-        "summary": "Delete a model instance by {{id}} from the data source.",
-        "operationId": "System.deleteById",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "description": "Model id",
-            "required": true,
-            "type": "string",
-            "format": "JSON"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Request was successful",
-            "schema": {
-              "type": "object"
-            }
-          }
-        },
-        "deprecated": false
-      }
-    },
-    "/systems/count": {
-      "get": {
-        "tags": [
-          "System"
-        ],
-        "summary": "Count instances of the model matched by where from the data source.",
-        "operationId": "System.count",
-        "parameters": [
-          {
-            "name": "where",
-            "in": "query",
-            "description": "Criteria to match model instances",
-            "required": false,
-            "type": "string",
-            "format": "JSON"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Request was successful",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "count": {
-                  "type": "number",
-                  "format": "double"
-                }
-              }
-            }
-          }
-        },
-        "deprecated": false
-      }
-    },
-    "/systems/{id}/tsdata": {
-      "get": {
-        "tags": [
-          "System"
-        ],
         "summary": "get timeserial data",
-        "operationId": "System.prototype.getTSData",
+        "operationId": "Device.prototype.getTSData",
         "parameters": [
           {
             "name": "id",
             "in": "path",
-            "description": "System id",
+            "description": "Device id",
             "required": true,
             "type": "string",
             "format": "JSON"
@@ -1814,18 +1584,18 @@
         "deprecated": false
       }
     },
-    "/systems/{id}/events": {
+    "/devices/{id}/events": {
       "get": {
         "tags": [
-          "System"
+          "Device"
         ],
         "summary": "get events data",
-        "operationId": "System.prototype.getEvents",
+        "operationId": "Device.prototype.getEvents",
         "parameters": [
           {
             "name": "id",
             "in": "path",
-            "description": "System id",
+            "description": "Device id",
             "required": true,
             "type": "string",
             "format": "JSON"
@@ -1894,13 +1664,93 @@
         "deprecated": false
       }
     },
-    "/systems/alertChart": {
+    "/devices/{id}/events-timeseries": {
       "get": {
         "tags": [
-          "System"
+          "Device"
+        ],
+        "summary": "get events data for timeseries chart",
+        "operationId": "Device.prototype.getEventsTimeSeries",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Device id",
+            "required": true,
+            "type": "string",
+            "format": "JSON"
+          },
+          {
+            "name": "start",
+            "in": "query",
+            "required": true,
+            "type": "string",
+            "format": "date-time"
+          },
+          {
+            "name": "end",
+            "in": "query",
+            "required": true,
+            "type": "string",
+            "format": "date-time"
+          },
+          {
+            "name": "macAddress",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "unitId",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "stringId",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "priority",
+            "in": "query",
+            "required": true,
+            "type": "string",
+            "format": "JSON"
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "type": "number",
+            "format": "double"
+          },
+          {
+            "name": "isAsc",
+            "in": "query",
+            "required": false,
+            "type": "boolean"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Request was successful",
+            "schema": {
+              "$ref": "#/definitions/Event"
+            }
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/devices/alertChart": {
+      "get": {
+        "tags": [
+          "Device"
         ],
         "summary": "get system alertChart",
-        "operationId": "System.alertChart",
+        "operationId": "Device.alertChart",
         "parameters": [],
         "responses": {
           "200": {
@@ -1913,13 +1763,13 @@
         "deprecated": false
       }
     },
-    "/systems/alertStats": {
+    "/devices/alertStats": {
       "get": {
         "tags": [
-          "System"
+          "Device"
         ],
         "summary": "get system alertStats",
-        "operationId": "System.alertStats",
+        "operationId": "Device.alertStats",
         "parameters": [
           {
             "name": "systemId",
@@ -1939,13 +1789,13 @@
         "deprecated": false
       }
     },
-    "/systems/stats": {
+    "/devices/stats": {
       "get": {
         "tags": [
-          "System"
+          "Device"
         ],
         "summary": "get system stats",
-        "operationId": "System.stats",
+        "operationId": "Device.stats",
         "parameters": [],
         "responses": {
           "200": {
@@ -1958,13 +1808,170 @@
         "deprecated": false
       }
     },
-    "/blocks/{id}/system": {
+    "/devices/{id}/block-stats": {
+      "get": {
+        "tags": [
+          "Device"
+        ],
+        "summary": "get system stats",
+        "operationId": "Device.prototype.blockStats",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Device id",
+            "required": true,
+            "type": "string",
+            "format": "JSON"
+          },
+          {
+            "name": "unitId",
+            "in": "query",
+            "description": "Unit id",
+            "required": false,
+            "type": "string",
+            "format": "JSON"
+          },
+          {
+            "name": "blockId",
+            "in": "query",
+            "description": "Block id",
+            "required": false,
+            "type": "string",
+            "format": "JSON"
+          },
+          {
+            "name": "filter",
+            "in": "query",
+            "description": "Filter defining fields and include - must be a JSON-encoded string ({\"something\":\"value\"})",
+            "required": false,
+            "type": "string",
+            "format": "JSON"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Request was successful",
+            "schema": {
+              "type": "object"
+            }
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/devices/credentials": {
+      "put": {
+        "tags": [
+          "Device"
+        ],
+        "summary": "Create device credential",
+        "operationId": "Device.credentials",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": false,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "macAddress": {
+                  "type": "string"
+                },
+                "uuid": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Request was successful",
+            "schema": {
+              "type": "object"
+            }
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/devices/{id}/fwUpdate": {
+      "put": {
+        "tags": [
+          "Device"
+        ],
+        "summary": "check fw update",
+        "operationId": "Device.prototype.fwUpdate",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Device id",
+            "required": true,
+            "type": "string",
+            "format": "JSON"
+          }
+        ],
+        "responses": {
+          "202": {
+            "description": "Request was successful",
+            "schema": {
+              "$ref": "#/definitions/Device"
+            }
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/devices/{id}/uploadConfig": {
+      "post": {
+        "tags": [
+          "Device"
+        ],
+        "summary": "check fw update",
+        "operationId": "Device.prototype.uploadConfig",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Device id",
+            "required": true,
+            "type": "string",
+            "format": "JSON"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "config": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "202": {
+            "description": "Request was successful",
+            "schema": {
+              "$ref": "#/definitions/Device"
+            }
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/blocks/{id}/device": {
       "get": {
         "tags": [
           "Block"
         ],
-        "summary": "Fetches belongsTo relation system.",
-        "operationId": "Block.prototype.__get__system",
+        "summary": "Fetches belongsTo relation device.",
+        "operationId": "Block.prototype.__get__device",
         "parameters": [
           {
             "name": "id",
@@ -1985,7 +1992,7 @@
           "200": {
             "description": "Request was successful",
             "schema": {
-              "$ref": "#/definitions/System"
+              "$ref": "#/definitions/Device"
             }
           }
         },
@@ -3487,6 +3494,585 @@
         },
         "deprecated": false
       }
+    },
+    "/event-views": {
+      "post": {
+        "tags": [
+          "EventView"
+        ],
+        "summary": "Create a new instance of the model and persist it into the data source.",
+        "operationId": "EventView.create",
+        "parameters": [
+          {
+            "name": "data",
+            "in": "body",
+            "description": "Model instance data",
+            "required": false,
+            "schema": {
+              "description": "Model instance data",
+              "$ref": "#/definitions/EventView"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Request was successful",
+            "schema": {
+              "$ref": "#/definitions/EventView"
+            }
+          }
+        },
+        "deprecated": false
+      },
+      "patch": {
+        "tags": [
+          "EventView"
+        ],
+        "summary": "Patch an existing model instance or insert a new one into the data source.",
+        "operationId": "EventView.patchOrCreate",
+        "parameters": [
+          {
+            "name": "data",
+            "in": "body",
+            "description": "Model instance data",
+            "required": false,
+            "schema": {
+              "description": "Model instance data",
+              "$ref": "#/definitions/EventView"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Request was successful",
+            "schema": {
+              "$ref": "#/definitions/EventView"
+            }
+          }
+        },
+        "deprecated": false
+      },
+      "put": {
+        "tags": [
+          "EventView"
+        ],
+        "summary": "Replace an existing model instance or insert a new one into the data source.",
+        "operationId": "EventView.replaceOrCreate__put_event-views",
+        "parameters": [
+          {
+            "name": "data",
+            "in": "body",
+            "description": "Model instance data",
+            "required": false,
+            "schema": {
+              "description": "Model instance data",
+              "$ref": "#/definitions/EventView"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Request was successful",
+            "schema": {
+              "$ref": "#/definitions/EventView"
+            }
+          }
+        },
+        "deprecated": false
+      },
+      "get": {
+        "tags": [
+          "EventView"
+        ],
+        "summary": "Find all instances of the model matched by filter from the data source.",
+        "operationId": "EventView.find",
+        "parameters": [
+          {
+            "name": "filter",
+            "in": "query",
+            "description": "Filter defining fields, where, include, order, offset, and limit - must be a JSON-encoded string (`{\"where\":{\"something\":\"value\"}}`).  See https://loopback.io/doc/en/lb3/Querying-data.html#using-stringified-json-in-rest-queries for more details.",
+            "required": false,
+            "type": "string",
+            "format": "JSON"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Request was successful",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/EventView"
+              }
+            }
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/event-views/replaceOrCreate": {
+      "post": {
+        "tags": [
+          "EventView"
+        ],
+        "summary": "Replace an existing model instance or insert a new one into the data source.",
+        "operationId": "EventView.replaceOrCreate__post_event-views_replaceOrCreate",
+        "parameters": [
+          {
+            "name": "data",
+            "in": "body",
+            "description": "Model instance data",
+            "required": false,
+            "schema": {
+              "description": "Model instance data",
+              "$ref": "#/definitions/EventView"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Request was successful",
+            "schema": {
+              "$ref": "#/definitions/EventView"
+            }
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/event-views/upsertWithWhere": {
+      "post": {
+        "tags": [
+          "EventView"
+        ],
+        "summary": "Update an existing model instance or insert a new one into the data source based on the where criteria.",
+        "operationId": "EventView.upsertWithWhere",
+        "parameters": [
+          {
+            "name": "where",
+            "in": "query",
+            "description": "Criteria to match model instances",
+            "required": false,
+            "type": "string",
+            "format": "JSON"
+          },
+          {
+            "name": "data",
+            "in": "body",
+            "description": "An object of model property name/value pairs",
+            "required": false,
+            "schema": {
+              "description": "An object of model property name/value pairs",
+              "$ref": "#/definitions/EventView"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Request was successful",
+            "schema": {
+              "$ref": "#/definitions/EventView"
+            }
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/event-views/{id}/exists": {
+      "get": {
+        "tags": [
+          "EventView"
+        ],
+        "summary": "Check whether a model instance exists in the data source.",
+        "operationId": "EventView.exists__get_event-views_{id}_exists",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Model id",
+            "required": true,
+            "type": "string",
+            "format": "JSON"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Request was successful",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "exists": {
+                  "type": "boolean"
+                }
+              }
+            }
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/event-views/{id}": {
+      "head": {
+        "tags": [
+          "EventView"
+        ],
+        "summary": "Check whether a model instance exists in the data source.",
+        "operationId": "EventView.exists__head_event-views_{id}",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Model id",
+            "required": true,
+            "type": "string",
+            "format": "JSON"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Request was successful",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "exists": {
+                  "type": "boolean"
+                }
+              }
+            }
+          }
+        },
+        "deprecated": false
+      },
+      "get": {
+        "tags": [
+          "EventView"
+        ],
+        "summary": "Find a model instance by {{id}} from the data source.",
+        "operationId": "EventView.findById",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Model id",
+            "required": true,
+            "type": "string",
+            "format": "JSON"
+          },
+          {
+            "name": "filter",
+            "in": "query",
+            "description": "Filter defining fields and include - must be a JSON-encoded string ({\"something\":\"value\"})",
+            "required": false,
+            "type": "string",
+            "format": "JSON"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Request was successful",
+            "schema": {
+              "$ref": "#/definitions/EventView"
+            }
+          }
+        },
+        "deprecated": false
+      },
+      "put": {
+        "tags": [
+          "EventView"
+        ],
+        "summary": "Replace attributes for a model instance and persist it into the data source.",
+        "operationId": "EventView.replaceById__put_event-views_{id}",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Model id",
+            "required": true,
+            "type": "string",
+            "format": "JSON"
+          },
+          {
+            "name": "data",
+            "in": "body",
+            "description": "Model instance data",
+            "required": false,
+            "schema": {
+              "description": "Model instance data",
+              "$ref": "#/definitions/EventView"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Request was successful",
+            "schema": {
+              "$ref": "#/definitions/EventView"
+            }
+          }
+        },
+        "deprecated": false
+      },
+      "delete": {
+        "tags": [
+          "EventView"
+        ],
+        "summary": "Delete a model instance by {{id}} from the data source.",
+        "operationId": "EventView.deleteById",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Model id",
+            "required": true,
+            "type": "string",
+            "format": "JSON"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Request was successful",
+            "schema": {
+              "type": "object"
+            }
+          }
+        },
+        "deprecated": false
+      },
+      "patch": {
+        "tags": [
+          "EventView"
+        ],
+        "summary": "Patch attributes for a model instance and persist it into the data source.",
+        "operationId": "EventView.prototype.patchAttributes",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "EventView id",
+            "required": true,
+            "type": "string",
+            "format": "JSON"
+          },
+          {
+            "name": "data",
+            "in": "body",
+            "description": "An object of model property name/value pairs",
+            "required": false,
+            "schema": {
+              "description": "An object of model property name/value pairs",
+              "$ref": "#/definitions/EventView"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Request was successful",
+            "schema": {
+              "$ref": "#/definitions/EventView"
+            }
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/event-views/{id}/replace": {
+      "post": {
+        "tags": [
+          "EventView"
+        ],
+        "summary": "Replace attributes for a model instance and persist it into the data source.",
+        "operationId": "EventView.replaceById__post_event-views_{id}_replace",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Model id",
+            "required": true,
+            "type": "string",
+            "format": "JSON"
+          },
+          {
+            "name": "data",
+            "in": "body",
+            "description": "Model instance data",
+            "required": false,
+            "schema": {
+              "description": "Model instance data",
+              "$ref": "#/definitions/EventView"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Request was successful",
+            "schema": {
+              "$ref": "#/definitions/EventView"
+            }
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/event-views/findOne": {
+      "get": {
+        "tags": [
+          "EventView"
+        ],
+        "summary": "Find first instance of the model matched by filter from the data source.",
+        "operationId": "EventView.findOne",
+        "parameters": [
+          {
+            "name": "filter",
+            "in": "query",
+            "description": "Filter defining fields, where, include, order, offset, and limit - must be a JSON-encoded string (`{\"where\":{\"something\":\"value\"}}`).  See https://loopback.io/doc/en/lb3/Querying-data.html#using-stringified-json-in-rest-queries for more details.",
+            "required": false,
+            "type": "string",
+            "format": "JSON"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Request was successful",
+            "schema": {
+              "$ref": "#/definitions/EventView"
+            }
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/event-views/update": {
+      "post": {
+        "tags": [
+          "EventView"
+        ],
+        "summary": "Update instances of the model matched by {{where}} from the data source.",
+        "operationId": "EventView.updateAll",
+        "parameters": [
+          {
+            "name": "where",
+            "in": "query",
+            "description": "Criteria to match model instances",
+            "required": false,
+            "type": "string",
+            "format": "JSON"
+          },
+          {
+            "name": "data",
+            "in": "body",
+            "description": "An object of model property name/value pairs",
+            "required": false,
+            "schema": {
+              "description": "An object of model property name/value pairs",
+              "$ref": "#/definitions/EventView"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Request was successful",
+            "schema": {
+              "description": "Information related to the outcome of the operation",
+              "type": "object",
+              "properties": {
+                "count": {
+                  "description": "The number of instances updated",
+                  "type": "number",
+                  "format": "double"
+                }
+              }
+            }
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/event-views/count": {
+      "get": {
+        "tags": [
+          "EventView"
+        ],
+        "summary": "Count instances of the model matched by where from the data source.",
+        "operationId": "EventView.count",
+        "parameters": [
+          {
+            "name": "where",
+            "in": "query",
+            "description": "Criteria to match model instances",
+            "required": false,
+            "type": "string",
+            "format": "JSON"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Request was successful",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "count": {
+                  "type": "number",
+                  "format": "double"
+                }
+              }
+            }
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/event-views/change-stream": {
+      "post": {
+        "tags": [
+          "EventView"
+        ],
+        "summary": "Create a change stream.",
+        "operationId": "EventView.createChangeStream__post_event-views_change-stream",
+        "parameters": [
+          {
+            "name": "options",
+            "in": "formData",
+            "required": false,
+            "type": "string",
+            "format": "JSON"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Request was successful",
+            "schema": {
+              "type": "file"
+            }
+          }
+        },
+        "deprecated": false
+      },
+      "get": {
+        "tags": [
+          "EventView"
+        ],
+        "summary": "Create a change stream.",
+        "operationId": "EventView.createChangeStream__get_event-views_change-stream",
+        "parameters": [
+          {
+            "name": "options",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "JSON"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Request was successful",
+            "schema": {
+              "type": "file"
+            }
+          }
+        },
+        "deprecated": false
+      }
     }
   },
   "tags": [
@@ -3495,9 +4081,6 @@
     },
     {
       "name": "Device"
-    },
-    {
-      "name": "System"
     },
     {
       "name": "Block"
@@ -3510,6 +4093,9 @@
     },
     {
       "name": "Event"
+    },
+    {
+      "name": "EventView"
     }
   ],
   "consumes": [
@@ -3683,20 +4269,296 @@
       ],
       "additionalProperties": false
     },
-    "System": {
+    "Unit": {
       "properties": {
-        "systemId": {
-          "maxLength": 128,
+        "unitId": {
+          "maxLength": 40,
           "type": "string"
         },
         "deviceId": {
           "maxLength": 128,
           "type": "string"
         },
+        "systemId": {
+          "maxLength": 128,
+          "type": "string"
+        },
         "name": {
           "maxLength": 255,
+          "default": "unit",
+          "type": "string"
+        },
+        "totalBlock": {
+          "default": 0,
+          "type": "number",
+          "format": "double"
+        },
+        "totalString": {
+          "default": 0,
+          "type": "number",
+          "format": "double"
+        },
+        "address": {
+          "maxLength": 255,
+          "type": "string"
+        },
+        "blkCapacity": {
+          "default": 0,
+          "type": "number",
+          "format": "double"
+        },
+        "refreshDuration": {
+          "default": 0,
+          "type": "number",
+          "format": "double"
+        },
+        "enable": {
+          "default": false,
+          "type": "boolean"
+        },
+        "operationMode": {
+          "default": 0,
+          "type": "number",
+          "format": "double"
+        },
+        "voltageLevel": {
+          "default": 0,
+          "type": "number",
+          "format": "double"
+        },
+        "deviceType": {
+          "type": "string"
+        },
+        "cableType": {
+          "type": "string"
+        },
+        "capacity": {
+          "default": 0,
+          "type": "number",
+          "format": "double"
+        },
+        "localUnitId": {
+          "maxLength": 36,
+          "type": "string"
+        },
+        "id": {
+          "type": "number",
+          "format": "double"
+        },
+        "created": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "updated": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "required": [
+        "unitId",
+        "deviceId",
+        "systemId"
+      ],
+      "additionalProperties": false
+    },
+    "Block": {
+      "properties": {
+        "macAddress": {
+          "maxLength": 36,
+          "type": "string"
+        },
+        "deviceId": {
+          "maxLength": 128,
+          "type": "string"
+        },
+        "systemId": {
+          "maxLength": 128,
+          "type": "string"
+        },
+        "stringId": {
+          "maxLength": 36,
+          "type": "string"
+        },
+        "unitId": {
+          "maxLength": 36,
+          "type": "string"
+        },
+        "r1": {
+          "default": 0,
+          "type": "number",
+          "format": "double"
+        },
+        "r2": {
+          "default": 0,
+          "type": "number",
+          "format": "double"
+        },
+        "vscale": {
+          "default": 0,
+          "type": "number",
+          "format": "double"
+        },
+        "address16": {
+          "default": 0,
+          "type": "number",
+          "format": "double"
+        },
+        "address24": {
+          "default": 0,
+          "type": "number",
+          "format": "double"
+        },
+        "address32": {
+          "default": 0,
+          "type": "number",
+          "format": "double"
+        },
+        "address40": {
+          "default": 0,
+          "type": "number",
+          "format": "double"
+        },
+        "enable": {
+          "default": false,
+          "type": "boolean"
+        },
+        "operationMode": {
+          "default": "unknown",
+          "type": "string"
+        },
+        "voltageLevel": {
+          "default": 0,
+          "type": "number",
+          "format": "double"
+        },
+        "deviceType": {
+          "default": "unknown",
+          "type": "string"
+        },
+        "cableType": {
+          "default": "unknown",
+          "type": "string"
+        },
+        "capacity": {
+          "default": 0,
+          "type": "number",
+          "format": "double"
+        },
+        "alertType": {
+          "default": 0,
+          "type": "number",
+          "format": "double"
+        },
+        "alertUnit": {
+          "type": "string"
+        },
+        "localBlockId": {
+          "maxLength": 36,
+          "type": "string"
+        },
+        "localUnitId": {
+          "maxLength": 36,
+          "type": "string"
+        },
+        "localStringId": {
+          "maxLength": 36,
+          "type": "string"
+        },
+        "rUpper": {
+          "default": false,
+          "type": "boolean"
+        },
+        "vUpper": {
+          "default": false,
+          "type": "boolean"
+        },
+        "vLower": {
+          "default": false,
+          "type": "boolean"
+        },
+        "eUpper": {
+          "default": false,
+          "type": "boolean"
+        },
+        "eLower": {
+          "default": false,
+          "type": "boolean"
+        },
+        "tUpper": {
+          "default": false,
+          "type": "boolean"
+        },
+        "tLower": {
+          "default": false,
+          "type": "boolean"
+        },
+        "id": {
+          "type": "number",
+          "format": "double"
+        },
+        "created": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "updated": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "required": [
+        "deviceId",
+        "systemId"
+      ],
+      "additionalProperties": false
+    },
+    "Device": {
+      "properties": {
+        "id": {
+          "maxLength": 128,
+          "type": "string"
+        },
+        "brokerId": {
+          "maxLength": 36,
+          "type": "string"
+        },
+        "systemId": {
+          "maxLength": 128,
+          "type": "string"
+        },
+        "online": {
+          "default": false,
+          "type": "boolean"
+        },
+        "lastUpdateStatus": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "username": {
+          "maxLength": 255,
+          "type": "string"
+        },
+        "endpoint": {
+          "maxLength": 255,
+          "default": "localhost",
+          "type": "string"
+        },
+        "protocol": {
+          "maxLength": 6,
+          "default": "mqtt",
+          "type": "string"
+        },
+        "port": {
+          "maxLength": 5,
+          "default": "1883",
+          "type": "string"
+        },
+        "name": {
           "default": "BMS",
           "type": "string"
+        },
+        "connectedAt": {
+          "type": "string",
+          "format": "date-time"
         },
         "culture": {
           "maxLength": 255,
@@ -3838,94 +4700,19 @@
           "type": "number",
           "format": "double"
         },
+        "string": {
+          "default": {},
+          "type": "object"
+        },
         "error": {
           "type": "string"
         },
-        "userId": {
-          "type": "number",
-          "format": "double"
-        },
-        "created": {
-          "type": "string",
-          "format": "date-time"
-        },
-        "updated": {
-          "type": "string",
-          "format": "date-time"
-        }
-      },
-      "required": [
-        "systemId",
-        "deviceId"
-      ],
-      "additionalProperties": false
-    },
-    "Device": {
-      "properties": {
-        "id": {
-          "maxLength": 128,
+        "appVersion": {
           "type": "string"
         },
-        "brokerId": {
-          "maxLength": 36,
-          "type": "string"
-        },
-        "systemId": {
-          "maxLength": 128,
-          "type": "string"
-        },
-        "online": {
-          "default": false,
-          "type": "boolean"
-        },
-        "lastUpdateStatus": {
-          "type": "string",
-          "format": "date-time"
-        },
-        "username": {
-          "maxLength": 255,
-          "type": "string"
-        },
-        "endpoint": {
-          "maxLength": 255,
-          "default": "localhost",
-          "type": "string"
-        },
-        "protocol": {
-          "maxLength": 6,
-          "default": "mqtt",
-          "type": "string"
-        },
-        "port": {
-          "maxLength": 5,
-          "default": "1883",
-          "type": "string"
-        },
-        "firmwareId": {
-          "maxLength": 255,
-          "type": "string"
-        },
-        "lastReportConfig": {
-          "type": "string",
-          "format": "date-time"
-        },
-        "firmwareVersion": {
-          "maxLength": 255,
-          "type": "string"
-        },
-        "allowRemoteConfig": {
-          "type": "boolean"
-        },
-        "allowRemoteControl": {
-          "type": "boolean"
-        },
-        "name": {
-          "default": "unnamed",
-          "type": "string"
-        },
-        "connectedAt": {
-          "type": "string",
-          "format": "date-time"
+        "config": {
+          "default": {},
+          "type": "object"
         },
         "created": {
           "type": "string",
@@ -3940,113 +4727,6 @@
         "id",
         "username",
         "name"
-      ],
-      "additionalProperties": false
-    },
-    "Block": {
-      "properties": {
-        "macAddress": {
-          "maxLength": 36,
-          "type": "string"
-        },
-        "deviceId": {
-          "maxLength": 128,
-          "type": "string"
-        },
-        "systemId": {
-          "maxLength": 128,
-          "type": "string"
-        },
-        "stringId": {
-          "maxLength": 36,
-          "type": "string"
-        },
-        "unitId": {
-          "maxLength": 36,
-          "type": "string"
-        },
-        "r1": {
-          "default": 0,
-          "type": "number",
-          "format": "double"
-        },
-        "r2": {
-          "default": 0,
-          "type": "number",
-          "format": "double"
-        },
-        "vscale": {
-          "default": 0,
-          "type": "number",
-          "format": "double"
-        },
-        "address16": {
-          "default": 0,
-          "type": "number",
-          "format": "double"
-        },
-        "address24": {
-          "default": 0,
-          "type": "number",
-          "format": "double"
-        },
-        "address32": {
-          "default": 0,
-          "type": "number",
-          "format": "double"
-        },
-        "address40": {
-          "default": 0,
-          "type": "number",
-          "format": "double"
-        },
-        "enable": {
-          "default": false,
-          "type": "boolean"
-        },
-        "operationMode": {
-          "default": "unknown",
-          "type": "string"
-        },
-        "voltageLevel": {
-          "default": 0,
-          "type": "number",
-          "format": "double"
-        },
-        "deviceType": {
-          "default": "unknown",
-          "type": "string"
-        },
-        "cableType": {
-          "default": "unknown",
-          "type": "string"
-        },
-        "capacity": {
-          "default": 0,
-          "type": "number",
-          "format": "double"
-        },
-        "alertType": {
-          "default": 0,
-          "type": "number",
-          "format": "double"
-        },
-        "id": {
-          "type": "number",
-          "format": "double"
-        },
-        "created": {
-          "type": "string",
-          "format": "date-time"
-        },
-        "updated": {
-          "type": "string",
-          "format": "date-time"
-        }
-      },
-      "required": [
-        "deviceId",
-        "systemId"
       ],
       "additionalProperties": false
     },
@@ -4178,6 +4858,81 @@
         }
       },
       "required": [
+        "type",
+        "metadata",
+        "read",
+        "timestamp"
+      ],
+      "additionalProperties": false
+    },
+    "EventView": {
+      "properties": {
+        "id": {
+          "type": "number",
+          "format": "double"
+        },
+        "priority": {
+          "default": 2,
+          "type": "number",
+          "format": "double"
+        },
+        "type": {
+          "type": "string"
+        },
+        "systemId": {
+          "maxLength": 128,
+          "type": "string"
+        },
+        "userId": {
+          "maxLength": 40,
+          "type": "string"
+        },
+        "deviceId": {
+          "maxLength": 128,
+          "type": "string"
+        },
+        "unitId": {
+          "maxLength": 40,
+          "type": "string"
+        },
+        "stringId": {
+          "maxLength": 40,
+          "type": "string"
+        },
+        "macAddress": {
+          "maxLength": 40,
+          "type": "string"
+        },
+        "metadata": {
+          "default": {},
+          "type": "object"
+        },
+        "read": {
+          "default": false,
+          "type": "boolean"
+        },
+        "timestamp": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "numberOfAlerts": {
+          "default": 0,
+          "type": "number",
+          "format": "double"
+        },
+        "numberOfWarning": {
+          "default": 0,
+          "type": "number",
+          "format": "double"
+        },
+        "numberOfDisconnect": {
+          "default": 0,
+          "type": "number",
+          "format": "double"
+        }
+      },
+      "required": [
+        "id",
         "type",
         "metadata",
         "read",

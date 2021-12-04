@@ -5,7 +5,7 @@ import { Tabs } from 'antd'
 const { TabPane } = Tabs
 
 function callback(key) {
-  console.log(key)
+  console.info(key)
 }
 
 class AntdTabsExample extends React.Component {

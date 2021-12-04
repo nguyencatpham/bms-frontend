@@ -187,7 +187,7 @@ const DefaultPage = ({ list, loading, total, dispatch }) => {
   }, [range, payload, dispatch])
 
   const onFilter = (event, picker) => {
-    console.log(event)
+    console.info(event)
     setRange({
       start: picker.startDate.toISOString(),
       end: picker.endDate.toISOString()

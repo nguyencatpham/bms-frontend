@@ -81,14 +81,35 @@ const routes = [
     Component: lazy(() => import('pages/device/create')),
     exact: true
   },
-  {
-    path: '/devices/:id',
-    Component: lazy(() => import('pages/device/detail')),
-    exact: true
-  },
+  // {
+  //   path: '/devices/:id',
+  //   Component: lazy(() => import('pages/device/detail')),
+  //   exact: true
+  // },
   {
     path: '/devices/:id/update',
     Component: lazy(() => import('pages/device/update')),
+    exact: true
+  },
+  {
+    path: '/devices/:id/stats',
+    Component: lazy(() => import('pages/device/stats')),
+    exact: true
+  },
+  // // TODO
+  // {
+  //   path: '/devices/:id/detail',
+  //   Component: lazy(() => import('pages/device/detail')),
+  //   exact: true
+  // },
+  {
+    path: '/devices/:id/history',
+    Component: lazy(() => import('pages/device/history')),
+    exact: true
+  },
+  {
+    path: '/devices/:id/config',
+    Component: lazy(() => import('pages/device/config')),
     exact: true
   },
   {
@@ -96,11 +117,11 @@ const routes = [
     Component: lazy(() => import('pages/event')),
     exact: true
   },
-  {
-    path: '/block-info',
-    Component: lazy(() => import('pages/dashboard/home/Charts/blockStatus/info')),
-    exact: true
-  },
+  // {
+  //   path: '/block-info',
+  //   Component: lazy(() => import('pages/dashboard/home/Charts/blockStatus/info')),
+  //   exact: true
+  // },
   {
     path: '/logout',
     Component: lazy(() => import('pages/logout')),

@@ -3,12 +3,12 @@ import React from 'react'
 import { Tag } from 'antd'
 
 function log(e) {
-  console.log(e)
+  console.info(e)
 }
 
 function preventDefault(e) {
   e.preventDefault()
-  console.log('Clicked! But prevent default.')
+  console.info('Clicked! But prevent default.')
 }
 
 class AntdTagExample extends React.Component {

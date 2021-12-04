@@ -21,7 +21,7 @@ const Login = ({ dispatch, user, logo, version }) => {
   }
 
   const onFinishFailed = (errorInfo) => {
-    console.log('Failed:', errorInfo)
+    console.warn('Failed:', errorInfo)
   }
 
   // const changeAuthProvider = (value) => {

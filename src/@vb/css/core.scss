@@ -14,7 +14,9 @@ html {
 body {
   font-size: 1rem;
   line-height: 1.5;
-  font-family: $base-font;
+  // font-family: $base-font;
+  font-family: 'Segoe UI', Helvetica, sans-serif !important;
+  // font-family: Arial ;
   color: $text;
   overflow-x: hidden !important;
   position: relative;

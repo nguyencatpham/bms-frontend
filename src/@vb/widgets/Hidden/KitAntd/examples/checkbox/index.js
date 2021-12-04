@@ -3,7 +3,7 @@ import React from 'react'
 import { Checkbox } from 'antd'
 
 function onChange(checkedValues) {
-  console.log('checked = ', checkedValues)
+  console.info('checked = ', checkedValues)
 }
 
 const plainOptions = ['Apple', 'Pear', 'Orange']

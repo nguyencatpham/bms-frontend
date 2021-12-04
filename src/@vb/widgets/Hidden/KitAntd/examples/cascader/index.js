@@ -37,7 +37,7 @@ const options = [
 ]
 
 function onChange(value) {
-  console.log(value)
+  console.info(value)
 }
 
 class AntdCascaderExample extends React.Component {

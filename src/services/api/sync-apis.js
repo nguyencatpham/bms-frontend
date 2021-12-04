@@ -145,7 +145,7 @@ ${apiStr}
 }
 
 http.get(jsonURL, (res) => {
-  console.log('GET:', jsonURL)
+  console.info('GET:', jsonURL)
   let body = ''
   res.setEncoding('utf8')
   res.on('data', (chunk) => {
@@ -158,7 +158,7 @@ http.get(jsonURL, (res) => {
     const apiData = JSON.parse(body)
     fs.writeFileSync(jsonPath, JSON.stringify(apiData, null, 2))
     GenAllAPIs({ apis: apiData })
-    console.log(`
+    console.info(`
 Get APIs data from ${jsonURL} succesful.
 JSON data API saved at: ${jsonPath}
 API Client generated at: ${apiPath}

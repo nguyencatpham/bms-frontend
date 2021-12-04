@@ -3,7 +3,7 @@ import React from 'react'
 import { Switch } from 'antd'
 
 function onChange(checked) {
-  console.log(`switch to ${checked}`)
+  console.info(`switch to ${checked}`)
 }
 
 class AntdSwitchExample extends React.Component {

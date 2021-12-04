@@ -5,11 +5,11 @@ import style from '../style.module.scss'
 
 const ForgotPassword = () => {
   const onFinish = values => {
-    console.log('Success:', values)
+    console.info('Success:', values)
   }
 
   const onFinishFailed = errorInfo => {
-    console.log('Failed:', errorInfo)
+    console.info('Failed:', errorInfo)
   }
 
   return (

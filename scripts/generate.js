@@ -61,7 +61,7 @@ const generate = (filepath) => {
     generateSettings(settings)
     generatePages(config, content)
   } catch (err) {
-    console.log(err)
+    console.error(err)
     logg(
       'Something goes wrong. Try to change config file or checkout latest version from git.',
       'red',

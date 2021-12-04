@@ -35,7 +35,6 @@ const DefaultPage = ({ block, tsdata, dispatch }) => {
 
     chart.current = armChart
     // chart.current.data = data
-    console.log('test', tsdata)
     chart.current.data = tsdata.map(({ timestamp, v0, e, soc, r, t }) => ({ timestamp: new Date(timestamp), v0, e, soc, r, t }))
     chart.current.paddingRight = 20
     // Create axes
@@ -114,7 +113,6 @@ const DefaultPage = ({ block, tsdata, dispatch }) => {
   ]
 
   const onFilter = (event, picker) => {
-    console.log(event)
     setRange({
       start: picker.startDate.unix(),
       end: picker.endDate.unix()

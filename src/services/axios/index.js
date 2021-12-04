@@ -26,7 +26,7 @@ apiClient.interceptors.request.use(request => {
 apiClient.interceptors.response.use(undefined, error => {
   // Errors handling
   const { response } = error
-  console.log('############INTERCEPTORS', response, error)
+  console.info('############INTERCEPTORS', response, error)
   if (!response) {
     store.set('offline', true)
     return

@@ -24,21 +24,21 @@ class AntdTransferExample extends React.Component {
   handleChange = (nextTargetKeys, direction, moveKeys) => {
     this.setState({ targetKeys: nextTargetKeys })
 
-    console.log('targetKeys: ', nextTargetKeys)
-    console.log('direction: ', direction)
-    console.log('moveKeys: ', moveKeys)
+    console.info('targetKeys: ', nextTargetKeys)
+    console.info('direction: ', direction)
+    console.info('moveKeys: ', moveKeys)
   }
 
   handleSelectChange = (sourceSelectedKeys, targetSelectedKeys) => {
     this.setState({ selectedKeys: [...sourceSelectedKeys, ...targetSelectedKeys] })
 
-    console.log('sourceSelectedKeys: ', sourceSelectedKeys)
-    console.log('targetSelectedKeys: ', targetSelectedKeys)
+    console.info('sourceSelectedKeys: ', sourceSelectedKeys)
+    console.info('targetSelectedKeys: ', targetSelectedKeys)
   }
 
   handleScroll = (direction, e) => {
-    console.log('direction:', direction)
-    console.log('target:', e.target)
+    console.info('direction:', direction)
+    console.info('target:', e.target)
   }
 
   handleDisable = (disabled) => {

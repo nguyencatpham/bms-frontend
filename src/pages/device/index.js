@@ -1,9 +1,8 @@
-
 import React, { useState, useEffect } from 'react'
-import { Avatar, Input, Table, Button, Form } from 'antd'
+import { Input, Table, Button, Form, Dropdown, Menu } from 'antd'
 import { connect } from 'react-redux'
-import { UserOutlined, CloseOutlined } from '@ant-design/icons'
-import { withRouter, Link } from 'react-router-dom'
+import { EllipsisOutlined } from '@ant-design/icons'
+import { withRouter, Link, useHistory } from 'react-router-dom'
 import { Helmet } from 'react-helmet'
 import { TIME_FORMAT } from 'constant'
 import moment from 'moment'
@@ -12,6 +11,7 @@ import { get } from 'lodash'
 import './style.scss'
 
 const { Item } = Form
+const { Search } = Input
 
 const mapStateToProps = ({ authDevice, user, dispatch }) => {
   let { list, loading, total, preConfirm } = authDevice
@@ -25,10 +25,9 @@ const mapStateToProps = ({ authDevice, user, dispatch }) => {
 }
 
 const DefaultPage = ({ list, loading, total, preConfirm, usernameOrEmail, dispatch }) => {
+  const history = useHistory()
   const [form] = Form.useForm()
   const [modal, setModal] = useState()
-  const [name, setName] = useState()
-  const [roles] = useState([])
   const [pagination, setPagination] = useState({
     current: 1,
     pageSize: 10,
@@ -37,55 +36,52 @@ const DefaultPage = ({ list, loading, total, preConfirm, usernameOrEmail, dispat
   })
   const [payload, setPayload] = useState({
     filter: JSON.stringify({
-      include: [{
-        relation: 'devices',
-        scope: {
-          include: [{
-            relation: 'systems',
-            scope: {
-              include: [{
+      include: [
+        {
+          relation: 'devices',
+          scope: {
+            include: [
+              {
                 relation: 'blocks'
-              }]
-            }
-          }]
+              },
+              {
+                relation: 'units'
+              }
+            ]
+          }
         }
-      }],
+      ],
       skip: (pagination.current - 1) * pagination.pageSize,
       limit: pagination.pageSize,
-      order: ['created DESC']
+      order: ['updated DESC, created DESC']
     })
   })
 
+  const onSearch = (value) => console.info(value)
   const columns = [
     {
       title: '',
-      dataIndex: 'index',
-      key: 'index',
+      dataIndex: 'online',
+      key: 'online',
       render: (text, item) => {
-        const device = get(item.devices, ['0'], {})
-
-        return (
-          <Link className='break-word' to={device.systems ? `/devices/${item.uuid}` : '#'}>
-            <Avatar
-              shape='square'
-              size='large'
-              icon={<UserOutlined />}
-              src='/resources/images/battery-icon.png'
-            />
-          </Link>
-        )
+        const online = get(item.devices, ['0', 'online'])
+        console.log({ online, item })
+        return <span className={`square ${online ? 'square-online' : 'square-offline'}`} />
       }
-    },
-    {
+    }, {
       title: 'Hệ thống',
       dataIndex: 'name',
       key: 'name',
       render: (text, item) => {
         const device = get(item.devices, ['0'], {})
-        const name = get(device.systems, ['0', 'name'], 'Chưa kích hoạt')
+        const name = get(device, ['name'], 'Chưa kích hoạt')
 
-        if (device.systems) {
-          return <Link className='break-word' to={`/devices/${item.uuid}`}>{name}</Link>
+        if (device) {
+          return (
+            <Link className='break-word' to={`/devices/${item.uuid}`}>
+              {name}
+            </Link>
+          )
         } else {
           return <span>{name}</span>
         }
@@ -97,61 +93,74 @@ const DefaultPage = ({ list, loading, total, preConfirm, usernameOrEmail, dispat
       key: 'macAddress'
     },
     {
-      title: 'Trạng thái',
-      dataIndex: 'online',
-      key: 'online',
-      render: (text, item) => {
-        const online = get(item.devices, ['0', 'online'])
-        return <div className={`square ${online ? 'square-online' : 'square-offline'}`} />
-      }
-    },
-    {
       title: 'Cập nhật lân cuối',
       dataIndex: 'lastUpdateStatus',
       key: 'lastUpdateStatus',
       render: (text, item) => {
         const lastUpdateStatus = get(item.devices, ['0', 'lastUpdateStatus'])
-        return <span className='break-word '>{lastUpdateStatus ? moment(text).format(TIME_FORMAT) : '---'}</span>
+        return (
+          <span className='break-word '>
+            {lastUpdateStatus ? moment(text).format(TIME_FORMAT) : '---'}
+          </span>
+        )
       }
     },
-    // {
-    //   title: 'Thời gian đăng ký',
-    //   dataIndex: 'created',
-    //   key: 'created',
-    //   render: (text, item) => {
-    //     const created = get(item.devices, ['0', 'created'])
-    //     return <span className='break-word '>{created ? moment(text).format(TIME_FORMAT) : '---'}</span>
-    //   }
-    // },
-    // {
-    //   title: 'Phiên bản',
-    //   dataIndex: 'firmwareVersion',
-    //   key: 'firmwareVersion',
-    //   render: (text, item) => {
-    //     const name = get(item.devices, ['0', 'firmwareVersion'])
-    //     return <span>{name || '---'}</span>
-    //   }
-    // },
     {
-      title: 'Thao tác',
-      dataIndex: 'action',
-      key: 'action',
+      title: (
+        <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
+          <Search placeholder='Tìm' onSearch={onSearch} style={{ width: '240px' }} />
+          <Button style={{ marginLeft: '1rem' }} type='primary' onClick={() => history.push('devices/create')}>
+            <span className='break-word'>
+              Thêm
+            </span>
+          </Button>
+        </div>
+      ),
+      dataIndex: 'options',
+      responsive: ['md'],
       render: (text, item) => {
         return (
-          <div className='action-group break-word'>
-            <div style={{fontSize: '1.3rem'}} className="d-flex justify-content-center align-items-center mx-1">
-              <div></div>
-              <div>
-                <CloseOutlined className='ico18 ico-red text-danger' onClick={() => setModal(item.uuid)} />
-              </div>
-            </div>
+          <div className='device-options'>
+            <Dropdown
+              overlay={
+                <Menu style={{ minWidth: '100px' }}>
+                  <Menu.Item key='0' onClick={() => history.push(`/devices/${item.uuid}/update`)}>
+                    <span className='break-word'>
+                      Sửa
+                    </span>
+                  </Menu.Item>
+                  <Menu.Item key='1' onClick={() => history.push(`/devices/${item.uuid}/stats`)}>
+                    <span className='break-word'>
+                      Cấu hình
+                    </span>
+                  </Menu.Item>
+                  <Menu.Item key='2' onClick={() => history.push(`/devices/${item.uuid}/history`)}>
+                    <span className='break-word'>
+                      Lịch sử hoạt động
+                    </span>
+                  </Menu.Item>
+                  <Menu.Item key='3' onClick={() => history.push(`/devices/${item.uuid}/config`)}>
+                    <span className='break-word'>
+                      Load config
+                    </span>
+                  </Menu.Item>
+                  <Menu.Divider />
+                  <Menu.Item onClick={() => setModal(item)} key='4'>
+                    Xóa
+                  </Menu.Item>
+                </Menu>
+              }
+              trigger={['click']}
+            >
+              <EllipsisOutlined className='icon' onClick={(e) => e.preventDefault()} />
+            </Dropdown>
           </div>
         )
       }
     }
   ]
 
-  const onTableChange = pagination => {
+  const onTableChange = (pagination) => {
     setPagination(pagination)
     const { filter } = payload
     const _filter = JSON.parse(filter)
@@ -189,88 +198,72 @@ const DefaultPage = ({ list, loading, total, preConfirm, usernameOrEmail, dispat
     })
   }, [dispatch, payload])
 
-  const onSearch = (e) => {
-    if (e.key && e.key !== 'Enter') {
-      return
-    }
-    const and = []
-    if (name) {
-      and.push({ or: [{ name: { like: `%${name}%` } }, { macAddress: { like: `%${name}%` } }, { model: { like: `%${name}%` } }] })
-    }
-    if (roles.length) {
-      and.push({ role: { inq: roles } })
-    }
-    setPayload({
-      ...payload,
-      filter: JSON.stringify({
-        include: [{
-          relation: 'devices',
-          scope: {
-            include: [{
-              relation: 'systems',
-              scope: {
-                include: [{
-                  relation: 'blocks'
-                }]
-              }
-            }]
-          }
-        }],
-        where: { and },
-        skip: 0,
-        limit: pagination.pageSize,
-        order: ['created DESC']
-      })
-    })
-  }
+  // const onSearch = (e) => {
+  //   if (e.key && e.key !== 'Enter') {
+  //     return
+  //   }
+  //   const and = []
+  //   if (name) {
+  //     and.push({
+  //       or: [
+  //         { name: { like: `%${name}%` } },
+  //         { macAddress: { like: `%${name}%` } },
+  //         { model: { like: `%${name}%` } },
+  //       ],
+  //     })
+  //   }
+  //   if (roles.length) {
+  //     and.push({ role: { inq: roles } })
+  //   }
+  //   setPayload({
+  //     ...payload,
+  //     filter: JSON.stringify({
+  //       include: [
+  //         {
+  //           relation: 'devices',
+  //           scope: {
+  //             include: [
+  //               {
+  //                 relation: 'systems',
+  //                 scope: {
+  //                   include: [
+  //                     {
+  //                       relation: 'blocks',
+  //                     },
+  //                   ],
+  //                 },
+  //               },
+  //             ],
+  //           },
+  //         },
+  //       ],
+  //       where: { and },
+  //       skip: 0,
+  //       limit: pagination.pageSize,
+  //       order: ['created DESC'],
+  //     }),
+  //   })
+  // }
+
   return (
     <>
-      <div className='device-page' onKeyUp={onSearch}>
+      <div className='DevicePage page'>
         <Helmet title='Quản lý thiết bị' />
-        <div className='row'>
-          <div className='col-lg-12 col-md-12'>
-            <h5 className='text-dark mb-4 text-uppercase'>Quản lý thiết bị</h5>
-            <div className='card'>
-              <div className='card-body d-flex justify-content-between flex-column flex-md-row'>
-                <div className="d-flex justify-content-between w-100 flex-column flex-md-row">
-                  <div className='w-100'>
-                    <Input
-                      style={{ width: '100%' }}
-                      placeholder='Nhập tên hoặc mã thiết bị, hệ thống'
-                      value={name}
-                      onChange={e => setName(e.target.value)}
-                      allowClear
-                    />
-                  </div>
-                </div>
-                <div className='ml-md-3 ml-0 mt-3 mt-md-0'>
-                  <Button className='btn btn-primary btn-filter' autoFocus onClick={onSearch}><i className='i_search small' />Tìm</Button>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div className='card'>
-          <div className='card-body'>
-            <Table
-              className='custom-table table-responsive'
-              rowKey={x => x.id}
-              dataSource={list}
-              pagination={{ ...pagination, showSizeChanger: true }}
-              loading={loading}
-              columns={columns}
-              onChange={onTableChange}
-              rowClassName={(record) => record.suspend ? 'color-grey' : ''}
-              ellipsis
-            />
-          </div>
-        </div>
+        <Table
+          // rowSelection={rowSelection}
+          className='custom-table table-responsive'
+          rowKey={(x) => x.uuid}
+          dataSource={list}
+          pagination={{ ...pagination, showSizeChanger: true }}
+          loading={loading}
+          columns={columns}
+          onChange={onTableChange}
+          rowClassName={(record) => (record.suspend ? 'color-grey' : '')}
+          ellipsis
+        />
       </div>
-      {modal &&
-        <Form
-          form={form}
-          onFinish={onDelete}
-        >
+      {modal && (
+        <Form form={form} onFinish={onDelete}>
           <PreConfirm
             loading={loading}
             visible={!!modal}
@@ -278,14 +271,11 @@ const DefaultPage = ({ list, loading, total, preConfirm, usernameOrEmail, dispat
             onCancel={() => setModal(false)}
             preConfirm={preConfirm}
           />
-          <Item
-            name='id'
-            label=''
-            initialValue={modal}
-          >
+          <Item name='id' label='' initialValue={modal}>
             <Input style={{ display: 'none' }} />
           </Item>
-        </Form>}
+        </Form>
+      )}
     </>
   )
 }
