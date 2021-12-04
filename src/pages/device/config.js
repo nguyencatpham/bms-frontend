@@ -1,97 +1,108 @@
-import { Upload, Button, Form, Input } from 'antd'
+import { Upload, Button, Form } from 'antd'
 import { UploadOutlined } from '@ant-design/icons'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
+import { connect } from 'react-redux'
+import { withRouter } from 'react-router-dom'
 import './detailForm.scss'
-import { useHistory } from 'react-router'
+import { useHistory, useParams } from 'react-router'
 import { Helmet } from 'react-helmet'
+import TextArea from 'rc-textarea'
+import ReactJson from 'react-json-view'
+import './editor.scss'
 const { Item } = Form
 
-const fileList = [
-  {
-    uid: '-1',
-    name: 'xxx.png',
-    status: 'done',
-    url: 'http://www.baidu.com/xxx.png',
-  },
-]
+const mapStateToProps = ({ device, authDevice, user, dispatch }) => {
+  const { detail = {} } = device
+  return { detail, dispatch }
+}
 
-function Config() {
+const UploadConfigPage = ({ detail, dispatch }) => {
   const history = useHistory()
+  const { id } = useParams()
   const [form] = Form.useForm()
-  const [files, setFiles] = useState(fileList)
+  const [files, setFiles] = useState([])
+  const [content, setContent] = useState(detail.config)
   const onFinish = values => {
-    // delete values.role
-    // delete values.confirm
-    // dispatch({
-    //   type: 'authDevice/CREATE',
-    //   payload: { body: [{ ...values }] }
-    // })
-  }
-
-  const handleChange = (info) => {
-    let fileList = [...info.fileList]
-
-    // 1. Limit the number of uploaded files
-    // Only to show two recent uploaded files, and old ones will be replaced by the new
-    fileList = fileList.slice(-2)
-
-    // 2. Read from response and show file link
-    fileList = fileList.map((file) => {
-      if (file.response) {
-        // Component will show file.url as link
-        file.url = file.response.url
+    dispatch({
+      type: 'device/UPLOAD_CONFIG',
+      payload: {
+        id,
+        body: {
+          config: content
+        }
       }
-      return file
     })
-
-    this.setState({ fileList })
   }
 
-  const props = {
-    action: 'https://www.mocky.io/v2/5cc8019d300000980a055e76',
-    onChange: handleChange,
-    multiple: false,
-  }
+  const uploadFile = async (info) => {
+    const { file } = info
+    setFiles([file])
 
+    const encoded = await new Promise(resolve => {
+      const reader = new FileReader()
+      reader.readAsDataURL(file.originFileObj)
+      reader.onload = () => resolve(reader.result)
+    })
+    const json = atob(encoded.substring(29))
+    const result = JSON.parse(json)
+    setContent(result)
+  }
+  useEffect(() => {
+    dispatch({
+      type: 'device/DETAIL',
+      payload: {
+        id
+      }
+    })
+  }, [id, dispatch])
+  useEffect(() => {
+    setContent(detail.config)
+  }, [detail.config])
   return (
     <>
-      <div className="detail-page device-create-page">
-        <Helmet title="Thiết bị | Load config" />
+      <div className='detail-page device-create-page'>
+        <Helmet title='Thiết bị | Load config' />
         {/* <h3 className='form-title'><i className='i_user_8 ico30' />QUẢN LÝ THIẾT BỊ</h3> */}
-        <div className="card-content">
-          <div className="card-bg detail-form-wrap">
+        <div className='card-content'>
+          <div className='card-bg detail-form-wrap'>
             {/* <Card title='Thêm thiết bị'> */}
-            <Form className="detail-form" onFinish={onFinish} form={form}>
+            <Form className='detail-form' onFinish={onFinish} form={form}>
               {/* <div className='row'>
           <div className='col-lg-8 col-md-8 offset-md-2'> */}
               <Item
-                className="display-grid grid-row"
-                name="uuid"
-                label="Chọn file config để upload"
+                className='display-grid grid-row'
+                name='file'
+                label='Chọn file config để upload file config.json'
                 rules={[
                   {
                     required: true,
-                    message: 'Vui lòng nhập UUID!',
-                  },
-                  {
-                    max: 256,
-                    message: 'UUID quá dài!',
-                  },
+                    message: 'Vui lòng upload file config.json!'
+                  }
                 ]}
               >
-                
-              <Upload {...props} fileList={files}>
-                <Button icon={<UploadOutlined />}>Upload</Button>
-              </Upload>
+                <Upload
+                  action={null}
+                  onChange={uploadFile}
+                  fileList={files}
+                  accept='application/JSON'
+                  multiple={false}
+                >
+                  <Button icon={<UploadOutlined />}>Upload</Button>
+                </Upload>
               </Item>
-              
-              <div className="text-right fl-right btn-footer btn-group-footer">
-                <Button type="dashed" onClick={() => history.push('/devices')}>
-                  <i className="i_cancel ico25" />
+              <Item
+                className='display-grid grid-row'
+                name='content'
+              >
+                <ReactJson src={content} />
+              </Item>
+              <div className='text-right fl-right btn-footer btn-group-footer'>
+                <Button type='dashed' onClick={() => history.push('/devices')}>
+                  <i className='i_cancel ico25' />
                   <strong>Hủy</strong>
                 </Button>
-                <Button type="primary" style={{ marginLeft: 10 }} htmlType="submit">
-                  <i className="i_save_36 ico25" />
+                <Button type='primary' style={{ marginLeft: 10 }} htmlType='submit'>
+                  <i className='i_save_36 ico25' />
                   <strong>Lưu</strong>
                 </Button>
               </div>
@@ -106,4 +117,4 @@ function Config() {
   )
 }
 
-export default Config
+export default withRouter(connect(mapStateToProps)(UploadConfigPage))

@@ -48,18 +48,18 @@ export const COMMON = ({ type, field, actionType }) => {
       if (type.toLowerCase().indexOf('post') > -1) {
         notification.success({
           message: 'Thành công!',
-          description: `${ENTITY} ${response.name} đã được tạo thành công!`
+          description: `${ENTITY} đã được thiết lập thành công!`
         })
-        history.push(`/${ENTITY}s/${response.id}`)
+        history.push(`/${ENTITY}s`)
       }
       if (type.toLowerCase().indexOf('change') > -1 ||
         type.toLowerCase().indexOf('patch') > -1 ||
         type.toLowerCase().indexOf('put') > -1) {
         notification.success({
           message: 'Thành công!',
-          description: `${ENTITY} ${response.name} đã được cập nhật thành công!`
+          description: `${ENTITY} đã được cập nhật thành công!`
         })
-        history.push(`/${ENTITY}s/${response.id}`)
+        history.push(`/${ENTITY}s`)
       }
       if (type.toLowerCase().indexOf('delete') > -1) {
         notification.success({
@@ -93,6 +93,8 @@ export default function * rootSaga () {
     takeEvery(actions.BLOCKS, COMMON({ type: TYPES.DEVICES_GET_ID_BLOCKS, field: 'blocks' })),
     takeEvery(actions.BLOCK_STATS, COMMON({ type: TYPES.DEVICES_GET_ID_BLOCK_STATS, field: 'blockStats' })),
     takeEvery(actions.BLOCK_EVENTS, COMMON({ type: TYPES.DEVICES_GET_ID_EVENTS_TIMESERIES, field: 'blockEvents' })),
-    takeEvery(actions.BLOCK_DETAIL_EVENTS, COMMON({ type: TYPES.DEVICES_GET_ID_EVENTS_TIMESERIES, field: 'blockDetailEvents' }))
+    takeEvery(actions.BLOCK_DETAIL_EVENTS, COMMON({ type: TYPES.DEVICES_GET_ID_EVENTS_TIMESERIES, field: 'blockDetailEvents' })),
+    takeEvery(actions.UPLOAD_CONFIG, COMMON({ type: TYPES.DEVICES_POST_ID_UPLOADCONFIG, field: 'uploadConfig' })),
+    takeEvery(actions.FWUPDATE, COMMON({ type: TYPES.DEVICES_PUT_ID_FWUPDATE, field: 'fwUpdate' }))
   ])
 }

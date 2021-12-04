@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { Input, Table, Button, Form, Dropdown, Menu } from 'antd'
 import { connect } from 'react-redux'
 import { EllipsisOutlined } from '@ant-design/icons'
-import { withRouter, Link, useHistory } from 'react-router-dom'
+import { withRouter, useHistory } from 'react-router-dom'
 import { Helmet } from 'react-helmet'
 import { TIME_FORMAT } from 'constant'
 import moment from 'moment'
@@ -78,9 +78,9 @@ const DefaultPage = ({ list, loading, total, preConfirm, usernameOrEmail, dispat
 
         if (device) {
           return (
-            <Link className='break-word' to={`/devices/${item.uuid}`}>
-              {name}
-            </Link>
+            // <Link className='break-word' to={`/devices/${item.uuid}`}>
+            { name }
+            // </Link>
           )
         } else {
           return <span>{name}</span>
@@ -94,13 +94,12 @@ const DefaultPage = ({ list, loading, total, preConfirm, usernameOrEmail, dispat
     },
     {
       title: 'Cập nhật lân cuối',
-      dataIndex: 'lastUpdateStatus',
-      key: 'lastUpdateStatus',
+      dataIndex: 'updated',
+      key: 'updated',
       render: (text, item) => {
-        const lastUpdateStatus = get(item.devices, ['0', 'lastUpdateStatus'])
         return (
           <span className='break-word '>
-            {lastUpdateStatus ? moment(text).format(TIME_FORMAT) : '---'}
+            {text ? moment(text).format(TIME_FORMAT) : '---'}
           </span>
         )
       }
@@ -124,11 +123,11 @@ const DefaultPage = ({ list, loading, total, preConfirm, usernameOrEmail, dispat
             <Dropdown
               overlay={
                 <Menu style={{ minWidth: '100px' }}>
-                  <Menu.Item key='0' onClick={() => history.push(`/devices/${item.uuid}/update`)}>
+                  {/* <Menu.Item key='0' onClick={() => history.push(`/devices/${item.uuid}/update`)}>
                     <span className='break-word'>
                       Sửa
                     </span>
-                  </Menu.Item>
+                  </Menu.Item> */}
                   <Menu.Item key='1' onClick={() => history.push(`/devices/${item.uuid}/stats`)}>
                     <span className='break-word'>
                       Cấu hình
