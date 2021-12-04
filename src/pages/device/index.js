@@ -65,7 +65,6 @@ const DefaultPage = ({ list, loading, total, preConfirm, usernameOrEmail, dispat
       key: 'online',
       render: (text, item) => {
         const online = get(item.devices, ['0', 'online'])
-        console.log({ online, item })
         return <span className={`square ${online ? 'square-online' : 'square-offline'}`} />
       }
     }, {
@@ -75,11 +74,10 @@ const DefaultPage = ({ list, loading, total, preConfirm, usernameOrEmail, dispat
       render: (text, item) => {
         const device = get(item.devices, ['0'], {})
         const name = get(device, ['name'], 'Chưa kích hoạt')
-
         if (device) {
           return (
             // <Link className='break-word' to={`/devices/${item.uuid}`}>
-            { name }
+            <p>{name}</p>
             // </Link>
           )
         } else {
@@ -88,6 +86,10 @@ const DefaultPage = ({ list, loading, total, preConfirm, usernameOrEmail, dispat
       }
     },
     {
+      title: 'Site',
+      dataIndex: 'siteName',
+      key: 'siteName'
+    }, {
       title: 'Mã thiết bị',
       dataIndex: 'macAddress',
       key: 'macAddress'
