@@ -95,7 +95,7 @@ const DefaultPage = ({ loading, blockEvents, dispatch }) => {
           rowKey={(x) => x.id}
           dataSource={blockEvents.map(x => ({
             time: x.time,
-            message: x.body
+            message: x.title
           }))}
           pagination={{ ...pagination, showSizeChanger: true }}
           loading={loading}
