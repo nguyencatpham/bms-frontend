@@ -73,85 +73,82 @@ const DefaultPage = ({ loading, detail, preConfirm, dispatch }) => {
 
   return (
     <>
-      <div className='detail-page device-create-page'>
+      <div className='DevicePage page'>
         <Helmet title='Thiết bị | Cập nhật' />
         <h3 className='form-title'><i className='i_user_8 ico30' />QUẢN LÝ THIẾT BỊ</h3>
-        <div className='card-content'>
-          <div className='card-bg'>
-            <Card title={<p><span>Cập nhật tài khoản:</span><span className='txt-orange'>{name}</span></p>} />
-            <Form
-              className='detail-form'
-              onFinish={onFinish}
-              form={form}
-              autoComplete='off'
+        <Form
+          className='detail-form'
+          onFinish={onFinish}
+          form={form}
+          autoComplete='off'
+        >
+          <Item
+            className='display-grid grid-row'
+            name='name'
+            label='name'
+            rules={[
+              {
+                required: true,
+                message: 'Vui lòng nhập name!'
+              }
+            ]}
+          >
+            <Input placeholder='Nhập UUID' />
+          </Item>
+          <Item
+            className='display-grid grid-row'
+            name='macAddress'
+            label='Địa chỉ Mac'
+            rules={[
+              {
+                required: true,
+                message: 'Vui lòng nhập địa chỉ mac address!'
+              }
+            ]}
+          >
+            <Input placeholder='Nhập địa chỉ MAC...' />
+          </Item>
+          <Item
+            className='display-grid grid-row'
+            name='serialId'
+            label='Serial'
+            rules={[
+              {
+                required: true,
+                message: 'Vui lòng nhập Serial!'
+              }
+            ]}
+          >
+            <Input placeholder='Nhập Serial...' />
+          </Item>
+          <Item
+            className='display-grid grid-row'
+            name='model'
+            label='Model'
+            rules={[
+              {
+                required: true,
+                message: 'Vui lòng nhập model!'
+              }
+            ]}
+          >
+            <Input placeholder='Nhập model...' />
+          </Item>
+          <div className='text-right fl-right btn-footer btn-group-footer'>
+            <Button type='dashed' onClick={() => history.push('/devices')}>
+              <i className='i_cancel ico25' />
+              <strong>Hủy</strong>
+            </Button>
+            <Button
+              type='primary'
+              style={{ marginLeft: 10 }}
+              onClick={() => validateFields()}
             >
-              <Item
-                className='display-grid grid-row'
-                name='serialId'
-                label='Serial'
-                rules={[
-                  {
-                    required: true,
-                    message: 'Vui lòng nhập Serial!'
-                  }
-                ]}
-              >
-                <Input placeholder='Nhập UUID' />
-              </Item>
-              <Item
-                className='display-grid grid-row'
-                name='macAddress'
-                label='Địa chỉ Mac'
-                rules={[
-                  {
-                    required: true,
-                    message: 'Vui lòng nhập địa chỉ mac address!'
-                  }
-                ]}
-              >
-                <Input placeholder='Nhập địa chỉ MAC...' />
-              </Item>
-              <Item
-                className='display-grid grid-row'
-                name='serialId'
-                label='Serial'
-                rules={[
-                  {
-                    required: true,
-                    message: 'Vui lòng nhập Serial!'
-                  }
-                ]}
-              >
-                <Input placeholder='Nhập Serial...' />
-              </Item>
-              <Item
-                className='display-grid grid-row'
-                name='model'
-                label='Model'
-                rules={[
-                  {
-                    required: true,
-                    message: 'Vui lòng nhập model!'
-                  }
-                ]}
-              >
-                <Input placeholder='Nhập model...' />
-              </Item>
-              <div className='text-right fl-right btn-footer btn-group-footer'>
-                <Button type='dashed' onClick={() => history.push('/devices')}>
-                  <i className='i_cancel ico25' />
-                  <strong>Hủy</strong>
-                </Button>
-                <Button
-                  type='primary'
-                  style={{ marginLeft: 10 }}
-                  onClick={() => validateFields()}
-                >
-                  <i className='i_save_36 ico25' />
-                  <strong>Lưu</strong>
-                </Button>
-              </div>
-              {/* <div className="fl-right btn-group-footer">
+              <i className='i_save_36 ico25' />
+              <strong>Lưu</strong>
+            </Button>
+          </div>
+          {/* <div className="fl-right btn-group-footer">
                 <div className="fl-right">
                   <Button
                     className="btn btn-create btn-cancel"
@@ -173,16 +170,14 @@ const DefaultPage = ({ loading, detail, preConfirm, dispatch }) => {
                   </Button>
                 </div>
               </div> */}
-              <PreConfirm
-                loading={loading}
-                visible={modal}
-                onOk={() => form.submit()}
-                onCancel={() => setModal(false)}
-                preConfirm={preConfirm}
-              />
-            </Form>
-          </div>
-        </div>
+          <PreConfirm
+            loading={loading}
+            visible={modal}
+            onOk={() => form.submit()}
+            onCancel={() => setModal(false)}
+            preConfirm={preConfirm}
+          />
+        </Form>
       </div>
     </>
   )

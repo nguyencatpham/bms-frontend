@@ -24,7 +24,7 @@ window.jQuery = window.$ = jQuery
 
 const mapStateToProps = ({ authDevice, device, user, system, dispatch }) => {
   let { list, loading, total, preConfirm } = authDevice
-  const { list: devices, units = [], blocks = [], blockStats = {}, blockEvents = {} } = device
+  const { list: devices, units = [], blocks = [], blockStats = {}, blockEvents = {}, blocksSummary = [] } = device
   const { list: users, username, email, role } = user
   const { stats = {}, alertCount = {}, alertCountBySystem = {}, list: systems = [] } = system
   const usernameOrEmail = username || email
@@ -49,11 +49,12 @@ const mapStateToProps = ({ authDevice, device, user, system, dispatch }) => {
     blocks,
     blockStats,
     blockEvents,
+    blocksSummary,
     dispatch
   }
 }
 
-const DefaultPage = ({ total, systems, devices, units, blocks, blockStats, blockEvents, dispatch }) => {
+const DefaultPage = ({ total, systems, devices, units, blocks, blockStats, blockEvents, blocksSummary, dispatch }) => {
   const [time, setTime] = useState(moment())
   const [systemId, setSystemId] = useState()
   const [unitId, setUnitId] = useState()
@@ -141,7 +142,7 @@ const DefaultPage = ({ total, systems, devices, units, blocks, blockStats, block
         payload: {
           id: systemId,
           filter: JSON.stringify({
-            fields: ['id', 'name'],
+            fields: ['id', 'name', 'localUnitId'],
             order: ['created DESC']
           })
         }
@@ -169,21 +170,6 @@ const DefaultPage = ({ total, systems, devices, units, blocks, blockStats, block
   useEffect(() => {
     if (systemId) {
       dispatch({
-        type: 'device/BLOCKS',
-        payload: {
-          id: systemId,
-          unitId,
-          filter: JSON.stringify({
-            // fields: ['id', 'localBlockId', 'macAddress'],
-            order: ['localBlockId ASC', 'id ASC']
-          })
-        }
-      })
-    }
-  }, [systemId, unitId])
-  useEffect(() => {
-    if (systemId) {
-      dispatch({
         type: 'device/BLOCK_STATS',
         payload: {
           id: systemId,
@@ -191,63 +177,84 @@ const DefaultPage = ({ total, systems, devices, units, blocks, blockStats, block
           blockId
         }
       })
+      dispatch({
+        type: 'device/BLOCKS',
+        payload: {
+          id: systemId,
+          unitId,
+          blockId,
+          filter: JSON.stringify({
+            order: ['localBlockId ASC', 'id ASC']
+          })
+        }
+      })
+      dispatch({
+        type: 'device/BLOCKS_SUMMARY',
+        payload: {
+          id: systemId,
+          unitId,
+          filter: JSON.stringify({
+            order: ['localBlockId ASC', 'id ASC']
+          })
+        }
+      })
     }
   }, [systemId, unitId, blockId])
   // polling
-  useEffect(() => {
-    const interval = setInterval(() => {
-      if (systemId) {
-        dispatch({
-          type: 'device/BLOCK_STATS',
-          payload: {
-            id: systemId,
-            unitId,
-            blockId
-          }
-        })
-      }
-    }, 60 * 1000)
-    return () => clearInterval(interval)
-  }, [systemId, unitId, blockId])
-  useEffect(() => {
-    const interval = setInterval(() => {
-      if (systemId) {
-        dispatch({
-          type: 'device/BLOCKS',
-          payload: {
-            id: systemId,
-            unitId,
-            filter: JSON.stringify({
-              // fields: ['id', 'localBlockId', 'macAddress'],
-              order: ['localBlockId ASC', 'id ASC']
-            })
-          }
-        })
-      }
-    }, 60 * 1000)
-    return () => clearInterval(interval)
-  }, [systemId, unitId])
-  useEffect(() => {
-    const interval = setInterval(() => {
-      if (systemId) {
-        dispatch({
-          type: 'device/BLOCK_EVENTS',
-          payload: {
-            id: systemId,
-            start: time.startOf('day').unix(),
-            end: time.endOf('day').unix(),
-            priority: [0, 1, 2, 3, 4, 5],
-            unitId,
-            macAddress: get(blocks.find(x => x.id === blockId), ['macAddress']),
-            isAsc: true,
-            limit: 1000
-          //  stringId
-          }
-        })
-      }
-    }, 60 * 1000)
-    return () => clearInterval(interval)
-  }, [systemId, time])
+  // useEffect(() => {
+  //   const interval = setInterval(() => {
+  //     if (systemId) {
+  //       dispatch({
+  //         type: 'device/BLOCK_STATS',
+  //         payload: {
+  //           id: systemId,
+  //           unitId,
+  //           blockId
+  //         }
+  //       })
+  //     }
+  //   }, 60 * 1000)
+  //   return () => clearInterval(interval)
+  // }, [systemId, unitId, blockId])
+  // useEffect(() => {
+  //   const interval = setInterval(() => {
+  //     if (systemId) {
+  //       dispatch({
+  //         type: 'device/BLOCKS',
+  //         payload: {
+  //           id: systemId,
+  //           unitId,
+  //           filter: JSON.stringify({
+  //             // fields: ['id', 'localBlockId', 'macAddress'],
+  //             order: ['localBlockId ASC', 'id ASC']
+  //           })
+  //         }
+  //       })
+  //     }
+  //   }, 60 * 1000)
+  //   return () => clearInterval(interval)
+  // }, [systemId, unitId])
+  // useEffect(() => {
+  //   const interval = setInterval(() => {
+  //     if (systemId) {
+  //       dispatch({
+  //         type: 'device/BLOCK_EVENTS',
+  //         payload: {
+  //           id: systemId,
+  //           start: time.startOf('day').unix(),
+  //           end: time.endOf('day').unix(),
+  //           priority: [0, 1, 2, 3, 4, 5],
+  //           unitId,
+  //           macAddress: get(blocks.find(x => x.id === blockId), ['macAddress']),
+  //           isAsc: true,
+  //           limit: 1000
+  //         //  stringId
+  //         }
+  //       })
+  //     }
+  //   }, 60 * 1000)
+  //   return () => clearInterval(interval)
+  // }, [systemId, time])
   return (
     <>
       <Helmet title='Hệ thống quản lý ắc quy' />
@@ -279,12 +286,15 @@ const DefaultPage = ({ total, systems, devices, units, blocks, blockStats, block
                   <select
                     className='select'
                     placeholder='Chọn Unit'
-                    onChange={(e) => setUnitId(e.target.value)}
+                    onChange={(e) => {
+                      setUnitId(e.target.value)
+                      setBlockId()
+                    }}
                     value={unitId}
                   >
                     <option value=''>Tất cả</option>
                     {units.map(x => (
-                      <option key={x.id} value={x.id}>{x.name}</option>
+                      <option key={x.id} value={x.localUnitId}>{x.name}</option>
                     ))}
                   </select>
                   <PlusCircleOutlinedIcon />
@@ -297,7 +307,7 @@ const DefaultPage = ({ total, systems, devices, units, blocks, blockStats, block
                     value={blockId}
                   >
                     <option value=''>Tất cả</option>
-                    {blocks.map(x => (
+                    {blocksSummary.map(x => (
                       <option key={x.id} value={x.id}>Block {x.localBlockId || x.id}</option>
                     ))}
                   </select>

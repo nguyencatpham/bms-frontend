@@ -36,7 +36,17 @@ const BlockList = ({ data = [], dispatch }) => {
         <TitleIcon />
         <h2 className='custom-card__title'>Số liệu thu thập</h2>
       </div>
-      {data.map((block, index) => (
+      {data.sort((a, b) => {
+        const current = parseInt(a.localBlockId)
+        const next = parseInt(b.localBlockId)
+        if (current < next) {
+          return -1
+        }
+        if (current > next) {
+          return 1
+        }
+        return 0
+      }).map((block, index) => (
         <input className='debug-block-item' key={index} type='hidden' value={`localBlockId=${block.localBlockId}, index=${index + 1}`} />
       ))}
       <BlockModal modal={modal} setModal={setModal} />

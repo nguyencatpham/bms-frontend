@@ -1,7 +1,7 @@
 {
   "swagger": "2.0",
   "info": {
-    "version": "0.1.1",
+    "version": "0.2.1",
     "title": "bms-backend",
     "description": "bms Backend API"
   },
@@ -1205,49 +1205,6 @@
       }
     },
     "/devices/{id}/blocks": {
-      "get": {
-        "tags": [
-          "Device"
-        ],
-        "summary": "[PUBLIC] get a list of blocks.",
-        "description": "Authorization: `Authorized user`",
-        "operationId": "Device.prototype.getBlocks",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "description": "Device id",
-            "required": true,
-            "type": "string",
-            "format": "JSON"
-          },
-          {
-            "name": "unitId",
-            "in": "query",
-            "description": "Unit id",
-            "required": false,
-            "type": "string",
-            "format": "JSON"
-          },
-          {
-            "name": "filter",
-            "in": "query",
-            "description": "Filter defining fields and include - must be a JSON-encoded string ({\"something\":\"value\"})",
-            "required": false,
-            "type": "string",
-            "format": "JSON"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Request was successful",
-            "schema": {
-              "$ref": "#/definitions/Block"
-            }
-          }
-        },
-        "deprecated": false
-      },
       "post": {
         "tags": [
           "Device"
@@ -1301,6 +1258,57 @@
         "responses": {
           "204": {
             "description": "Request was successful"
+          }
+        },
+        "deprecated": false
+      },
+      "get": {
+        "tags": [
+          "Device"
+        ],
+        "summary": "[PUBLIC] get a list of blocks.",
+        "description": "Authorization: `Authorized user`",
+        "operationId": "Device.prototype.getBlocks",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Device id",
+            "required": true,
+            "type": "string",
+            "format": "JSON"
+          },
+          {
+            "name": "unitId",
+            "in": "query",
+            "description": "Unit id",
+            "required": false,
+            "type": "string",
+            "format": "JSON"
+          },
+          {
+            "name": "blockId",
+            "in": "query",
+            "description": "BMK block id",
+            "required": false,
+            "type": "string",
+            "format": "JSON"
+          },
+          {
+            "name": "filter",
+            "in": "query",
+            "description": "Filter defining fields and include - must be a JSON-encoded string ({\"something\":\"value\"})",
+            "required": false,
+            "type": "string",
+            "format": "JSON"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Request was successful",
+            "schema": {
+              "$ref": "#/definitions/Block"
+            }
           }
         },
         "deprecated": false
@@ -1516,7 +1524,7 @@
         "tags": [
           "Device"
         ],
-        "summary": "get timeserial data",
+        "summary": "[DEPRECATED] get timeserial data",
         "operationId": "Device.prototype.getTSData",
         "parameters": [
           {
@@ -1749,7 +1757,7 @@
         "tags": [
           "Device"
         ],
-        "summary": "get system alertChart",
+        "summary": "[DEPRECATED] get system alertChart",
         "operationId": "Device.alertChart",
         "parameters": [],
         "responses": {
@@ -1768,7 +1776,7 @@
         "tags": [
           "Device"
         ],
-        "summary": "get system alertStats",
+        "summary": "[DEPRECATED] get system alertStats",
         "operationId": "Device.alertStats",
         "parameters": [
           {
@@ -1794,7 +1802,7 @@
         "tags": [
           "Device"
         ],
-        "summary": "get system stats",
+        "summary": "[DEPRECATED] get system stats",
         "operationId": "Device.stats",
         "parameters": [],
         "responses": {
@@ -4492,6 +4500,46 @@
           "default": false,
           "type": "boolean"
         },
+        "v0": {
+          "default": 0,
+          "type": "number",
+          "format": "double"
+        },
+        "e": {
+          "default": 0,
+          "type": "number",
+          "format": "double"
+        },
+        "r": {
+          "default": 0,
+          "type": "number",
+          "format": "double"
+        },
+        "t": {
+          "default": 0,
+          "type": "number",
+          "format": "double"
+        },
+        "sOC": {
+          "default": 0,
+          "type": "number",
+          "format": "double"
+        },
+        "totalDischargeSecond": {
+          "default": 0,
+          "type": "number",
+          "format": "double"
+        },
+        "totalDischargeCycle": {
+          "default": 0,
+          "type": "number",
+          "format": "double"
+        },
+        "expectedLifeTimeRest": {
+          "default": 0,
+          "type": "number",
+          "format": "double"
+        },
         "id": {
           "type": "number",
           "format": "double"
@@ -4811,6 +4859,16 @@
           "type": "number",
           "format": "double"
         },
+        "value": {
+          "default": 1,
+          "type": "number",
+          "format": "double"
+        },
+        "blockType": {
+          "default": 0,
+          "type": "number",
+          "format": "double"
+        },
         "type": {
           "type": "string"
         },
@@ -4827,6 +4885,10 @@
           "type": "string"
         },
         "unitId": {
+          "maxLength": 40,
+          "type": "string"
+        },
+        "localUnitId": {
           "maxLength": 40,
           "type": "string"
         },

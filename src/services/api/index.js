@@ -1,7 +1,7 @@
 /* eslint camelcase: 0 */
 /*
     Total: 120 APIs
-    version: "0.1.1",
+    version: "0.2.1",
     title: "bms-backend",
     description: "bms Backend API"
 */
@@ -45,9 +45,9 @@ export const types = {
   DEVICES_POST_ID_UNITS: 'DEVICES_POST_ID_UNITS',
   DEVICES_DELETE_ID_UNITS: 'DEVICES_DELETE_ID_UNITS',
   DEVICES_GET_ID_UNITS_COUNT: 'DEVICES_GET_ID_UNITS_COUNT',
-  DEVICES_GET_ID_BLOCKS: 'DEVICES_GET_ID_BLOCKS',
   DEVICES_POST_ID_BLOCKS: 'DEVICES_POST_ID_BLOCKS',
   DEVICES_DELETE_ID_BLOCKS: 'DEVICES_DELETE_ID_BLOCKS',
+  DEVICES_GET_ID_BLOCKS: 'DEVICES_GET_ID_BLOCKS',
   DEVICES_GET_ID_BLOCKS_COUNT: 'DEVICES_GET_ID_BLOCKS_COUNT',
   DEVICES_GET_ID: 'DEVICES_GET_ID',
   DEVICES_DELETE_ID: 'DEVICES_DELETE_ID',
@@ -323,11 +323,6 @@ export const apis = {
     method: 'GET',
     url: `${apiEndpoint}/api/devices/${id}/units/count?${where ? `where=${encodeURIComponent(typeof where === 'object' ? JSON.stringify(where) : where)}` : ''}`
   }),
-  // [PUBLIC] get a list of blocks.
-  DEVICES_GET_ID_BLOCKS: ({ id, unitId, filter }) => ({
-    method: 'GET',
-    url: `${apiEndpoint}/api/devices/${id}/blocks?${unitId ? `unitId=${encodeURIComponent(typeof unitId === 'object' ? JSON.stringify(unitId) : unitId)}&` : ''}${filter ? `filter=${encodeURIComponent(typeof filter === 'object' ? JSON.stringify(filter) : filter)}` : ''}`
-  }),
   // Creates a new instance in blocks of this model.
   DEVICES_POST_ID_BLOCKS: ({ id, data }) => ({
     method: 'POST',
@@ -338,6 +333,11 @@ export const apis = {
   DEVICES_DELETE_ID_BLOCKS: ({ id }) => ({
     method: 'DELETE',
     url: `${apiEndpoint}/api/devices/${id}/blocks`
+  }),
+  // [PUBLIC] get a list of blocks.
+  DEVICES_GET_ID_BLOCKS: ({ id, unitId, blockId, filter }) => ({
+    method: 'GET',
+    url: `${apiEndpoint}/api/devices/${id}/blocks?${unitId ? `unitId=${encodeURIComponent(typeof unitId === 'object' ? JSON.stringify(unitId) : unitId)}&` : ''}${blockId ? `blockId=${encodeURIComponent(typeof blockId === 'object' ? JSON.stringify(blockId) : blockId)}&` : ''}${filter ? `filter=${encodeURIComponent(typeof filter === 'object' ? JSON.stringify(filter) : filter)}` : ''}`
   }),
   // Counts blocks of Device.
   DEVICES_GET_ID_BLOCKS_COUNT: ({ id, where }) => ({
@@ -370,7 +370,7 @@ export const apis = {
     method: 'GET',
     url: `${apiEndpoint}/api/devices/count?${where ? `where=${encodeURIComponent(typeof where === 'object' ? JSON.stringify(where) : where)}` : ''}`
   }),
-  // get timeserial data
+  // [DEPRECATED] get timeserial data
   DEVICES_GET_ID_TSDATA: ({ id, start, end, macAddress, unitId, stringId, type, limit }) => ({
     method: 'GET',
     url: `${apiEndpoint}/api/devices/${id}/tsdata?${start ? `start=${encodeURIComponent(typeof start === 'object' ? JSON.stringify(start) : start)}&` : ''}${end ? `end=${encodeURIComponent(typeof end === 'object' ? JSON.stringify(end) : end)}&` : ''}${macAddress ? `macAddress=${encodeURIComponent(typeof macAddress === 'object' ? JSON.stringify(macAddress) : macAddress)}&` : ''}${unitId ? `unitId=${encodeURIComponent(typeof unitId === 'object' ? JSON.stringify(unitId) : unitId)}&` : ''}${stringId ? `stringId=${encodeURIComponent(typeof stringId === 'object' ? JSON.stringify(stringId) : stringId)}&` : ''}${type ? `type=${encodeURIComponent(typeof type === 'object' ? JSON.stringify(type) : type)}&` : ''}${limit ? `limit=${encodeURIComponent(typeof limit === 'object' ? JSON.stringify(limit) : limit)}` : ''}`
@@ -385,17 +385,17 @@ export const apis = {
     method: 'GET',
     url: `${apiEndpoint}/api/devices/${id}/events-timeseries?${start ? `start=${encodeURIComponent(typeof start === 'object' ? JSON.stringify(start) : start)}&` : ''}${end ? `end=${encodeURIComponent(typeof end === 'object' ? JSON.stringify(end) : end)}&` : ''}${macAddress ? `macAddress=${encodeURIComponent(typeof macAddress === 'object' ? JSON.stringify(macAddress) : macAddress)}&` : ''}${unitId ? `unitId=${encodeURIComponent(typeof unitId === 'object' ? JSON.stringify(unitId) : unitId)}&` : ''}${stringId ? `stringId=${encodeURIComponent(typeof stringId === 'object' ? JSON.stringify(stringId) : stringId)}&` : ''}${priority ? `priority=${encodeURIComponent(typeof priority === 'object' ? JSON.stringify(priority) : priority)}&` : ''}${limit ? `limit=${encodeURIComponent(typeof limit === 'object' ? JSON.stringify(limit) : limit)}&` : ''}${isAsc ? `isAsc=${encodeURIComponent(typeof isAsc === 'object' ? JSON.stringify(isAsc) : isAsc)}` : ''}`
   }),
-  // get system alertChart
+  // [DEPRECATED] get system alertChart
   DEVICES_GET_ALERTCHART: () => ({
     method: 'GET',
     url: `${apiEndpoint}/api/devices/alertChart`
   }),
-  // get system alertStats
+  // [DEPRECATED] get system alertStats
   DEVICES_GET_ALERTSTATS: ({ systemId }) => ({
     method: 'GET',
     url: `${apiEndpoint}/api/devices/alertStats?${systemId ? `systemId=${encodeURIComponent(typeof systemId === 'object' ? JSON.stringify(systemId) : systemId)}` : ''}`
   }),
-  // get system stats
+  // [DEPRECATED] get system stats
   DEVICES_GET_STATS: () => ({
     method: 'GET',
     url: `${apiEndpoint}/api/devices/stats`
