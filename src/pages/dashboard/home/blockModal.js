@@ -55,20 +55,6 @@ const BlockModal = ({ modal, setModal, blockDetailEvents, blockHistories, dispat
 
   useEffect(() => {
     if (modal) {
-      // dispatch({
-      //   type: 'device/BLOCK_DETAIL_EVENTS',
-      //   payload: {
-      //     id: modal.deviceId,
-      //     start: time.startOf('day').unix(),
-      //     end: time.endOf('day').unix(),
-      //     priority: [0, 1, 2, 3, 4, 5],
-      //     unitId: modal.unitId,
-      //     macAddress: modal.macAddress,
-      //     isAsc: true,
-      //     limit: 1000
-      //     //  stringId
-      //   }
-      // })
       dispatch({
         type: 'device/BLOCK_HISTORY',
         payload: {
@@ -77,7 +63,7 @@ const BlockModal = ({ modal, setModal, blockDetailEvents, blockHistories, dispat
           end: range.end,
           macAddress: modal.macAddress,
           isAsc: true,
-          timebucket: '1 minute',
+          timebucket: '1 hour',
           limit: 1000
           //  stringId
         }

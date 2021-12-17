@@ -1,6 +1,6 @@
 import React from 'react'
 import Chart from 'react-apexcharts'
-import { TIME_ONLY_FORMAT } from 'constant'
+import { SHORT_DATE_FORMAT } from 'constant'
 import moment from 'moment'
 
 const ChartPage = ({ series, labels }) => {
@@ -48,7 +48,7 @@ const ChartPage = ({ series, labels }) => {
       xaxis: {
         labels: {
           formatter: function (value) {
-            return moment(value * 1000).format(TIME_ONLY_FORMAT)
+            return moment(value * 1000).format(SHORT_DATE_FORMAT)
           }
         }
       },
