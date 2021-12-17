@@ -1,5 +1,7 @@
 import React from 'react'
 import Chart from 'react-apexcharts'
+import { TIME_ONLY_FORMAT } from 'constant'
+import moment from 'moment'
 
 const ChartPage = ({ series, labels }) => {
   var config = {
@@ -44,24 +46,15 @@ const ChartPage = ({ series, labels }) => {
         }
       },
       xaxis: {
-        categories: [
-          '14:10',
-          '14:20',
-          '14:30',
-          '14:40',
-          '14:50',
-          '15:00',
-          '15:10',
-          '15:20',
-          '15:30',
-          '15:40',
-          '15:50',
-          '16:00'
-        ]
+        labels: {
+          formatter: function (value) {
+            return moment(value * 1000).format(TIME_ONLY_FORMAT)
+          }
+        }
       },
       yaxis: [
         {
-          seriesName: 'RUpper',
+          seriesName: 'R',
           opposite: true,
           axisTicks: {
             show: true
@@ -84,7 +77,7 @@ const ChartPage = ({ series, labels }) => {
           }
         },
         {
-          seriesName: 'VUpper',
+          seriesName: 'V0',
           axisTicks: {
             show: true
           },
@@ -107,7 +100,7 @@ const ChartPage = ({ series, labels }) => {
         },
         {
           show: false,
-          seriesName: 'VUpper'
+          seriesName: 'E'
           // axisTicks: {
           //   show: true,
           // },
@@ -130,7 +123,7 @@ const ChartPage = ({ series, labels }) => {
         },
 
         {
-          seriesName: 'TUpper',
+          seriesName: 'T',
           opposite: true,
           axisTicks: {
             show: true

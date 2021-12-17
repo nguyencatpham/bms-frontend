@@ -1,6 +1,6 @@
 /* eslint camelcase: 0 */
 /*
-    Total: 120 APIs
+    Total: 139 APIs
     version: "0.2.1",
     title: "bms-backend",
     description: "bms Backend API"
@@ -57,6 +57,7 @@ export const types = {
   DEVICES_GET_ID_TSDATA: 'DEVICES_GET_ID_TSDATA',
   DEVICES_GET_ID_EVENTS: 'DEVICES_GET_ID_EVENTS',
   DEVICES_GET_ID_EVENTS_TIMESERIES: 'DEVICES_GET_ID_EVENTS_TIMESERIES',
+  DEVICES_GET_ID_BLOCK_HISTORIES: 'DEVICES_GET_ID_BLOCK_HISTORIES',
   DEVICES_GET_ALERTCHART: 'DEVICES_GET_ALERTCHART',
   DEVICES_GET_ALERTSTATS: 'DEVICES_GET_ALERTSTATS',
   DEVICES_GET_STATS: 'DEVICES_GET_STATS',
@@ -112,6 +113,24 @@ export const types = {
   EVENTS_GET: 'EVENTS_GET',
   EVENTS_GET_COUNT: 'EVENTS_GET_COUNT',
   EVENTS_POST_READS: 'EVENTS_POST_READS',
+  EVENTLOGS_POST: 'EVENTLOGS_POST',
+  EVENTLOGS_PATCH: 'EVENTLOGS_PATCH',
+  EVENTLOGS_PUT: 'EVENTLOGS_PUT',
+  EVENTLOGS_GET: 'EVENTLOGS_GET',
+  EVENTLOGS_POST_REPLACEORCREATE: 'EVENTLOGS_POST_REPLACEORCREATE',
+  EVENTLOGS_POST_UPSERTWITHWHERE: 'EVENTLOGS_POST_UPSERTWITHWHERE',
+  EVENTLOGS_GET_ID_EXISTS: 'EVENTLOGS_GET_ID_EXISTS',
+  EVENTLOGS_HEAD_ID: 'EVENTLOGS_HEAD_ID',
+  EVENTLOGS_GET_ID: 'EVENTLOGS_GET_ID',
+  EVENTLOGS_PUT_ID: 'EVENTLOGS_PUT_ID',
+  EVENTLOGS_DELETE_ID: 'EVENTLOGS_DELETE_ID',
+  EVENTLOGS_PATCH_ID: 'EVENTLOGS_PATCH_ID',
+  EVENTLOGS_POST_ID_REPLACE: 'EVENTLOGS_POST_ID_REPLACE',
+  EVENTLOGS_GET_FINDONE: 'EVENTLOGS_GET_FINDONE',
+  EVENTLOGS_POST_UPDATE: 'EVENTLOGS_POST_UPDATE',
+  EVENTLOGS_GET_COUNT: 'EVENTLOGS_GET_COUNT',
+  EVENTLOGS_POST_CHANGE_STREAM: 'EVENTLOGS_POST_CHANGE_STREAM',
+  EVENTLOGS_GET_CHANGE_STREAM: 'EVENTLOGS_GET_CHANGE_STREAM',
   EVENT_VIEWS_POST: 'EVENT_VIEWS_POST',
   EVENT_VIEWS_PATCH: 'EVENT_VIEWS_PATCH',
   EVENT_VIEWS_PUT: 'EVENT_VIEWS_PUT',
@@ -384,6 +403,11 @@ export const apis = {
   DEVICES_GET_ID_EVENTS_TIMESERIES: ({ id, start, end, macAddress, unitId, stringId, priority, limit, isAsc }) => ({
     method: 'GET',
     url: `${apiEndpoint}/api/devices/${id}/events-timeseries?${start ? `start=${encodeURIComponent(typeof start === 'object' ? JSON.stringify(start) : start)}&` : ''}${end ? `end=${encodeURIComponent(typeof end === 'object' ? JSON.stringify(end) : end)}&` : ''}${macAddress ? `macAddress=${encodeURIComponent(typeof macAddress === 'object' ? JSON.stringify(macAddress) : macAddress)}&` : ''}${unitId ? `unitId=${encodeURIComponent(typeof unitId === 'object' ? JSON.stringify(unitId) : unitId)}&` : ''}${stringId ? `stringId=${encodeURIComponent(typeof stringId === 'object' ? JSON.stringify(stringId) : stringId)}&` : ''}${priority ? `priority=${encodeURIComponent(typeof priority === 'object' ? JSON.stringify(priority) : priority)}&` : ''}${limit ? `limit=${encodeURIComponent(typeof limit === 'object' ? JSON.stringify(limit) : limit)}&` : ''}${isAsc ? `isAsc=${encodeURIComponent(typeof isAsc === 'object' ? JSON.stringify(isAsc) : isAsc)}` : ''}`
+  }),
+  // get events hitorical block data
+  DEVICES_GET_ID_BLOCK_HISTORIES: ({ id, start, end, macAddress, unitId, stringId, limit, isAsc }) => ({
+    method: 'GET',
+    url: `${apiEndpoint}/api/devices/${id}/block-histories?${start ? `start=${encodeURIComponent(typeof start === 'object' ? JSON.stringify(start) : start)}&` : ''}${end ? `end=${encodeURIComponent(typeof end === 'object' ? JSON.stringify(end) : end)}&` : ''}${macAddress ? `macAddress=${encodeURIComponent(typeof macAddress === 'object' ? JSON.stringify(macAddress) : macAddress)}&` : ''}${unitId ? `unitId=${encodeURIComponent(typeof unitId === 'object' ? JSON.stringify(unitId) : unitId)}&` : ''}${stringId ? `stringId=${encodeURIComponent(typeof stringId === 'object' ? JSON.stringify(stringId) : stringId)}&` : ''}${limit ? `limit=${encodeURIComponent(typeof limit === 'object' ? JSON.stringify(limit) : limit)}&` : ''}${isAsc ? `isAsc=${encodeURIComponent(typeof isAsc === 'object' ? JSON.stringify(isAsc) : isAsc)}` : ''}`
   }),
   // [DEPRECATED] get system alertChart
   DEVICES_GET_ALERTCHART: () => ({
@@ -677,6 +701,106 @@ export const apis = {
     method: 'POST',
     url: `${apiEndpoint}/api/events/reads`,
     body
+  }),
+  // Create a new instance of the model and persist it into the data source.
+  EVENTLOGS_POST: ({ data }) => ({
+    method: 'POST',
+    url: `${apiEndpoint}/api/eventLogs`,
+    body: data
+  }),
+  // Patch an existing model instance or insert a new one into the data source.
+  EVENTLOGS_PATCH: ({ data }) => ({
+    method: 'PATCH',
+    url: `${apiEndpoint}/api/eventLogs`,
+    body: data
+  }),
+  // Replace an existing model instance or insert a new one into the data source.
+  EVENTLOGS_PUT: ({ data }) => ({
+    method: 'PUT',
+    url: `${apiEndpoint}/api/eventLogs`,
+    body: data
+  }),
+  // Find all instances of the model matched by filter from the data source.
+  EVENTLOGS_GET: ({ filter }) => ({
+    method: 'GET',
+    url: `${apiEndpoint}/api/eventLogs?${filter ? `filter=${encodeURIComponent(typeof filter === 'object' ? JSON.stringify(filter) : filter)}` : ''}`
+  }),
+  // Replace an existing model instance or insert a new one into the data source.
+  EVENTLOGS_POST_REPLACEORCREATE: ({ data }) => ({
+    method: 'POST',
+    url: `${apiEndpoint}/api/eventLogs/replaceOrCreate`,
+    body: data
+  }),
+  // Update an existing model instance or insert a new one into the data source based on the where criteria.
+  EVENTLOGS_POST_UPSERTWITHWHERE: ({ where, data }) => ({
+    method: 'POST',
+    url: `${apiEndpoint}/api/eventLogs/upsertWithWhere?${where ? `where=${encodeURIComponent(typeof where === 'object' ? JSON.stringify(where) : where)}` : ''}`,
+    body: data
+  }),
+  // Check whether a model instance exists in the data source.
+  EVENTLOGS_GET_ID_EXISTS: ({ id }) => ({
+    method: 'GET',
+    url: `${apiEndpoint}/api/eventLogs/${id}/exists`
+  }),
+  // Check whether a model instance exists in the data source.
+  EVENTLOGS_HEAD_ID: ({ id }) => ({
+    method: 'HEAD',
+    url: `${apiEndpoint}/api/eventLogs/${id}`
+  }),
+  // Find a model instance by {{id}} from the data source.
+  EVENTLOGS_GET_ID: ({ id, filter }) => ({
+    method: 'GET',
+    url: `${apiEndpoint}/api/eventLogs/${id}?${filter ? `filter=${encodeURIComponent(typeof filter === 'object' ? JSON.stringify(filter) : filter)}` : ''}`
+  }),
+  // Replace attributes for a model instance and persist it into the data source.
+  EVENTLOGS_PUT_ID: ({ id, data }) => ({
+    method: 'PUT',
+    url: `${apiEndpoint}/api/eventLogs/${id}`,
+    body: data
+  }),
+  // Delete a model instance by {{id}} from the data source.
+  EVENTLOGS_DELETE_ID: ({ id }) => ({
+    method: 'DELETE',
+    url: `${apiEndpoint}/api/eventLogs/${id}`
+  }),
+  // Patch attributes for a model instance and persist it into the data source.
+  EVENTLOGS_PATCH_ID: ({ id, data }) => ({
+    method: 'PATCH',
+    url: `${apiEndpoint}/api/eventLogs/${id}`,
+    body: data
+  }),
+  // Replace attributes for a model instance and persist it into the data source.
+  EVENTLOGS_POST_ID_REPLACE: ({ id, data }) => ({
+    method: 'POST',
+    url: `${apiEndpoint}/api/eventLogs/${id}/replace`,
+    body: data
+  }),
+  // Find first instance of the model matched by filter from the data source.
+  EVENTLOGS_GET_FINDONE: ({ filter }) => ({
+    method: 'GET',
+    url: `${apiEndpoint}/api/eventLogs/findOne?${filter ? `filter=${encodeURIComponent(typeof filter === 'object' ? JSON.stringify(filter) : filter)}` : ''}`
+  }),
+  // Update instances of the model matched by {{where}} from the data source.
+  EVENTLOGS_POST_UPDATE: ({ where, data }) => ({
+    method: 'POST',
+    url: `${apiEndpoint}/api/eventLogs/update?${where ? `where=${encodeURIComponent(typeof where === 'object' ? JSON.stringify(where) : where)}` : ''}`,
+    body: data
+  }),
+  // Count instances of the model matched by where from the data source.
+  EVENTLOGS_GET_COUNT: ({ where }) => ({
+    method: 'GET',
+    url: `${apiEndpoint}/api/eventLogs/count?${where ? `where=${encodeURIComponent(typeof where === 'object' ? JSON.stringify(where) : where)}` : ''}`
+  }),
+  // Create a change stream.
+  EVENTLOGS_POST_CHANGE_STREAM: ({ options }) => ({
+    method: 'POST',
+    url: `${apiEndpoint}/api/eventLogs/change-stream`,
+    body: { options }
+  }),
+  // Create a change stream.
+  EVENTLOGS_GET_CHANGE_STREAM: ({ options }) => ({
+    method: 'GET',
+    url: `${apiEndpoint}/api/eventLogs/change-stream?${options ? `options=${encodeURIComponent(typeof options === 'object' ? JSON.stringify(options) : options)}` : ''}`
   }),
   // Create a new instance of the model and persist it into the data source.
   EVENT_VIEWS_POST: ({ data }) => ({

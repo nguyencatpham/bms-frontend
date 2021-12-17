@@ -95,6 +95,7 @@ export default function * rootSaga () {
     takeEvery(actions.BLOCK_STATS, COMMON({ type: TYPES.DEVICES_GET_ID_BLOCK_STATS, field: 'blockStats' })),
     takeEvery(actions.BLOCK_EVENTS, COMMON({ type: TYPES.DEVICES_GET_ID_EVENTS_TIMESERIES, field: 'blockEvents' })),
     takeEvery(actions.BLOCK_DETAIL_EVENTS, COMMON({ type: TYPES.DEVICES_GET_ID_EVENTS_TIMESERIES, field: 'blockDetailEvents' })),
+    takeEvery(actions.BLOCK_HISTORY, COMMON({ type: TYPES.DEVICES_GET_ID_BLOCK_HISTORIES, field: 'blockHistories' })),
     takeEvery(actions.UPLOAD_CONFIG, COMMON({ type: TYPES.DEVICES_POST_ID_UPLOADCONFIG, field: 'uploadConfig' })),
     takeEvery(actions.FWUPDATE, COMMON({ type: TYPES.DEVICES_PUT_ID_FWUPDATE, field: 'fwUpdate' }))
   ])

@@ -1,3 +1,4 @@
+import moment from 'moment'
 export const HOCHIMINH_CENTER = [10.7682231, 106.7045727]
 export const TIME_FORMAT = 'DD/MM/YYYY HH:mm'
 export const TIME_ONLY_FORMAT = 'HH:mm'
@@ -69,5 +70,50 @@ export function getBlockAlertColorByType (type) {
       return getBlockColor({ offline: true })
     default:
       break
+  }
+}
+export const DATE_PICKER_OPTIONS = {
+  opens: 'center',
+  drops: 'down',
+  timePicker: true,
+  minYear: 2000,
+  maxYear: 2038,
+  maxSpan: {
+    days: 7
+  },
+  // minDate: 1,
+  maxDate: moment().endOf('day'),
+  locale: {
+    format: TIME_FORMAT,
+    separator: ' - ',
+    applyLabel: 'Chọn',
+    cancelLabel: 'Hủy',
+    fromLabel: 'Từ',
+    toLabel: 'Đến',
+    customRangeLabel: 'Tùy chọn',
+    daysOfWeek: [
+      'CN',
+      'Hai',
+      'Ba',
+      'Tư',
+      'Năm',
+      'Sáu',
+      'Báy'
+    ],
+    monthNames: [
+      'Tháng 1',
+      'Tháng 2',
+      'Tháng 3',
+      'Tháng 4',
+      'Tháng 5',
+      'Tháng 6',
+      'Tháng 7',
+      'Tháng 8',
+      'Tháng 9',
+      'Tháng 10',
+      'Tháng 11',
+      'Tháng 12'
+    ],
+    firstDay: 1
   }
 }

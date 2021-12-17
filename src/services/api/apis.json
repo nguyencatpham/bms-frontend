@@ -1752,6 +1752,79 @@
         "deprecated": false
       }
     },
+    "/devices/{id}/block-histories": {
+      "get": {
+        "tags": [
+          "Device"
+        ],
+        "summary": "get events hitorical block data",
+        "operationId": "Device.prototype.getBlockHistory",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Device id",
+            "required": true,
+            "type": "string",
+            "format": "JSON"
+          },
+          {
+            "name": "start",
+            "in": "query",
+            "required": true,
+            "type": "string",
+            "format": "date-time"
+          },
+          {
+            "name": "end",
+            "in": "query",
+            "required": true,
+            "type": "string",
+            "format": "date-time"
+          },
+          {
+            "name": "macAddress",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "unitId",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "stringId",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "type": "number",
+            "format": "double"
+          },
+          {
+            "name": "isAsc",
+            "in": "query",
+            "required": false,
+            "type": "boolean"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Request was successful",
+            "schema": {
+              "$ref": "#/definitions/EventLog"
+            }
+          }
+        },
+        "deprecated": false
+      }
+    },
     "/devices/alertChart": {
       "get": {
         "tags": [
@@ -3503,6 +3576,585 @@
         "deprecated": false
       }
     },
+    "/eventLogs": {
+      "post": {
+        "tags": [
+          "EventLog"
+        ],
+        "summary": "Create a new instance of the model and persist it into the data source.",
+        "operationId": "EventLog.create",
+        "parameters": [
+          {
+            "name": "data",
+            "in": "body",
+            "description": "Model instance data",
+            "required": false,
+            "schema": {
+              "description": "Model instance data",
+              "$ref": "#/definitions/EventLog"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Request was successful",
+            "schema": {
+              "$ref": "#/definitions/EventLog"
+            }
+          }
+        },
+        "deprecated": false
+      },
+      "patch": {
+        "tags": [
+          "EventLog"
+        ],
+        "summary": "Patch an existing model instance or insert a new one into the data source.",
+        "operationId": "EventLog.patchOrCreate",
+        "parameters": [
+          {
+            "name": "data",
+            "in": "body",
+            "description": "Model instance data",
+            "required": false,
+            "schema": {
+              "description": "Model instance data",
+              "$ref": "#/definitions/EventLog"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Request was successful",
+            "schema": {
+              "$ref": "#/definitions/EventLog"
+            }
+          }
+        },
+        "deprecated": false
+      },
+      "put": {
+        "tags": [
+          "EventLog"
+        ],
+        "summary": "Replace an existing model instance or insert a new one into the data source.",
+        "operationId": "EventLog.replaceOrCreate__put_eventLogs",
+        "parameters": [
+          {
+            "name": "data",
+            "in": "body",
+            "description": "Model instance data",
+            "required": false,
+            "schema": {
+              "description": "Model instance data",
+              "$ref": "#/definitions/EventLog"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Request was successful",
+            "schema": {
+              "$ref": "#/definitions/EventLog"
+            }
+          }
+        },
+        "deprecated": false
+      },
+      "get": {
+        "tags": [
+          "EventLog"
+        ],
+        "summary": "Find all instances of the model matched by filter from the data source.",
+        "operationId": "EventLog.find",
+        "parameters": [
+          {
+            "name": "filter",
+            "in": "query",
+            "description": "Filter defining fields, where, include, order, offset, and limit - must be a JSON-encoded string (`{\"where\":{\"something\":\"value\"}}`).  See https://loopback.io/doc/en/lb3/Querying-data.html#using-stringified-json-in-rest-queries for more details.",
+            "required": false,
+            "type": "string",
+            "format": "JSON"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Request was successful",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/EventLog"
+              }
+            }
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/eventLogs/replaceOrCreate": {
+      "post": {
+        "tags": [
+          "EventLog"
+        ],
+        "summary": "Replace an existing model instance or insert a new one into the data source.",
+        "operationId": "EventLog.replaceOrCreate__post_eventLogs_replaceOrCreate",
+        "parameters": [
+          {
+            "name": "data",
+            "in": "body",
+            "description": "Model instance data",
+            "required": false,
+            "schema": {
+              "description": "Model instance data",
+              "$ref": "#/definitions/EventLog"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Request was successful",
+            "schema": {
+              "$ref": "#/definitions/EventLog"
+            }
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/eventLogs/upsertWithWhere": {
+      "post": {
+        "tags": [
+          "EventLog"
+        ],
+        "summary": "Update an existing model instance or insert a new one into the data source based on the where criteria.",
+        "operationId": "EventLog.upsertWithWhere",
+        "parameters": [
+          {
+            "name": "where",
+            "in": "query",
+            "description": "Criteria to match model instances",
+            "required": false,
+            "type": "string",
+            "format": "JSON"
+          },
+          {
+            "name": "data",
+            "in": "body",
+            "description": "An object of model property name/value pairs",
+            "required": false,
+            "schema": {
+              "description": "An object of model property name/value pairs",
+              "$ref": "#/definitions/EventLog"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Request was successful",
+            "schema": {
+              "$ref": "#/definitions/EventLog"
+            }
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/eventLogs/{id}/exists": {
+      "get": {
+        "tags": [
+          "EventLog"
+        ],
+        "summary": "Check whether a model instance exists in the data source.",
+        "operationId": "EventLog.exists__get_eventLogs_{id}_exists",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Model id",
+            "required": true,
+            "type": "string",
+            "format": "JSON"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Request was successful",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "exists": {
+                  "type": "boolean"
+                }
+              }
+            }
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/eventLogs/{id}": {
+      "head": {
+        "tags": [
+          "EventLog"
+        ],
+        "summary": "Check whether a model instance exists in the data source.",
+        "operationId": "EventLog.exists__head_eventLogs_{id}",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Model id",
+            "required": true,
+            "type": "string",
+            "format": "JSON"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Request was successful",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "exists": {
+                  "type": "boolean"
+                }
+              }
+            }
+          }
+        },
+        "deprecated": false
+      },
+      "get": {
+        "tags": [
+          "EventLog"
+        ],
+        "summary": "Find a model instance by {{id}} from the data source.",
+        "operationId": "EventLog.findById",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Model id",
+            "required": true,
+            "type": "string",
+            "format": "JSON"
+          },
+          {
+            "name": "filter",
+            "in": "query",
+            "description": "Filter defining fields and include - must be a JSON-encoded string ({\"something\":\"value\"})",
+            "required": false,
+            "type": "string",
+            "format": "JSON"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Request was successful",
+            "schema": {
+              "$ref": "#/definitions/EventLog"
+            }
+          }
+        },
+        "deprecated": false
+      },
+      "put": {
+        "tags": [
+          "EventLog"
+        ],
+        "summary": "Replace attributes for a model instance and persist it into the data source.",
+        "operationId": "EventLog.replaceById__put_eventLogs_{id}",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Model id",
+            "required": true,
+            "type": "string",
+            "format": "JSON"
+          },
+          {
+            "name": "data",
+            "in": "body",
+            "description": "Model instance data",
+            "required": false,
+            "schema": {
+              "description": "Model instance data",
+              "$ref": "#/definitions/EventLog"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Request was successful",
+            "schema": {
+              "$ref": "#/definitions/EventLog"
+            }
+          }
+        },
+        "deprecated": false
+      },
+      "delete": {
+        "tags": [
+          "EventLog"
+        ],
+        "summary": "Delete a model instance by {{id}} from the data source.",
+        "operationId": "EventLog.deleteById",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Model id",
+            "required": true,
+            "type": "string",
+            "format": "JSON"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Request was successful",
+            "schema": {
+              "type": "object"
+            }
+          }
+        },
+        "deprecated": false
+      },
+      "patch": {
+        "tags": [
+          "EventLog"
+        ],
+        "summary": "Patch attributes for a model instance and persist it into the data source.",
+        "operationId": "EventLog.prototype.patchAttributes",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "EventLog id",
+            "required": true,
+            "type": "string",
+            "format": "JSON"
+          },
+          {
+            "name": "data",
+            "in": "body",
+            "description": "An object of model property name/value pairs",
+            "required": false,
+            "schema": {
+              "description": "An object of model property name/value pairs",
+              "$ref": "#/definitions/EventLog"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Request was successful",
+            "schema": {
+              "$ref": "#/definitions/EventLog"
+            }
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/eventLogs/{id}/replace": {
+      "post": {
+        "tags": [
+          "EventLog"
+        ],
+        "summary": "Replace attributes for a model instance and persist it into the data source.",
+        "operationId": "EventLog.replaceById__post_eventLogs_{id}_replace",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Model id",
+            "required": true,
+            "type": "string",
+            "format": "JSON"
+          },
+          {
+            "name": "data",
+            "in": "body",
+            "description": "Model instance data",
+            "required": false,
+            "schema": {
+              "description": "Model instance data",
+              "$ref": "#/definitions/EventLog"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Request was successful",
+            "schema": {
+              "$ref": "#/definitions/EventLog"
+            }
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/eventLogs/findOne": {
+      "get": {
+        "tags": [
+          "EventLog"
+        ],
+        "summary": "Find first instance of the model matched by filter from the data source.",
+        "operationId": "EventLog.findOne",
+        "parameters": [
+          {
+            "name": "filter",
+            "in": "query",
+            "description": "Filter defining fields, where, include, order, offset, and limit - must be a JSON-encoded string (`{\"where\":{\"something\":\"value\"}}`).  See https://loopback.io/doc/en/lb3/Querying-data.html#using-stringified-json-in-rest-queries for more details.",
+            "required": false,
+            "type": "string",
+            "format": "JSON"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Request was successful",
+            "schema": {
+              "$ref": "#/definitions/EventLog"
+            }
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/eventLogs/update": {
+      "post": {
+        "tags": [
+          "EventLog"
+        ],
+        "summary": "Update instances of the model matched by {{where}} from the data source.",
+        "operationId": "EventLog.updateAll",
+        "parameters": [
+          {
+            "name": "where",
+            "in": "query",
+            "description": "Criteria to match model instances",
+            "required": false,
+            "type": "string",
+            "format": "JSON"
+          },
+          {
+            "name": "data",
+            "in": "body",
+            "description": "An object of model property name/value pairs",
+            "required": false,
+            "schema": {
+              "description": "An object of model property name/value pairs",
+              "$ref": "#/definitions/EventLog"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Request was successful",
+            "schema": {
+              "description": "Information related to the outcome of the operation",
+              "type": "object",
+              "properties": {
+                "count": {
+                  "description": "The number of instances updated",
+                  "type": "number",
+                  "format": "double"
+                }
+              }
+            }
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/eventLogs/count": {
+      "get": {
+        "tags": [
+          "EventLog"
+        ],
+        "summary": "Count instances of the model matched by where from the data source.",
+        "operationId": "EventLog.count",
+        "parameters": [
+          {
+            "name": "where",
+            "in": "query",
+            "description": "Criteria to match model instances",
+            "required": false,
+            "type": "string",
+            "format": "JSON"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Request was successful",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "count": {
+                  "type": "number",
+                  "format": "double"
+                }
+              }
+            }
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/eventLogs/change-stream": {
+      "post": {
+        "tags": [
+          "EventLog"
+        ],
+        "summary": "Create a change stream.",
+        "operationId": "EventLog.createChangeStream__post_eventLogs_change-stream",
+        "parameters": [
+          {
+            "name": "options",
+            "in": "formData",
+            "required": false,
+            "type": "string",
+            "format": "JSON"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Request was successful",
+            "schema": {
+              "type": "file"
+            }
+          }
+        },
+        "deprecated": false
+      },
+      "get": {
+        "tags": [
+          "EventLog"
+        ],
+        "summary": "Create a change stream.",
+        "operationId": "EventLog.createChangeStream__get_eventLogs_change-stream",
+        "parameters": [
+          {
+            "name": "options",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "JSON"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Request was successful",
+            "schema": {
+              "type": "file"
+            }
+          }
+        },
+        "deprecated": false
+      }
+    },
     "/event-views": {
       "post": {
         "tags": [
@@ -4101,6 +4753,9 @@
     },
     {
       "name": "Event"
+    },
+    {
+      "name": "EventLog"
     },
     {
       "name": "EventView"
@@ -4923,6 +5578,98 @@
         "type",
         "metadata",
         "read",
+        "timestamp"
+      ],
+      "additionalProperties": false
+    },
+    "EventLog": {
+      "properties": {
+        "deviceId": {
+          "maxLength": 36,
+          "type": "string"
+        },
+        "blockId": {
+          "maxLength": 36,
+          "type": "string"
+        },
+        "stringId": {
+          "maxLength": 36,
+          "type": "string"
+        },
+        "unitId": {
+          "maxLength": 36,
+          "type": "string"
+        },
+        "macAddress": {
+          "maxLength": 36,
+          "type": "string"
+        },
+        "v0": {
+          "type": "number",
+          "format": "double"
+        },
+        "e": {
+          "type": "number",
+          "format": "double"
+        },
+        "r": {
+          "type": "number",
+          "format": "double"
+        },
+        "t": {
+          "type": "number",
+          "format": "double"
+        },
+        "sOC": {
+          "type": "number",
+          "format": "double"
+        },
+        "totalDischargeSecond": {
+          "type": "number",
+          "format": "double"
+        },
+        "totalDischargeCycle": {
+          "type": "number",
+          "format": "double"
+        },
+        "expectedLifeTimeRest": {
+          "type": "number",
+          "format": "double"
+        },
+        "rUpper": {
+          "type": "boolean"
+        },
+        "vUpper": {
+          "type": "boolean"
+        },
+        "vLower": {
+          "type": "boolean"
+        },
+        "eUpper": {
+          "type": "boolean"
+        },
+        "eLower": {
+          "type": "boolean"
+        },
+        "tUpper": {
+          "type": "boolean"
+        },
+        "tLower": {
+          "type": "boolean"
+        },
+        "operationMode": {
+          "type": "number",
+          "format": "double"
+        },
+        "deviceType": {
+          "type": "string"
+        },
+        "timestamp": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "required": [
         "timestamp"
       ],
       "additionalProperties": false

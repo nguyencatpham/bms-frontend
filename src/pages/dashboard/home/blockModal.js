@@ -1,93 +1,113 @@
 import React, { useState, useEffect } from 'react'
-import { Modal, Button, DatePicker } from 'antd'
+import { Modal, Button } from 'antd'
 import LineChart from './lineChartModal'
 import TitleIcon from './titleIcon'
 import moment from 'moment'
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
+import 'moment/locale/vi'
+import { DATE_PICKER_OPTIONS } from 'constant'
+
+import DateRangePicker from 'react-bootstrap-daterangepicker'
+import jQuery from 'jquery'
+// you will need the css that comes with bootstrap@3. if you are using
+// a tool like webpack, you can do the following:
+// import 'bootstrap/dist/css/bootstrap.css'
+// you will also need the css that comes with bootstrap-daterangepicker
+import 'bootstrap-daterangepicker/daterangepicker.css'
 import './blockModal.scss'
+window.jQuery = window.$ = jQuery
 
 const mapStateToProps = ({ device, dispatch }) => {
-  const { blockDetailEvents = {} } = device
-  return { blockDetailEvents, dispatch }
+  const { blockDetailEvents = {}, blockHistories = {} } = device
+  return { blockDetailEvents, blockHistories, dispatch }
 }
-const BlockModal = ({ modal, setModal, blockDetailEvents, dispatch }) => {
-  const [time, setTime] = useState(moment())
+const BlockModal = ({ modal, setModal, blockDetailEvents, blockHistories, dispatch }) => {
+  const [maxDate] = useState(moment().endOf('day'))
+  const range = {
+    start: moment().add('-7', 'days').set({ hour: 0, minute: 0, second: 0 }).unix() * 1000,
+    end: moment().set({ hour: 23, minute: 59, second: 59 }).unix() * 1000
+  }
   const [series, setSeries] = useState([
-    {
-      name: 'RUpper',
-      data: [],
-      color: '#865439'
-    },
-    {
-      name: 'VUpper',
-      data: [],
-      color: '#FF7600'
-    },
-    {
-      name: 'ELower',
-      data: [],
-      color: '#FFF338'
-    },
-    {
-      name: 'TUpper',
-      data: [],
-      color: '#FF4848'
-    },
-    {
-      name: 'Offline',
-      data: [],
-      color: '#FF4848'
-    }
+    [
+      {
+        name: 'R',
+        data: [],
+        color: '#865439'
+      },
+      {
+        name: 'V0',
+        data: [],
+        color: '#FF7600'
+      },
+      {
+        name: 'E',
+        data: [],
+        color: '#FFF338'
+      },
+      {
+        name: 'T',
+        data: [],
+        color: '#FF4848'
+      }
+    ]
   ])
 
   useEffect(() => {
     if (modal) {
+      // dispatch({
+      //   type: 'device/BLOCK_DETAIL_EVENTS',
+      //   payload: {
+      //     id: modal.deviceId,
+      //     start: time.startOf('day').unix(),
+      //     end: time.endOf('day').unix(),
+      //     priority: [0, 1, 2, 3, 4, 5],
+      //     unitId: modal.unitId,
+      //     macAddress: modal.macAddress,
+      //     isAsc: true,
+      //     limit: 1000
+      //     //  stringId
+      //   }
+      // })
       dispatch({
-        type: 'device/BLOCK_DETAIL_EVENTS',
+        type: 'device/BLOCK_HISTORY',
         payload: {
           id: modal.deviceId,
-          start: time.startOf('day').unix(),
-          end: time.endOf('day').unix(),
-          priority: [0, 1, 2, 3, 4, 5],
-          unitId: modal.unitId,
+          start: range.start,
+          end: range.end,
           macAddress: modal.macAddress,
           isAsc: true,
+          timebucket: '1 minute',
           limit: 1000
           //  stringId
         }
       })
     }
-  }, [modal, time])
+  }, [modal, range.start, range.end])
   useEffect(() => {
     setSeries([
       {
-        name: 'RUpper',
-        data: blockDetailEvents.rUpper || [],
+        name: 'R',
+        data: blockHistories.r || [],
         color: '#865439'
       },
       {
-        name: 'VUpper',
-        data: blockDetailEvents.vUpper || [],
+        name: 'V0',
+        data: blockHistories.v0 || [],
         color: '#FF7600'
       },
       {
-        name: 'ELower',
-        data: blockDetailEvents.eLower || [],
+        name: 'E',
+        data: blockHistories.e || [],
         color: '#FFF338'
       },
       {
-        name: 'TUpper',
-        data: blockDetailEvents.tUpper || [],
+        name: 'T',
+        data: blockHistories.t || [],
         color: '#FF4848'
-      // },
-      // {
-      //   name: 'Offline',
-      //   data: blockDetailEvents.offline || [],
-      //   color: '#FF4848'
       }
     ])
-  }, [blockDetailEvents])
+  }, [blockHistories])
 
   return (
     <>
@@ -109,13 +129,33 @@ const BlockModal = ({ modal, setModal, blockDetailEvents, dispatch }) => {
                     <TitleIcon />
                     <h2 className='title'>Thông tin block {modal.localBlockId}</h2>
                   </div>
-                  <div>
-                    <DatePicker
-                      placeholder='Chọn thời gian'
-                      format='DD/MM/YYYY'
-                      value={time}
-                      onChange={setTime}
-                    />
+                  <div style={{ width: 300 }}>
+                    <DateRangePicker
+                      initialSettings={{
+                        startDate: moment(range.start),
+                        endDate: moment(range.end),
+                        parentEl: '#date-range-modal',
+                        ...DATE_PICKER_OPTIONS,
+                        maxDate
+                      }}
+                      onApply={(event, picker) => {
+                        dispatch({
+                          type: 'device/BLOCK_HISTORY',
+                          payload: {
+                            id: modal.deviceId,
+                            start: picker.startDate.unix() * 1000,
+                            end: picker.endDate.unix() * 1000,
+                            timebucket: '1 minute',
+                            macAddress: modal.macAddress,
+                            isAsc: true,
+                            limit: 1000
+                            //  stringId
+                          }
+                        })
+                      }}
+                    >
+                      <input type='text' width={300} className='form-control general-datetime col-12' />
+                    </DateRangePicker>
                   </div>
                 </div>
                 <div className='chart'>
