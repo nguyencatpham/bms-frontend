@@ -2,6 +2,7 @@ import { TIME_ONLY_FORMAT } from 'constant'
 import moment from 'moment'
 import React from 'react'
 import Chart from 'react-apexcharts'
+import './style.scss'
 
 const ChartPage = ({ series, labels }) => {
   var config = {
@@ -31,7 +32,7 @@ const ChartPage = ({ series, labels }) => {
         // },
       },
       markers: {
-        size: 5,
+        size: 0,
         hover: {
           size: 7
         }
@@ -87,7 +88,9 @@ const ChartPage = ({ series, labels }) => {
         },
         yaxis: {
           lines: {
-            show: true
+            show: true,
+            logarithmic: true,
+            showAlways: true
           }
         }
       }

@@ -19,6 +19,7 @@ import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-daterangepicker/daterangepicker.css'
 import { get } from 'lodash'
 import moment from 'moment'
+import { calTimeBucket } from 'utils'
 // expose jQuery to window for debugging
 window.jQuery = window.$ = jQuery
 
@@ -155,11 +156,12 @@ const DefaultPage = ({ total, systems, devices, units, blocks, blockStats, block
         type: 'device/BLOCK_EVENTS',
         payload: {
           id: systemId,
-          start: time.startOf('day').unix(),
-          end: time.endOf('day').unix(),
+          start: (time || moment()).startOf('day').unix(),
+          end: (time || moment()).endOf('day').unix(),
           priority: [0, 1, 2, 3, 4, 5],
           unitId,
           macAddress: get(blocks.find(x => x.id === blockId), ['macAddress']),
+          timebucket: calTimeBucket({ start: (time || moment()).startOf('day'), end: (time || moment()).endOf('day') }),
           isAsc: true,
           limit: 1000
           //  stringId
@@ -246,6 +248,7 @@ const DefaultPage = ({ total, systems, devices, units, blocks, blockStats, block
   //           priority: [0, 1, 2, 3, 4, 5],
   //           unitId,
   //           macAddress: get(blocks.find(x => x.id === blockId), ['macAddress']),
+  //           timebucket: calTimeBucket({ start: time.startOf('day'), end: time.endOf('day') }),
   //           isAsc: true,
   //           limit: 1000
   //         //  stringId
@@ -273,7 +276,13 @@ const DefaultPage = ({ total, systems, devices, units, blocks, blockStats, block
                     style={{ position: 'relative' }}
                     className='select'
                     placeholder='Chọn hệ thống'
-                    onChange={(e) => setSystemId(e.target.value)}
+                    onChange={(e) => {
+                      setSystemId(e.target.value)
+                      setPagination({
+                        ...pagination,
+                        current: 1
+                      })
+                    }}
                     value={systemId}
                   >
                     {devices.map(x => (
@@ -289,6 +298,10 @@ const DefaultPage = ({ total, systems, devices, units, blocks, blockStats, block
                     onChange={(e) => {
                       setUnitId(e.target.value)
                       setBlockId()
+                      setPagination({
+                        ...pagination,
+                        current: 1
+                      })
                     }}
                     value={unitId}
                   >
@@ -303,7 +316,13 @@ const DefaultPage = ({ total, systems, devices, units, blocks, blockStats, block
                   <select
                     className='select'
                     placeholder='Chọn Block'
-                    onChange={(e) => setBlockId(e.target.value)}
+                    onChange={(e) => {
+                      setBlockId(e.target.value)
+                      setPagination({
+                        ...pagination,
+                        current: 1
+                      })
+                    }}
                     value={blockId}
                   >
                     <option value=''>Tất cả</option>

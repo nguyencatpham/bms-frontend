@@ -94,6 +94,7 @@ export default function * rootSaga () {
     takeEvery(actions.BLOCKS_SUMMARY, COMMON({ type: TYPES.DEVICES_GET_ID_BLOCKS, field: 'blocksSummary' })),
     takeEvery(actions.BLOCK_STATS, COMMON({ type: TYPES.DEVICES_GET_ID_BLOCK_STATS, field: 'blockStats' })),
     takeEvery(actions.BLOCK_EVENTS, COMMON({ type: TYPES.DEVICES_GET_ID_EVENTS_TIMESERIES, field: 'blockEvents' })),
+    takeEvery(actions.EVENTS, COMMON({ type: TYPES.DEVICES_GET_ID_EVENTS, field: 'deviceEvents' })),
     takeEvery(actions.BLOCK_DETAIL_EVENTS, COMMON({ type: TYPES.DEVICES_GET_ID_EVENTS_TIMESERIES, field: 'blockDetailEvents' })),
     takeEvery(actions.BLOCK_HISTORY, COMMON({ type: TYPES.DEVICES_GET_ID_BLOCK_HISTORIES, field: 'blockHistories' })),
     takeEvery(actions.UPLOAD_CONFIG, COMMON({ type: TYPES.DEVICES_POST_ID_UPLOADCONFIG, field: 'uploadConfig' })),

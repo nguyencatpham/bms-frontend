@@ -16,6 +16,7 @@ import jQuery from 'jquery'
 // you will also need the css that comes with bootstrap-daterangepicker
 import 'bootstrap-daterangepicker/daterangepicker.css'
 import './blockModal.scss'
+import { calTimeBucket } from 'utils'
 window.jQuery = window.$ = jQuery
 
 const mapStateToProps = ({ device, dispatch }) => {
@@ -63,7 +64,7 @@ const BlockModal = ({ modal, setModal, blockDetailEvents, blockHistories, dispat
           end: range.end,
           macAddress: modal.macAddress,
           isAsc: true,
-          timebucket: '1 hour',
+          timebucket: calTimeBucket({ start: moment(range.start), end: moment(range.end) }),
           limit: 1000
           //  stringId
         }
@@ -131,7 +132,7 @@ const BlockModal = ({ modal, setModal, blockDetailEvents, blockHistories, dispat
                             id: modal.deviceId,
                             start: picker.startDate.unix() * 1000,
                             end: picker.endDate.unix() * 1000,
-                            timebucket: '1 minute',
+                            timebucket: calTimeBucket({ start: picker.startDate, end: picker.endDate }),
                             macAddress: modal.macAddress,
                             isAsc: true,
                             limit: 1000
@@ -165,7 +166,7 @@ const BlockModal = ({ modal, setModal, blockDetailEvents, blockHistories, dispat
                   <div className='side-info__body'>
                     <div className='body-row'>
                       <div>Block</div>
-                      <div id={`localBlockId=${modal.localBlockId},id=${modal.id}`}>{modal.localBlockId || modal.id}</div>
+                      <div id={`localBlockId=${modal.localBlockId},id=${modal.id}`}>{modal.localBlockId || '?'}</div>
                       <div />
                     </div>
                     <div className='body-row'>

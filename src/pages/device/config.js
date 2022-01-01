@@ -6,7 +6,6 @@ import { withRouter } from 'react-router-dom'
 import './detailForm.scss'
 import { useHistory, useParams } from 'react-router'
 import { Helmet } from 'react-helmet'
-import TextArea from 'rc-textarea'
 import ReactJson from 'react-json-view'
 import './editor.scss'
 const { Item } = Form

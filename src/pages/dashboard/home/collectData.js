@@ -47,7 +47,7 @@ const BlockList = ({ data = [], dispatch }) => {
         }
         return 0
       }).map((block, index) => (
-        <input className='debug-block-item' key={index} type='hidden' value={`localBlockId=${block.localBlockId}, index=${index + 1}`} />
+        <input className='debug-block-item' key={index} type='hidden' value={`localBlockId=${block.localBlockId}, type=${block.deviceType}, index=${index + 1}, macAddress=${block.macAddress}`} />
       ))}
       <BlockModal modal={modal} setModal={setModal} />
       <div className='custom-card__body'>
@@ -63,10 +63,10 @@ const BlockList = ({ data = [], dispatch }) => {
               <div
                 key={index}
                 onClick={() => setModal(item)}
-                className='block'
+                className={`block debug-id${item.id}-localBlockId=${item.localBlockId}-index=${index + 1}-mac=${item.macAddress}-type=${item.deviceType}`}
                 style={{ backgroundColor: getBlockColor(item) }}
               >
-                {item.localBlockId || index + 1}
+                {item.localBlockId || '?'}
               </div>
             )
           })}

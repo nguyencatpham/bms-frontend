@@ -125,11 +125,11 @@ const DefaultPage = ({ list, loading, total, preConfirm, usernameOrEmail, dispat
             <Dropdown
               overlay={
                 <Menu style={{ minWidth: '100px' }}>
-                  <Menu.Item key='0' onClick={() => history.push(`/devices/${item.uuid}/update`)}>
+                  {/* <Menu.Item key='0' onClick={() => history.push(`/devices/${item.uuid}/update`)}>
                     <span className='break-word'>
                       Sửa
                     </span>
-                  </Menu.Item>
+                  </Menu.Item> */}
                   <Menu.Item key='1' onClick={() => history.push(`/devices/${item.uuid}/stats`)}>
                     <span className='break-word'>
                       Cấu hình
@@ -171,16 +171,19 @@ const DefaultPage = ({ list, loading, total, preConfirm, usernameOrEmail, dispat
   }
 
   const onDelete = ({ password }) => {
-    dispatch({
-      type: 'authDevice/DELETE',
-      payload: {
-        id: modal,
-        body: {
-          username: usernameOrEmail,
-          password
+    if (modal) {
+      console.log({ modal })
+      dispatch({
+        type: 'authDevice/DELETE',
+        payload: {
+          id: modal.uuid,
+          body: {
+            username: usernameOrEmail,
+            password
+          }
         }
-      }
-    })
+      })
+    }
     setModal(false)
   }
   useEffect(() => {

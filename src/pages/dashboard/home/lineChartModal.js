@@ -2,6 +2,7 @@ import React from 'react'
 import Chart from 'react-apexcharts'
 import { SHORT_DATE_FORMAT } from 'constant'
 import moment from 'moment'
+import './style.scss'
 
 const ChartPage = ({ series, labels }) => {
   var config = {
@@ -40,7 +41,7 @@ const ChartPage = ({ series, labels }) => {
         }
       },
       markers: {
-        size: 5,
+        size: 0,
         hover: {
           size: 7
         }
@@ -56,6 +57,7 @@ const ChartPage = ({ series, labels }) => {
         {
           seriesName: 'R',
           opposite: true,
+          logarithmic: true,
           axisTicks: {
             show: true
           },
@@ -78,6 +80,8 @@ const ChartPage = ({ series, labels }) => {
         },
         {
           seriesName: 'V0',
+          logarithmic: true,
+          showAlways: true,
           axisTicks: {
             show: true
           },
@@ -100,30 +104,31 @@ const ChartPage = ({ series, labels }) => {
         },
         {
           show: false,
-          seriesName: 'E'
-          // axisTicks: {
-          //   show: true,
-          // },
-          // axisBorder: {
-          //   show: true,
-          //   color: '#000',
-          // },
-          // labels: {
-          //   show: true,
-          //   offsetX: 0,
-          //   offsetY: 0,
-          //   rotate: 0,
-          // },
-          // title: {
-          //   text: 'V2',
-          //   rotate: 0,
-          //   offsetX: 39,
-          //   offsetY: -175,
-          // },
+          seriesName: 'V0',
+          logarithmic: true,
+          axisTicks: {
+            show: true
+          },
+          axisBorder: {
+            show: true,
+            color: '#000'
+          },
+          labels: {
+            show: true,
+            offsetX: 0,
+            offsetY: 0,
+            rotate: 0
+          },
+          title: {
+            text: 'V',
+            rotate: 0,
+            offsetX: 39,
+            offsetY: -175
+          }
         },
-
         {
           seriesName: 'T',
+          logarithmic: true,
           opposite: true,
           axisTicks: {
             show: true
@@ -179,7 +184,6 @@ const ChartPage = ({ series, labels }) => {
           }
         ]
       },
-
       grid: {
         padding: {
           top: 15,

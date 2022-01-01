@@ -5,21 +5,23 @@ import { withRouter, useParams } from 'react-router-dom'
 import { Helmet } from 'react-helmet'
 import moment from 'moment'
 import './style.scss'
+import { TIME_FORMAT } from 'constant'
+import ReactJson from 'react-json-view'
 
 const mapStateToProps = ({ device, user, dispatch }) => {
-  let { list, loading, total, blockEvents = [] } = device
+  let { list, loading, total, deviceEvents = [] } = device
   const { list: users, username, email } = user
   const usernameOrEmail = username || email
   if (typeof total === 'object') {
     total = total.count
   }
 
-  return { list, loading, total, users, blockEvents, usernameOrEmail, dispatch }
+  return { list, loading, total, users, deviceEvents, usernameOrEmail, dispatch }
 }
 
 // TODO Temp data while waiting for backend
 
-const DefaultPage = ({ loading, blockEvents, dispatch }) => {
+const DefaultPage = ({ loading, deviceEvents, dispatch }) => {
   const [time] = useState(moment())
   const { id } = useParams()
   const [pagination, setPagination] = useState({
@@ -32,34 +34,36 @@ const DefaultPage = ({ loading, blockEvents, dispatch }) => {
   const columns = [
     {
       title: 'Thời gian',
-      dataIndex: 'time',
-      key: 'time',
+      dataIndex: 'timestamp',
+      key: 'timestamp',
       width: '20%',
-      render: (text) => {
-        return <div style={{ whiteSpace: 'nowrap' }}>{text}</div>
+      render: (text, item) => {
+        return <div style={{ whiteSpace: 'nowrap' }}>{moment(text).format(TIME_FORMAT)}</div>
       }
-      // render: (text, item) => {
-      //   const device = get(item.devices, ['0'], {})
-      //   const name = get(device.systems, ['0', 'name'], 'Chưa kích hoạt')
-
-      //   if (device.systems) {
-      //     return (
-      //       <Link className="break-word" to={`/devices/${item.uuid}`}>
-      //         {name}
-      //       </Link>
-      //     )
-      //   } else {
-      //     return <span>{name}</span>
-      //   }
-      // },
     },
     {
       title: 'Thông báo',
-      dataIndex: 'message',
-      key: 'message',
+      dataIndex: 'title',
+      key: 'title',
       width: '80%',
       render: (text) => {
         return <div style={{ whiteSpace: 'nowrap' }}>{text}</div>
+      }
+    },
+    {
+      title: 'Thông số',
+      dataIndex: 'metadata',
+      key: 'metadata',
+      width: '80%',
+      render: (text) => {
+        return (
+          <div style={{ whiteSpace: 'nowrap' }}>
+            <ReactJson
+              name='metadata'
+              displayDataTypes={false}
+              src={text}
+            />
+          </div>)
       }
     }
 
@@ -72,11 +76,11 @@ const DefaultPage = ({ loading, blockEvents, dispatch }) => {
   useEffect(() => {
     if (id) {
       dispatch({
-        type: 'device/BLOCK_EVENTS',
+        type: 'device/EVENTS',
         payload: {
           id,
-          start: time.startOf('day').unix(),
-          end: time.endOf('day').unix(),
+          start: (time || moment()).startOf('day').unix(),
+          end: (time || moment()).endOf('day').unix(),
           priority: [0, 1, 2, 3, 4, 5],
           isAsc: true,
           limit: 1000
@@ -93,10 +97,7 @@ const DefaultPage = ({ loading, blockEvents, dispatch }) => {
           //   rowSelection={rowSelection}
           className='custom-table table-responsive'
           rowKey={(x) => x.id}
-          dataSource={blockEvents.map(x => ({
-            time: x.time,
-            message: x.title
-          }))}
+          dataSource={deviceEvents}
           pagination={{ ...pagination, showSizeChanger: true }}
           loading={loading}
           columns={columns}
