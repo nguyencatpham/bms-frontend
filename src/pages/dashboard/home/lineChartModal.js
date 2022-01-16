@@ -37,7 +37,8 @@ const ChartPage = ({ series, labels }) => {
           vertical: 0
         },
         formatter: function (val, opts) {
-          return val[0]
+          console.log('val', { val, opts })
+          return val
         }
       },
       markers: {
@@ -57,7 +58,7 @@ const ChartPage = ({ series, labels }) => {
         {
           seriesName: 'R',
           opposite: true,
-          logarithmic: true,
+          // logarithmic: true,
           axisTicks: {
             show: true
           },
@@ -80,7 +81,7 @@ const ChartPage = ({ series, labels }) => {
         },
         {
           seriesName: 'V0',
-          logarithmic: true,
+          // logarithmic: true,
           showAlways: true,
           axisTicks: {
             show: true
@@ -104,8 +105,8 @@ const ChartPage = ({ series, labels }) => {
         },
         {
           show: false,
-          seriesName: 'V0',
-          logarithmic: true,
+          seriesName: 'E',
+          // logarithmic: true,
           axisTicks: {
             show: true
           },
@@ -120,7 +121,7 @@ const ChartPage = ({ series, labels }) => {
             rotate: 0
           },
           title: {
-            text: 'V',
+            text: 'E',
             rotate: 0,
             offsetX: 39,
             offsetY: -175
@@ -128,7 +129,7 @@ const ChartPage = ({ series, labels }) => {
         },
         {
           seriesName: 'T',
-          logarithmic: true,
+          // logarithmic: true,
           opposite: true,
           axisTicks: {
             show: true

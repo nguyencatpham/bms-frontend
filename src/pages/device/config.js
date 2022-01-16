@@ -7,7 +7,6 @@ import './detailForm.scss'
 import { useHistory, useParams } from 'react-router'
 import { Helmet } from 'react-helmet'
 import ReactJson from 'react-json-view'
-import './editor.scss'
 const { Item } = Form
 
 const mapStateToProps = ({ device, authDevice, user, dispatch }) => {
@@ -89,12 +88,6 @@ const UploadConfigPage = ({ detail, dispatch }) => {
                   <Button icon={<UploadOutlined />}>Upload</Button>
                 </Upload>
               </Item>
-              <Item
-                className='display-grid grid-row'
-                name='content'
-              >
-                <ReactJson src={content} />
-              </Item>
               <div className='text-right fl-right btn-footer btn-group-footer'>
                 <Button type='dashed' onClick={() => history.push('/devices')}>
                   <i className='i_cancel ico25' />
@@ -108,6 +101,19 @@ const UploadConfigPage = ({ detail, dispatch }) => {
               {/* </div>
         </div> */}
             </Form>
+          </div>
+          <div className='card-content json-view' style={{ marginLeft: 150 }}>
+            <div className='card-bg detail-form-wrap'>
+              <div className='display-grid grid-row'>
+                <ReactJson
+                  src={content}
+                  name={false}
+                  displayDataTypes={false}
+                  quotesOnKeys={false}
+                  displayArrayKey={false}
+                />
+              </div>
+            </div>
             {/* </Card> */}
           </div>
         </div>

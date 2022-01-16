@@ -20,7 +20,7 @@ const mapStateToProps = ({ menu, settings, user }) => ({
       settings.isMenuCollapsed) &&
     !settings.isMobileView,
   role: user.role,
-  user,
+  user
 })
 
 const flyoutTimers = {}
@@ -33,7 +33,7 @@ const MenuLeft = ({
   settings,
   flyoutActive,
   role,
-  user,
+  user
 }) => {
   const [activeSubmenu, setActiveSubmenu] = useState('')
   const [activeItem, setActiveItem] = useState('')
@@ -50,8 +50,8 @@ const MenuLeft = ({
       type: 'settings/CHANGE_SETTING',
       payload: {
         setting: 'isMenuCollapsed',
-        value: !isMenuCollapsed,
-      },
+        value: !isMenuCollapsed
+      }
     })
   }
 
@@ -62,8 +62,8 @@ const MenuLeft = ({
       type: 'settings/CHANGE_SETTING',
       payload: {
         setting: 'isMobileMenuOpen',
-        value: !isMobileMenuOpen,
-      },
+        value: !isMobileMenuOpen
+      }
     })
   }
 
@@ -83,11 +83,11 @@ const MenuLeft = ({
       const element = renderFlyoutMenu(items, key, itemDimensions)
       setRenderedFlyoutItems({
         ...renderedFlyoutItems,
-        [key]: element,
+        [key]: element
       })
       flyoutItems = {
         ...renderedFlyoutItems,
-        [key]: element,
+        [key]: element
       }
     }
   }
@@ -97,7 +97,7 @@ const MenuLeft = ({
       flyoutTimers[key] = setTimeout(() => {
         delete flyoutItems[key]
         setRenderedFlyoutItems({
-          ...flyoutItems,
+          ...flyoutItems
         })
       }, 100)
     }
@@ -118,7 +118,7 @@ const MenuLeft = ({
           [style.air__menuFlyoutLeft]: settings.menuLayoutType === 'left',
           [style.air__menuFlyout__black]: settings.flyoutMenuColor === 'dark',
           [style.air__menuFlyout__white]: settings.flyoutMenuColor === 'white',
-          [style.air__menuFlyout__gray]: settings.flyoutMenuColor === 'gray',
+          [style.air__menuFlyout__gray]: settings.flyoutMenuColor === 'gray'
         })}
         key={key}
       >
@@ -134,7 +134,7 @@ const MenuLeft = ({
             return (
               <li
                 className={classNames(style.air__menuLeft__item, {
-                  [style.air__menuLeft__item__active]: activeItem === item.key,
+                  [style.air__menuLeft__item__active]: activeItem === item.key
                 })}
                 key={item.key}
               >
@@ -191,7 +191,7 @@ const MenuLeft = ({
       return (
         <li
           className={classNames(style.air__menuLeft__item, {
-            [style.air__menuLeft__item__active]: activeItem === key,
+            [style.air__menuLeft__item__active]: activeItem === key
           })}
           key={key}
         >
@@ -206,7 +206,7 @@ const MenuLeft = ({
             </Link>
           )}
           {!item.url && (
-            <a href="#" onClick={(e) => e.preventDefault()} className={style.air__menuLeft__link}>
+            <a href='#' onClick={(e) => e.preventDefault()} className={style.air__menuLeft__link}>
               {icon && <i className={`${icon} ${style.air__menuLeft__icon}`} />}
               <span>{title}</span>
             </a>
@@ -219,12 +219,12 @@ const MenuLeft = ({
       return (
         <li
           className={classNames(style.air__menuLeft__item, style.air__menuLeft__submenu, {
-            [style.air__menuLeft__submenu__active]: activeSubmenu === item.key,
+            [style.air__menuLeft__submenu__active]: activeSubmenu === item.key
           })}
           key={item.key}
         >
           <a
-            href="#"
+            href='#'
             className={style.air__menuLeft__link}
             onClick={(e) => handleSubmenuClick(e, item.key)}
             onMouseEnter={(event) => handleFlyoutOver(event, item.key, item.children)}
@@ -235,7 +235,7 @@ const MenuLeft = ({
             <i className={`${item.icon} ${style.air__menuLeft__icon}`} />
             <span>{item.title}</span>
             {item.count && (
-              <span className="badge text-white bg-blue-light float-right mt-1 px-2">
+              <span className='badge text-white bg-blue-light float-right mt-1 px-2'>
                 {item.count}
               </span>
             )}
@@ -272,15 +272,15 @@ const MenuLeft = ({
     flex: `0 0 ${settings.leftMenuWidth}px`,
     maxWidth: `${settings.leftMenuWidth}px`,
     minWidth: `${settings.leftMenuWidth}px`,
-    width: `${settings.leftMenuWidth}px`,
+    width: `${settings.leftMenuWidth}px`
   }
 
   return (
-    <Sider width="auto">
+    <Sider width='auto'>
       <TransitionGroup>
         {Object.keys(renderedFlyoutItems).map((item) => {
           return (
-            <CSSTransition key={item} timeout={0} classNames="air__menuFlyout__animation">
+            <CSSTransition key={item} timeout={0} classNames='air__menuFlyout__animation'>
               {renderedFlyoutItems[item]}
             </CSSTransition>
           )
@@ -301,56 +301,58 @@ const MenuLeft = ({
           [style.air__menuFlyout__white]:
             settings.flyoutMenuColor === 'white' && settings.flyoutMenuType !== 'default',
           [style.air__menuFlyout__gray]:
-            settings.flyoutMenuColor === 'gray' && settings.flyoutMenuType !== 'default',
+            settings.flyoutMenuColor === 'gray' && settings.flyoutMenuType !== 'default'
         })}
         // style={menuWidthStyle}
       >
         <div
-        className={style.air__menuLeft__outer}
+          className={style.air__menuLeft__outer}
         // style={menuWidthStyle}
         >
           <a
-            href="#"
+            href='#'
             className={style.air__menuLeft__mobileToggleButton}
             onClick={toggleMobileMenu}
           >
             <span />
           </a>
-          <a href="#" className={style.air__menuLeft__toggleButton} onClick={toggleMenu}>
+          <a href='#' className={style.air__menuLeft__toggleButton} onClick={toggleMenu}>
             <span />
             <span />
           </a>
           <div className={style.air__menuLeft__logo}>
             <div className={style.air__menuLeft__logo__letter}>
-              <svg
-                width="40"
-                height="40"
-                viewBox="0 0 40 40"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <rect width="40" height="40" rx="8" fill="#017EFA" />
-                <path
-                  d="M20 10C14.486 10 10 14.486 10 20C10 25.514 14.486 30 20 30C25.514 30 30 25.514 30 20C30 14.486 25.514 10 20 10ZM20 28C15.589 28 12 24.411 12 20C12 15.589 15.589 12 20 12C24.411 12 28 15.589 28 20C28 24.411 24.411 28 20 28Z"
-                  fill="white"
-                />
-                <path d="M21 14L15 21H19V26L25 19H21V14Z" fill="white" />
-              </svg>
+              <Link to='/'>
+                <svg
+                  width='40'
+                  height='40'
+                  viewBox='0 0 40 40'
+                  fill='none'
+                  xmlns='http://www.w3.org/2000/svg'
+                >
+                  <rect width='40' height='40' rx='8' fill='#017EFA' />
+                  <path
+                    d='M20 10C14.486 10 10 14.486 10 20C10 25.514 14.486 30 20 30C25.514 30 30 25.514 30 20C30 14.486 25.514 10 20 10ZM20 28C15.589 28 12 24.411 12 20C12 15.589 15.589 12 20 12C24.411 12 28 15.589 28 20C28 24.411 24.411 28 20 28Z'
+                    fill='white'
+                  />
+                  <path d='M21 14L15 21H19V26L25 19H21V14Z' fill='white' />
+                </svg>
+              </Link>
             </div>
             <div>
-              <div className={style.air__menuLeft__logo__name}>Bình Sơn</div>
+              <div className={style.air__menuLeft__logo__name}><Link to='/'>Bình Sơn</Link></div>
               <div className={style.air__menuLeft__logo__descr}>Hệ thống giám sát ắc quy</div>
             </div>
           </div>
-          
+
           <PerfectScrollbar>
-            <div id="menu-left-container" className={style.air__menuLeft__container}>
+            <div id='menu-left-container' className={style.air__menuLeft__container}>
               <ul style={{ padding: 0, display: 'flex', flexDirection: 'column' }}>{items}</ul>
             </div>
           </PerfectScrollbar>
         </div>
       </div>
-      <a href="#" className={style.air__menuLeft__backdrop} onClick={toggleMobileMenu} />
+      <a href='#' className={style.air__menuLeft__backdrop} onClick={toggleMobileMenu} />
     </Sider>
   )
 }

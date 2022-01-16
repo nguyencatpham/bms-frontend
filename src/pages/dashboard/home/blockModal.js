@@ -114,7 +114,7 @@ const BlockModal = ({ modal, setModal, blockDetailEvents, blockHistories, dispat
                 <div className='header'>
                   <div className='title-wrap'>
                     <TitleIcon />
-                    <h2 className='title'>Thông tin block {modal.localBlockId}</h2>
+                    <h2 className='title'>Thông tin block {modal.blockId}</h2>
                   </div>
                   <div style={{ width: 300 }}>
                     <DateRangePicker
@@ -166,7 +166,7 @@ const BlockModal = ({ modal, setModal, blockDetailEvents, blockHistories, dispat
                   <div className='side-info__body'>
                     <div className='body-row'>
                       <div>Block</div>
-                      <div id={`localBlockId=${modal.localBlockId},id=${modal.id}`}>{modal.localBlockId || '?'}</div>
+                      <div id={`blockId=${modal.blockId},id=${modal.id}`}>{modal.blockId || '?'}</div>
                       <div />
                     </div>
                     <div className='body-row'>
@@ -175,7 +175,7 @@ const BlockModal = ({ modal, setModal, blockDetailEvents, blockHistories, dispat
                       <div />
                     </div>
                     <div className='body-row'>
-                      <div>Vo</div>
+                      <div>V0</div>
                       <div>{modal.v0 || '-'}</div>
                       <div>V</div>
                     </div>

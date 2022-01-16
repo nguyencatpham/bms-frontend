@@ -73,9 +73,9 @@ const DefaultPage = ({ loading, detail, preConfirm, dispatch }) => {
 
   return (
     <>
-      <div className='detail-page account-create-page'>
+      <div className='detail-page account-update-page'>
         <Helmet title='Tài khoản | Cập nhật' />
-        <h3 className='form-title'><i className='i_user_8 ico30' />QUẢN TRỊ VIÊN</h3>
+        {/* <h3 className='form-title'><i className='i_user_8 ico30' />QUẢN TRỊ VIÊN</h3> */}
         <div className='card-content'>
           <div className='card-bg detail-form-wrap'>
             {/* <Card title={<p><span>Cập nhật tài khoản:</span><span className='txt-orange'>{name}</span></p>}> */}
@@ -88,7 +88,7 @@ const DefaultPage = ({ loading, detail, preConfirm, dispatch }) => {
               {/* <div className='row'>
                   <div className='col-lg-8 col-md-8 offset-md-2'> */}
               <Item
-                className='display-grid'
+                className='display-grid fullname'
                 name='name'
                 label='Họ tên'
                 rules={[
@@ -106,7 +106,7 @@ const DefaultPage = ({ loading, detail, preConfirm, dispatch }) => {
                 />
               </Item>
               <Item
-                className='display-grid'
+                className='display-grid address'
                 name='address'
                 label='Địa chỉ'
                 rules={[
@@ -121,7 +121,35 @@ const DefaultPage = ({ loading, detail, preConfirm, dispatch }) => {
                 />
               </Item>
               <Item
-                className='display-grid grid-row'
+                className='display-grid grid-row username'
+                name='username'
+                label='Tên đăng nhập'
+                rules={[
+                  {
+                    required: false,
+                    message: 'Vui lòng nhập tên đăng nhập!'
+                  }, {
+                    max: 255,
+                    message: 'Tên đăng nhập quá dài!'
+                  }
+                ]}
+              >
+                <Input disabled />
+              </Item>
+              <Item
+                className='display-grid grid-row password'
+                name='password'
+                label='Mật khẩu'
+                rules={[{
+                  max: 32,
+                  message: 'Mật khẩu quá dài!'
+                }
+                ]}
+              >
+                <Input type='password' />
+              </Item>
+              <Item
+                className='display-grid grid-row role'
                 name='role'
                 label='Vai trò'
                 initialValue={
@@ -135,7 +163,7 @@ const DefaultPage = ({ loading, detail, preConfirm, dispatch }) => {
                 />
               </Item>
               <Item
-                className='display-grid grid-row'
+                className='display-grid grid-row note'
                 name='description'
                 label='Ghi chú'
                 rules={[
@@ -153,22 +181,6 @@ const DefaultPage = ({ loading, detail, preConfirm, dispatch }) => {
                   placeholder='Nhập ghi chú...'
                   autoSize={{ minRows: 3, maxRows: 5 }}
                 />
-              </Item>
-              <Item
-                className='display-grid grid-row'
-                name='username'
-                label='Tên đăng nhập'
-                rules={[
-                  {
-                    required: true,
-                    message: 'Vui lòng nhập tên đăng nhập!'
-                  }, {
-                    max: 255,
-                    message: 'Tên đăng nhập quá dài!'
-                  }
-                ]}
-              >
-                <Input />
               </Item>
               <div className='text-right fl-right btn-footer btn-group-footer'>
                 <Button

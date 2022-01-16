@@ -21,6 +21,8 @@ const mapStateToProps = ({ authDevice, user, dispatch }) => {
     total = total.count
   }
 
+  list = list.filter(x => x.devices.length)
+
   return { list, loading, total, users, preConfirm, usernameOrEmail, dispatch }
 }
 
@@ -56,8 +58,40 @@ const DefaultPage = ({ list, loading, total, preConfirm, usernameOrEmail, dispat
       order: ['updated DESC, created DESC']
     })
   })
-
-  const onSearch = (value) => console.info(value)
+  const onSearch = (value) => {
+    const and = []
+    and.push({
+      or: [
+        { name: { like: `%${value}%` } },
+        { siteName: { like: `%${value}%` } }
+      ]
+    })
+    setPayload({
+      ...payload,
+      filter: JSON.stringify({
+        include: [
+          {
+            relation: 'devices',
+            scope: {
+              where: { name: value },
+              include: [
+                {
+                  relation: 'blocks'
+                },
+                {
+                  relation: 'units'
+                }
+              ]
+            }
+          }
+        ],
+        // where: { and },
+        skip: (pagination.current - 1) * pagination.pageSize,
+        limit: pagination.pageSize,
+        order: ['updated DESC, created DESC']
+      })
+    })
+  }
   const columns = [
     {
       title: '',
@@ -201,53 +235,6 @@ const DefaultPage = ({ list, loading, total, preConfirm, usernameOrEmail, dispat
       payload
     })
   }, [dispatch, payload])
-
-  // const onSearch = (e) => {
-  //   if (e.key && e.key !== 'Enter') {
-  //     return
-  //   }
-  //   const and = []
-  //   if (name) {
-  //     and.push({
-  //       or: [
-  //         { name: { like: `%${name}%` } },
-  //         { macAddress: { like: `%${name}%` } },
-  //         { model: { like: `%${name}%` } },
-  //       ],
-  //     })
-  //   }
-  //   if (roles.length) {
-  //     and.push({ role: { inq: roles } })
-  //   }
-  //   setPayload({
-  //     ...payload,
-  //     filter: JSON.stringify({
-  //       include: [
-  //         {
-  //           relation: 'devices',
-  //           scope: {
-  //             include: [
-  //               {
-  //                 relation: 'systems',
-  //                 scope: {
-  //                   include: [
-  //                     {
-  //                       relation: 'blocks',
-  //                     },
-  //                   ],
-  //                 },
-  //               },
-  //             ],
-  //           },
-  //         },
-  //       ],
-  //       where: { and },
-  //       skip: 0,
-  //       limit: pagination.pageSize,
-  //       order: ['created DESC'],
-  //     }),
-  //   })
-  // }
 
   return (
     <>

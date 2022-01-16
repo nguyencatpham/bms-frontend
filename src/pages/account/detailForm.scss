@@ -19,3 +19,35 @@
   margin: 2rem !important;
   }
 }
+.account-update-page{
+  .fullname{
+    label{
+      margin-right: 50px;
+    }
+  }
+  .address{
+    label{
+      margin-right: 50px;
+    }
+  }
+  .username{
+    label{
+      margin-right: 10px;
+    }
+  }
+  .password{
+    label{
+      margin-right: 30px;
+    }
+  }
+  .role{
+    label{
+      margin-right: 65px;
+    }
+  }
+  .note{
+    label{
+      margin-right: 45px;
+    }
+  }
+}

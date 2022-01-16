@@ -59,6 +59,13 @@ const BlockList = ({ data = [], dispatch }) => {
               return
             }
             const item = data[i]
+            let blockId = '?'
+            if (`${item.localBlockId}` === '0') {
+              blockId = '1'
+            } else if (parseInt(item.localBlockId) > 0) {
+              blockId = parseInt(item.localBlockId) + 1
+            }
+            item.blockId = blockId
             return (
               <div
                 key={index}
@@ -66,7 +73,7 @@ const BlockList = ({ data = [], dispatch }) => {
                 className={`block debug-id${item.id}-localBlockId=${item.localBlockId}-index=${index + 1}-mac=${item.macAddress}-type=${item.deviceType}`}
                 style={{ backgroundColor: getBlockColor(item) }}
               >
-                {item.localBlockId || '?'}
+                {blockId}
               </div>
             )
           })}

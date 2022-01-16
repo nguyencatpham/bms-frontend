@@ -9,7 +9,7 @@ import { Form, DatePicker } from 'antd'
 import PlusCircleOutlinedIcon from '@ant-design/icons/PlusCircleOutlined'
 import { Helmet } from 'react-helmet'
 import './style.scss'
-import BlockList from './collectData'
+import BlockList from './blocks'
 
 import jQuery from 'jquery'
 // you will need the css that comes with bootstrap@3. if you are using

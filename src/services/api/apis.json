@@ -1735,6 +1735,12 @@
             "format": "double"
           },
           {
+            "name": "timebucket",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
             "name": "isAsc",
             "in": "query",
             "required": false,
@@ -1806,6 +1812,12 @@
             "required": false,
             "type": "number",
             "format": "double"
+          },
+          {
+            "name": "timebucket",
+            "in": "query",
+            "required": false,
+            "type": "string"
           },
           {
             "name": "isAsc",
