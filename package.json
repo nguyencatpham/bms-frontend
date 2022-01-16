@@ -1,6 +1,7 @@
 {
   "name": "visual-builder-react-cra",
   "version": "1.0.0",
+  "homepage": "https://nguyencatpham.github.io/bms-frontend/",
   "private": true,
   "scripts": {
     "start": "REACT_APP_API_URL=http://45.117.169.119:7777 react-app-rewired start",
@@ -11,12 +12,13 @@
     "prettier": "prettier --write \"src/**/*.{js,jsx,ts,tsx,scss,less}\"",
     "eslint": "eslint --ext .js,jsx src",
     "stylelint": "stylelint \"src/**/*.{scss,less}\"",
-    "deploy": "cd .cloudflare/ && wrangler publish",
     "build-demo": "REACT_APP_AUTHENTICATED=true react-app-rewired build",
     "build-deploy": "yarn vb-full && yarn build-demo && yarn deploy && yarn vb-seed",
     "vb": "node ./scripts/vb.js",
     "vb-full": "REDIRECT_URL=/dashboard/alpha node ./scripts/generate.js --config=config-full.json",
-    "vb-seed": "node ./scripts/generate.js --config=config-seed.json"
+    "vb-seed": "node ./scripts/generate.js --config=config-seed.json",
+    "predeploy": "yarn build",
+    "deploy": "gh-pages -d build"
   },
   "lint-staged": {
     "src/**/*.{js,jsx,ts,tsx,scss,less}": [
@@ -56,6 +58,7 @@
     "faker": "^5.4.0",
     "file-saver": "^2.0.5",
     "firebase": "^8.1.1",
+    "gh-pages": "^3.2.3",
     "highcharts": "^9.0.1",
     "highcharts-react-official": "^3.0.0",
     "history": "^4.10.1",
