@@ -24,8 +24,11 @@ const DefaultPage = ({ loading, detail, preConfirm, dispatch }) => {
   const { name, role, address, description, username } = detail
 
   const onFinish = body => {
-    delete body.zoneId
     delete body.role
+    if (!body.passphrase) {
+      delete body.passphrase
+    }
+    console.log({ body })
     dispatch({
       type: 'account/UPDATE',
       payload: {
@@ -36,13 +39,13 @@ const DefaultPage = ({ loading, detail, preConfirm, dispatch }) => {
   }
 
   const validateFields = async () => {
-    form.setFieldsValue({ password: '' })
+    form.setFieldsValue({ password: '', passphrase: '' })
     dispatch({
       type: 'account/FLUSH_PRE_CONFIRM',
       payload: {}
     })
     try {
-      await form.validateFields(['name', 'description', 'description'])
+      await form.validateFields(['name', 'description'])
       setModal(true)
     } catch (error) {
       console.error(error)
@@ -65,7 +68,7 @@ const DefaultPage = ({ loading, detail, preConfirm, dispatch }) => {
     form.setFieldsValue({
       name,
       address,
-      role,
+      role: ROLE[role] === ROLE.admin ? ROLE.manager : ROLE.operator,
       description,
       username
     })
@@ -138,7 +141,7 @@ const DefaultPage = ({ loading, detail, preConfirm, dispatch }) => {
               </Item>
               <Item
                 className='display-grid grid-row password'
-                name='password'
+                name='passphrase'
                 label='Mật khẩu'
                 rules={[{
                   max: 32,
@@ -152,15 +155,8 @@ const DefaultPage = ({ loading, detail, preConfirm, dispatch }) => {
                 className='display-grid grid-row role'
                 name='role'
                 label='Vai trò'
-                initialValue={
-                  ROLE[role] === ROLE.admin ? ROLE.client : ROLE.user
-                }
               >
-                <Select
-                  disabled options={Object.keys(ROLE).map(x => (
-                    <Option key={x} value={x}>{ROLE[x]}</Option>
-                  ))}
-                />
+                <Input disabled />
               </Item>
               <Item
                 className='display-grid grid-row note'
@@ -193,7 +189,7 @@ const DefaultPage = ({ loading, detail, preConfirm, dispatch }) => {
                 <Button
                   type='primary'
                   style={{ marginLeft: 10 }}
-                  htmlType='submit'
+                  onClick={() => setModal(true)}
                 >
                   <i className='i_save_36 ico25' />
                   <strong>Lưu</strong>

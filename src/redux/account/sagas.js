@@ -69,6 +69,11 @@ export const COMMON = ({ type, field, actionType }) => {
         delete data.password
       }
     }
+    let passphrase = ''
+    if (payload.body && payload.body.passphrase) {
+      passphrase = payload.body.passphrase
+      delete payload.body.passphrase
+    }
     let response = yield call(callApi, { type, payload })
     if (response) {
       if (type.toLowerCase().indexOf('count') > -1) {
@@ -111,7 +116,7 @@ export const COMMON = ({ type, field, actionType }) => {
         })
         const role = store.get('user.role')
         // if (role === 'admin') { history.push(`/accounts/${response.id}`) }
-        if (role === 'admin') { history.push(`/accounts`) }
+        if (role === 'admin') { history.push('/accounts') }
         return false
       }
       if (type.toLowerCase().indexOf('post') > -1) {
@@ -121,17 +126,26 @@ export const COMMON = ({ type, field, actionType }) => {
         })
         const role = store.get('user.role')
         // if (role === 'admin') { history.push(`/accounts/${response.id}`) }
-        if (role === 'admin') { history.push(`/accounts`) }
+        if (role === 'admin') { history.push('/accounts') }
       }
       if (type.toLowerCase().indexOf('change') > -1 ||
         type.toLowerCase().indexOf('patch') > -1 ||
         type.toLowerCase().indexOf('put') > -1) {
+        if (passphrase) {
+          yield put({
+            type: actions.SET_PASSWORD,
+            payload: {
+              id: payload.id,
+              password: passphrase
+            }
+          })
+        }
         notification.success({
           message: 'Thành công!',
           description: `Tài khoản ${response.name} đã được cập nhật thành công!`
         })
         const role = store.get('user.role')
-        if (role === 'admin') { history.push(`/accounts`) }
+        if (role === 'admin') { history.push('/accounts') }
         // if (role === 'admin') { history.push(`/accounts/${response.id}`) }
       }
       if (type.toLowerCase().indexOf('delete') > -1) {

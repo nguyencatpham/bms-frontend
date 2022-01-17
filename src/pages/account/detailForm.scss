@@ -19,7 +19,10 @@
   margin: 2rem !important;
   }
 }
-.account-update-page{
+.account-update-page, .account-create-page{
+  .ant-input[disabled]{
+    color: #403479;
+  }
   .fullname{
     label{
       margin-right: 50px;
@@ -37,7 +40,7 @@
   }
   .password{
     label{
-      margin-right: 30px;
+      margin-right: 45px;
     }
   }
   .role{

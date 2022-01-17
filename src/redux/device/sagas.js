@@ -48,7 +48,7 @@ export const COMMON = ({ type, field, actionType }) => {
       if (type.toLowerCase().indexOf('post') > -1) {
         notification.success({
           message: 'Thành công!',
-          description: `${ENTITY} đã được thiết lập thành công!`
+          description: 'Thiết bị đã được thiết lập thành công!'
         })
         history.push(`/${ENTITY}s`)
       }
@@ -57,14 +57,14 @@ export const COMMON = ({ type, field, actionType }) => {
         type.toLowerCase().indexOf('put') > -1) {
         notification.success({
           message: 'Thành công!',
-          description: `${ENTITY} đã được cập nhật thành công!`
+          description: 'Thiết bị đã được cập nhật thành công!'
         })
         history.push(`/${ENTITY}s`)
       }
       if (type.toLowerCase().indexOf('delete') > -1) {
         notification.success({
           message: 'Thành công!',
-          description: `${ENTITY} đã được xóa thành công!`
+          description: 'Thiết bị đã được xóa thành công!'
         })
         if (window.location.pathname !== `/${ENTITY}s`) {
           history.push(`/${ENTITY}s`)

@@ -25,7 +25,7 @@ const mapStateToProps = ({ account, user, dispatch }) => {
 }
 
 const DefaultPage = ({ list, loading, total, preConfirm, usernameOrEmail, role, dispatch }) => {
-  const history = useHistory();
+  const history = useHistory()
   const [form] = Form.useForm()
   const [modal, setModal] = useState()
   const [name, setName] = useState()
@@ -34,7 +34,7 @@ const DefaultPage = ({ list, loading, total, preConfirm, usernameOrEmail, role, 
     current: 1,
     pageSize: 10,
     total: 0,
-    showTotal: (total, range) => `${range[0]}-${range[1]} trên ${total} tài khoản`,
+    showTotal: (total, range) => `${range[0]}-${range[1]} trên ${total} tài khoản`
   })
   const [payload, setPayload] = useState({
     skip: pagination.pageSize * (pagination.current - 1),
@@ -43,11 +43,29 @@ const DefaultPage = ({ list, loading, total, preConfirm, usernameOrEmail, role, 
       include: [{ relation: 'devices' }],
       skip: (pagination.current - 1) * pagination.pageSize,
       limit: pagination.pageSize,
-      order: ['created DESC'],
-    }),
+      order: ['created DESC']
+    })
   })
-
-  const onSearch = (value) => console.info(value)
+  const onSearch = (value) => {
+    const and = []
+    and.push({
+      or: [
+        { name: { like: `%${value}%` } },
+        { username: { like: `%${value}%` } },
+        { email: { like: `%${value}%` } }
+      ]
+    })
+    setPayload({
+      ...payload,
+      filter: JSON.stringify({
+        include: [{ relation: 'devices' }],
+        where: { and },
+        skip: 0,
+        limit: pagination.pageSize,
+        order: ['created DESC']
+      })
+    })
+  }
   const columns = [
     {
       title: 'Tài khoản',
@@ -57,18 +75,18 @@ const DefaultPage = ({ list, loading, total, preConfirm, usernameOrEmail, role, 
         if (role === 'admin') {
           return (
             // <Link className="break-word" to={`/accounts/${item.id}`}>
-            <span className="break-word">{text || item.username || item.email}</span>
+            <span className='break-word'>{text || item.username || item.email}</span>
             // </Link>
           )
         }
         return text
-      },
+      }
     },
     {
       title: 'Vai trò',
       dataIndex: 'role',
       key: 'role',
-      render: (x) => <span className="break-word ">{ROLE[x]}</span>,
+      render: (x) => <span className='break-word '>{ROLE[x]}</span>
     },
     // {
     //   title: 'Hệ thống',
@@ -84,16 +102,16 @@ const DefaultPage = ({ list, loading, total, preConfirm, usernameOrEmail, role, 
       dataIndex: 'created',
       key: 'created',
       render: (x) => {
-        return <span className="break-word ">{moment(x).format(TIME_FORMAT)}</span>
-      },
+        return <span className='break-word '>{moment(x).format(TIME_FORMAT)}</span>
+      }
     },
     {
       title: (
         <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
-          <Search placeholder="Tìm" onSearch={onSearch} style={{ width: '240px' }} />
+          <Search placeholder='Tìm' onSearch={onSearch} style={{ width: '240px' }} />
 
-          <Button style={{ marginLeft: '1rem' }} type="primary" onClick={() => history.push('/accounts/create')}>
-            <span className="break-word">
+          <Button style={{ marginLeft: '1rem' }} type='primary' onClick={() => history.push('/accounts/create')}>
+            <span className='break-word'>
               Thêm
             </span>
           </Button>
@@ -103,30 +121,30 @@ const DefaultPage = ({ list, loading, total, preConfirm, usernameOrEmail, role, 
       responsive: ['md'],
       render: (text, item) => {
         return (
-          <div className="account-options">
+          <div className='account-options'>
             <Dropdown
               overlay={
                 <Menu style={{ minWidth: '100px' }}>
-                  <Menu.Item key="0" onClick={() => history.push(`/accounts/${item.id}/update`) }>
-                    <span className="break-word" >
+                  <Menu.Item key='0' onClick={() => history.push(`/accounts/${item.id}/update`)}>
+                    <span className='break-word'>
                       Sửa
                     </span>
                   </Menu.Item>
-                  
+
                   <Menu.Divider />
-                  <Menu.Item onClick={() => setModal(item)} key="1">
+                  <Menu.Item onClick={() => setModal(item)} key='1'>
                     Xóa
                   </Menu.Item>
                 </Menu>
               }
               trigger={['click']}
             >
-              <EllipsisOutlined className="icon" onClick={(e) => e.preventDefault()} />
+              <EllipsisOutlined className='icon' onClick={(e) => e.preventDefault()} />
             </Dropdown>
           </div>
         )
-      },
-    },
+      }
+    }
     // {
     //   title: 'Ghi chú',
     //   dataIndex: 'note',
@@ -181,9 +199,9 @@ const DefaultPage = ({ list, loading, total, preConfirm, usernameOrEmail, role, 
         id,
         body: {
           username: usernameOrEmail,
-          password,
-        },
-      },
+          password
+        }
+      }
     })
     setModal(false)
   }
@@ -195,55 +213,26 @@ const DefaultPage = ({ list, loading, total, preConfirm, usernameOrEmail, role, 
   useEffect(() => {
     dispatch({
       type: 'account/COUNT',
-      payload: { where: (JSON.parse(payload.filter) || {}).where },
+      payload: { where: (JSON.parse(payload.filter) || {}).where }
     })
     dispatch({
       type: 'account/LIST',
-      payload,
+      payload
     })
   }, [dispatch, payload])
 
-  // const onSearch = (e) => {
-  //   if (e.key && e.key !== 'Enter') {
-  //     return
-  //   }
-  //   const and = []
-  //   if (name) {
-  //     and.push({
-  //       or: [
-  //         { name: { like: `%${name}%` } },
-  //         { username: { like: `%${name}%` } },
-  //         { email: { like: `%${name}%` } },
-  //       ],
-  //     })
-  //   }
-  //   if (roles.length) {
-  //     and.push({ role: { inq: roles } })
-  //   }
-  //   setPayload({
-  //     ...payload,
-  //     filter: JSON.stringify({
-  //       include: [{ relation: 'devices' }],
-  //       where: { and },
-  //       skip: 0,
-  //       limit: pagination.pageSize,
-  //       order: ['created DESC'],
-  //     }),
-  //   })
-  //   // setQuery(and)
-  // }
   const rowSelection = {
-    type: 'checkbox',
+    type: 'checkbox'
     // selectedRowKeys,
     // onChange: this.onSelectChange,
   }
   return (
     <>
-      <div className="AccountPage page">
-        <Helmet title="Quản lý tài khoản" />
+      <div className='AccountPage page'>
+        <Helmet title='Quản lý tài khoản' />
         <Table
           rowSelection={rowSelection}
-          className="custom-table table-responsive"
+          className='custom-table table-responsive'
           rowKey={(x) => x.id}
           dataSource={list}
           pagination={{ ...pagination, showSizeChanger: true }}
@@ -263,7 +252,7 @@ const DefaultPage = ({ list, loading, total, preConfirm, usernameOrEmail, role, 
             onCancel={() => setModal(false)}
             preConfirm={preConfirm}
           />
-          <Item name="id" label="" initialValue={modal.id}>
+          <Item name='id' label='' initialValue={modal.id}>
             <Input style={{ display: 'none' }} />
           </Item>
         </Form>

@@ -26,15 +26,17 @@ const menu = (
   </Menu>
 )
 
-const mapStateToProps = ({ menu }) => ({
-  menuData: menu.menuData
+const mapStateToProps = ({ menu, user = {} }) => ({
+  menuData: menu.menuData,
+  user
 })
 
 const Breadcrumbs2 = (props) => {
   const [breadcrumbs, setBreadcrumbs] = useState([])
   const {
     location: { pathname },
-    menuData = []
+    menuData = [],
+    user
   } = props
 
   // useEffect(() => {
@@ -107,7 +109,7 @@ const Breadcrumbs2 = (props) => {
         />
         <Dropdown overlay={menu} trigger={['click']} placement='bottomRight'>
           <div className='profile-name' onClick={(e) => e.preventDefault()}>
-            Admin <DownOutlined className='arrow' />
+            {user.name || user.username} <DownOutlined className='arrow' />
           </div>
         </Dropdown>
       </div>

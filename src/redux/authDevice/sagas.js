@@ -42,14 +42,19 @@ export const COMMON = ({ type, field, actionType }) => {
         })
       }
       if (type.toLowerCase().indexOf('delete') > -1) {
+        console.log({ payload })
         yield put({
-          type: `${ENTITY}/SET_DELETE`,
+          type: 'device/DELETE',
           payload
         })
-        notification.success({
-          message: 'Thành công!',
-          description: `${ENTITY} đã được xóa thành công!`
+        yield put({
+          type: 'device/SET_DELETE',
+          payload
         })
+        // notification.success({
+        //   message: 'Thành công!',
+        //   description: `${ENTITY} đã được xóa thành công!`
+        // })
       }
     }
     yield loading(false)

@@ -42,7 +42,7 @@ const DefaultPage = ({ loading, detail, role, dispatch }) => {
               <div className='row'>
                 <div className='col-lg-8 col-md-8 offset-md-2'>
                   <Item
-                    className='display-grid grid-row'
+                    className='display-grid grid-row fullname'
                     name='name'
                     label='Họ tên'
                     rules={[
@@ -60,7 +60,7 @@ const DefaultPage = ({ loading, detail, role, dispatch }) => {
                     />
                   </Item>
                   <Item
-                    className='display-grid grid-row'
+                    className='display-grid grid-row address'
                     name='address'
                     label='Địa chỉ'
                     rules={[
@@ -75,21 +75,17 @@ const DefaultPage = ({ loading, detail, role, dispatch }) => {
                     />
                   </Item>
                   <Item
-                    className='display-grid grid-row'
+                    className='display-grid grid-row role'
                     name='role'
                     label='Vai trò'
                     initialValue={
-                      ROLE[role] === ROLE.admin ? ROLE.client : ROLE.user
+                      ROLE[role] === ROLE.admin ? ROLE.manager : ROLE.operator
                     }
                   >
-                    <Select
-                      disabled options={Object.keys(ROLE).map(x => (
-                        <Option key={x} value={x}>{ROLE[x]}</Option>
-                      ))}
-                    />
+                    <Input disabled />
                   </Item>
                   <Item
-                    className='display-grid grid-row'
+                    className='display-grid grid-row note'
                     name='description'
                     label='Ghi chú'
                     rules={[
@@ -109,7 +105,7 @@ const DefaultPage = ({ loading, detail, role, dispatch }) => {
                     />
                   </Item>
                   <Item
-                    className='display-grid grid-row'
+                    className='display-grid grid-row username'
                     name='username'
                     label='Tên đăng nhập'
                     rules={[
@@ -125,7 +121,7 @@ const DefaultPage = ({ loading, detail, role, dispatch }) => {
                     <Input />
                   </Item>
                   <Item
-                    className='display-grid grid-row'
+                    className='display-grid grid-row password'
                     name='password'
                     label='Mật khẩu'
                     rules={[
@@ -141,7 +137,7 @@ const DefaultPage = ({ loading, detail, role, dispatch }) => {
                     />
                   </Item>
                   <Item
-                    className='display-grid grid-row'
+                    className='display-grid grid-row confirm'
                     name='confirm'
                     label='Nhập lại mật khẩu'
                     dependencies={['password']}

@@ -24,4 +24,3 @@ publish_docker_registry_job:
     - docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN registry.gitlab.com
     - docker build -t $CONTAINER_IMAGE .
     - docker push $CONTAINER_IMAGE
-  when: manual

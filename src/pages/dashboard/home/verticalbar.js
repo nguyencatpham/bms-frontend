@@ -90,6 +90,7 @@ const ChartPage = ({ series, labels }) => {
         }
       },
       tooltip: {
+        theme: 'dark',
         y: {
           formatter: function (val) {
             return val

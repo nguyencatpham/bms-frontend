@@ -26,8 +26,8 @@ const mapStateToProps = ({ device, dispatch }) => {
 const BlockModal = ({ modal, setModal, blockDetailEvents, blockHistories, dispatch }) => {
   const [maxDate] = useState(moment().endOf('day'))
   const range = {
-    start: moment().add('-7', 'days').set({ hour: 0, minute: 0, second: 0 }).unix() * 1000,
-    end: moment().set({ hour: 23, minute: 59, second: 59 }).unix() * 1000
+    start: moment().add('-7', 'days').startOf('day').unix() * 1000,
+    end: moment().endOf('day').unix() * 1000
   }
   const [series, setSeries] = useState([
     [

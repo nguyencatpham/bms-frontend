@@ -13,15 +13,15 @@ import './style.scss'
 const { Item } = Form
 const { Search } = Input
 
-const mapStateToProps = ({ authDevice, user, dispatch }) => {
-  let { list, loading, total, preConfirm } = authDevice
+const mapStateToProps = ({ device, user, dispatch }) => {
+  let { list, loading, total, preConfirm } = device
   const { list: users, username, email } = user
   const usernameOrEmail = username || email
   if (typeof total === 'object') {
     total = total.count
   }
 
-  list = list.filter(x => x.devices.length)
+  // list = list.filter(x => x.devices.length)
 
   return { list, loading, total, users, preConfirm, usernameOrEmail, dispatch }
 }
@@ -38,21 +38,21 @@ const DefaultPage = ({ list, loading, total, preConfirm, usernameOrEmail, dispat
   })
   const [payload, setPayload] = useState({
     filter: JSON.stringify({
-      include: [
-        {
-          relation: 'devices',
-          scope: {
-            include: [
-              {
-                relation: 'blocks'
-              },
-              {
-                relation: 'units'
-              }
-            ]
-          }
-        }
-      ],
+      // include: [
+      //   {
+      //     relation: 'devices',
+      //     scope: {
+      //       include: [
+      //         {
+      //           relation: 'blocks'
+      //         },
+      //         {
+      //           relation: 'units'
+      //         }
+      //       ]
+      //     }
+      //   }
+      // ],
       skip: (pagination.current - 1) * pagination.pageSize,
       limit: pagination.pageSize,
       order: ['updated DESC, created DESC']
@@ -69,23 +69,7 @@ const DefaultPage = ({ list, loading, total, preConfirm, usernameOrEmail, dispat
     setPayload({
       ...payload,
       filter: JSON.stringify({
-        include: [
-          {
-            relation: 'devices',
-            scope: {
-              where: { name: value },
-              include: [
-                {
-                  relation: 'blocks'
-                },
-                {
-                  relation: 'units'
-                }
-              ]
-            }
-          }
-        ],
-        // where: { and },
+        where: { and },
         skip: (pagination.current - 1) * pagination.pageSize,
         limit: pagination.pageSize,
         order: ['updated DESC, created DESC']
@@ -98,7 +82,7 @@ const DefaultPage = ({ list, loading, total, preConfirm, usernameOrEmail, dispat
       dataIndex: 'online',
       key: 'online',
       render: (text, item) => {
-        const online = get(item.devices, ['0', 'online'])
+        const online = item.online
         return <span className={`square ${online ? 'square-online' : 'square-offline'}`} />
       }
     }, {
@@ -108,15 +92,7 @@ const DefaultPage = ({ list, loading, total, preConfirm, usernameOrEmail, dispat
       render: (text, item) => {
         const device = get(item.devices, ['0'], {})
         const name = get(device, ['name'], 'Chưa kích hoạt')
-        if (device) {
-          return (
-            // <Link className='break-word' to={`/devices/${item.uuid}`}>
-            <p>{name}</p>
-            // </Link>
-          )
-        } else {
-          return <span>{name}</span>
-        }
+        return <p>{text}</p>
       }
     },
     {
@@ -124,9 +100,16 @@ const DefaultPage = ({ list, loading, total, preConfirm, usernameOrEmail, dispat
       dataIndex: 'siteName',
       key: 'siteName'
     }, {
-      title: 'Mã thiết bị',
-      dataIndex: 'macAddress',
-      key: 'macAddress'
+      title: 'Thời gian kết nối',
+      dataIndex: 'connectedAt',
+      key: 'connectedAt',
+      render: (text, item) => {
+        return (
+          <span className='break-word '>
+            {text ? moment(text).format(TIME_FORMAT) : '---'}
+          </span>
+        )
+      }
     },
     {
       title: 'Cập nhật lân cuối',
@@ -159,22 +142,22 @@ const DefaultPage = ({ list, loading, total, preConfirm, usernameOrEmail, dispat
             <Dropdown
               overlay={
                 <Menu style={{ minWidth: '100px' }}>
-                  {/* <Menu.Item key='0' onClick={() => history.push(`/devices/${item.uuid}/update`)}>
+                  {/* <Menu.Item key='0' onClick={() => history.push(`/devices/${item.id}/update`)}>
                     <span className='break-word'>
                       Sửa
                     </span>
                   </Menu.Item> */}
-                  <Menu.Item key='1' onClick={() => history.push(`/devices/${item.uuid}/stats`)}>
+                  <Menu.Item key='1' onClick={() => history.push(`/devices/${item.id}/stats`)}>
                     <span className='break-word'>
                       Cấu hình
                     </span>
                   </Menu.Item>
-                  <Menu.Item key='2' onClick={() => history.push(`/devices/${item.uuid}/history`)}>
+                  <Menu.Item key='2' onClick={() => history.push(`/devices/${item.id}/history`)}>
                     <span className='break-word'>
                       Lịch sử hoạt động
                     </span>
                   </Menu.Item>
-                  <Menu.Item key='3' onClick={() => history.push(`/devices/${item.uuid}/config`)}>
+                  <Menu.Item key='3' onClick={() => history.push(`/devices/${item.id}/config`)}>
                     <span className='break-word'>
                       Load config
                     </span>
@@ -210,7 +193,8 @@ const DefaultPage = ({ list, loading, total, preConfirm, usernameOrEmail, dispat
       dispatch({
         type: 'authDevice/DELETE',
         payload: {
-          id: modal.uuid,
+          id: modal.id,
+          uuid: modal.id,
           body: {
             username: usernameOrEmail,
             password
@@ -227,11 +211,11 @@ const DefaultPage = ({ list, loading, total, preConfirm, usernameOrEmail, dispat
   }, [total, pagination, setPagination])
   useEffect(() => {
     dispatch({
-      type: 'authDevice/COUNT',
+      type: 'device/COUNT',
       payload: { where: (JSON.parse(payload.filter) || {}).where }
     })
     dispatch({
-      type: 'authDevice/LIST',
+      type: 'device/LIST',
       payload
     })
   }, [dispatch, payload])
@@ -243,7 +227,7 @@ const DefaultPage = ({ list, loading, total, preConfirm, usernameOrEmail, dispat
         <Table
           // rowSelection={rowSelection}
           className='custom-table table-responsive'
-          rowKey={(x) => x.uuid}
+          rowKey={(x) => x.id}
           dataSource={list}
           pagination={{ ...pagination, showSizeChanger: true }}
           loading={loading}

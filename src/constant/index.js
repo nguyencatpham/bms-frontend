@@ -7,8 +7,8 @@ export const SHORT_DATE_FORMAT = 'DD/MM HH:mm'
 
 export const ROLE = {
   admin: 'Quản trị viên', // Tất cả
-  client: 'Khách hàng', // Thông tin General/Monitor/Chart/Events
-  user: 'Nhân viên' // Thông tin General/Monitor/Chart/Events
+  manager: 'Khách hàng', // Thông tin General/Monitor/Chart/Events
+  operator: 'Nhân viên' // Thông tin General/Monitor/Chart/Events
 }
 export const ROLE_OLD = {
   ADMIN: 'Quản trị viên', // Tất cả
